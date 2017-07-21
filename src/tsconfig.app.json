@@ -1,0 +1,30 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "outDir": "../out-tsc/demo",
+        "baseUrl": ".",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es5",
+        "lib": [
+            "es2016",
+            "dom"
+        ],
+        "paths": {
+            "MasterNG": [
+                "lib"
+            ],
+
+            "flex-layout": [
+                "lib/flex-layout"
+            ]
+        }
+    },
+    "exclude": [
+        "test.ts",
+        "**/*.spec.ts"
+    ]
+}
