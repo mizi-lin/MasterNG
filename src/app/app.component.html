@@ -1,0 +1,108 @@
+<div [style.padding.px]="16">
+    <panel class="light bordered">
+        <panel-header>
+            <panel-title>
+                {{title}}
+            </panel-title>
+            <panel-toolbar [tools]="['|', 'fullscreen']">
+                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+
+                <cols [order]="21" [gutter]="'4,4'">
+                    <i class="fa fa-battery-1" aria-hidden="true"></i>
+                </cols>
+            </panel-toolbar>
+        </panel-header>
+
+        <panel-body>
+            <row [style.minHeight.px]="200" [gutter]="16">
+                <cols [span]="4">
+                    <div>1</div>
+                </cols>
+                <cols [span]="8">
+                    <div>2</div>
+                </cols>
+                <section cols [span]="8">
+                    <div>3</div>
+                </section>
+
+                <div cols [span]="4">
+                    <div>4</div>
+                </div>
+            </row>
+        </panel-body>
+
+        <panel-bottom></panel-bottom>
+    </panel>
+
+    <panel class="mt-16 primary bordered">
+        <panel-header>
+            <panel-title>
+                {{title}}
+            </panel-title>
+            <panel-toolbar></panel-toolbar>
+        </panel-header>
+
+        <panel-body>
+            <row [style.minHeight.px]="200" [gutter]="16">
+                <cols [span]="6">
+                    <div>1</div>
+                </cols>
+                <cols [span]="6">
+                    <div>2</div>
+                </cols>
+                <section cols [span]="9">
+                    <div>3</div>
+                </section>
+
+                <div cols [span]="3">
+                    <div>4</div>
+                </div>
+            </row>
+        </panel-body>
+    </panel>
+
+    <panel type="portlet" class="mt-16 light bordered">
+        <panel-header>
+            <panel-title>
+                {{title}}
+                <small>flex layout</small>
+            </panel-title>
+            <panel-toolbar [tools]="['fullscreen', 'reload', 'remove']">
+
+            </panel-toolbar>
+        </panel-header>
+
+        <panel-body>
+            <row [style.minHeight.px]="200" [gutter]="16">
+                <cols [span]="9">
+                    <div class="bordered">1</div>
+                </cols>
+                <cols [span]="6">
+                    <div class="bordered">2</div>
+                </cols>
+                <section cols [span]="6">
+                    <div class="bordered">3</div>
+                </section>
+
+                <div cols [span]="3">
+                    <div class="bordered">4</div>
+                </div>
+            </row>
+        </panel-body>
+    </panel>
+
+</div>
+
+<style>
+    cols > div,
+    [cols] > div {
+        background: #00b3ee;
+        height: 100%;
+    }
+
+    [type="portlet"] cols > div,
+    [type="portlet"] [cols] > div {
+        background: #fff;
+    }
+
+</style>
