@@ -8,6 +8,7 @@ import {PanelBottomComponent} from './panel-bottom.component';
 import {PanelToolbarComponent} from './panel-toolbar.component';
 import {ToolExpandComponent} from './tool-expand.component';
 import {ToolCompressComponent} from './tool-compress.component';
+import {ToolCollapseDownComponent, ToolCollapseUpComponent} from './tool-collapse.component';
 import {FlexLayoutModule} from 'MasterNG';
 
 @NgModule({
@@ -23,7 +24,9 @@ import {FlexLayoutModule} from 'MasterNG';
         PanelBodyComponent,
         PanelBottomComponent,
         ToolExpandComponent,
-        ToolCompressComponent
+        ToolCompressComponent,
+        ToolCollapseDownComponent,
+        ToolCollapseUpComponent
     ],
     exports: [
         PanelComponent,
@@ -33,7 +36,9 @@ import {FlexLayoutModule} from 'MasterNG';
         PanelBodyComponent,
         PanelBottomComponent,
         ToolExpandComponent,
-        ToolCompressComponent
+        ToolCompressComponent,
+        ToolCollapseDownComponent,
+        ToolCollapseUpComponent
     ],
     providers: [
     ]

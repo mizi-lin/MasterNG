@@ -7,3 +7,4 @@ export * from './panel-title.component';
 export * from './panel-toolbar.component';
 export * from './tool-expand.component';
 export * from './tool-compress.component';
+export * from './tool-collapse.component';

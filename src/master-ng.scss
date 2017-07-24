@@ -211,6 +211,13 @@ panel {
     }
 }
 
+panel.collapse-up {
+    padding-bottom: 0;
+    panel-header {
+        border-bottom: 1px solid transparent !important;
+    }
+}
+
 panel.light {
     background: $light_background_color;
 
