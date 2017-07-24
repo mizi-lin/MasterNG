@@ -1,12 +1,10 @@
 <div [style.padding.px]="16">
-    <panel class="light bordered">
+    <panel class="light bordered" [collapse]="'up'">
         <panel-header>
             <panel-title>
                 {{title}}
             </panel-title>
-            <panel-toolbar [tools]="['|', 'fullscreen']">
-                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-
+            <panel-toolbar [tools]="['collapse', 'fullscreen']">
                 <cols [order]="21" [gutter]="'4,4'">
                     <i class="fa fa-battery-1" aria-hidden="true"></i>
                 </cols>
@@ -67,8 +65,7 @@
                 {{title}}
                 <small>flex layout</small>
             </panel-title>
-            <panel-toolbar [tools]="['fullscreen', 'reload', 'remove']">
-
+            <panel-toolbar [tools]="['fullscreen', 'collapse', 'remove']">
             </panel-toolbar>
         </panel-header>
 

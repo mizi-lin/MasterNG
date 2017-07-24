@@ -1,6 +1,6 @@
 import {
     Component, OnInit, Input, ContentChildren, AfterViewInit, ElementRef,
-    Renderer2, OnChanges, SimpleChanges
+    Renderer2, OnChanges, SimpleChanges, HostListener
 } from '@angular/core';
 import * as mu from 'mzmu';
 declare var mu: any;
@@ -22,6 +22,11 @@ declare var mu: any;
                 <i class="fa fa-refresh" aria-hidden="true"></i>
             </cols>
             
+            <cols *ngIf="toolMap['collapse']" [order]="toolMap['collapse']">
+                <tool-collapse-up></tool-collapse-up>
+                <tool-collapse-down></tool-collapse-down>
+            </cols>
+            
             <cols *ngIf="toolMap['|']" [order]="toolMap['|']">
                 <ng-content></ng-content>
             </cols>
@@ -36,6 +41,8 @@ declare var mu: any;
     ]
 })
 export class PanelToolbarComponent implements OnChanges {
+
+
 
     @Input() tools: string[];
 

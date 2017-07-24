@@ -34,7 +34,6 @@ export class RowComponent implements OnInit, AfterViewInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         mu.exist(changes['gutter'], () => {
-            console.debug(-this.gutter + 'px');
             this._renderer.setStyle(this._ref.nativeElement, 'marginLeft', -this.gutter / 2 + 'px');
             this._renderer.setStyle(this._ref.nativeElement, 'marginRight', -this.gutter / 2 + 'px');
         });
@@ -51,8 +50,6 @@ export class RowComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     ngAfterViewInit(): void {
-
-
         mu.each(this.colsArr._results, (cols) => {
             if (mu.isNotExist(cols.gutter)) {
                 cols._renderer.setStyle(cols._ref.nativeElement, 'paddingLeft', this.gutter / 2 + 'px');
