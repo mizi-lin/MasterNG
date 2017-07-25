@@ -33,7 +33,6 @@ export class PanelComponent implements OnChanges, AfterContentChecked {
     isChanges: boolean = false;
 
     toggle_collapse(state?: boolean): void {
-
         mu.exist(state, () => {
             this.isCollapse = state;
         });

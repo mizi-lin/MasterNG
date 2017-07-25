@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, ContentChildren, AfterViewInit, OnChanges, SimpleChanges} from '@angular/core';
 import * as mu from 'mzmu';
 import {PanelComponent} from './panel.component';
+import {PanelSimpleComponent} from './panel-simple.component';
 declare var mu: any;
 
 @Component({
@@ -20,6 +21,7 @@ export class CollapseComponent implements OnInit, OnChanges, AfterViewInit {
     @Input() collapse: string;
 
     @ContentChildren(PanelComponent) _panels: any;
+    @ContentChildren(PanelSimpleComponent) _panelSimples: any;
 
     constructor() {
     }
@@ -27,14 +29,32 @@ export class CollapseComponent implements OnInit, OnChanges, AfterViewInit {
     ngOnInit(): void {
     }
 
-    toggle_accordion(_panel, state): void {
-        mu.run(this._panels, (_panels) => {
-            mu.each(_panels._results, (__panel) => {
-                if (__panel !== _panel) {
-                    __panel._toggle_collapse(state);
-                } else {
-                    __panel._toggle_collapse(_panel.isCollapse);
-                }
+    toggle_accordion(_panels, _panel, state): void {
+        mu.each(_panels, (__panel) => {
+            if (__panel !== _panel) {
+                __panel._toggle_collapse(state);
+            } else {
+                __panel._toggle_collapse(_panel.isCollapse);
+            }
+        });
+    }
+
+    adjust_panels(_panels: any): void {
+        mu.exist(this.accordion, (showIndex) => {
+            mu.each(_panels, (_panel, index) => {
+                let _toggle_collapse = _panel.toggle_collapse.bind(_panel);
+                _toggle_collapse(showIndex !== index);
+                _panel._toggle_collapse = _toggle_collapse;
+                _panel.collapse = true;
+                _panel.isChanges = true;
+                _panel.toggle_collapse = () => {
+                    this.toggle_accordion(_panels, _panel, true);
+                };
+
+            });
+        }, () => {
+            mu.each(_panels, (_panel) => {
+                _panel.collapse = this.collapse;
             });
         });
     }
@@ -49,24 +69,14 @@ export class CollapseComponent implements OnInit, OnChanges, AfterViewInit {
         // 重写 toggle_collapse 方法
         setTimeout(() => {
             mu.run(this._panels, (_panels) => {
-                mu.exist(this.accordion, (showIndex) => {
-                    mu.each(_panels._results, (_panel, index) => {
-                        let _toggle_collapse = _panel.toggle_collapse.bind(_panel);
-                        _toggle_collapse(showIndex !== index);
-                        _panel._toggle_collapse = _toggle_collapse;
-                        _panel.collapse = true;
-                        _panel.isChanges = true;
-                        _panel.toggle_collapse = () => {
-                            this.toggle_accordion(_panel, true);
-                        };
-
-                    });
-                }, () => {
-                    mu.each(_panels._results, (_panel) => {
-                        _panel.collapse = this.collapse;
-                    });
-                });
+                this.adjust_panels(_panels._results);
             });
+
+            mu.run(this._panelSimples, (_ps) => {
+                let _panels = mu.map(_ps._results, (o) => o._panel);
+                this.adjust_panels(_panels);
+            });
+
         }, 1);
 
     }
