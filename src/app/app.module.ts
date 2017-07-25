@@ -6,6 +6,7 @@ import {HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {FlexLayoutModule} from '../lib/flex-layout/flex-layout.module';
 import {PanelModule} from '../lib/panel/panel.module';
+import {ButtonModule} from '../lib/button/button.module';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import {PanelModule} from '../lib/panel/panel.module';
         HttpModule,
 
         FlexLayoutModule.forRoot(),
-        PanelModule.forRoot()
+        PanelModule.forRoot(),
+        ButtonModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]
