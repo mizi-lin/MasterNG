@@ -8,3 +8,5 @@ export * from './panel-toolbar.component';
 export * from './tool-expand.component';
 export * from './tool-compress.component';
 export * from './tool-collapse.component';
+export * from './collapse.component';
+export * from './panel-simple.component';

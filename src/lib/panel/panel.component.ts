@@ -1,6 +1,7 @@
 import {
-    Component, Input, ContentChildren, AfterViewInit, ElementRef,
-    Renderer2, OnChanges, SimpleChanges, HostListener, ContentChild, HostBinding
+    Component, Input, ElementRef, ContentChildren, ViewChild,
+    Renderer2, OnChanges, SimpleChanges, HostListener, ContentChild, HostBinding, forwardRef, AfterViewInit,
+    AfterContentInit, AfterContentChecked
 } from '@angular/core';
 import * as mu from 'mzmu';
 import {PanelBodyComponent} from './panel-body.component';
@@ -19,10 +20,24 @@ declare var mu: any;
         `
     ]
 })
-export class PanelComponent implements OnChanges {
+export class PanelComponent implements OnChanges, AfterContentChecked {
+
+    @ContentChild(PanelBodyComponent) panelBody: any;
+
+    // @ContentChildren(PanelBodyComponent, {descendants: true}) ss: any;
+    // @ContentChild(forwardRef(() => PanelBodyComponent)) children: any;
+    // @ViewChild(PanelBodyComponent) ss: any;
+
     isCollapse: boolean = true;
 
-    toggle_collapse(): void {
+    isChanges: boolean = false;
+
+    toggle_collapse(state?: boolean): void {
+
+        mu.exist(state, () => {
+            this.isCollapse = state;
+        });
+
         mu.run(this.panelBody, (cmp) => {
             this.isCollapse ? cmp._renderer.setAttribute(cmp._ref.nativeElement, 'hidden') : cmp._renderer.removeAttribute(cmp._ref.nativeElement, 'hidden');
             this.isCollapse = !this.isCollapse;
@@ -31,12 +46,11 @@ export class PanelComponent implements OnChanges {
         });
     }
 
-    constructor(private _ref: ElementRef,
-                private _renderer: Renderer2) {
-
+    _ngChanges(): void {
+        this.isChanges = true;
+        this.isCollapse = this.collapse === 'up';
+        this.toggle_collapse();
     }
-
-    @ContentChild(PanelBodyComponent) panelBody: any;
 
     /**
      * header-title 是否支持 collapse
@@ -45,21 +59,22 @@ export class PanelComponent implements OnChanges {
     @HostBinding('class.collapse-up') class_collapse_up: boolean;
     @HostBinding('class.collapse-drop') class_collapse_drop: boolean;
 
-    @HostListener('click', ['$event']) onClick(event: any) {
-        if (this.collapse && mu.or(event.target.nodeName, 'PANEL-TITLE')) {
-            this.toggle_collapse();
-        }
-
+    constructor(private _ref: ElementRef,
+                private _renderer: Renderer2
+    ) {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.debug('ooOoooOooOOOOooo', changes);
-
         // 默认展开
         mu.exist(changes['collapse'], () => {
-            this.isCollapse = this.collapse === 'up';
-            this.toggle_collapse();
+            this._ngChanges();
         });
+    }
+
+    ngAfterContentChecked(): void {
+        if(!this.isChanges && this.collapse){
+            this._ngChanges();
+        }
     }
 
 }

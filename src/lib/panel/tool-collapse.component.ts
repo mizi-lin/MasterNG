@@ -15,7 +15,7 @@ declare var mu: any;
 export class ToolCollapseDownComponent implements OnInit {
     @HostListener('click') onClick(event: any) {
         mu.run(this._panel, (o) => {
-            o.toggle_collapse(true);
+            o.toggle_collapse();
             this.fsClick.emit(true);
         });
     }
@@ -28,11 +28,9 @@ export class ToolCollapseDownComponent implements OnInit {
                 // @Host() private _panel: PanelComponent
                 // -> 祖踪 component
                 @Inject(forwardRef(() => PanelComponent)) private _panel) {
-
     }
 
     ngOnInit(): void {
-
     }
 
 }
@@ -46,7 +44,7 @@ export class ToolCollapseDownComponent implements OnInit {
 export class ToolCollapseUpComponent implements OnInit {
     @HostListener('click') onClick(event: any) {
         mu.run(this._panel, (o) => {
-            o.toggle_collapse(false);
+            o.toggle_collapse();
             this.fsClick.emit(true);
         });
     }

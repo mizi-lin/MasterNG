@@ -32,32 +32,10 @@
         <panel-bottom></panel-bottom>
     </panel>
 
-    <panel class="mt-16 primary bordered">
-        <panel-header>
-            <panel-title>
-                {{title}}
-            </panel-title>
-            <panel-toolbar></panel-toolbar>
-        </panel-header>
-
-        <panel-body>
-            <row [style.minHeight.px]="200" [gutter]="16">
-                <cols [span]="6">
-                    <div>1</div>
-                </cols>
-                <cols [span]="6">
-                    <div>2</div>
-                </cols>
-                <section cols [span]="9">
-                    <div>3</div>
-                </section>
-
-                <div cols [span]="3">
-                    <div>4</div>
-                </div>
-            </row>
-        </panel-body>
-    </panel>
+    <panel-s class="mt-16 primary bordered" [title]="'将进酒'" [tools]="['collapse']">
+        君不见黄河之水天上来, 奔流到海不复回 <br />
+        君不见高堂明镜悲白发, 朝如青丝暮成雪
+    </panel-s>
 
     <panel type="portlet" class="mt-16 light bordered">
         <panel-header>
@@ -87,6 +65,57 @@
             </row>
         </panel-body>
     </panel>
+
+    <h3>Collapse</h3>
+
+    <collapse class="bordered" [accordion]="0">
+        <panel>
+            <panel-header>
+                <panel-title>
+                    Panel - 1
+                </panel-title>
+                <panel-toolbar [tools]="['collapse']"></panel-toolbar>
+            </panel-header>
+            <panel-body>
+
+                <panel-s class="primary" title="清平调<small>李白</small>">
+                    云想衣裳花想容，<br />
+                    春风拂槛露华浓。<br />
+                    若非群玉山头见，<br />
+                    会向瑶台月下逢
+                </panel-s>
+
+                <panel class="primary">
+                    <panel-header>
+                        <panel-title>
+                            Panel - 1 - 2
+                        </panel-title>
+                        <panel-toolbar [tools]="['collapse']"></panel-toolbar>
+                    </panel-header>
+                    <panel-body>
+                        1 - 1
+                    </panel-body>
+                </panel>
+
+            </panel-body>
+        </panel>
+
+        <panel>
+            <panel-header>
+                <panel-title>
+                    Panel - 2
+                </panel-title>
+                <panel-toolbar [tools]="['collapse']"></panel-toolbar>
+            </panel-header>
+
+            <panel-body>
+                2
+            </panel-body>
+        </panel>
+
+
+
+    </collapse>
 
 </div>
 
