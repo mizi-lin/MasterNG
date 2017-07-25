@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 import * as mu from 'mzmu';
 import {PanelBodyComponent} from './panel-body.component';
+import {PanelComponent} from './panel.component';
 declare var mu: any;
 
 @Component({
@@ -34,6 +35,8 @@ export class PanelSimpleComponent implements OnChanges, AfterContentChecked {
     @Input() title: string;
     @Input() tools: string[];
     @Input() theme: string;
+
+    @ViewChild(PanelComponent) _panel: any;
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2) {

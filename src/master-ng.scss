@@ -174,7 +174,6 @@ i.fa {
 /**
  * Panel
  */
-
 panel,
 panel-s,
 panel-simple {
@@ -291,3 +290,16 @@ panel-simple {
     }
 }
 
+/**
+ * Collapse
+ */
+collapse {
+    > panel-s > panel,
+    > panel {
+        > panel-header {
+            > panel-title {
+                cursor: pointer;
+            }
+        }
+    }
+}
