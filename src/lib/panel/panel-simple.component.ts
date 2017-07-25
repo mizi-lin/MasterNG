@@ -13,7 +13,7 @@ declare var mu: any;
     template: `
         <panel>
             <panel-header>
-                <panel-title [innerHTML]="title">
+                <panel-title [innerHTML]="_title">
                 </panel-title>
                 <panel-toolbar [tools]="tools"></panel-toolbar>
             </panel-header>
@@ -32,7 +32,13 @@ declare var mu: any;
 })
 export class PanelSimpleComponent implements OnChanges, AfterContentChecked {
 
-    @Input() title: string;
+    _title: string;
+
+    @Input() set title(v) {
+        let tt = v.split('::');
+        this._title = tt[0] + mu.run(tt[1], (small) => `<small>${small}</small>`, () => '');
+    };
+
     @Input() tools: string[];
     @Input() theme: string;
 
