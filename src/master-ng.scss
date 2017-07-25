@@ -174,7 +174,10 @@ i.fa {
 /**
  * Panel
  */
-panel {
+
+panel,
+panel-s,
+panel-simple {
     position: relative;
     display: block;
     width: 100%;
@@ -194,6 +197,10 @@ panel {
             padding-left: $w2;
             font-size: 18px;
             flex: 1;
+
+            small {
+                margin-left: $w;
+            }
         }
 
         panel-toolbar {
@@ -209,73 +216,78 @@ panel {
     panel-bottom {
         display: block;
     }
+
+
+    &.collapse-up {
+        padding-bottom: 0;
+        panel-header {
+            border-bottom: 1px solid transparent !important;
+        }
+    }
+
+    &.light {
+        background: $light_background_color;
+
+        panel-header {
+            border-bottom: 1px solid $light_border_color;
+            panel-title {
+            }
+
+            panel-toolbar {
+            }
+        }
+
+        panel-body {
+        }
+
+        panel-bottom {
+        }
+    }
+
+    &.primary {
+
+        panel-header {
+            border-bottom: 1px solid $primary_border_color;
+            background: $primary_background_color;
+            color: #fff;
+
+            panel-title {
+                small {
+                    color: rgba(255, 255, 255, .6);
+                }
+            }
+
+            panel-toolbar {
+            }
+        }
+
+        panel-body {
+        }
+
+        panel-bottom {
+        }
+    }
+
+    &[type='portlet'] {
+        padding: $w $w2 $w;
+
+        panel-header {
+            height: $w6;
+            panel-title {
+                padding: 0 0 $w 0;
+            }
+
+            panel-toolbar {
+                padding-right: 0;
+            }
+        }
+
+        panel-body {
+            padding: $w2 0;
+        }
+
+        panel-bottom {
+        }
+    }
 }
 
-panel.collapse-up {
-    padding-bottom: 0;
-    panel-header {
-        border-bottom: 1px solid transparent !important;
-    }
-}
-
-panel.light {
-    background: $light_background_color;
-
-    panel-header {
-        border-bottom: 1px solid $light_border_color;
-        panel-title {
-        }
-
-        panel-toolbar {
-        }
-    }
-
-    panel-body {
-    }
-
-    panel-bottom {
-    }
-}
-
-panel.primary {
-
-    panel-header {
-        border-bottom: 1px solid $primary_border_color;
-        background: $primary_background_color;
-        color: #fff;
-
-        panel-title {
-        }
-
-        panel-toolbar {
-        }
-    }
-
-    panel-body {
-    }
-
-    panel-bottom {
-    }
-}
-
-panel[type='portlet'] {
-    padding: $w $w2 $w;
-
-    panel-header {
-        height: $w6;
-        panel-title {
-            padding: 0 0 $w 0;
-        }
-
-        panel-toolbar {
-            padding-right: 0;
-        }
-    }
-
-    panel-body {
-        padding: $w2 0;
-    }
-
-    panel-bottom {
-    }
-}

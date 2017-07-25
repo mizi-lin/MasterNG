@@ -42,8 +42,6 @@ declare var mu: any;
 })
 export class PanelToolbarComponent implements OnChanges {
 
-
-
     @Input() tools: string[];
 
     // -> fullscreen  控制全屏控件toggle
@@ -63,14 +61,12 @@ export class PanelToolbarComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         mu.exist(changes['tools'], () => {
-            this.toolMap = mu.map(this.tools, (key, i) => {
+            this.toolMap = mu.map(this.tools || [], (key, i) => {
                 return {
                     __key__: key,
                     __val__: (i + 1) * 10
                 }
             }, {});
-
-            console.debug(this.toolMap)
         });
     }
 

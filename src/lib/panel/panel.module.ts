@@ -1,5 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {CollapseComponent} from './collapse.component';
 import {PanelComponent} from './panel.component';
 import {PanelHeaderComponent} from './panel-header.component';
 import {PanelTitleComponent} from './panel-title.component';
@@ -9,6 +10,7 @@ import {PanelToolbarComponent} from './panel-toolbar.component';
 import {ToolExpandComponent} from './tool-expand.component';
 import {ToolCompressComponent} from './tool-compress.component';
 import {ToolCollapseDownComponent, ToolCollapseUpComponent} from './tool-collapse.component';
+import {PanelSimpleComponent} from './panel-simple.component';
 import {FlexLayoutModule} from 'MasterNG';
 
 @NgModule({
@@ -26,7 +28,9 @@ import {FlexLayoutModule} from 'MasterNG';
         ToolExpandComponent,
         ToolCompressComponent,
         ToolCollapseDownComponent,
-        ToolCollapseUpComponent
+        ToolCollapseUpComponent,
+        CollapseComponent,
+        PanelSimpleComponent
     ],
     exports: [
         PanelComponent,
@@ -38,7 +42,9 @@ import {FlexLayoutModule} from 'MasterNG';
         ToolExpandComponent,
         ToolCompressComponent,
         ToolCollapseDownComponent,
-        ToolCollapseUpComponent
+        ToolCollapseUpComponent,
+        CollapseComponent,
+        PanelSimpleComponent
     ],
     providers: [
     ]
