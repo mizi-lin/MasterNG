@@ -158,9 +158,51 @@
             <button btn class="danger light">Danger</button>
             <button btn class="transparent light">Transparent</button>
             <button btn class="transparent" disabled>disabled</button>
-
-
         </div>
+    </panel-s>
+
+    <panel-s class="mt-8 bordered" title="图标按钮::Icon Button">
+        <div>
+            <button btn [icon]="'hourglass-start'">Default</button>
+            <button btn [icon]="'eye'" class="primary">Primary</button>
+            <button btn [icon]="'diamond'"  class="success">Success</button>
+            <button btn [icon]="'cogs'" class="info">Info</button>
+            <button btn [icon]="'code'" class="warning light">Warning</button>
+            <button btn [icon]="'flash'" class="danger light">Danger</button>
+            <button btn [icon]="'fire'" class="transparent light">Transparent</button>
+            <button btn [icon]="'eyedropper'" class="transparent" disabled>disabled</button>
+        </div>
+
+        <div class="mt-8">
+            <button btn [icon]="'hourglass-start'"></button>
+            <button btn [icon]="'eye'" [shape]="'square'" class="primary">Primary</button>
+            <a href="javascript:;" btn [icon]="'diamond'" [shape]="'circle'" class="success">Success</a>
+            <a btn [icon]="'cogs'" [shape]="'square'" class="info">Info</a>
+            <a btn [icon]="'code'" [shape]="'circle'" class="warning light">Warning</a>
+            <button btn [icon]="'flash'" [shape]="'square'" class="danger light">Danger</button>
+            <button btn [icon]="'fire'" [shape]="'circle'" class="transparent light">Transparent</button>
+            <button btn [icon]="'eyedropper'" [shape]="'square'" class="transparent" disabled>disabled</button>
+        </div>
+
+        <div class="mt-8">
+            <button btn [symbol]="'hourglass-start'">Default</button>
+            <button btn [icon]="'eye'" [symbol]="'diamond'" class="primary">Primary</button>
+            <button btn [icon]="'diamond'" [symbol]="'chevron-down'" class="success">Success</button>
+            <button btn [icon]="'cogs'" [symbol]="'chevron-down'" class="info">Info</button>
+            <button btn [icon]="'code'" [symbol]="'chevron-down'" class="warning light">
+                Warning
+                <i class="fa fa-sort-down"></i>
+            </button>
+            <button btn [icon]="'flash'" [symbol]="'square'" class="danger light">Danger</button>
+            <button btn [icon]="'fire'" [symbol]="'flash'" class="transparent light">Transparent</button>
+            <button btn [icon]="'eyedropper'" [symbol]="'code'" class="transparent" disabled>disabled</button>
+        </div>
+
+        <button btn [icon]="'eye'" [shape]="'full'" class="primary mt-8" >Primary</button>
+        <button btn [icon]="'diamond'" [shape]="'full'" [symbol]="'chevron-down'" class="success mt-4">Success</button>
+        <button btn [icon]="'code'" [shape]="'full'" [symbol]="'chevron-down'" class="warning light mt-4">Warning</button>
+        <button btn [icon]="'flash'" [shape]="'full'" class="danger light mt-4">Danger</button>
+
     </panel-s>
 
 </div>

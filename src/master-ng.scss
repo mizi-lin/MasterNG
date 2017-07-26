@@ -19,8 +19,8 @@ $gray_color: #999;
 $light_background_color: #fff;
 $light_border_color: #e7ecf1;
 
-$primary_background_color: #3598dc;
-$primary_border_color: #d2eafb;
+$primary_background_color: #108ee9;
+$primary_border_color: #0e77ca;
 
 $success_background_color: #36c6d3;
 $success_border_color: #2bb8c4;
@@ -229,7 +229,7 @@ collapse {
 
     &.primary {
         background: $primary_background_color;
-        border-color: $primary_background_color;
+        border-color: $primary_border_color;
         color: #fff;
 
         &:hover {
@@ -243,6 +243,10 @@ collapse {
                 background: $primary_background_color;
                 color: #fff;
             }
+        }
+
+        &.master-icon-symbol .symbol {
+            border-left: 1px solid $primary_border_color;
         }
     }
 
@@ -261,6 +265,10 @@ collapse {
                 background: $success_background_color;
                 color: #fff;
             }
+        }
+
+        &.master-icon-symbol .symbol {
+            border-left: 1px solid $success_border_color;
         }
 
     }
@@ -282,6 +290,10 @@ collapse {
                 color: #fff;
             }
         }
+
+        &.master-icon-symbol .symbol {
+            border-left: 1px solid $info_border_color;
+        }
     }
 
     &.warning {
@@ -299,6 +311,10 @@ collapse {
                 background: $warning_background_color;
                 color: #fff;
             }
+        }
+
+        &.master-icon-symbol .symbol {
+            border-left: 1px solid $warning_border_color;
         }
     }
 
@@ -318,6 +334,10 @@ collapse {
                 color: #fff;
             }
         }
+
+        &.master-icon-symbol .symbol {
+            border-left: 1px solid $danger_border_color;
+        }
     }
 
     &.transparent {
@@ -326,6 +346,10 @@ collapse {
 
         &:hover {
             color: rgba(0, 0, 0, .3);
+        }
+
+        &.master-icon-symbol .symbol {
+            border-left: 1px solid rgba(255, 255, 255, .2);
         }
     }
 
@@ -341,6 +365,46 @@ collapse {
         &:hover {
             background: rgba(226, 226, 226, .8);
             color: rgba(0, 0, 0, .3);
+        }
+    }
+
+    &.master-btn-circle {
+        padding: 0;
+        width: $btnHeight;
+        border-radius: 50%;
+
+        span {
+            display: none;
+        }
+    }
+
+    &.master-btn-square {
+        padding: 0;
+        width: $btnHeight;
+
+        span {
+            display: none;
+        }
+    }
+
+    &.master-btn-full {
+        display: block;
+        padding: 0;
+        width: 100%;
+    }
+
+    &.master-icon-symbol {
+        padding-right: 43px;
+
+        .symbol {
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            right: 0;
+            width: $btnHeight;
+            line-height: $btnHeight - 2px;
+            text-align: center;
+            border-left: 1px solid #d9d9d9;
         }
     }
 
