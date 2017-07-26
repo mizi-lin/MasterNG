@@ -93,7 +93,6 @@ panel-simple {
     position: relative;
     display: block;
     width: 100%;
-    padding-bottom: $w;
 
     panel-header {
         position: relative;
@@ -223,23 +222,23 @@ collapse {
 [btn] {
     display: inline-block;
 
-    &:hover {
+    &:hover, &:focus {
         color: rgba(0, 0, 0, .3);
     }
 
+    .primary &,
     &.primary {
         background: $primary_background_color;
         border-color: $primary_border_color;
         color: #fff;
 
-        &:hover {
-            background: $light_background_color;
-            color: $primary_background_color;
+        &:hover, &:focus, &.active {
+            background: $primary_border_color;
         }
 
         &.light {
             color: $primary_background_color;
-            &:hover {
+            &:hover, &:focus, &.active  {
                 background: $primary_background_color;
                 color: #fff;
             }
@@ -254,14 +253,13 @@ collapse {
         background: $success_background_color;
         border-color: $success_border_color;
         color: #fff;
-        &:hover {
-            background: $light_background_color;
-            color: $success_background_color;
+        &:hover, &:focus {
+            background: $success_border_color;
         }
 
         &.light {
             color: $success_background_color;
-            &:hover {
+            &:hover, &:focus {
                 background: $success_background_color;
                 color: #fff;
             }
@@ -278,14 +276,13 @@ collapse {
         border-color: $info_border_color;
         color: #fff;
 
-        &:hover {
-            background: $light_background_color;
-            color: $info_background_color;
+        &:hover, &:focus {
+            background: $info_border_color;
         }
 
         &.light {
             color: $info_background_color;
-            &:hover {
+            &:hover, &:focus {
                 background: $info_background_color;
                 color: #fff;
             }
@@ -300,14 +297,13 @@ collapse {
         background: $warning_background_color;
         border-color: $warning_border_color;
         color: #fff;
-        &:hover {
-            background: $light_background_color;
-            color: $warning_background_color;
+        &:hover, &:focus {
+            background: $warning_border_color;
         }
 
         &.light {
             color: $warning_background_color;
-            &:hover {
+            &:hover, &:focus {
                 background: $warning_background_color;
                 color: #fff;
             }
@@ -322,14 +318,13 @@ collapse {
         background: $danger_background_color;
         border-color: $danger_border_color;
         color: #fff;
-        &:hover {
-            background: $light_background_color;
-            color: $danger_background_color;
+        &:hover, &:focus {
+            background: $danger_border_color;
         }
 
         &.light {
             color: $danger_background_color;
-            &:hover {
+            &:hover, &:focus {
                 background: $danger_background_color;
                 color: #fff;
             }
@@ -344,7 +339,7 @@ collapse {
         background: transparent;
         border-color: transparent;
 
-        &:hover {
+        &:hover, &:focus {
             color: rgba(0, 0, 0, .3);
         }
 
@@ -362,7 +357,7 @@ collapse {
         color: rgba(0, 0, 0, .4);
         border: 1px solid rgba(0, 0, 0, .1);
 
-        &:hover {
+        &:hover, &:focus {
             background: rgba(226, 226, 226, .8);
             color: rgba(0, 0, 0, .3);
         }
@@ -408,4 +403,36 @@ collapse {
         }
     }
 
+}
+
+btn-group {
+    display: inline-block;
+    font-size: 0;
+
+    > btn-radio + btn-radio [btn].master-btn,
+    > btn-checkbox + btn-checkbox [btn].master-btn,
+    > [btn] + [btn] {
+        border-left-color: transparent;
+        border-radius: 0;
+    }
+
+    > btn-radio:first-child [btn],
+    > btn-checkbox:first-child [btn],
+    > [btn]:first-child {
+        border-radius: 3px 0 0 3px;
+    }
+
+    > btn-radio:last-child [btn].master-btn,
+    > btn-checkbox:last-child [btn].master-btn,
+    > [btn]:last-child {
+        border-radius: 0 3px 3px 0;
+    }
+}
+
+btn-checkbox,
+btn-radio {
+    input {
+        position: absolute;
+        left: -9999px;
+    }
 }
