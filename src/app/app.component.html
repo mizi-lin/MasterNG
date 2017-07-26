@@ -33,7 +33,8 @@
     </panel>
 
     <panel-s class="mt-16 primary bordered" [title]="'将进酒'" [tools]="['collapse']">
-        君不见黄河之水天上来, 奔流到海不复回 <br />
+        君不见黄河之水天上来, 奔流到海不复回
+        <br />
         君不见高堂明镜悲白发, 朝如青丝暮成雪
     </panel-s>
 
@@ -79,9 +80,12 @@
             <panel-body>
 
                 <panel-s class="primary" title="清平调<small>李白</small>">
-                    云想衣裳花想容，<br />
-                    春风拂槛露华浓。<br />
-                    若非群玉山头见，<br />
+                    云想衣裳花想容，
+                    <br />
+                    春风拂槛露华浓。
+                    <br />
+                    若非群玉山头见，
+                    <br />
                     会向瑶台月下逢
                 </panel-s>
 
@@ -116,21 +120,30 @@
 
     <collapse class="mt-16 bordered" [accordion]="1">
         <panel-s title="赤壁 <small>杜牧</small>">
-            折戟沉沙铁未销，<br />
-            自将磨洗认前朝。<br />
-            东风不与周郎便，<br />
+            折戟沉沙铁未销，
+            <br />
+            自将磨洗认前朝。
+            <br />
+            东风不与周郎便，
+            <br />
             铜雀春深锁二乔。
         </panel-s>
         <panel-s title="蝉 <small>李商隐</small>">
-            本以高难饱，徒劳恨费声。<br />
-            五更疏欲断，一树碧无情。<br />
-            薄宦梗犹泛，故园芜已平。<br />
+            本以高难饱，徒劳恨费声。
+            <br />
+            五更疏欲断，一树碧无情。
+            <br />
+            薄宦梗犹泛，故园芜已平。
+            <br />
             烦君最相警，我亦举家清。
         </panel-s>
         <panel-s title="送人东游 <small>温庭筠</small>">
-            荒戌落黄叶，浩然离故关。<br />
-            高风汉阳渡，初日郢门山。<br />
-            江上几人在，天涯孤棹还。<br />
+            荒戌落黄叶，浩然离故关。
+            <br />
+            高风汉阳渡，初日郢门山。
+            <br />
+            江上几人在，天涯孤棹还。
+            <br />
             何当重相见，樽酒慰离颜。
         </panel-s>
     </collapse>
@@ -159,13 +172,20 @@
             <button btn class="transparent light">Transparent</button>
             <button btn class="transparent" disabled>disabled</button>
         </div>
+
+        <div class="mt-8">
+            <btn-radio class="primary">This is a radio button</btn-radio>
+            <btn-checkbox class="primary">This is a check button</btn-checkbox>
+        </div>
+
+
     </panel-s>
 
     <panel-s class="mt-8 bordered" title="图标按钮::Icon Button">
         <div>
             <button btn [icon]="'hourglass-start'">Default</button>
             <button btn [icon]="'eye'" class="primary">Primary</button>
-            <button btn [icon]="'diamond'"  class="success">Success</button>
+            <button btn [icon]="'diamond'" class="success">Success</button>
             <button btn [icon]="'cogs'" class="info">Info</button>
             <button btn [icon]="'code'" class="warning light">Warning</button>
             <button btn [icon]="'flash'" class="danger light">Danger</button>
@@ -198,10 +218,53 @@
             <button btn [icon]="'eyedropper'" [symbol]="'code'" class="transparent" disabled>disabled</button>
         </div>
 
-        <button btn [icon]="'eye'" [shape]="'full'" class="primary mt-8" >Primary</button>
+        <button btn [icon]="'eye'" [shape]="'full'" class="primary mt-8">Primary</button>
         <button btn [icon]="'diamond'" [shape]="'full'" [symbol]="'chevron-down'" class="success mt-4">Success</button>
         <button btn [icon]="'code'" [shape]="'full'" [symbol]="'chevron-down'" class="warning light mt-4">Warning</button>
         <button btn [icon]="'flash'" [shape]="'full'" class="danger light mt-4">Danger</button>
+
+    </panel-s>
+
+    <panel-s class="mt-8 bordered" title="按钮组::Group Button">
+        <div>
+            <btn-group>
+                <button btn [icon]="'cogs'" class="primary">Left</button>
+                <button btn class="primary">Center</button>
+                <button btn class="primary">Right</button>
+            </btn-group>
+        </div>
+
+        <div class="mt-8">
+            <btn-group>
+                <button btn [icon]="'cogs'" class="primary light">Left</button>
+                <button btn class="primary light">Center</button>
+                <button btn class="primary light">Right</button>
+            </btn-group>
+        </div>
+
+        <div class="mt-8">
+            <btn-group>
+                <btn-checkbox class="primary">Left</btn-checkbox>
+                <btn-checkbox class="primary">Center</btn-checkbox>
+                <btn-checkbox class="primary">Right</btn-checkbox>
+            </btn-group>
+
+            <btn-group>
+                <btn-radio [name]="'test'" [cls]="'primary light'">Left</btn-radio>
+                <btn-radio [name]="'test'" [cls]="'primary light'">Center</btn-radio>
+                <btn-radio [name]="'test'" [cls]="'primary light'">Right</btn-radio>
+            </btn-group>
+        </div>
+
+        <div class="mt-8">
+            <btn-group>
+                <button btn>Default</button>
+                <button btn class="primary">Primary</button>
+                <button btn class="success light">Success</button>
+                <button btn [icon]="'cogs'" class="info">Info</button>
+                <button btn [icon]="'code'" class="warning light">Warning</button>
+            </btn-group>
+        </div>
 
     </panel-s>
 
