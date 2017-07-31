@@ -30,6 +30,8 @@ export class ButtonRadioComponent implements OnInit, OnChanges, DoCheck {
 
     radio: any;
 
+    //todo ngModel
+
     constructor(
         private _ref: ElementRef,
         private _render: Renderer2

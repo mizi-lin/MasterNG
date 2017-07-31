@@ -19,15 +19,11 @@ export class ButtonCheckComponent implements OnInit, OnChanges {
 
     @HostListener('click', ['$event.target']) onclick(target) {
         if(target.nodeName === 'INPUT'){
-
             this.checked = target.checked;
         }
     };
 
-
-
-
-
+    //todo ngModel
     constructor() {
 
     }
