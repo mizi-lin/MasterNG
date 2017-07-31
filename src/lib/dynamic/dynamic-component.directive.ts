@@ -102,13 +102,7 @@ export abstract class DynamicComponent {
     context: any;
 }
 
-@Component({
-    selector: 'dynamic-sample-1',
-    template: `<div>Dynamic sample 1 ({{context?.text}} - {{abc}})</div> <panel-s title="xxxx"></panel-s>`
-})
-export class DynamicSample1Component extends DynamicComponent {
-    abc: string = 'adssadad';
-}
+
 
 @Component({
     selector: 'unknown-component',

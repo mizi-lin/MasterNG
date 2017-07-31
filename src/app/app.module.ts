@@ -9,21 +9,22 @@ import {PanelModule} from '../lib/panel/panel.module';
 import {ButtonModule} from '../lib/button/button.module';
 import {CalendarModule} from '../lib/calendar/calendar.module';
 import {RouterModule} from '@angular/router';
-import {DynamicComponent, DyComponent} from './dynamic/dynamic.component';
+import {
+    DyComponent, DynamicSample1Component,
+    DynamicDemoComponent
+} from './dynamic/dynamic.component';
 import {BaseComponent} from './base/base.component';
 import {DynamicModule} from '../lib/dynamic/dynamic.module';
-import {DynamicSample1Component} from '../lib/dynamic/dynamic-component.directive';
 
 
 @NgModule({
     declarations: [
         AppComponent,
-        DynamicComponent,
         BaseComponent,
         DyComponent,
 
+        DynamicDemoComponent,
         DynamicSample1Component
-
     ],
 
     exports: [
@@ -51,7 +52,7 @@ import {DynamicSample1Component} from '../lib/dynamic/dynamic-component.directiv
             },
             {
                 path: 'dynamic',
-                component: DynamicComponent
+                component: DynamicDemoComponent
             }
             // {
             //     path: '!',

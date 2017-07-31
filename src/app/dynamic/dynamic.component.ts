@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DynamicSample1Component} from '../../lib/dynamic/dynamic-component.directive';
+import {DynamicComponent} from '../../lib/dynamic/dynamic-component.directive';
 
 
 
@@ -21,7 +21,7 @@ export class DyComponent implements OnInit {
     templateUrl: './dynamic.component.html',
     styleUrls: ['./dynamic.component.scss']
 })
-export class DynamicComponent implements OnInit {
+export class DynamicDemoComponent implements OnInit {
 
     title: string = `title a, b, c `;
     html: string = require('./test.html');
@@ -36,3 +36,10 @@ export class DynamicComponent implements OnInit {
 
 }
 
+@Component({
+    selector: 'dynamic-sample-1',
+    template: `<div>Dynamic sample 1 ({{context?.text}} - {{abc}})</div> <panel-s title="xxxx"></panel-s>`
+})
+export class DynamicSample1Component extends DynamicComponent {
+    abc: string = 'adssadad';
+}
