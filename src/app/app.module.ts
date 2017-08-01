@@ -15,7 +15,7 @@ import {
 } from './dynamic/dynamic.component';
 import {BaseComponent} from './base/base.component';
 import {DynamicModule} from '../lib/dynamic/dynamic.module';
-
+import {DetectionComponent, DetectionChildComponent, DetectionChild1Component} from './detection/detection.component';
 
 @NgModule({
     declarations: [
@@ -24,12 +24,14 @@ import {DynamicModule} from '../lib/dynamic/dynamic.module';
         DyComponent,
 
         DynamicDemoComponent,
-        DynamicSample1Component
+        DynamicSample1Component,
+
+        DetectionComponent,
+        DetectionChildComponent,
+        DetectionChild1Component
     ],
 
-    exports: [
-        DyComponent,
-    ],
+    exports: [],
 
     /**
      * 不会再模板中被引用到的组件。
@@ -53,6 +55,10 @@ import {DynamicModule} from '../lib/dynamic/dynamic.module';
             {
                 path: 'dynamic',
                 component: DynamicDemoComponent
+            },
+            {
+                path: 'detection',
+                component: DetectionComponent
             }
             // {
             //     path: '!',

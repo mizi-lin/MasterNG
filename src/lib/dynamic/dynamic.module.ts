@@ -1,8 +1,8 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HtmlOutlet} from './dynamic-html.directive';
-import {DynamicComponentDirective, UnknownDynamicComponent} from './dynamic-component.directive';
 import {DynamicService} from './dynamic-component.service';
+import {DynamicComponentComponent, UnknownDynamicComponent} from './dynamic-component.component';
 
 /**
  * ReqModule
@@ -18,13 +18,13 @@ import {DynamicService} from './dynamic-component.service';
     declarations: [
         HtmlOutlet,
         UnknownDynamicComponent,
-        DynamicComponentDirective
+        DynamicComponentComponent
     ],
 
     exports: [
         HtmlOutlet,
         // UnknownDynamicComponent,
-        DynamicComponentDirective
+        DynamicComponentComponent
     ],
 
     entryComponents: [
