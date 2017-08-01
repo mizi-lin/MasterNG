@@ -1,85 +1,54 @@
+//our root app component
 import {
-    Component, Input, OnInit, OnDestroy,
-    ViewChild, ViewContainerRef,
-    ComponentFactoryResolver, ComponentRef
-} from '@angular/core';
+    Component,
+    Directive,
+    ComponentFactory,
+    Input,
+    ReflectiveInjector,
+    ViewContainerRef,
+
+} from '@angular/core'
+import {ComponentMetadata} from 'codelyzer/angular/metadata';
+
+export function createComponentFactory(resolver: ComponentResolver, metadata: ComponentMetadata): Promise<ComponentFactory<any>> {
+    const cmpClass = class DynamicComponent {};
+    const decoratedCmp = Component(metadata)(cmpClass);
+    return resolver.resolveComponent(decoratedCmp);
+}
+
+@Directive({
+    selector: 'dynamic-html-outlet',
+})
+export class DynamicHTMLOutlet {
+    @Input() src: string;
+
+    constructor(private vcRef: ViewContainerRef, private resolver: ComponentResolver) {
+    }
+
+    ngOnChanges() {
+        if (!this.src) return;
+
+        const metadata = new ComponentMetadata({
+            selector: 'dynamic-html',
+            template: this.src,
+        });
+        createComponentFactory(this.resolver, metadata)
+        .then(factory => {
+            const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
+            this.vcRef.createComponent(factory, 0, injector, []);
+        });
+    }
+}
 
 @Component({
-    selector: 'dynamic-content',
+    selector: 'my-app',
     template: `
-        <div>
-            <div #container></div>
-        </div>
-    `
+        <dynamic-html-outlet [src]="html"></dynamic-html-outlet>
+    `,
+    directives: [DynamicHTMLOutlet]
 })
-export class DynamicContentComponent implements OnInit, OnDestroy {
-
-    @ViewChild('container', { read: ViewContainerRef })
-    container: ViewContainerRef;
-
-    @Input()
-    type: string;
-
-    @Input()
-    context: any;
-
-    private mappings = {
-        'sample1': DynamicSample1Component,
-        'sample2': DynamicSample2Component
-    };
-
-    private componentRef: ComponentRef<{}>;
-
-    constructor(
-        private componentFactoryResolver: ComponentFactoryResolver) {
-    }
-
-    getComponentType(typeName: string) {
-        let type = this.mappings[typeName];
-        return type || UnknownDynamicComponent;
-    }
-
-    ngOnInit() {
-        if (this.type) {
-            let componentType = this.getComponentType(this.type);
-
-            // note: componentType must be declared within module.entryComponents
-            let factory = this.componentFactoryResolver.resolveComponentFactory(componentType);
-            this.componentRef = this.container.createComponent(factory);
-
-            // set component context
-            let instance = <DynamicComponent> this.componentRef.instance;
-            instance.context = this.context;
-        }
-    }
-
-    ngOnDestroy() {
-        if (this.componentRef) {
-            this.componentRef.destroy();
-            this.componentRef = null;
-        }
-    }
-
+export class App {
+    html = `<div>
+    <p>Dynamic HTML Fragment</p>
+</div>`;
 }
-
-export abstract class DynamicComponent {
-    context: any;
-}
-
-@Component({
-    selector: 'dynamic-sample-1',
-    template: `<div>Dynamic sample 1 ({{context?.text}})</div>`
-})
-export class DynamicSample1Component extends DynamicComponent {}
-
-@Component({
-    selector: 'dynamic-sample-2',
-    template: `<div>Dynamic sample 2 ({{context?.text}})</div>`
-})
-export class DynamicSample2Component extends DynamicComponent {}
-
-@Component({
-    selector: 'unknown-component',
-    template: `<div>Unknown component ({{context?.text}})</div>`
-})
-export class UnknownDynamicComponent extends DynamicComponent {}

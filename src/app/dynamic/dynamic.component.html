@@ -6,7 +6,7 @@
 
 <hr />
 
-<dynamic-component [component]="ccc" [context]="{text: 'today heart shuang'}"></dynamic-component>
+<dynamic-component [component]="ccc" [inputs]="this.context" [outputs]="['abcd']" (outevt)="outevt($event)"></dynamic-component>
+<dynamic-component [name]="'ccc'" [inputs]="{text: 'today heart shuang'}"></dynamic-component>
 
 
-<dynamic-component [name]="'ccc'" [context]="{text: 'today heart shuang'}"></dynamic-component>
