@@ -70,7 +70,12 @@ import {DetectionComponent, DetectionChildComponent, DetectionChild1Component} f
         PanelModule.forRoot(),
         ButtonModule.forRoot(),
         CalendarModule.forRoot(),
-        DynamicModule.forRoot()
+        DynamicModule.forRoot([
+            FlexLayoutModule,
+            PanelModule,
+            ButtonModule,
+            CalendarModule
+        ])
     ],
     providers: [],
     schemas: [
@@ -80,3 +85,4 @@ import {DetectionComponent, DetectionChildComponent, DetectionChild1Component} f
 })
 export class AppModule {
 }
+

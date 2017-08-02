@@ -1,6 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {HtmlOutlet} from './dynamic-html.directive';
+import {DynamicTemplateDirective, ExtraModules} from './dynamic-template.directive';
 import {DynamicService} from './dynamic-component.service';
 import {DynamicComponentComponent, UnknownDynamicComponent} from './dynamic-component.component';
 
@@ -16,13 +16,13 @@ import {DynamicComponentComponent, UnknownDynamicComponent} from './dynamic-comp
     ],
 
     declarations: [
-        HtmlOutlet,
+        DynamicTemplateDirective,
         UnknownDynamicComponent,
         DynamicComponentComponent
     ],
 
     exports: [
-        HtmlOutlet,
+        DynamicTemplateDirective,
         // UnknownDynamicComponent,
         DynamicComponentComponent
     ],
@@ -36,9 +36,15 @@ import {DynamicComponentComponent, UnknownDynamicComponent} from './dynamic-comp
     ]
 })
 export class DynamicModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(modules: any[] = []): ModuleWithProviders {
         return {
-            ngModule: DynamicModule
+            ngModule: DynamicModule,
+            providers: [
+                {
+                    provide: ExtraModules,
+                    useValue: {items: modules}
+                }
+            ]
         };
     }
 }
