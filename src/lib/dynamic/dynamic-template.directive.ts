@@ -8,8 +8,11 @@ import {
     ComponentFactory,
     ModuleWithComponentFactories,
     ComponentRef,
-    ReflectiveInjector
+    ReflectiveInjector, ComponentFactoryResolver, OnDestroy, SimpleChanges
 } from '@angular/core';
+
+import * as mu from 'mzmu';
+declare var mu: any;
 
 /**
  * 每一个 Component 和 Directive 的实例都必须对应一个 Host（宿主），
@@ -88,61 +91,102 @@ import {
 
 import {RouterModule}  from '@angular/router';
 import {CommonModule} from '@angular/common';
-// import {SharedModule} from './shared.module'
+import {BrowserModule} from '@angular/platform-browser';
 
-export function createComponentFactory(compiler: Compiler, metadata: Component): Promise<ComponentFactory<any>> {
-    const cmpClass = class DynamicComponent {
-    };
-    const decoratedCmp = Component(metadata)(cmpClass);
+export class ExtraModules {
+    items: any[]
+}
+
+export function createComponentFactory(compiler: Compiler, template: string, extraModules: any): Promise<ComponentFactory<any>> {
+    // const compMetadata = new Component({
+    //     selector: 'dynamic-html',
+    //     template: template
+    // });
+    // const cmpClass = class DynamicTemplateComponent {
+    // };
+    // const decoratedCmp = Component(compMetadata)(cmpClass);
+
+    @Component({
+        selector: 'decorated-cmp',
+        template: template
+    })
+    class _DecoratedCmp {
+
+    }
 
     @NgModule({
         imports: [
             CommonModule,
-            // SharedModule,
-            RouterModule
+            BrowserModule,
+            RouterModule,
+            ...extraModules.items
         ],
-        declarations: [decoratedCmp]
+        entryComponents: [
+            _DecoratedCmp
+        ],
+        exports: [
+            _DecoratedCmp
+        ],
+        declarations: [_DecoratedCmp]
     })
     class DynamicHtmlModule {
     }
 
     return compiler.compileModuleAndAllComponentsAsync(DynamicHtmlModule)
     .then((moduleWithComponentFactory: ModuleWithComponentFactories<any>) => {
-        return moduleWithComponentFactory.componentFactories.find(x => x.componentType === decoratedCmp);
+        return moduleWithComponentFactory.componentFactories.find(x => x.componentType === _DecoratedCmp);
     });
 }
 
-@Directive({selector: 'html-outlet'})
-export class HtmlOutlet {
-    @Input() html: string;
-    cmpRef: ComponentRef<any>;
+@Directive({selector: 'dynamic-template'})
+export class DynamicTemplateDirective implements OnDestroy {
+    @Input() template: string;
+    @Input() context: any;
 
-    constructor(private vcRef: ViewContainerRef, private compiler: Compiler) {
+    _cmpRef: ComponentRef<any>;
+    instance: any;
+
+    constructor(private _vcRef: ViewContainerRef,
+                private compiler: Compiler,
+                private extraModules: ExtraModules) {
     }
 
-    ngOnChanges() {
-        const html = this.html;
-        if (!html) return;
+    ngOnChanges(changes: SimpleChanges) {
 
-        if (this.cmpRef) {
-            this.cmpRef.destroy();
-        }
+        mu.exist(changes['template'], () => {
+            const template = this.template;
+            if (!template) return;
 
-        const compMetadata = new Component({
-            selector: 'dynamic-html',
-            template: this.html,
+            if (this._cmpRef) {
+                this._cmpRef.destroy();
+            }
+
+            createComponentFactory(this.compiler, template, this.extraModules)
+            .then(factory => {
+                const injector = ReflectiveInjector.fromResolvedProviders([], this._vcRef.parentInjector);
+                this._cmpRef = this._vcRef.createComponent(factory, 0, injector, []);
+                this.instance = this._cmpRef.instance;
+                mu.each(this.context || [], (v, k) => {
+                    this.instance[k] = v;
+                });
+            });
         });
 
-        createComponentFactory(this.compiler, compMetadata)
-        .then(factory => {
-            const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
-            this.cmpRef = this.vcRef.createComponent(factory, 0, injector, []);
+        mu.exist(changes['context'], () => {
+            mu.run(this.instance, () => {
+                mu.each(this.context, (v, k) => {
+                    this.instance[k] = v;
+                });
+            });
         });
+
+
     }
 
     ngOnDestroy() {
-        if (this.cmpRef) {
-            this.cmpRef.destroy();
+        if (this._cmpRef) {
+            this._cmpRef.destroy();
         }
     }
 }
+

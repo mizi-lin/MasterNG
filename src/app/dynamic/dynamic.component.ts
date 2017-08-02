@@ -24,7 +24,7 @@ export class DyComponent implements OnInit {
 })
 export class DynamicDemoComponent implements OnInit {
 
-    title: string = `title a, b, c `;
+    title: string = `将进酒::李白`;
     html: string = require('./test.html');
 
     ccc: any = DynamicSample1Component;
@@ -42,11 +42,6 @@ export class DynamicDemoComponent implements OnInit {
     ngOnInit() {
         this.context.text = +new Date();
         this.context.title = 'This v - title';
-        setInterval(() => {
-            this.context.text = +new Date();
-            // this.context[this.context.text] = 1111;
-            // this.context = mu.clone(this.context);
-        }, 1000);
     }
 
 }
@@ -55,7 +50,7 @@ export class DynamicDemoComponent implements OnInit {
     selector: 'dynamic-sample-1',
     template: `
         <div>{{title}}</div> 
-        <panel-s class="bordered" title="xxxx">Dynamic sample 1 ({{text}}) {{abc}}</panel-s>
+        <panel-s class="bordered" title="OOOO::oooo">Dynamic sample 1 ({{text}}) {{abc}}</panel-s>
     `
 })
 export class DynamicSample1Component implements OnChanges, OnInit {

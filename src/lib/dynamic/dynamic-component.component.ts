@@ -149,7 +149,7 @@ export abstract class DynamicComponent {
  */
 @Component({
     selector: 'unknown-component',
-    template: `<div>Unknown component</div>`
+    template: `<div title="unknown-component">unknown-component</div>`
 })
 export class UnknownDynamicComponent extends DynamicComponent {
 }
