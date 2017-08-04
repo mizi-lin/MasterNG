@@ -33,7 +33,7 @@ export class DynamicDemoComponent implements OnInit {
     count: number = 0;
 
     outevt($event): void {
-        console.debug($event);
+        // console.debug($event);
     }
 
     constructor(private cdRef: ChangeDetectorRef) {
@@ -56,6 +56,7 @@ export class DynamicDemoComponent implements OnInit {
 export class DynamicSample1Component implements OnChanges, OnInit {
     abc: string = 'adssadad';
 
+    text: string = 's';
 
     @Input() title: any;
 
@@ -74,6 +75,5 @@ export class DynamicSample1Component implements OnChanges, OnInit {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        console.debug('', changes);
     }
 }

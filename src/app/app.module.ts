@@ -16,6 +16,9 @@ import {
 import {BaseComponent} from './base/base.component';
 import {DynamicModule} from '../lib/dynamic/dynamic.module';
 import {DetectionComponent, DetectionChildComponent, DetectionChild1Component} from './detection/detection.component';
+import { ReqComponent } from './req/req.component';
+import {ReqModule} from '../lib/req/req.module';
+import {ResourcePool} from './req/resource-pool';
 
 @NgModule({
     declarations: [
@@ -28,7 +31,8 @@ import {DetectionComponent, DetectionChildComponent, DetectionChild1Component} f
 
         DetectionComponent,
         DetectionChildComponent,
-        DetectionChild1Component
+        DetectionChild1Component,
+        ReqComponent
     ],
 
     exports: [],
@@ -59,25 +63,38 @@ import {DetectionComponent, DetectionChildComponent, DetectionChild1Component} f
             {
                 path: 'detection',
                 component: DetectionComponent
+            },
+
+            {
+                path: 'req',
+                component: ReqComponent
             }
+
             // {
             //     path: '!',
             //     component: FeCpt
             // }
         ], {useHash: true}),
 
+
+
         FlexLayoutModule.forRoot(),
         PanelModule.forRoot(),
         ButtonModule.forRoot(),
         CalendarModule.forRoot(),
+
         DynamicModule.forRoot([
             FlexLayoutModule,
             PanelModule,
             ButtonModule,
             CalendarModule
-        ])
+        ]),
+
+        ReqModule.forRoot()
     ],
-    providers: [],
+    providers: [
+        ResourcePool
+    ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA
     ],
