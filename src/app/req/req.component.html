@@ -1,0 +1,26 @@
+<p>
+    req works!
+</p>
+
+<req-http [req]="{url: 'assets/store/user.json'}" (result)="user_data = $event">
+    {{user_data | json}}
+</req-http>
+
+<hr>
+
+<req-http [req]="req" [params]="params" [payload]="payload" (result)="company_data = $event">
+    {{company_data | json}}
+</req-http>
+
+<hr>
+
+{{data | json}}
+
+<hr>
+
+<req-resource [pool]="_rp"
+              [req]="{method: 'get', key: 'demo' }"
+              [params]="{store: 'store', name: 'user', key: 'req_resource'}"
+              (result)="demo_data = $event.data">
+    {{demo_data | json}}
+</req-resource>

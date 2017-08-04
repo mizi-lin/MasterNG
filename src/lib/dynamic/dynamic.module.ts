@@ -5,10 +5,11 @@ import {DynamicService} from './dynamic-component.service';
 import {DynamicComponentComponent, UnknownDynamicComponent} from './dynamic-component.component';
 
 /**
- * ReqModule
- * 使ajax请求与返回分开
- * 使ajax各阶段事务专注于自己
- * NO_DATA 与 Http Processor 各自呈现
+ * DynamicModule
+ * 该模块包含
+ * 1. DynamicTemplateDirective 动态载入template
+ * 2. DynamicComponentComponent 动态载入Component
+ * 3 todo 动态载入Router
  */
 @NgModule({
     imports: [

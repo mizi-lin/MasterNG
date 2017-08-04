@@ -27,7 +27,7 @@ export class ToolCollapseDownComponent implements OnInit {
                 // -> 父级 component
                 // @Host() private _panel: PanelComponent
                 // -> 祖踪 component
-                @Inject(forwardRef(() => PanelComponent)) private _panel) {
+                @Inject(forwardRef(() => PanelComponent)) public _panel) {
     }
 
     ngOnInit(): void {
@@ -56,7 +56,7 @@ export class ToolCollapseUpComponent implements OnInit {
                 // -> 父级 component
                 // @Host() private _panel: PanelComponent
                 // -> 祖踪 component
-                @Inject(forwardRef(() => PanelComponent)) private _panel) {
+                @Inject(forwardRef(() => PanelComponent)) public _panel) {
 
     }
 

@@ -119,7 +119,7 @@ export class DynamicComponentComponent implements OnChanges, OnDestroy {
         mu.exist(changes['inputs'], () => {
             if (this.dynamicComponent && this.instance) {
                 this.setInputs(this.inputs);
-                this.instance.ngOnChanges(mu.map(this.inputs, (v, k) => {
+                this.instance.ngOnChanges && this.instance.ngOnChanges(mu.map(this.inputs, (v, k) => {
                     return {
                         currentValue: v
                     }
