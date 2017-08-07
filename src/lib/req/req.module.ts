@@ -51,6 +51,7 @@ import {DynamicModule} from 'MasterNG';
         },
 
         $$Resource
+
     ]
 })
 export class ReqModule {

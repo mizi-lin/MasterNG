@@ -39,12 +39,21 @@ export class ReqComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._http.get('assets/store/info.json', {
+        this._http.get('assets/store/jys.txt', {
             params: {
                 t: + new Date()
             }
         }).subscribe((res) => {
-            this.data = res;
+            console.debug('jys:::', res);
+        });
+
+        // 404
+        this._http.get('assets/store/jys.json', {
+            params: {
+                t: + new Date()
+            }
+        }).subscribe((res) => {
+            console.debug('jys:::', res);
         });
 
         this._rp.demo.get({
@@ -52,16 +61,18 @@ export class ReqComponent implements OnInit {
             name: 'user',
             key: 'Resource_User'
         }).subscribe((res) => {
+            console.debug('user:::', res);
             this.data = res;
         });
 
-        this._rp.demo.post({
+        this._rp.demo.get({
             store: 'store',
             name: 'company',
             key: 'Resource_Company'
         },{
             ttt: + new Date()
         }).subscribe((res) => {
+            console.debug('company:::', res);
             this.data = res;
         });
 

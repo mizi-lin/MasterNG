@@ -1,11 +1,12 @@
-import {Headers, Response, ConnectionBackend, RequestOptions, RequestOptionsArgs, Http} from '@angular/http';
+import {
+    Headers, Response, ConnectionBackend, RequestOptions, RequestOptionsArgs, Http
+} from '@angular/http';
 import {Injectable, Injector} from '@angular/core';
 import {Observable} from 'rxjs';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {Router} from '@angular/router';
-
-declare var mu: any, console: any;
+declare let mu: any, console: any;
 
 /**
  * http 拦截器
@@ -55,85 +56,121 @@ export class $$HttpInterceptor extends Http {
         return headers;
     }
 
-    map(observable: Observable<Response>, method: string): Observable<Response> {
+    map(observable: Observable<Response>): Observable<Response> {
         return observable.map((response: Response) => {
-            let body = response.json();
-            return body || {};
+            try {
+                return response.json() || {};
+            } catch (e) {
+                return response.text();
+            }
+
         });
     }
 
-    intercept(observable: Observable<Response>): Observable<Response> {
-        return observable.catch((err: any, source: Observable<Response>) => {
-                let status: any = err.status;
-                let title: string;
-                let error: any;
+    onCatch(error: any, caught: Observable<any>, url?: string): Observable<any> {
+        console.error('catch::::', url);
 
-                switch (status) {
-                    case 401:
-                        title = 'TOKEN失效';
-                        // setTimeout(() => {
-                        //     mu.storage(CONST.TOKEN, '');
-                        //     mu.storage(CONST.ACCESS_TOKEN, '');
-                        //     this.router.navigate([CONST.FE_LOGIN]);
-                        // }, 0);
-                        break;
-                    case 404:
-                        title = '页面不存在';
-                        break;
-                    case 500:
-                        title = '操作错误或失败';
-                        break;
-                    case 502:
-                        title = '连接中断';
-                        break;
-                    default:
-                        title = '操作失败';
-                        break;
-                }
+        // Observable.empty()
+        // 则不会到do中onError 中调用
+        // 默认 error.status === 401 时不返回错误
+        if(error && error.status) {
+            return Observable.empty();
+        }
 
-                if (status === 404) {
-                    error = {
-                        data: [
-                            {message: '当前页面或资源不存在'}
-                        ]
-                    };
-                } else if (status === 502) {
-                    error = {
-                        data: [
-                            {message: '网络连接错误'},
-                            {message: '或服务器连接中断'}
-                        ]
-                    };
-                } else {
-                    error = err.json();
-                }
-
-                // if (err.status  == 401 && !_.endsWith(err.url, 'api/auth/login')) {
-                if (err.status === 401) {
-                    return Observable.empty();
-                } else {
-                    return Observable.throw(err);
-                }
-            }
-        );
+        return Observable.throw(error);
     }
 
-    get(url: string, options: RequestOptionsArgs = {}): Observable<any> {
+    onSuccess(res: Response, url?: string): void {
+        console.log(res);
+    }
+
+    onError(error: any, url?: string): void {
+        console.error('error::::', url);
+    }
+
+    onFinally(url?: string): void {
+        this.afterRequest(url);
+    }
+
+    beforeRequest(url: string, config: any): void {
+        console.debug('before:::: -> ', url)
+    }
+
+    afterRequest(url): void {
+        console.debug('after:::: -> ', url)
+    }
+
+    intercept(observable: Observable<Response>, url: string): Observable<Response> {
+        return observable.catch((error: any, caught: Observable<any>) => {
+            return this.onCatch(error, caught, url);
+        })
+        .do((res: Response) => {
+            this.onSuccess(res, url);
+        }, (error: any) => {
+            this.onError(error, url);
+        })
+        .finally(() => {
+            this.onFinally(url);
+        });
+    }
+
+    _like_get(method: string, url: string, options: RequestOptionsArgs = {}): Observable<Response> {
         options.headers = this.addHeaderWithToken(options.headers);
-        return this.intercept(this.map(super.get(url, options), 'get'));
+        let observable = super[method](url, options);
+        this.beforeRequest(url, {
+            method,
+            options
+        });
+        observable = this.map(observable);
+        return this.intercept(observable, url);
     }
 
-    post(url: string, body ?: any, options ?: any): Observable<any> {
-        options = options || {};
+    _like_post(method: string, url: string, body: any = {}, options: RequestOptionsArgs = {}): Observable<Response> {
         options.headers = this.addHeaderWithToken(options.headers);
         options.headers.append('Content-Type', 'application/json');
-        return this.intercept(this.map(super.post(url, body, options).debounceTime(500).distinctUntilChanged(), 'post'));
+        let observable = super[method](url, body, options);
+        this.beforeRequest(url, {
+            method,
+            body,
+            options
+        });
+        observable = this.map(observable);
+        return this.intercept(observable, url);
     }
 
-    patch(url: string, data ?: any, options ?: any): Observable<any> {
-        options = options || {};
-        options.headers = this.addHeaderWithToken(options.headers);
-        options.headers.append('Content-Type', 'application/json');
-        return this.intercept(this.map(super.patch(url, data, options), 'patch'));
+    get(url: string, options: RequestOptionsArgs = {}): Observable<Response> {
+        const method = 'get';
+        return this._like_get(method, url, options);
     }
+
+    delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        const method = 'delete';
+        return this._like_get(method, url, options);
+    }
+
+    head(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        const method = 'head';
+        return this._like_get(method, url, options);
+    }
+
+    options(url: string, options?: RequestOptionsArgs): Observable<Response> {
+        const method = 'options';
+        return this._like_get(method, url, options);
+    }
+
+    post(url: string, body: any = {}, options: RequestOptionsArgs = {}): Observable<Response> {
+        const method = 'post';
+        return this._like_post(method, url, body, options);
+    }
+
+    patch(url: string, body: any = {}, options: RequestOptionsArgs = {}): Observable<Response> {
+        const method = 'patch';
+        return this._like_post(method, url, body, options);
+    }
+
+    put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+        const method = 'put';
+        return this._like_post(method, url, body, options);
+    }
+
 }
