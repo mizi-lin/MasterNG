@@ -26,6 +26,7 @@ export class DynamicDemoComponent implements OnInit {
 
     title: string = `将进酒::李白`;
     html: string = require('./test.html');
+    // html: string = 'asas';
 
     ccc: any = DynamicSample1Component;
     context: any = {};

@@ -8,6 +8,7 @@ import {ReqNoDataComponent} from './req-nodata.component';
 import {$$Resource} from './resource.service';
 import {ResourceContainer} from './resource-container';
 import {DynamicModule} from 'MasterNG';
+import {$$HttpLoader} from './http-loader';
 
 /**
  * ReqModule
