@@ -3,12 +3,15 @@ import {Http} from '@angular/http';
 import {Observable, Subscriber} from 'rxjs';
 import {ReqNoDataComponent} from './req-nodata.component';
 import * as mu from 'mzmu';
-
+import * as jquery from 'jquery';
 declare const mu: any;
+
+
 
 @Component({
     selector: 'req-http',
     template: `
+        <div class="loading"></div>
         <dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></dynamic-component>
         <ng-content *ngIf="!noData"></ng-content>
     `
@@ -35,6 +38,8 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     }
 
     ngOnInit() {
+        console.debug('::::::::::');
+        console.debug('oooOooOOooo', jquery);
     }
 
     req_http(req: any): void {

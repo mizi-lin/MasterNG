@@ -3,6 +3,9 @@
     "compilerOptions": {
         "outDir": "../out-tsc/demo",
         "baseUrl": ".",
+        "typeRoots": [
+            "../node_modules/@types"
+        ],
         "sourceMap": true,
         "declaration": false,
         "moduleResolution": "node",
@@ -17,7 +20,6 @@
             "MasterNG": [
                 "lib"
             ],
-
             "flex-layout": [
                 "lib/flex-layout"
             ]

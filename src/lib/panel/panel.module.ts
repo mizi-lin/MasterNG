@@ -11,7 +11,7 @@ import {ToolExpandComponent} from './tool-expand.component';
 import {ToolCompressComponent} from './tool-compress.component';
 import {ToolCollapseDownComponent, ToolCollapseUpComponent} from './tool-collapse.component';
 import {PanelSimpleComponent} from './panel-simple.component';
-import {FlexLayoutModule} from 'MasterNG';
+import {FlexLayoutModule} from '../flex-layout/flex-layout.module';
 
 @NgModule({
     imports: [
