@@ -3,12 +3,14 @@ import {CommonModule} from '@angular/common';
 import {HttpModule, Http, XHRBackend, RequestOptions} from '@angular/http';
 import {ReqHttpComponent} from './req-http.component';
 import {ReqResourceComponent} from './req-resource.component';
-import {$$HttpInterceptor} from './http-interceptor.service';
+import {$$HttpInterceptor} from './$$HttpInterceptor';
 import {ReqNoDataComponent} from './req-nodata.component';
-import {$$Resource} from './resource.service';
-import {ResourceContainer} from './resource-container';
+import {$$Resource} from './$$Resource';
 import {DynamicModule} from 'MasterNG';
-import {$$HttpLoader} from './http-loader';
+
+import {LoaderBarModule} from 'lib/loader-bar/loader-bar.module';
+import {HttpLoaderComponent} from './http-loader.component';
+import {ReqService} from './req.service';
 
 /**
  * ReqModule
@@ -26,16 +28,20 @@ import {$$HttpLoader} from './http-loader';
     imports: [
         CommonModule,
         HttpModule,
-        DynamicModule
+        DynamicModule,
+        LoaderBarModule.forRoot()
+
     ],
     declarations: [
         ReqHttpComponent,
         ReqResourceComponent,
-        ReqNoDataComponent
+        ReqNoDataComponent,
+        HttpLoaderComponent
     ],
     exports: [
         ReqHttpComponent,
-        ReqResourceComponent
+        ReqResourceComponent,
+        HttpLoaderComponent
     ],
     entryComponents: [
         ReqNoDataComponent
@@ -51,7 +57,8 @@ import {$$HttpLoader} from './http-loader';
             ]
         },
 
-        $$Resource
+        $$Resource,
+        ReqService
 
     ]
 })

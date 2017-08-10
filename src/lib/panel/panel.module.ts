@@ -12,6 +12,7 @@ import {ToolCompressComponent} from './tool-compress.component';
 import {ToolCollapseDownComponent, ToolCollapseUpComponent} from './tool-collapse.component';
 import {PanelSimpleComponent} from './panel-simple.component';
 import {FlexLayoutModule} from 'MasterNG';
+import {ToolRefreshComponent} from './tool-refresh.component';
 
 @NgModule({
     imports: [
@@ -29,6 +30,7 @@ import {FlexLayoutModule} from 'MasterNG';
         ToolCompressComponent,
         ToolCollapseDownComponent,
         ToolCollapseUpComponent,
+        ToolRefreshComponent,
         CollapseComponent,
         PanelSimpleComponent
     ],

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Subscriber} from 'rxjs/Subscriber';
 import {ReqNoDataComponent} from './req-nodata.component';
 import * as mu from 'mzmu';
@@ -8,11 +8,14 @@ declare let mu: any;
 @Component({
     selector: 'req-resource',
     template: `
+        <loader-bar *ngIf="loading"
+                    [progress]="process"></loader-bar>
         <dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></dynamic-component>
         <ng-content *ngIf="!noData"></ng-content>
-    `
+    `,
+    styles: [`:host {display: block; }`]
 })
-export class ReqResourceComponent implements OnInit {
+export class ReqResourceComponent implements OnInit, OnChanges {
 
     @Input() pool: any;
     @Input() req: any | {
@@ -25,7 +28,7 @@ export class ReqResourceComponent implements OnInit {
     @Input() payload: any;
 
     // todo
-    @Input() loading: boolean = false;
+    @Input() loading = true;
 
     @Output() result: any = new EventEmitter<any>();
 
@@ -33,6 +36,8 @@ export class ReqResourceComponent implements OnInit {
 
     noData: boolean = false;
     noDataComponent: any = ReqNoDataComponent;
+
+    process: number;
 
     constructor() {
     }
@@ -44,12 +49,17 @@ export class ReqResourceComponent implements OnInit {
         const method = req.method || (req.payload ? 'post' : 'get');
         mu.run(mu.prop(this.pool, req.key), (pool) => {
             this._observable = pool[method](req.params, req.paylaod).subscribe((res: any = {}) => {
+                this.process = 100;
                 mu.run(res.data, () => {
                     this.result.emit(res);
                 }, () => {
                     this.noData = true;
                 });
             });
+        },
+        // fail request
+        () => {
+            this.process = 100;
         });
     }
 
@@ -58,6 +68,8 @@ export class ReqResourceComponent implements OnInit {
     }, 300);
 
     ngOnChanges(changes: SimpleChanges) {
+
+        this.process = Math.round(Math.random() * 30);
 
         mu.run(changes['params'] && this.req, () => {
             this.req.params = this.params;

@@ -4,3 +4,4 @@ export * from './button';
 export * from './calendar';
 export * from './dynamic';
 export * from './req';
+export * from './loader-bar';

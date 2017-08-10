@@ -1,5 +1,5 @@
 export * from './req.module'
 export * from './req-http.component'
 export * from './req-resource.component'
-export * from './http-interceptor.service'
-export * from './resource.service'
+export * from './$$HttpInterceptor'
+export * from './$$Resource'

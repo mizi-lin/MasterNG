@@ -2,10 +2,16 @@ import {
     Headers, Response, ConnectionBackend, RequestOptions, RequestOptionsArgs, Http
 } from '@angular/http';
 import {Injectable, Injector} from '@angular/core';
-import {Observable} from 'rxjs';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/finally';
 import {Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import {ReqService} from './req.service';
+
 declare let mu: any, console: any;
 
 /**
@@ -25,8 +31,9 @@ declare let mu: any, console: any;
  * subscribe()：订阅流（即执行）
  */
 @Injectable()
-export class $$HttpLoader extends Http {
+export class $$HttpInterceptor extends Http {
     router: Router;
+    reqServ: ReqService;
 
     constructor(backend: ConnectionBackend,
                 defaultOptions: RequestOptions,
@@ -40,8 +47,17 @@ export class $$HttpLoader extends Http {
          */
         setTimeout(() => {
             this.router = injector.get(Router);
+            this.reqServ = injector.get(ReqService);
         }, 0);
     }
+
+    getRandomInt(min: number, max: number): number {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    loadComplete: any = mu.debounce(() => {
+        this.reqServ.progress = 100;
+    }, 500);
 
     addHeaderWithToken(headers: Headers): Headers {
         headers = headers || new Headers();
@@ -73,7 +89,7 @@ export class $$HttpLoader extends Http {
         // Observable.empty()
         // 则不会到do中onError 中调用
         // 默认 error.status === 401 时不返回错误
-        if(error && error.status) {
+        if (error && error.status) {
             return Observable.empty();
         }
 
@@ -81,7 +97,7 @@ export class $$HttpLoader extends Http {
     }
 
     onSuccess(res: Response, url?: string): void {
-        console.log(res);
+        // console.log(res);
     }
 
     onError(error: any, url?: string): void {
@@ -93,11 +109,19 @@ export class $$HttpLoader extends Http {
     }
 
     beforeRequest(url: string, config: any): void {
-        console.debug('before:::: -> ', url)
+        let progress = this.reqServ.progress;
+        mu.run( progress > 0 && progress < 100, () => {
+            this.reqServ.progress += (100 - progress) * (Math.random() * .5);
+        }, () => {
+            this.reqServ.progress = this.getRandomInt(5, 25);
+        });
+
+        console.debug('before:::: -> ', url);
     }
 
     afterRequest(url): void {
-        console.debug('after:::: -> ', url)
+        this.loadComplete();
+        // console.debug('after:::: -> ', url);
     }
 
     intercept(observable: Observable<Response>, url: string): Observable<Response> {

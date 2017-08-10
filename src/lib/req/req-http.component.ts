@@ -11,10 +11,12 @@ declare const mu: any;
 @Component({
     selector: 'req-http',
     template: `
-        <div class="loading"></div>
+        <loader-bar *ngIf="loading"
+            [progress]="process"></loader-bar>
         <dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></dynamic-component>
         <ng-content *ngIf="!noData"></ng-content>
-    `
+    `,
+    styles: [`:host {display: block; }`]
 })
 export class ReqHttpComponent implements OnChanges, OnDestroy {
 
@@ -25,7 +27,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     @Input() context: any;
 
     // todo
-    @Input() loading: boolean = false;
+    @Input() loading: boolean = true;
 
     @Output() result: any = new EventEmitter<any>();
 
@@ -34,12 +36,9 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     noData: boolean = false;
     noDataComponent: any = ReqNoDataComponent;
 
-    constructor(private _http: Http) {
-    }
+    process: number = 0;
 
-    ngOnInit() {
-        console.debug('::::::::::');
-        console.debug('oooOooOOooo', jquery);
+    constructor(private _http: Http) {
     }
 
     req_http(req: any): void {
@@ -61,6 +60,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
         }
 
         this._observable = this._http[method](req.url, ...args).subscribe((res) => {
+            this.process = 100;
             res = res || {};
             mu.run(res.data, () => {
                 this.result.emit(res);
@@ -76,6 +76,8 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     }, 300);
 
     ngOnChanges(changes: SimpleChanges) {
+
+        this.process = 50;
 
         mu.run(changes['params'] && this.req, () => {
             this.req.params = {

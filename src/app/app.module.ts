@@ -10,6 +10,8 @@ import {DynamicModule} from '../lib/dynamic/dynamic.module';
 import {ReqModule} from '../lib/req/req.module';
 import {DemoPanelComponent} from './demo-panel/demo-panel.component';
 import {DemoReqComponent} from './demo-req/demo-req.component';
+import {LoaderBarModule} from '../lib/loader-bar/loader-bar.module';
+import {ResourcePool} from './demo-req/resource-pool';
 
 @NgModule({
     declarations: [
@@ -35,7 +37,7 @@ import {DemoReqComponent} from './demo-req/demo-req.component';
         PanelModule.forRoot(),
         ButtonModule.forRoot(),
         CalendarModule.forRoot(),
-
+        LoaderBarModule.forRoot(),
         DynamicModule.forRoot([
             FlexLayoutModule,
             PanelModule,
@@ -45,7 +47,9 @@ import {DemoReqComponent} from './demo-req/demo-req.component';
 
         ReqModule.forRoot()
     ],
-    providers: [],
+    providers: [
+        ResourcePool
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

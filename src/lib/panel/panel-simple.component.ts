@@ -6,6 +6,7 @@ import {
 import * as mu from 'mzmu';
 import {PanelBodyComponent} from './panel-body.component';
 import {PanelComponent} from './panel.component';
+
 declare var mu: any;
 
 @Component({
@@ -23,18 +24,20 @@ declare var mu: any;
         </panel>
     `,
     styles: [
-        `
+            `
             :host {
-               width: 100%;
+                display: block;
+                width: 100%;
             }
-        `
+            `
     ]
 })
 export class PanelSimpleComponent implements OnChanges, AfterContentChecked {
 
     _title: string;
 
-    @Input() set title(v) {
+    @Input()
+    set title(v) {
         let [parent, sub] = (v || '').split('::');
         this._title = parent + mu.run(sub, (sub) => `<small>${sub}</small>`, () => '');
     };
