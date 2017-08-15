@@ -1,0 +1,14 @@
+:host {
+    display: block;
+    width: 100%;
+    z-index: 9999;
+    line-height: 0;
+    top: 0;
+    left: 0;
+    font-size: 0;
+
+    > .bar {
+        transition: height .3s;
+        background: #108ee9;
+    }
+}

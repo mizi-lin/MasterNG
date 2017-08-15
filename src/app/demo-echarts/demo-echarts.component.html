@@ -1,0 +1,45 @@
+<div class="demo-echarts">
+
+    <panel-s class="bordered" title="echarts-render::injector options">
+        <div echarts-render [options]="options_1" [style.height.px]="300">
+        </div>
+    </panel-s>
+
+    <panel-s class="mt-8 bordered" title="echarts-render::req-http get options">
+        <req-http [req]="{url: './assets/store/echarts-bar.json'}" (result)="bar_options = $event.data; barOptions($event.data)">
+            <row>
+                <cols [span]="12">
+                    <div echarts-render [options]="bar_options"  [style.height.px]="300">
+                    </div>
+                </cols>
+
+                <cols [span]="12">
+                    <div echarts-render [options]="bar_options2">
+                    </div>
+                </cols>
+            </row>
+        </req-http>
+    </panel-s>
+
+    <panel-s class="mt-8 bordered" title="EchartsService::data conversion options">
+        <req-http [req]="{url: './assets/store/pie.json'}" (result)="pieConversion($event.data); pie_data = $event.data">
+            <row>
+                <cols [span]="12">
+                    <div echarts-render [options]="pie_options"  [style.height.px]="300">
+                    </div>
+                </cols>
+
+                <cols [span]="12">
+                    <echarts [data]="pie_data" [type]="'pie'" [setting]="{subtype: 'annular', legend_show: false, selected: 1}" [style.height.px]="300">
+                    </echarts>
+                </cols>
+            </row>
+        </req-http>
+    </panel-s>
+
+    <echarts-panel class="mt-8 bordered" title="EchartsPanel::panel && tools">
+
+    </echarts-panel>
+
+
+</div>
