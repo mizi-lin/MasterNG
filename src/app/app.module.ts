@@ -5,15 +5,20 @@ import {AppComponent} from './app.component';
 import {DemoPanelComponent} from './demo-panel/demo-panel.component';
 import {DemoReqComponent} from './demo-req/demo-req.component';
 import {DemoEchartsComponent} from './demo-echarts/demo-echarts.component';
+import {LoaderBarModule} from '../lib/loader-bar/loader-bar.module';
+import {ResourcePool} from './demo-req/resource-pool';
+import {DemoPanelComponent} from './demo-panel/demo-panel.component';
+import {DemoReqComponent} from './demo-req/demo-req.component';
+import {LoaderBarModule} from '../lib/loader-bar/loader-bar.module';
+import {ResourcePool} from './demo-req/resource-pool';
+import {DemoEchartsComponent} from './demo-echarts/demo-echarts.component';
+import {EchartsModule} from '../lib/echarts/echarts.module';
+import {PanelModule} from '../lib/panel/panel.module';
 import {FlexLayoutModule} from '../lib/flex-layout/flex-layout.module';
 import {ButtonModule} from '../lib/button/button.module';
 import {CalendarModule} from '../lib/calendar/calendar.module';
 import {DynamicModule} from '../lib/dynamic/dynamic.module';
 import {ReqModule} from '../lib/req/req.module';
-import {LoaderBarModule} from '../lib/loader-bar/loader-bar.module';
-import {ResourcePool} from './demo-req/resource-pool';
-import {EchartsModule} from '../lib/echarts/echarts.module';
-import {PanelModule} from '../lib/panel/panel.module';
 
 @NgModule({
     declarations: [
