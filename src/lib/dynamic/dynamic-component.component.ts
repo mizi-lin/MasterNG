@@ -9,7 +9,7 @@ import {
 
 import * as mu from 'mzmu';
 import {DynamicService} from './dynamic-component.service';
-declare var mu: any;
+declare const mu: any;
 
 /**
  * dynamic-component

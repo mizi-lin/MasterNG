@@ -45,9 +45,6 @@ export class LoaderBarComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-
-        console.debug(this.where, this.progress);
-
         mu.exist(changes['progress'], () => {
             mu.run(this.width >= 100, () => {
                 this.width = this._width;

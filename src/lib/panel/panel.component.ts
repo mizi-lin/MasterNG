@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import * as mu from 'mzmu';
 import {PanelBodyComponent} from './panel-body.component';
-declare var mu: any;
+declare const mu: any;
 
 @Component({
     selector: 'panel',

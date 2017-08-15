@@ -3,7 +3,7 @@ import {
     Renderer2, DoCheck, ViewChild, AfterViewInit
 } from '@angular/core';
 import * as mu from 'mzmu';
-declare var mu: any;
+declare const mu: any;
 
 @Component({
     selector: 'btn-radio',

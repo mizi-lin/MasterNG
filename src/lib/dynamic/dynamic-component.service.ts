@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as mu from 'mzmu';
-declare var mu: any;
+declare const mu: any;
 
 @Injectable()
 export class DynamicService {

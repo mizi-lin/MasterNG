@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import * as mu from 'mzmu';
 import {PanelComponent} from './panel.component';
-declare var mu: any;
+declare const mu: any;
 
 @Component({
     selector: 'panel-title',

@@ -1,13 +1,10 @@
 import {
-    Component, Input, ElementRef, ContentChildren, ViewChild,
-    Renderer2, OnChanges, SimpleChanges, HostListener, ContentChild, HostBinding, forwardRef, AfterViewInit,
-    AfterContentInit, AfterContentChecked
+    Component, Input, ElementRef, ViewChild,
+    Renderer2, OnChanges, SimpleChanges,
+    AfterContentChecked
 } from '@angular/core';
-import * as mu from 'mzmu';
-import {PanelBodyComponent} from './panel-body.component';
 import {PanelComponent} from './panel.component';
-
-declare var mu: any;
+declare const mu: any;
 
 @Component({
     selector: 'panel-s,panel-simple',

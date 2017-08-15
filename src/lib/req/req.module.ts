@@ -4,13 +4,14 @@ import {HttpModule, Http, XHRBackend, RequestOptions} from '@angular/http';
 import {ReqHttpComponent} from './req-http.component';
 import {ReqResourceComponent} from './req-resource.component';
 import {$$HttpInterceptor} from './$$HttpInterceptor';
-import {ReqNoDataComponent} from './req-nodata.component';
 import {$$Resource} from './$$Resource';
-import {DynamicModule} from 'MasterNG';
+import {ReqNoDataComponent} from './req-nodata.component';
 
 import {LoaderBarModule} from 'lib/loader-bar/loader-bar.module';
 import {HttpLoaderComponent} from './http-loader.component';
 import {ReqService} from './req.service';
+import {DynamicModule} from 'MasterNG';
+
 
 /**
  * ReqModule

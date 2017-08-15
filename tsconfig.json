@@ -20,13 +20,19 @@
             "MasterNG": [
                 "./src/lib"
             ]
-        }
+        },
+        "noResolve": false
     },
     "files": [
         "./src/lib/index.ts"
     ],
     "exclude": [
         "node_modules"
+    ],
+    "plugins": [
+        {
+            "name": "@angular/language-service"
+        }
     ],
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,

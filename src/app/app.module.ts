@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {AppComponent} from './app.component';
 import {FlexLayoutModule} from '../lib/flex-layout/flex-layout.module';
-import {PanelModule} from '../lib/panel/panel.module';
 import {ButtonModule} from '../lib/button/button.module';
 import {CalendarModule} from '../lib/calendar/calendar.module';
 import {DynamicModule} from '../lib/dynamic/dynamic.module';
@@ -12,12 +11,16 @@ import {DemoPanelComponent} from './demo-panel/demo-panel.component';
 import {DemoReqComponent} from './demo-req/demo-req.component';
 import {LoaderBarModule} from '../lib/loader-bar/loader-bar.module';
 import {ResourcePool} from './demo-req/resource-pool';
+import {DemoEchartsComponent} from './demo-echarts/demo-echarts.component';
+import {EchartsModule} from '../lib/echarts/echarts.module';
+import {PanelModule} from '../lib/panel/panel.module';
 
 @NgModule({
     declarations: [
         AppComponent,
         DemoPanelComponent,
-        DemoReqComponent
+        DemoReqComponent,
+        DemoEchartsComponent
     ],
     imports: [
         BrowserModule,
@@ -30,6 +33,10 @@ import {ResourcePool} from './demo-req/resource-pool';
             {
                 path: 'req',
                 component: DemoReqComponent
+            },
+            {
+                path: 'echarts',
+                component: DemoEchartsComponent
             }
         ], {useHash: true}),
 
@@ -45,7 +52,8 @@ import {ResourcePool} from './demo-req/resource-pool';
             CalendarModule
         ]),
 
-        ReqModule.forRoot()
+        ReqModule.forRoot(),
+        EchartsModule.forRoot()
     ],
     providers: [
         ResourcePool
