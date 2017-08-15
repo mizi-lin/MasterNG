@@ -12,9 +12,9 @@ export class AppComponent implements AfterViewInit {
 
     constructor() {
         this.title = 'AAPPP';
-        console.log($);
-        console.log(mu);
-        console.log(jQuery);
+        // console.log($);
+        // console.log(mu);
+        // console.log(jQuery);
 
     }
 

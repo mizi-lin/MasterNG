@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {ColComponent} from './col.component';
 import * as mu from 'mzmu';
-declare var mu: any;
+declare const mu: any;
 
 @Component({
     selector: 'row, [row]',

@@ -2,7 +2,7 @@ import {Component, OnInit, Input, ContentChildren, AfterViewInit, OnChanges, Sim
 import * as mu from 'mzmu';
 import {PanelComponent} from './panel.component';
 import {PanelSimpleComponent} from './panel-simple.component';
-declare var mu: any;
+declare const mu: any;
 
 @Component({
     selector: 'collapse',

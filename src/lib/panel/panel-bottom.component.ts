@@ -3,7 +3,7 @@ import {
     Renderer2, OnChanges, SimpleChanges
 } from '@angular/core';
 import * as mu from 'mzmu';
-declare var mu: any;
+declare const mu: any;
 
 @Component({
     selector: 'panel-bottom',
