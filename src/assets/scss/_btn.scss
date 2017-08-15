@@ -1,0 +1,57 @@
+$btnHeight: 28px;
+
+a.master-btn,
+label.master-btn {
+    line-height: $btnHeight;
+}
+
+.master-btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 500;
+    text-align: center;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid #d9d9d9;
+    white-space: nowrap;
+    line-height: 1.5;
+    padding: 0 15px;
+    font-size: 12px;
+    border-radius: 3px;
+    height: $btnHeight;
+    user-select: none;
+    transition: all .3s cubic-bezier(.645, .045, .355, 1);
+    position: relative;
+    color: rgba(0, 0, 0, .65);
+    background-color: #fff;
+    outline: 0;
+
+    > .anticon {
+        line-height: 1
+    }
+
+    &:active,
+    &:focus {
+        outline: 0
+    }
+
+    &:not([disabled]) {
+        &:hover {
+            text-decoration: none
+        }
+        &:active {
+            outline: 0;
+            transition: none
+        }
+    }
+
+    &.disabled,
+    &[disabled] {
+        cursor: not-allowed;
+
+        > * {
+            pointer-events: none
+        }
+    }
+}

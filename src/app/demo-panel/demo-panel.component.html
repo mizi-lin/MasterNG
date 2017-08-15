@@ -1,0 +1,98 @@
+<div class="demo-panel">
+    <panel type="portlet" class="mt-16 light bordered">
+        <panel-header>
+            <panel-title>
+                Panel
+                <small>flex layout</small>
+            </panel-title>
+            <panel-toolbar [tools]="['fullscreen', 'collapse', 'remove']">
+                <cols [order]="21" [gutter]="'4,4'">
+                    <i class="fa fa-battery-1" aria-hidden="true"></i>
+                </cols>
+            </panel-toolbar>
+        </panel-header>
+
+        <panel-body>
+            <row [style.minHeight.px]="200" [gutter]="16" class="demo-panel-row">
+                <cols [span]="2">
+                    <div class="bordered">1</div>
+                </cols>
+                <cols [span]="4">
+                    <div class="bordered">2</div>
+                </cols>
+
+                <cols [span]="6">
+                    <div class="bordered">3</div>
+                </cols>
+
+                <cols [span]="12">
+                    <div class="bordered">4</div>
+                </cols>
+            </row>
+        </panel-body>
+    </panel>
+
+    <panel-s class="bordered mt-16" title="Panel::simple">
+        <row [style.minHeight.px]="200" [gutter]="16" class="demo-panel-row">
+            <cols [span]="4">
+                <div>1</div>
+            </cols>
+            <cols [span]="8">
+                <div>2</div>
+            </cols>
+            <section cols [span]="8">
+                <div>3</div>
+            </section>
+
+            <div cols [span]="4">
+                <div>4</div>
+            </div>
+        </row>
+    </panel-s>
+
+    <panel-s class="mt-16 primary bordered" [title]="'将进酒'" [tools]="['collapse']">
+        君不见黄河之水天上来, 奔流到海不复回
+        <br />
+        君不见高堂明镜悲白发, 朝如青丝暮成雪
+    </panel-s>
+
+    <panel-s class="mt-16 bordered" [title]="'COLLAPSE::accordion'">
+        <collapse class="bordered" [accordion]="0">
+            <panel-s title="赤壁 <small>杜牧</small>" [tools]="['collapse']">
+                折戟沉沙铁未销，
+                <br />
+                自将磨洗认前朝。
+                <br />
+                东风不与周郎便，
+                <br />
+                铜雀春深锁二乔。
+            </panel-s>
+            <panel-s title="蝉 <small>李商隐</small>" [tools]="['collapse']">
+                本以高难饱，徒劳恨费声。
+                <br />
+                五更疏欲断，一树碧无情。
+                <br />
+                薄宦梗犹泛，故园芜已平。
+                <br />
+                烦君最相警，我亦举家清。
+            </panel-s>
+            <panel-s title="送人东游 <small>温庭筠</small>"  [tools]="['collapse']">
+                荒戌落黄叶，浩然离故关。
+                <br />
+                高风汉阳渡，初日郢门山。
+                <br />
+                江上几人在，天涯孤棹还。
+                <br />
+                何当重相见，樽酒慰离颜。
+            </panel-s>
+        </collapse>
+    </panel-s>
+
+
+</div>
+
+
+
+
+
+
