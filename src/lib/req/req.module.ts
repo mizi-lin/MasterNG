@@ -12,7 +12,6 @@ import {HttpLoaderComponent} from './http-loader.component';
 import {ReqService} from './req.service';
 import {DynamicModule} from '../dynamic';
 
-
 /**
  * ReqModule
  * 使ajax请求与返回分开
