@@ -4,19 +4,22 @@ import {Observable, Subscriber} from 'rxjs';
 import {ReqNoDataComponent} from './req-nodata.component';
 import * as mu from 'mzmu';
 import * as jquery from 'jquery';
+
 declare const mu: any;
-
-
 
 @Component({
     selector: 'req-http',
     template: `
         <loader-bar *ngIf="loading"
-            [progress]="process"></loader-bar>
+                    [progress]="process"></loader-bar>
         <dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></dynamic-component>
         <ng-content *ngIf="!noData"></ng-content>
     `,
-    styles: [`:host {display: block; }`]
+    styles: [
+            `:host {
+            display: block;
+        }`
+    ]
 })
 export class ReqHttpComponent implements OnChanges, OnDestroy {
 
@@ -72,12 +75,16 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     }
 
     debounce_req_http: any = mu.debounce((req: any) => {
-        this.req_http(req);
+        mu.run(req, () => {
+            this.req_http(req);
+        });
     }, 300);
 
     ngOnChanges(changes: SimpleChanges) {
 
-        this.process = 50;
+        mu.run(this.req, () => {
+            this.process = 50;
+        });
 
         mu.run(changes['params'] && this.req, () => {
             this.req.params = {

@@ -9,7 +9,7 @@
         <req-http [req]="{url: './assets/store/echarts-bar.json'}" (result)="bar_options = $event.data; barOptions($event.data)">
             <row>
                 <cols [span]="12">
-                    <div echarts-render [options]="bar_options"  [style.height.px]="300">
+                    <div echarts-render [options]="bar_options" [style.height.px]="300">
                     </div>
                 </cols>
 
@@ -25,7 +25,7 @@
         <req-http [req]="{url: './assets/store/pie.json'}" (result)="pieConversion($event.data); pie_data = $event.data">
             <row>
                 <cols [span]="12">
-                    <div echarts-render [options]="pie_options"  [style.height.px]="300">
+                    <div echarts-render [options]="pie_options" [style.height.px]="300">
                     </div>
                 </cols>
 
@@ -37,9 +37,10 @@
         </req-http>
     </panel-s>
 
-    <echarts-panel class="mt-8 bordered" title="EchartsPanel::panel && tools">
-
+    <echarts-panel class="mt-8 bordered" title="EchartsPanel::panel && tools"
+                   [req]="{url: './assets/store/bar-data.json'}"
+                   [type]="'bar'"
+                   height="300px">
     </echarts-panel>
-
 
 </div>

@@ -37,7 +37,10 @@ declare const mu: any;
     `,
     styles: [
             `
-
+                :host cols {
+                    margin-left: 4px;
+                    margin-right: 4px;
+                }
             `
     ]
 })

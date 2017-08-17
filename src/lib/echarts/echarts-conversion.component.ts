@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import * as mu from 'mzmu';
 import {EchartsService} from './echarts.service';
 
@@ -11,18 +11,18 @@ declare const mu: any;
 @Component({
     selector: 'echarts',
     template: `
-        <div echarts-render [options]="echarts_options"></div>
+        <div echarts-render [options]="echarts_options" (mycharts)="mycharts.emit($event)"></div>
     `,
     styles: [
-    `
-        :host, 
-        [echarts-render] {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-    
-    `
+            `
+            :host,
+            [echarts-render] {
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            `
     ]
 
 })
@@ -37,6 +37,8 @@ export class EchartsConversionComponent implements OnInit, OnChanges {
     @Input() type?: string;
 
     echarts_options: any;
+
+    @Output() mycharts: any = new EventEmitter<any>();
 
     constructor(private _serv: EchartsService) {
     }
@@ -54,6 +56,22 @@ export class EchartsConversionComponent implements OnInit, OnChanges {
             this.echarts_options = this._serv.getOptions(this.type, data, this.setting);
         });
 
+        mu.run(changes['setting'], (settingListener) => {
+            if (!settingListener.firstChange) {
+                this.echarts_options = this._serv.getOptions(this.type, this.data, this.setting);
+            }
+        });
+
+        mu.run(changes['type'], (typeListener) => {
+            if (!typeListener.firstChange) {
+                this.echarts_options = this._serv.getOptions(this.type, this.data, this.setting);
+            }
+        });
+
     }
+
+    // mycharts_(_mycharts): void {
+    //     this.mycharts.emit(_mycharts);
+    // }
 
 }
