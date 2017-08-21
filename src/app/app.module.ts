@@ -19,6 +19,8 @@ import {ButtonModule} from '../lib/button/button.module';
 import {CalendarModule} from '../lib/calendar/calendar.module';
 import {DynamicModule} from '../lib/dynamic/dynamic.module';
 import {ReqModule} from '../lib/req/req.module';
+import {MnCommonModule} from '../lib/mn-common/mn-common.module';
+import {MnHandsontableModule} from '../lib/mn-handsontable/mn-handsontable.module';
 
 @NgModule({
     declarations: [
@@ -58,7 +60,9 @@ import {ReqModule} from '../lib/req/req.module';
         ]),
 
         ReqModule.forRoot(),
-        EchartsModule.forRoot()
+        EchartsModule.forRoot(),
+        MnHandsontableModule.forRoot(),
+        MnCommonModule.forRoot()
     ],
     providers: [
         ResourcePool

@@ -39,6 +39,7 @@ export class EchartsConversionComponent implements OnInit, OnChanges {
     echarts_options: any;
 
     @Output() mycharts: any = new EventEmitter<any>();
+    @Output() result: any = new EventEmitter<any>();
 
     constructor(private _serv: EchartsService) {
     }
@@ -50,21 +51,25 @@ export class EchartsConversionComponent implements OnInit, OnChanges {
 
         mu.run(mu.prop(changes, 'options.currentValue'), (options) => {
             this.echarts_options = options;
+            this.result.emit(this.echarts_options);
         });
 
         mu.run(mu.prop(changes, 'data.currentValue'), (data) => {
             this.echarts_options = this._serv.getOptions(this.type, data, this.setting);
+            this.result.emit(this.echarts_options);
         });
 
         mu.run(changes['setting'], (settingListener) => {
             if (!settingListener.firstChange) {
                 this.echarts_options = this._serv.getOptions(this.type, this.data, this.setting);
+                this.result.emit(this.echarts_options);
             }
         });
 
         mu.run(changes['type'], (typeListener) => {
             if (!typeListener.firstChange) {
                 this.echarts_options = this._serv.getOptions(this.type, this.data, this.setting);
+                this.result.emit(this.echarts_options);
             }
         });
 

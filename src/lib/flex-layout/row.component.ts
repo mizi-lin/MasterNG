@@ -1,32 +1,29 @@
 import {
-    Component, OnInit, Input, ContentChildren, AfterViewInit, ElementRef,
+    Component, OnInit, Input, AfterViewInit, ElementRef,
     Renderer2, OnChanges, SimpleChanges
 } from '@angular/core';
-import {ColComponent} from './col.component';
-import * as mu from 'mzmu';
+// import {ColComponent} from './col.component';
 declare const mu: any;
 
 @Component({
     selector: 'row, [row]',
     template: '<ng-content></ng-content>',
     styles: [
-        `
+            `
             :host {
                 display: flex;
                 flex-wrap: wrap;
                 align-items: stretch;
                 box-sizing: border-box;
             }
-            
-            
-        `
+            `
     ]
 })
 export class RowComponent implements OnInit, AfterViewInit, OnChanges {
-
-    @ContentChildren(ColComponent) colsArr;
+    // @ContentChildren(ColComponent) colsArr;
 
     @Input() gutter;
+    @Input() where;
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2) {
@@ -39,23 +36,22 @@ export class RowComponent implements OnInit, AfterViewInit, OnChanges {
         });
     }
 
-    ngOnInit(): void  {
-        // let a = []
-        // mu.each(33, (ii, i) => {
-        //     a.push(`.mb-${i}{margin-bottom: ${i}px;}`);
-        // });
-        //
-        // console.debug(a.join(''))
-
+    ngOnInit(): void {
     }
 
     ngAfterViewInit(): void {
-        mu.each(this.colsArr._results, (cols) => {
-            if (mu.isNotExist(cols.gutter)) {
-                cols._renderer.setStyle(cols._ref.nativeElement, 'paddingLeft', this.gutter / 2 + 'px');
-                cols._renderer.setStyle(cols._ref.nativeElement, 'paddingRight', this.gutter / 2 + 'px');
-            }
+        // mu.each(this.colsArr._results, (cols) => {
+        //     if (mu.isNotExist(cols.gutter)) {
+        //         cols._renderer.setStyle(cols._ref.nativeElement, 'paddingLeft', this.gutter / 2 + 'px');
+        //         cols._renderer.setStyle(cols._ref.nativeElement, 'paddingRight', this.gutter / 2 + 'px');
+        //     }
+        // });
+
+        mu.run(this._ref.nativeElement.children, (elements) => {
+            mu.each(elements, (el) => {
+                this._renderer.setStyle(el, 'paddingLeft', this.gutter / 2 + 'px');
+                this._renderer.setStyle(el, 'paddingRight', this.gutter / 2 + 'px');
+            });
         });
     }
-
 }
