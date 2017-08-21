@@ -1,10 +1,9 @@
 import {
-    Component, Input, ElementRef, ContentChildren, ViewChild,
-    Renderer2, OnChanges, SimpleChanges, HostListener, ContentChild, HostBinding, forwardRef, AfterViewInit,
-    AfterContentInit, AfterContentChecked
+    Component, Input, ElementRef, Renderer2, OnChanges, SimpleChanges, ContentChild, HostBinding,
+    AfterContentChecked
 } from '@angular/core';
-import * as mu from 'mzmu';
 import {PanelBodyComponent} from './panel-body.component';
+
 declare const mu: any;
 
 @Component({
@@ -13,24 +12,25 @@ declare const mu: any;
         <ng-content></ng-content>
     `,
     styles: [
-        `
+            `
             :host {
-               width: 100%;
+                width: 100%;
             }
-        `
+            `
     ]
 })
 export class PanelComponent implements OnChanges, AfterContentChecked {
 
     @ContentChild(PanelBodyComponent) panelBody: any;
 
+    @Input() where: string;
+
     // @ContentChildren(PanelBodyComponent, {descendants: true}) ss: any;
     // @ContentChild(forwardRef(() => PanelBodyComponent)) children: any;
     // @ViewChild(PanelBodyComponent) ss: any;
 
-    isCollapse: boolean = true;
-
-    isChanges: boolean = false;
+    isCollapse = true;
+    isChanges = false;
 
     toggle_collapse(state?: boolean): void {
         mu.exist(state, () => {
@@ -38,7 +38,9 @@ export class PanelComponent implements OnChanges, AfterContentChecked {
         });
 
         mu.run(this.panelBody, (cmp) => {
-            this.isCollapse ? cmp._renderer.setAttribute(cmp._ref.nativeElement, 'hidden') : cmp._renderer.removeAttribute(cmp._ref.nativeElement, 'hidden');
+            this.isCollapse
+                ? cmp._renderer.setAttribute(cmp._ref.nativeElement, 'hidden')
+                : cmp._renderer.removeAttribute(cmp._ref.nativeElement, 'hidden');
             this.isCollapse = !this.isCollapse;
             this.class_collapse_drop = this.isCollapse;
             this.class_collapse_up = !this.isCollapse;
@@ -59,8 +61,7 @@ export class PanelComponent implements OnChanges, AfterContentChecked {
     @HostBinding('class.collapse-drop') class_collapse_drop: boolean;
 
     constructor(private _ref: ElementRef,
-                private _renderer: Renderer2
-    ) {
+                private _renderer: Renderer2) {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -71,7 +72,7 @@ export class PanelComponent implements OnChanges, AfterContentChecked {
     }
 
     ngAfterContentChecked(): void {
-        if(!this.isChanges && this.collapse){
+        if (!this.isChanges && this.collapse) {
             this._ngChanges();
         }
     }

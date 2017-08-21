@@ -1,6 +1,6 @@
 import {
     Component, OnInit, Input, ContentChildren, AfterViewInit, ElementRef,
-    Renderer2, OnChanges, SimpleChanges, HostListener
+    Renderer2, OnChanges, SimpleChanges, HostListener, DoCheck
 } from '@angular/core';
 import * as mu from 'mzmu';
 
@@ -9,7 +9,7 @@ declare const mu: any;
 @Component({
     selector: 'panel-toolbar',
     template: `
-        <row [gutter]="8">
+        <row [gutter]="8" [where]="where">
             <cols *ngIf="toolMap['fullscreen']" [order]="toolMap['fullscreen']">
                 <tool-expand *ngIf="!fullscreen" (fsClick)="fullscreen_click($event)"></tool-expand>
                 <tool-compress *ngIf="fullscreen" (fsClick)="fullscreen_click($event)"></tool-compress>
@@ -36,17 +36,12 @@ declare const mu: any;
         </row>
     `,
     styles: [
-            `
-                :host cols {
-                    margin-left: 4px;
-                    margin-right: 4px;
-                }
-            `
     ]
 })
 export class PanelToolbarComponent implements OnChanges {
 
     @Input() tools: string[];
+    @Input() where: string;
 
     // -> fullscreen  控制全屏控件toggle
     fullscreen: boolean = false;

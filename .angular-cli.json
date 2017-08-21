@@ -21,7 +21,8 @@
             "styles": [
                 "master-ng.scss",
                 "../node_modules/font-awesome/scss/font-awesome.scss",
-                "../node_modules/normalize.css/normalize.css"
+                "../node_modules/normalize.css/normalize.css",
+                "../node_modules/handsontable/dist/handsontable.full.css"
             ],
             "scripts": [
                 "../node_modules/jquery/dist/jquery.js",
