@@ -11,9 +11,9 @@
     var attachEvent = document.attachEvent,
         stylesCreated = false;
 
-    var jQuery_resize = $.fn.resize;
+    var jQuery_mnResize = $.fn.mnResize;
 
-    $.fn.resize = function(callback) {
+    $.fn.mnResize = function(callback) {
         return this.each(function() {
             if(this == window)
                 jQuery_resize.call(jQuery(this), callback);
@@ -130,7 +130,7 @@
         if (attachEvent) element.attachEvent('onresize', fn);
         else {
             if (!element.__resizeTriggers__) {
-                if (getComputedStyle(element).position == 'static') element.style.position = 'relative';
+                if (getComputedStyle(element).position === 'static') element.style.position = 'relative';
                 createStyles();
                 element.__resizeLast__ = {};
                 element.__resizeListeners__ = [];
@@ -143,7 +143,7 @@
 
                 /* Listen for a css animation to detect element display/re-attach */
                 animationstartevent && element.__resizeTriggers__.addEventListener(animationstartevent, function(e) {
-                    if(e.animationName == animationName)
+                    if(e.animationName === animationName)
                         resetTriggers(element);
                 });
             }
