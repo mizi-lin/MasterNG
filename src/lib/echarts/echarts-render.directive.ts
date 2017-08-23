@@ -16,9 +16,6 @@ import {
 
 import * as echarts from 'echarts';
 import 'echarts-wordcloud/dist/echarts-wordcloud.min';
-
-console.debug( echarts );
-
 declare const mu: any;
 
 @Directive({

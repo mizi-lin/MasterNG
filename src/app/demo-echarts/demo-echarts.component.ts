@@ -137,9 +137,9 @@ export class DemoEchartsComponent implements OnInit {
 
     pie_options: any;
     pieConversion(data) {
-        this.pie_options = this._serv.getOptions('pie', data, {
+        this.pie_options = this._serv.getEchartResult('pie', data, {
             legend_show: false
-        });
+        })['options'];
     }
 
     ngOnInit() {

@@ -18,6 +18,7 @@ declare const mu: any;
     styles: [
             `:host {
             display: block;
+            height: 100%;
         }`
     ]
 })

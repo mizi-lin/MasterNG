@@ -35,9 +35,9 @@ export class PanelSimpleComponent implements OnChanges, AfterContentChecked {
 
     @Input()
     set title(v) {
-        let [parent, sub] = (v || '').split('::');
+        const [parent, sub] = (v || '').split('::');
         this._title = parent + mu.run(sub, (sub) => `<small>${sub}</small>`, () => '');
-    };
+    }
 
     @Input() tools: string[];
     @Input() theme: string;

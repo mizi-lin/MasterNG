@@ -37,6 +37,7 @@ export class EchartsConversionComponent implements OnInit, OnChanges {
     @Input() type?: string;
 
     echarts_options: any;
+    echarts_data: any;
 
     @Output() mycharts: any = new EventEmitter<any>();
     @Output() result: any = new EventEmitter<any>();
@@ -55,21 +56,24 @@ export class EchartsConversionComponent implements OnInit, OnChanges {
         });
 
         mu.run(mu.prop(changes, 'data.currentValue'), (data) => {
-            this.echarts_options = this._serv.getOptions(this.type, data, this.setting);
-            this.result.emit(this.echarts_options);
+            const result = this._serv.getEchartResult(this.type, data, this.setting);
+            this.echarts_options = result['options'];
+            this.result.emit(result);
         });
 
         mu.run(changes['setting'], (settingListener) => {
             if (!settingListener.firstChange) {
-                this.echarts_options = this._serv.getOptions(this.type, this.data, this.setting);
-                this.result.emit(this.echarts_options);
+                const result = this._serv.getEchartResult(this.type, this.data, this.setting);
+                this.echarts_options = result['options'];
+                this.result.emit(result);
             }
         });
 
         mu.run(changes['type'], (typeListener) => {
             if (!typeListener.firstChange) {
-                this.echarts_options = this._serv.getOptions(this.type, this.data, this.setting);
-                this.result.emit(this.echarts_options);
+                const result = this._serv.getEchartResult(this.type, this.data, this.setting);
+                this.echarts_options = result['options'];
+                this.result.emit(result);
             }
         });
 
