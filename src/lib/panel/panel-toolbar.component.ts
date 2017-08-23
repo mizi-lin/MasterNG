@@ -47,7 +47,6 @@ export class PanelToolbarComponent implements OnChanges {
     fullscreen: boolean = false;
 
     fullscreen_click($event): void {
-        console.debug('fullscreen:::::', $event);
         this.fullscreen = !this.fullscreen;
         this.toolMap['fullscreen']._click(this.fullscreen, $event);
     }

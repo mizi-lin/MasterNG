@@ -8,6 +8,7 @@ import {ReqModule} from '../req';
 import {PanelModule} from '../panel';
 import {FlexLayoutModule} from '../flex-layout';
 import {MnHandsontableModule} from '../mn-handsontable/mn-handsontable.module';
+import {MnCommonModule} from '../mn-common/mn-common.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {MnHandsontableModule} from '../mn-handsontable/mn-handsontable.module';
         PanelModule.forRoot(),
         ReqModule.forRoot(),
         FlexLayoutModule.forRoot(),
-        MnHandsontableModule.forRoot()
+        MnHandsontableModule.forRoot(),
+        MnCommonModule.forRoot()
     ],
     declarations: [
         EchartsRenderDirective,
