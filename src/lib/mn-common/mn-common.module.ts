@@ -1,6 +1,7 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TrustUrlPipe} from './mn-trust-url.pipe';
+import {MuPipe} from './mn-mu.pipe';
 
 
 @NgModule({
@@ -8,10 +9,12 @@ import {TrustUrlPipe} from './mn-trust-url.pipe';
         CommonModule
     ],
     declarations: [
-        TrustUrlPipe
+        TrustUrlPipe,
+        MuPipe
     ],
     exports: [
-        TrustUrlPipe
+        TrustUrlPipe,
+        MuPipe
     ],
     providers: [
     ]

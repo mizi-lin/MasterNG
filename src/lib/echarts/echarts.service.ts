@@ -677,23 +677,30 @@ export class EchartsService {
 
         options = this.adjustECharOptions(options);
 
-        console.debug(setting.__where__, 'series_data::::', _series_data);
-        console.debug(setting.__where__, 'x_axis::::', _x_axis);
 
-        let dataView = mu.map(_series_data, (v, k) => {
-            v = mu.map(v, (d) => d.value || d);
-            return [
-                k,
-                ...v
-            ];
-        }, []);
+        /**
+         * DateView 计算
+         */
 
-        mu.run(_x_axis || _legend, (xs) => {
-            xs.unshift('');
-            dataView.unshift(xs);
+        const dataView = mu.run(() => {
+            const _col_headers = mu.clone(_x_axis || _legend);
+            _series_data = mu.clone(_series_data);
+
+            let _dataView = mu.map(_series_data, (v, k) => {
+                v = mu.map(v, (d) => d.value || d);
+                return [
+                    k,
+                    ...v
+                ];
+            }, []);
+
+            mu.run(_col_headers, (_ch) => {
+                _ch.unshift('');
+                _dataView.unshift(_ch);
+            });
+
+            return this.transpose(_dataView);
         });
-
-        dataView = this.transpose(dataView);
 
         return {
             // echart 数据视图

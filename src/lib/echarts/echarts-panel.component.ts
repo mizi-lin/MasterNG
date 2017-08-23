@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
 import {EchartsService} from './echarts.service';
 import './jquery.resize.js';
+
 declare const mu: any, jQuery: any;
 
 @Component({
@@ -17,35 +18,45 @@ declare const mu: any, jQuery: any;
                         <i class="fa fa-download"></i>
                     </cols>
 
-                    <cols (click)="dataView_click($event)">
+                    <cols (click)="dataView_click($event)" [class.active]="statusMap.dataView_click">
                         <i class="fa fa-database"></i>
                     </cols>
 
-                    <cols (click)="line_click($event)">
+                    <cols *ngIf="_src_type | mu:'or':'bar'"
+                          (click)="line_click($event)"
+                          [class.active]="statusMap.line_click">
                         <i class="fa fa-line-chart"></i>
                     </cols>
 
-                    <cols (click)="bar_click($event)">
+                    <cols *ngIf="_src_type | mu:'or':'line'"
+                          (click)="bar_click($event)"
+                          [class.active]="statusMap.bar_click">
                         <i class="fa fa-bar-chart"></i>
                     </cols>
 
-                    <cols (click)="exchange_click($event)">
+                    <cols *ngIf="_src_type | mu:'or':'line':'bar'"
+                          (click)="exchange_click($event)"
+                          [class.active]="statusMap.exchange_click">
                         <i class="fa fa-retweet"></i>
                     </cols>
 
-                    <cols (click)="precent_rate_click($event)">
+                    <cols *ngIf="_src_type | mu:'or':'line':'bar'"
+                          (click)="precent_rate_click($event)"
+                          [class.active]="statusMap.precent_rate_click">
                         <i class="fa fa-align-justify"></i>
                     </cols>
 
-                    <cols (click)="label_show_all_click($event)">
+                    <cols *ngIf="_src_type | mu:'or':'line':'bar'"
+                          (click)="label_show_all_click($event)"
+                          [class.active]="statusMap.label_show_all_click">
                         <i class="fa fa-ellipsis-h"></i>
                     </cols>
 
-                    <cols (click)="legend_show_click($event)">
+                    <cols (click)="legend_show_click($event)" [class.active]="statusMap.legend_show_click">
                         <i class="fa fa-bookmark"></i>
                     </cols>
 
-                    <cols (click)="reload_click($event)">
+                    <cols (click)="reload_click($event)" [class.active]="statusMap.reload_click">
                         <i class="fa fa-refresh"></i>
                     </cols>
                 </panel-toolbar>
@@ -53,7 +64,7 @@ declare const mu: any, jQuery: any;
             <panel-body>
                 <req-http [req]="req" (result)="_data = $event.data" #panel>
                     <mn-handsontable *ngIf="handson" [data]="_dataView"></mn-handsontable>
-                    <echarts *ngIf="!handson"  
+                    <echarts *ngIf="!handson"
                              [style.height]="height"
                              [setting]="setting"
                              [options]="options"
@@ -107,20 +118,34 @@ export class EchartsPanelComponent implements OnChanges {
     _title: string;
     _data: any;
     _src_setting: any;
+    _src_type: any;
     _myChart: any;
     _options: any;
 
     _dataView: any;
 
     handson: any;
+    statusMap: any = {};
+
+    setStatus(fnKey: string): void {
+        this.statusMap[fnKey] = !this.statusMap[fnKey];
+    }
 
     constructor(private _es: EchartsService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        mu.exist(changes['setting'], () => {
-            this._src_setting = mu.clone(this.setting);
+        mu.exist(changes['setting'], (changes_setting) => {
+            if (changes_setting.first) {
+                this._src_setting = mu.clone(this.setting);
+            }
             this.setting.__where__ = this.where;
+        });
+
+        mu.exist(changes['type'], (type_changes) => {
+            if (type_changes.firstChange) {
+                this._src_type = type_changes.currentValue;
+            }
         });
     }
 
@@ -130,7 +155,6 @@ export class EchartsPanelComponent implements OnChanges {
     }
 
     mycharts($event) {
-        console.debug('mycharts::::::::', $event);
         this._myChart = $event;
     }
 
@@ -140,19 +164,23 @@ export class EchartsPanelComponent implements OnChanges {
 
     dataView_click($event) {
         this.handson = !this.handson;
+        this.setStatus('dataView_click');
     }
 
     line_click($event): void {
-        this.type = 'line';
+        this.type = 'line' === this.type ? this._src_type : 'line';
+        this.setStatus('line_click');
     }
 
     bar_click($event): void {
-        this.type = 'bar';
+        this.type = 'bar' === this.type ? this._src_type : 'bar';
+        this.setStatus('bar_click');
     }
 
     exchange_click($event): void {
         this.setting = mu.clone(this.setting || {});
         this.setting.xy_exchange = !this.setting.xy_exchange;
+        this.setStatus('exchange_click');
     }
 
     /**
@@ -163,29 +191,34 @@ export class EchartsPanelComponent implements OnChanges {
         this.setting = mu.clone(this.setting || {});
         this.setting.percent_rate = !this.setting.percent_rate;
         this.setting.yAxis_value_percent = !this.setting.yAxis_value_percent;
+        this.setStatus('precent_rate_click');
     }
 
     label_show_all_click($event): void {
         this.setting = mu.clone(this.setting || {});
         this.setting.rotate = this.setting.rotate ? 0 : 30;
+        this.setStatus('label_show_all_click');
     }
 
     legend_show_click($event): void {
         this.setting = mu.clone(this.setting || {});
         this.setting.legend_show = !this.setting.legend_show;
+        this.setStatus('legend_show_click');
     }
 
     reload_click($event): void {
         this.req = mu.clone(this.req);
+        this.setStatus('reload_click');
     }
 
     fullscreen_click: any = (full: any, $event: any) => {
-        console.debug( this._panel );
         jQuery(this._panel.nativeElement).resize((a, b) => {
             this._myChart.resize({
                 width: a.target.clientWidth,
                 height: a.target.clientHeight
             });
         });
-    }
+
+        this.setStatus('fullscreen_click');
+    };
 }

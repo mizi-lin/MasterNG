@@ -121,6 +121,13 @@ panel-simple {
 
         panel-toolbar {
             padding-right: $w2;
+
+            cols {
+                &:hover,
+                &.active {
+                    color: $primary_background_color;
+                }
+            }
         }
     }
 
