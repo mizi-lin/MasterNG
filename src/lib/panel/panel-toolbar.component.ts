@@ -10,7 +10,7 @@ declare const mu: any;
     selector: 'panel-toolbar',
     template: `
         <row [gutter]="8" [where]="where">
-            <cols *ngIf="toolMap['fullscreen']" [order]="toolMap['fullscreen']">
+            <cols *ngIf="toolMap['fullscreen']" [order]="toolMap['fullscreen'].order">
                 <tool-expand *ngIf="!fullscreen" (fsClick)="fullscreen_click($event)"></tool-expand>
                 <tool-compress *ngIf="fullscreen" (fsClick)="fullscreen_click($event)"></tool-compress>
             </cols>
@@ -33,6 +33,7 @@ declare const mu: any;
             </cols>
 
             <ng-content select="cols"></ng-content>
+            <ng-content select="ng-template"></ng-content>
         </row>
     `,
     styles: [

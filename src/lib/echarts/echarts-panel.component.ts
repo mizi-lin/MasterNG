@@ -10,55 +10,82 @@ declare const mu: any, jQuery: any;
         <panel>
             <panel-header>
                 <panel-title [innerHTML]="_title"></panel-title>
-                <panel-toolbar [tools]="[{
-                    name: 'fullscreen',
-                    click: fullscreen_click
-                }]">
-                    <cols (click)="download_click($event)">
-                        <i class="fa fa-download"></i>
-                    </cols>
+                <panel-toolbar [tools]="_tools">
 
-                    <cols (click)="dataView_click($event)" [class.active]="statusMap.dataView_click">
-                        <i class="fa fa-database"></i>
-                    </cols>
+                    <ng-template [ngIf]="toolMap['download']">
+                        <cols (click)="download_click($event)" 
+                              [order]="toolMap['download'].order">
+                            <i class="fa fa-download"></i>
+                        </cols>
+                    </ng-template>
 
-                    <cols *ngIf="_src_type | mu:'or':'bar'"
-                          (click)="line_click($event)"
-                          [class.active]="statusMap.line_click">
-                        <i class="fa fa-line-chart"></i>
-                    </cols>
+                    <ng-template [ngIf]="toolMap['data_view']">
+                        <cols (click)="dataView_click($event)"
+                              [order]="toolMap['data_view'].order"
+                              [class.active]="statusMap.dataView_click">
+                            <i class="fa fa-database"></i>
+                        </cols>
+                    </ng-template>
 
-                    <cols *ngIf="_src_type | mu:'or':'line'"
-                          (click)="bar_click($event)"
-                          [class.active]="statusMap.bar_click">
-                        <i class="fa fa-bar-chart"></i>
-                    </cols>
+                    <ng-template [ngIf]="toolMap['line']">
+                        <cols *ngIf="_src_type | mu:'or':'bar'"
+                              (click)="line_click($event)"
+                              [order]="toolMap['line'].order"
+                              [class.active]="statusMap.line_click">
+                            <i class="fa fa-line-chart"></i>
+                        </cols>
+                    </ng-template>
 
-                    <cols *ngIf="_src_type | mu:'or':'line':'bar'"
-                          (click)="exchange_click($event)"
-                          [class.active]="statusMap.exchange_click">
-                        <i class="fa fa-retweet"></i>
-                    </cols>
+                    <ng-template [ngIf]="toolMap['bar']">
+                        <cols *ngIf="_src_type | mu:'or':'line'"
+                              (click)="bar_click($event)"
+                              [order]="toolMap['bar'].order"
+                              [class.active]="statusMap.bar_click">
+                            <i class="fa fa-bar-chart"></i>
+                        </cols>
+                    </ng-template>
 
-                    <cols *ngIf="_src_type | mu:'or':'line':'bar'"
-                          (click)="precent_rate_click($event)"
-                          [class.active]="statusMap.precent_rate_click">
-                        <i class="fa fa-align-justify"></i>
-                    </cols>
+                    <ng-template [ngIf]="toolMap['exchange']">
+                        <cols *ngIf="_src_type | mu:'or':'line':'bar'"
+                              (click)="exchange_click($event)"
+                              [order]="toolMap['exchange'].order"
+                              [class.active]="statusMap.exchange_click">
+                            <i class="fa fa-retweet"></i>
+                        </cols>
+                    </ng-template>
 
-                    <cols *ngIf="_src_type | mu:'or':'line':'bar'"
-                          (click)="label_show_all_click($event)"
-                          [class.active]="statusMap.label_show_all_click">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </cols>
+                    <ng-template [ngIf]="toolMap['rate']">
+                        <cols *ngIf="_src_type | mu:'or':'line':'bar'"
+                              (click)="precent_rate_click($event)"
+                              [order]="toolMap['rate'].order"
+                              [class.active]="statusMap.precent_rate_click">
+                            <i class="fa fa-align-justify"></i>
+                        </cols>
+                    </ng-template>
 
-                    <cols (click)="legend_show_click($event)" [class.active]="statusMap.legend_show_click">
-                        <i class="fa fa-bookmark"></i>
-                    </cols>
+                    <ng-template [ngIf]="toolMap['label_all']">
+                        <cols *ngIf="_src_type | mu:'or':'line':'bar'"
+                              (click)="label_show_all_click($event)"
+                              [order]="toolMap['label_all'].order"
+                              [class.active]="statusMap.label_show_all_click">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </cols>
+                    </ng-template>
 
-                    <cols (click)="reload_click($event)" [class.active]="statusMap.reload_click">
-                        <i class="fa fa-refresh"></i>
-                    </cols>
+                    <ng-template [ngIf]="toolMap['legend']">
+                        <cols (click)="legend_show_click($event)"
+                              [order]="toolMap['legend'].order"
+                              [class.active]="statusMap.legend_show_click">
+                            <i class="fa fa-bookmark"></i>
+                        </cols>
+                    </ng-template>
+
+                    <ng-template [ngIf]="toolMap['reload']">
+                        <cols (click)="reload_click($event)"
+                              [order]="toolMap['reload'].order">
+                            <i class="fa fa-refresh"></i>
+                        </cols>
+                    </ng-template>
                 </panel-toolbar>
             </panel-header>
             <panel-body>
@@ -80,7 +107,16 @@ declare const mu: any, jQuery: any;
             `:host {
             display: block;
             width: 100%;
-        }`
+        }
+
+        :host panel-body {
+            padding: 0;
+        }
+            
+            :host req-http {
+                padding: 16px;
+            }
+            `
     ]
 })
 export class EchartsPanelComponent implements OnChanges {
@@ -94,12 +130,7 @@ export class EchartsPanelComponent implements OnChanges {
     @Input() setting: any;
     @Input() where: any;
 
-    /**
-     * tool bar
-     *
-     * tb: [type, ...tools]
-     */
-    @Input() tb: string;
+    @Input() tools: string;
 
     @Input()
     set data(v) {
@@ -123,9 +154,12 @@ export class EchartsPanelComponent implements OnChanges {
     _options: any;
 
     _dataView: any;
+    // fullscreen, download, data_view, line, bar, exchange, rate, label_all, legend, reload
+    _tools: any[] = [];
 
     handson: any;
     statusMap: any = {};
+    toolMap: any = {};
 
     setStatus(fnKey: string): void {
         this.statusMap[fnKey] = !this.statusMap[fnKey];
@@ -138,6 +172,8 @@ export class EchartsPanelComponent implements OnChanges {
         mu.exist(changes['setting'], (changes_setting) => {
             if (changes_setting.first) {
                 this._src_setting = mu.clone(this.setting);
+
+
             }
             this.setting.__where__ = this.where;
         });
@@ -146,6 +182,40 @@ export class EchartsPanelComponent implements OnChanges {
             if (type_changes.firstChange) {
                 this._src_type = type_changes.currentValue;
             }
+        });
+
+        mu.exist(changes['tools'], () => {
+            this.toolMap = mu.map(this.tools || [], (key, i) => {
+
+                if (typeof key === 'string') {
+                    key = {
+                        name: key
+                    };
+                }
+
+                key.order = key.order || (i + 1) * 10;
+                // key.click = key.click || mu.noop;
+
+                key._click = ($event) => {
+                    if (key.click) {
+                        return key.click($event);
+                    }
+                };
+
+                return {
+                    __key__: key.name,
+                    __val__: key
+                };
+            }, {});
+
+            mu.run(this.toolMap['fullscreen'], (o) => {
+                this._tools.push({
+                    name: 'fullscreen',
+                    click: this.fullscreen_click,
+                    order: o.order
+                });
+            });
+
         });
     }
 
@@ -202,7 +272,7 @@ export class EchartsPanelComponent implements OnChanges {
 
     legend_show_click($event): void {
         this.setting = mu.clone(this.setting || {});
-        this.setting.legend_show = !this.setting.legend_show;
+        this.setting.legend_show = !this._options.legend.show;
         this.setStatus('legend_show_click');
     }
 
@@ -212,13 +282,18 @@ export class EchartsPanelComponent implements OnChanges {
     }
 
     fullscreen_click: any = (full: any, $event: any) => {
-        jQuery(this._panel.nativeElement).resize((a, b) => {
+        const $el = jQuery(this._panel.nativeElement);
+
+        $el.mnResize(() => {
             this._myChart.resize({
-                width: a.target.clientWidth,
-                height: a.target.clientHeight
+                width: $el.width(),
+                height: $el.height()
             });
         });
 
+        // 自定义方法
+        mu.run(this.toolMap['fullscreen'].click, fn => fn(full, $event));
+
         this.setStatus('fullscreen_click');
-    };
+    }
 }
