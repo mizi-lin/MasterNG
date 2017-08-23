@@ -9,9 +9,7 @@ export class EchartsService {
     constructor() {
     }
 
-    colorsMap: any = {
-
-    };
+    colorsMap: any = {};
 
     /**
      *
@@ -40,13 +38,13 @@ export class EchartsService {
         return total;
     }
 
-    getOptions(type: string, data: any, setting: any = {}, $charts?: any, $mycharts?: any): any {
+    getEchartResult(type: string, data: any, setting: any = {}, $charts?: any, $mycharts?: any): any {
         const NAME = 'name';
         const X_VALUE = 'x';
         const Y_VALUE = 'value';
         const default_options = DEFAULT_ECHART_OPTIONS[type];
         let options: any = mu.clone(default_options);
-        let series_data: any;
+        let _series_data: any, _x_axis: any, _legend: any;
 
         const type_setting: any = {
             pie: [
@@ -210,13 +208,13 @@ export class EchartsService {
             mu.run(setting.module, (module) => {
                 switch (module) {
                     case 'single':
-                        series_data = {
+                        _series_data = {
                             [setting.single_name]: data
                         };
                         break;
                     case 'group':
                     case 'mix':
-                        series_data = mu.groupArray(data, NAME);
+                        _series_data = mu.groupArray(data, NAME);
                         break;
                 }
             });
@@ -226,7 +224,7 @@ export class EchartsService {
              */
             switch (type) {
                 case 'radar':
-                    options.series[0].data = mu.map(series_data, (o, name) => {
+                    options.series[0].data = mu.map(_series_data, (o, name) => {
                         return {
                             name: name,
                             value: mu.map(o, oo => oo.value, []),
@@ -242,7 +240,7 @@ export class EchartsService {
 
                 default:
 
-                    options.series = mu.map(series_data, (o, name) => {
+                    options.series = mu.map(_series_data, (o, name) => {
                         const series = {
                             name,
                             type: type,
@@ -353,9 +351,9 @@ export class EchartsService {
              * 颜色配置根据 legend.data 配置, 所以legend.data值必须设置
              */
             mu.run(type === 'pie', () => {
-                options.legend.data = mu.map(data, (o, name) => o.name, []);
+                _legend = options.legend.data = mu.map(data, (o, name) => o.name, []);
             }, () => {
-                options.legend.data = mu.map(series_data, (o, name) => name, []);
+                _legend = options.legend.data = mu.map(_series_data, (o, name) => name, []);
             });
 
         };
@@ -439,11 +437,11 @@ export class EchartsService {
                                 : setting.single_name;
                         });
 
-                        options.xAxis[0].data = mu.map(data, (o, x) => o[X_VALUE], []);
+                        _x_axis = options.xAxis[0].data = mu.map(data, (o, x) => o[X_VALUE], []);
                         break;
                     case 'group':
                     case 'mix':
-                        options.xAxis[0].data = mu.map(mu.groupArray(data, X_VALUE), (o, x) => x, []);
+                        _x_axis = options.xAxis[0].data = mu.map(mu.groupArray(data, X_VALUE), (o, x) => x, []);
                         break;
                 }
             });
@@ -679,7 +677,30 @@ export class EchartsService {
 
         options = this.adjustECharOptions(options);
 
-        return options;
+        console.debug(setting.__where__, 'series_data::::', _series_data);
+        console.debug(setting.__where__, 'x_axis::::', _x_axis);
+
+        let dataView = mu.map(_series_data, (v, k) => {
+            v = mu.map(v, (d) => d.value || d);
+            return [
+                k,
+                ...v
+            ];
+        }, []);
+
+        mu.run(_x_axis || _legend, (xs) => {
+            xs.unshift('');
+            dataView.unshift(xs);
+        });
+
+        dataView = this.transpose(dataView);
+
+        return {
+            // echart 数据视图
+            dataView,
+            // echart options
+            options
+        };
     }
 
     /**
@@ -785,6 +806,64 @@ export class EchartsService {
                 return x + '<br />' + format.join('<br />');
             }
         };
+    }
+
+    JSONToCSVConvertor(fileName: string, JSONData: any, colHeaders?: any): any {
+        const arrData = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData;
+        let CSV = '', row = '';
+
+        // Put the header (based on the colHeaders of my table in my example)
+        for (const index in colHeaders) {
+            row += colHeaders[index] + ',';
+        }
+        row = row.slice(0, -1);
+        CSV += row + '\r\n';
+
+        // Adding each rows of the table
+        for (let i = 0; i < arrData.length; i++) {
+            let row = '';
+            for (const index in arrData[i]) {
+                row += arrData[i][index] + ',';
+            }
+            row = row.slice(0, -1);
+            CSV += row + '\r\n';
+        }
+
+        if (CSV === '') {
+            alert('Invalid data');
+            return;
+        }
+
+        // Downloading the new generated csv.
+        // For IE >= 9
+        if (window.navigator.msSaveOrOpenBlob) {
+            const fileData = [CSV];
+            const blobObject = new Blob(fileData);
+            window.navigator.msSaveOrOpenBlob(blobObject, fileName);
+        } else {
+            // For Chome/Firefox/Opera
+            const link = document.createElement('a');
+            link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(CSV);
+            // link.style = 'visibility:hidden';
+            link.download = fileName;
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
+    /**
+     * 顺时针旋转90°多维数组
+     * @param {any[]} arr
+     * @return {any[]}
+     */
+    transpose(arr: any[]): any[] {
+        return mu.map(arr[0], (v, i) => {
+            return mu.map(arr, (items) => {
+                return items[i];
+            });
+        });
     }
 
 }

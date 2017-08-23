@@ -4,6 +4,7 @@
         "outDir": "../dist",
         "baseUrl": ".",
         "module": "es2015",
+        "sourceMap": true,
         "types": [],
         "paths": {
             "MasterNG": [

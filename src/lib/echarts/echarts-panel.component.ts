@@ -1,59 +1,7 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-
-declare const mu: any;
-
-import './jquery.json2csv.js';
-import {escape} from 'querystring';
-
-function JSONToCSVConvertor(JSONData: any, colHeaders?: any) {
-    let
-        arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData,
-        CSV = '',
-        row = '',
-        fileName = 'MasterNg.csv';
-
-    // Put the header (based on the colHeaders of my table in my example)
-    for (const index in colHeaders) {
-        row += colHeaders[index] + ',';
-    }
-    row = row.slice(0, -1);
-    CSV += row + '\r\n';
-
-    // Adding each rows of the table
-    for (let i = 0; i < arrData.length; i++) {
-        let row = '';
-        for (let index in arrData[i]) {
-            row += arrData[i][index] + ',';
-        }
-        row = row.slice(0, -1);
-        CSV += row + '\r\n';
-    }
-
-    if (CSV === '') {
-        alert('Invalid data');
-        return;
-    }
-
-    // Downloading the new generated csv.
-    // For IE >= 9
-    if (window.navigator.msSaveOrOpenBlob) {
-        const fileData = [CSV];
-        const blobObject = new Blob(fileData);
-        window.navigator.msSaveOrOpenBlob(blobObject, fileName);
-    } else {
-        // For Chome/Firefox/Opera
-        const uri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(CSV);
-
-        let link = document.createElement('a');
-        link.href = uri;
-        // link.style = 'visibility:hidden';
-        link.download = fileName;
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-}
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
+import {EchartsService} from './echarts.service';
+import './jquery.resize.js';
+declare const mu: any, jQuery: any;
 
 @Component({
     selector: 'echarts-panel',
@@ -61,12 +9,15 @@ function JSONToCSVConvertor(JSONData: any, colHeaders?: any) {
         <panel>
             <panel-header>
                 <panel-title [innerHTML]="_title"></panel-title>
-                <panel-toolbar>
+                <panel-toolbar [tools]="[{
+                    name: 'fullscreen',
+                    click: fullscreen_click
+                }]">
                     <cols (click)="download_click($event)">
                         <i class="fa fa-download"></i>
                     </cols>
-                    
-                    <cols (click)="database_click($event)">
+
+                    <cols (click)="dataView_click($event)">
                         <i class="fa fa-database"></i>
                     </cols>
 
@@ -100,16 +51,16 @@ function JSONToCSVConvertor(JSONData: any, colHeaders?: any) {
                 </panel-toolbar>
             </panel-header>
             <panel-body>
-                <req-http [req]="req" (result)="_data = $event.data">
-                    <mn-handsontable *ngIf="handson" [data]="handson"></mn-handsontable>
-                    <echarts *ngIf="!handson"
+                <req-http [req]="req" (result)="_data = $event.data" #panel>
+                    <mn-handsontable *ngIf="handson" [data]="_dataView"></mn-handsontable>
+                    <echarts *ngIf="!handson"  
                              [style.height]="height"
                              [setting]="setting"
                              [options]="options"
                              [type]="type"
                              [data]="_data"
                              (result)="result($event)"
-                             (mycharts)="_myChart = $event"></echarts>
+                             (mycharts)="mycharts($event)"></echarts>
                 </req-http>
             </panel-body>
         </panel>
@@ -123,11 +74,21 @@ function JSONToCSVConvertor(JSONData: any, colHeaders?: any) {
 })
 export class EchartsPanelComponent implements OnChanges {
 
+    @ViewChild('panel', {read: ElementRef}) _panel: ElementRef;
+
     @Input() req: any;
     @Input() type: string;
     @Input() height: string;
     @Input() options: any;
     @Input() setting: any;
+    @Input() where: any;
+
+    /**
+     * tool bar
+     *
+     * tb: [type, ...tools]
+     */
+    @Input() tb: string;
 
     @Input()
     set data(v) {
@@ -149,76 +110,36 @@ export class EchartsPanelComponent implements OnChanges {
     _myChart: any;
     _options: any;
 
+    _dataView: any;
+
     handson: any;
 
-    constructor() {
+    constructor(private _es: EchartsService) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
         mu.exist(changes['setting'], () => {
             this._src_setting = mu.clone(this.setting);
+            this.setting.__where__ = this.where;
         });
     }
 
-
-
     result($event) {
-        this._options = $event;
+        this._options = $event.options;
+        this._dataView = $event.dataView;
+    }
 
-        console.debug(this._options);
-
-        // console.debug(JSON.stringify(this._options));
+    mycharts($event) {
+        console.debug('mycharts::::::::', $event);
+        this._myChart = $event;
     }
 
     download_click($event) {
-        JSONToCSVConvertor(this.handson);
+        this._es.JSONToCSVConvertor('MasterNg.csv', this._dataView);
     }
 
-    database_click($event) {
-        let data, x_data, header;
-
-        if (this.handson) {
-            this.handson = null;
-            return false;
-        }
-
-        mu.run(this._options.xAxis[0], (xs) => {
-            x_data = mu.map(xs.data, (x) => {
-                return x.value || x;
-            });
-        });
-
-        mu.run(this._options.series, (series, index) => {
-            header = mu.map(series, (d) => {
-                console.debug(d);
-                return d.name;
-            });
-
-            header.unshift('');
-
-            data = mu.map(series, (d) => {
-                return mu.map(d.data, (dd) => dd.value || dd);
-            });
-
-            data.unshift(x_data);
-
-            const _data = [];
-
-            for (let i = 0; i < data[0].length; i++) {
-                _data[i] = [];
-            }
-
-            for (let i = 0; i < data.length; i++) {
-                for (let j = 0; j < data[i].length; j++) {
-                    _data[j][i] = data[i][j];
-                }
-            }
-
-            _data.unshift(header);
-
-            this.handson = _data;
-
-        });
+    dataView_click($event) {
+        this.handson = !this.handson;
     }
 
     line_click($event): void {
@@ -256,5 +177,15 @@ export class EchartsPanelComponent implements OnChanges {
 
     reload_click($event): void {
         this.req = mu.clone(this.req);
+    }
+
+    fullscreen_click: any = (full: any, $event: any) => {
+        console.debug( this._panel );
+        jQuery(this._panel.nativeElement).resize((a, b) => {
+            this._myChart.resize({
+                width: a.target.clientWidth,
+                height: a.target.clientHeight
+            });
+        });
     }
 }

@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import * as mu from 'mzmu';
 import {PanelComponent} from './panel.component';
+
 declare const mu: any;
 
 @Component({
@@ -12,16 +13,18 @@ declare const mu: any;
         <i class="fa fa-compress" aria-hidden="true"></i>
     `,
     styles: [
-        `
-            
-        `
+            `
+
+            `
     ]
 })
 export class ToolCompressComponent implements OnInit {
-    @HostListener('click') onClick(event: any){
+    @HostListener('click', ['$event'])
+    onClick($event: any) {
         mu.run(this._panel, (o) => {
             o._renderer.removeClass(o._ref.nativeElement, 'full-screen');
-            this.fsClick.emit(true);
+            console.debug(':::--:::', $event);
+            this.fsClick.emit($event);
         });
     }
 
@@ -29,8 +32,7 @@ export class ToolCompressComponent implements OnInit {
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2,
-                @Inject(forwardRef(() => PanelComponent)) private _panel
-    ) {
+                @Inject(forwardRef(() => PanelComponent)) private _panel) {
     }
 
     ngOnInit(): void {

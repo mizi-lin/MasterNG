@@ -37,14 +37,24 @@
         </req-http>
     </panel-s>
 
-    <echarts-panel class="mt-8 bordered" title="EchartsPanel::panel && tools"
-                   [req]="{url: './assets/store/bar-data.json'}"
-                   [type]="'bar'"
-                   height="300px">
-    </echarts-panel>
 
-    <panel-s class="bordered mt-8" title="handsontable">
-        <mn-handsontable></mn-handsontable>
-    </panel-s>
+
+    <row [gutter]="16">
+        <cols [span]="12">
+            <echarts-panel class="mt-8 bordered" title="EchartsPanel::bar panel && tools"
+                           [req]="{url: './assets/store/bar-data.json'}"
+                           [type]="'bar'"
+                           height="300px">
+            </echarts-panel>
+        </cols>
+        <cols [span]="12">
+            <echarts-panel class="mt-8 bordered" title="EchartsPanel::pie panel && tools"
+                           [req]="{url: './assets/store/pie.json'}"
+                           [type]="'pie'"
+                           [where]="'oooOooooOooo'"
+                           height="300px">
+            </echarts-panel>
+        </cols>
+    </row>
 
 </div>
