@@ -58,7 +58,8 @@ export class EchartsService {
                 '$legend',
                 'legend_show',
                 'legend_position',
-                'grid_position'
+                'grid_position',
+                'tooltip'
             ],
 
             wordCloud: [
@@ -74,7 +75,8 @@ export class EchartsService {
                 'legend_show',
                 'legend_position',
 
-                'grid_position'
+                'grid_position',
+                'tooltip'
             ],
 
             radar: [
@@ -88,6 +90,7 @@ export class EchartsService {
                 'legend_position',
 
                 'grid_position',
+                'tooltip',
 
                 'indicator'
             ],
@@ -111,6 +114,7 @@ export class EchartsService {
                 'yAxis_percent_rate',
 
                 'grid_position',
+                'tooltip',
                 'xy_exchange'
             ],
 
@@ -124,6 +128,7 @@ export class EchartsService {
                 '$legend',
                 'legend_show',
                 'legend_position',
+                'tooltip',
 
                 '$xAxis',
                 // 'xAxis_show_all',
@@ -412,6 +417,19 @@ export class EchartsService {
                     options.grid[p] = v;
                 }
             });
+        };
+
+        /**
+         * tooltip 设置
+         * tooltip 默认显示
+         */
+        fn.tooltip = () => {
+            let _tt = mu.ifnvl(setting.tooltip, true);
+            options.tooltip = options.tooltip || {};
+            options.tooltip.show = !!_tt;
+            if (!mu.type(_tt, 'boolean') && options.tooltip.formatter) {
+                options.tooltip.formatter = _tt;
+            }
         };
 
         // -> 关键步骤
