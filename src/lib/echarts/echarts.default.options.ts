@@ -148,6 +148,12 @@ export const DEFAULT_ECHART_OPTIONS = {
         legend: {
             show: true
         },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
         radar: {
             // shape: 'circle',
             splitNumber: 5,

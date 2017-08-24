@@ -47,7 +47,7 @@
                            height="300px">
             </echarts-panel>
         </cols>
-        <cols [span]="12" #pieBox>
+        <cols [span]="12">
             <echarts-box class="mt-8 bordered"
                            [req]="{url: './assets/store/pie.json'}"
                            [type]="'pie'"
@@ -56,6 +56,26 @@
                            [show_tools]="'toggle'"
                            [style.height]="'100%'">
             </echarts-box>
+        </cols>
+    </row>
+
+    <row [gutter]="16" class="mt-8">
+        <cols [span]="12">
+            <echarts-box class="mt-8 bordered"
+                         [req]="{url: './assets/store/echarts-radar.json'}"
+                         [type]="'radar'"
+                         [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"
+                         [setting]="{legend_show: false}"
+                         [style.height]="'100%'">
+            </echarts-box>
+        </cols>
+        <cols [span]="12">
+            <echarts-panel class="mt-8 bordered" title="EchartsPanel::world cloud"
+                           [req]="{url: './assets/store/echarts-world-cloud.json'}"
+                           [type]="'wordCloud'"
+                           [tools]="['fullscreen', 'download', 'data_view', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload']"
+                           height="300px">
+            </echarts-panel>
         </cols>
     </row>
 
