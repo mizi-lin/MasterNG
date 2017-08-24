@@ -70,9 +70,23 @@ export class EchartsRenderDirective implements OnChanges, OnDestroy, AfterViewIn
     private updateChart(): void {
         this._chart.clear();
 
-        this._ref.nativeElement.style.width = this.getWidth(this._ref.nativeElement) + 'px';
+        const width = this.getWidth(this._ref.nativeElement);
+        this._ref.nativeElement.style.width = width + 'px';
         this._ref.nativeElement.style.height = this.getHeight(this._ref.nativeElement) + 'px';
 
+        /**
+         * 根据 legend， 调整 grid.top || grid bottom
+         */
+        // mu.run(mu.prop(this.options, 'legend.show'), () => {
+        //     let legend = mu.map(mu.prop(this.options, 'legend.data'), (o) => o.name || o);
+        //     let len = legend.join(',').length + 5 * legend.length;
+        //     let h = Math.ceil(len * 7 / width) + 1.5;
+        //
+        //     this.options.grid.bottom = h * 54;
+        //
+        //     console.debug(this.options.grid.bottom, h, len, width);
+        //
+        // });
         this._chart.setOption(this.options);
         this._chart.resize();
     }
