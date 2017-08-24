@@ -5,15 +5,15 @@ import './jquery.resize.js';
 declare const mu: any, jQuery: any;
 
 @Component({
-    selector: 'echarts-panel',
+    selector: 'echarts-panel,echarts-box',
     template: `
         <panel>
             <panel-header>
                 <panel-title [innerHTML]="_title"></panel-title>
-                <panel-toolbar [tools]="_tools">
+                <panel-toolbar [tools]="_tools" [class.toggle]="show_tools === 'toggle'">
 
                     <ng-template [ngIf]="toolMap['download']">
-                        <cols (click)="download_click($event)" 
+                        <cols (click)="download_click($event)"
                               [order]="toolMap['download'].order">
                             <i class="fa fa-download"></i>
                         </cols>
@@ -103,21 +103,7 @@ declare const mu: any, jQuery: any;
             </panel-body>
         </panel>
     `,
-    styles: [
-            `:host {
-            display: block;
-            width: 100%;
-        }
-
-        :host panel-body {
-            padding: 0;
-        }
-            
-            :host req-http {
-                padding: 16px;
-            }
-            `
-    ]
+    styleUrls: ['./echarts.scss']
 })
 export class EchartsPanelComponent implements OnChanges {
 
@@ -129,8 +115,13 @@ export class EchartsPanelComponent implements OnChanges {
     @Input() options: any;
     @Input() setting: any;
     @Input() where: any;
-
     @Input() tools: string;
+
+    /**
+     * show_tools
+     * show, toggle
+     */
+    @Input() show_tools = 'show';
 
     @Input()
     set data(v) {
@@ -157,22 +148,31 @@ export class EchartsPanelComponent implements OnChanges {
     // fullscreen, download, data_view, line, bar, exchange, rate, label_all, legend, reload
     _tools: any[] = [];
 
+
+
     handson: any;
     statusMap: any = {};
     toolMap: any = {};
+    hide_title: boolean = false;
 
     setStatus(fnKey: string): void {
         this.statusMap[fnKey] = !this.statusMap[fnKey];
     }
 
-    constructor(private _es: EchartsService) {
+    constructor(private _es: EchartsService,
+                private _ref: ElementRef) {
+        if (this._ref.nativeElement.nodeName === 'ECHARTS-BOX') {
+            this.hide_title = true;
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
+
+        console.debug(this.height);
+
         mu.exist(changes['setting'], (changes_setting) => {
             if (changes_setting.first) {
                 this._src_setting = mu.clone(this.setting);
-
 
             }
             this.setting.__where__ = this.where;
@@ -222,6 +222,8 @@ export class EchartsPanelComponent implements OnChanges {
     result($event) {
         this._options = $event.options;
         this._dataView = $event.dataView;
+
+        this.type === 'pie' && console.debug(JSON.stringify(this._options));
     }
 
     mycharts($event) {
@@ -295,5 +297,5 @@ export class EchartsPanelComponent implements OnChanges {
         mu.run(this.toolMap['fullscreen'].click, fn => fn(full, $event));
 
         this.setStatus('fullscreen_click');
-    }
+    };
 }

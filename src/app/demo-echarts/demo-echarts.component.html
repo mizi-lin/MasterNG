@@ -43,16 +43,19 @@
                            [req]="{url: './assets/store/bar-data.json'}"
                            [type]="'bar'"
                            [tools]="['fullscreen', 'download', 'data_view', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload']"
+                           [show_tools]="'toggle'"
                            height="300px">
             </echarts-panel>
         </cols>
-        <cols [span]="12">
-            <echarts-panel class="mt-8 bordered" title="EchartsPanel::pie panel && tools"
+        <cols [span]="12" #pieBox>
+            <echarts-box class="mt-8 bordered"
                            [req]="{url: './assets/store/pie.json'}"
                            [type]="'pie'"
                            [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"
-                           height="300px">
-            </echarts-panel>
+                           [setting]="{legend_position: 'center bottom'}"
+                           [show_tools]="'toggle'"
+                           [style.height]="'100%'">
+            </echarts-box>
         </cols>
     </row>
 

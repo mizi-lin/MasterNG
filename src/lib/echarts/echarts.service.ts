@@ -377,14 +377,10 @@ export class EchartsService {
          * 设置legend所在的位置
          */
         fn.legend_position = () => {
-            mu.run(setting.legend_position, (positions) => {
-                const p = positions.replace(/\s{1,}/gi, ' ').split(' ');
-
-                mu.run(p[0], (left) => {
-                    options.legend.left = left;
-                });
-
-                mu.run(p[1], (top) => {
+            mu.run(setting.legend_position, (ps) => {
+                const [left, top] = mu.trim(ps).replace(/\s{1,}/gi, ' ').split(' ');
+                mu.run(left, () => options.legend.left = left);
+                mu.run(top, () => {
                     options.legend.top = top;
                     if (top === 'bottom') {
                         options.grid.top = 20;
@@ -403,12 +399,12 @@ export class EchartsService {
          * 设置grid所在的位置
          */
         fn.grid_position = () => {
-            const ps_ = (setting.grid_position || '').replace(/\s{1,}/gi, ' ').split(' ');
+            const [top, right, bottom, left] = (setting.grid_position || '').replace(/\s{1,}/gi, ' ').split(' ');
             const ps = {
-                top: mu.ifnvl(setting.grid_position_top, ps_[0]),
-                right: mu.ifnvl(setting.grid_position_right, ps_[1]),
-                bottom: mu.ifnvl(setting.grid_position_bottom, mu.ifnvl(ps_[2], ps_[0])),
-                left: mu.ifnvl(setting.grid_position_left, mu.ifnvl(ps_[3], ps_[1]))
+                top: mu.ifnvl(setting.grid_position_top, top),
+                right: mu.ifnvl(setting.grid_position_right, right),
+                bottom: mu.ifnvl(setting.grid_position_bottom, mu.ifnvl(bottom, top)),
+                left: mu.ifnvl(setting.grid_position_left, mu.ifnvl(left, right))
             };
 
             mu.each(ps, (v, p) => {
@@ -676,7 +672,6 @@ export class EchartsService {
         // type === 'radar' && console.debug(JSON.stringify(options));
 
         options = this.adjustECharOptions(options);
-
 
         /**
          * DateView 计算
