@@ -68,7 +68,7 @@ export class EchartsService {
                 'sort',
                 '$series',
                 'series_transparent',
-                'series_resize',
+                // 'series_resize',
 
                 '$legend',
                 'legend_show',
@@ -163,7 +163,7 @@ export class EchartsService {
          * wordCloud
          */
         fn.data_cut = () => {
-            mu.run($charts.clientWidth, (width) => {
+            mu.run(mu.prop($charts, 'clientWidth'), (width) => {
                 const len: number = data.length;
                 let count = Math.ceil(width * setting.rate);
                 count = len > count ? count : len;
@@ -323,7 +323,7 @@ export class EchartsService {
                         let color: string;
                         const colorArr = COLORS_POOL, colorArr_len = colorArr.length;
                         let rate = (len - sortMap[o.data.value] - 1) / len;
-                        const index = mu.randonInt(0, colorArr_len - 1);
+                        const index = mu.randomInt(0, colorArr_len - 1);
                         rate = rate < 0.1 ? 0.1 : rate;
                         color = colorArr[index];
                         color = color.replace(/\d{0,}[.]\d{1,}\)$/, rate + ')');
@@ -514,7 +514,7 @@ export class EchartsService {
          */
         fn.indicator = () => {
             options['radar'].indicator = mu.map(mu.groupArray(data, X_VALUE), (o, name) => {
-                const vals_ = mu.pick(o, 'value') || [0];
+                const vals_ = mu.map(mu.pick(o, 'value') || [0], (o) => o.value);
                 const max_ = Math.max(...vals_) || 0;
                 const min_ = Math.min(...vals_) || 0;
                 let min = Math.ceil(min_ * 0.8);
@@ -682,7 +682,7 @@ export class EchartsService {
             _series_data = mu.clone(_series_data);
 
             let _dataView = mu.map(_series_data, (v, k) => {
-                v = mu.map(v, (d) => d.value || d);
+                v = mu.map(v, (d) => mu.ifnvl(d.value, d));
                 return [
                     k,
                     ...v
@@ -811,6 +811,7 @@ export class EchartsService {
     }
 
     JSONToCSVConvertor(fileName: string, JSONData: any, colHeaders?: any): any {
+        fileName = fileName + '.csv';
         const arrData = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData;
         let CSV = '', row = '';
 

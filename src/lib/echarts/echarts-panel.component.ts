@@ -116,6 +116,7 @@ export class EchartsPanelComponent implements OnChanges {
     @Input() setting: any;
     @Input() where: any;
     @Input() tools: string;
+    @Input() filename: string = 'MasterNg';
 
     /**
      * show_tools
@@ -167,9 +168,6 @@ export class EchartsPanelComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-
-        console.debug(this.height);
-
         mu.exist(changes['setting'], (changes_setting) => {
             if (changes_setting.first) {
                 this._src_setting = mu.clone(this.setting);
@@ -223,7 +221,7 @@ export class EchartsPanelComponent implements OnChanges {
         this._options = $event.options;
         this._dataView = $event.dataView;
 
-        this.type === 'pie' && console.debug(JSON.stringify(this._options));
+        this.type === 'radar' && console.debug(JSON.stringify(this._options));
     }
 
     mycharts($event) {
@@ -231,7 +229,7 @@ export class EchartsPanelComponent implements OnChanges {
     }
 
     download_click($event) {
-        this._es.JSONToCSVConvertor('MasterNg.csv', this._dataView);
+        this._es.JSONToCSVConvertor(this.filename, this._dataView);
     }
 
     dataView_click($event) {
