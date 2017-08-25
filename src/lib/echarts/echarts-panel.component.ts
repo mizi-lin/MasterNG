@@ -220,8 +220,7 @@ export class EchartsPanelComponent implements OnChanges {
     result($event) {
         this._options = $event.options;
         this._dataView = $event.dataView;
-
-        this.type === 'radar' && console.debug(JSON.stringify(this._options));
+        // this.type === 'radar' && console.debug(JSON.stringify(this._options));
     }
 
     mycharts($event) {
