@@ -33,11 +33,12 @@ declare let mu: any, console: any;
 @Injectable()
 export class $$HttpInterceptor extends Http {
     router: Router;
-    reqServ: ReqService;
+    // reqServ: ReqService;
 
     constructor(backend: ConnectionBackend,
                 defaultOptions: RequestOptions,
-                injector: Injector) {
+                injector: Injector,
+                private reqServ: ReqService) {
         // super(backend, defaultOptions, injector);
         super(backend, defaultOptions);
 
@@ -47,12 +48,7 @@ export class $$HttpInterceptor extends Http {
          */
         setTimeout(() => {
             this.router = injector.get(Router);
-            this.reqServ = injector.get(ReqService);
         }, 0);
-    }
-
-    getRandomInt(min: number, max: number): number {
-        return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
     loadComplete: any = mu.debounce(() => {
@@ -61,7 +57,7 @@ export class $$HttpInterceptor extends Http {
 
     addHeaderWithToken(headers: Headers): Headers {
         headers = headers || new Headers();
-        //Caching von Ajax Requests verhindern, vor allem vom IE
+        // Caching von Ajax Requests verhindern, vor allem vom IE
         headers.append('Cache-control', 'no-cache');
         headers.append('Cache-control', 'no-store');
         headers.append('Pragma', 'no-cache');
@@ -109,11 +105,11 @@ export class $$HttpInterceptor extends Http {
     }
 
     beforeRequest(url: string, config: any): void {
-        let progress = this.reqServ.progress;
+        const progress = this.reqServ.progress;
         mu.run( progress > 0 && progress < 100, () => {
             this.reqServ.progress += (100 - progress) * (Math.random() * .5);
         }, () => {
-            this.reqServ.progress = this.getRandomInt(5, 25);
+            this.reqServ.progress = mu.randomInt(5, 25);
         });
 
         console.debug('before:::: -> ', url);

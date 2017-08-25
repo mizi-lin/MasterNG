@@ -47,18 +47,20 @@ import {DynamicModule} from '../dynamic';
         ReqNoDataComponent
     ],
     providers: [
+        ReqService,
+
         {
             provide: Http,
             useClass: $$HttpInterceptor,
             deps: [
                 XHRBackend,
                 RequestOptions,
-                Injector
+                Injector,
+                ReqService
             ]
         },
 
-        $$Resource,
-        ReqService
+        $$Resource
 
     ]
 })
