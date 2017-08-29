@@ -4,7 +4,7 @@ import {EchartsService} from './echarts.service';
 import {EchartsConversionComponent} from './echarts-conversion.component';
 import {EchartsRenderDirective} from './echarts-render.directive';
 import {EchartsPanelComponent} from './echarts-panel.component';
-import {ReqModule} from '../req';
+import {MnReqModule} from '../mn-req';
 import {PanelModule} from '../panel';
 import {FlexLayoutModule} from '../flex-layout';
 import {MnHandsontableModule} from '../mn-handsontable/mn-handsontable.module';
@@ -15,7 +15,7 @@ import {MnCommonModule} from '../mn-common/mn-common.module';
     imports: [
         CommonModule,
         PanelModule.forRoot(),
-        ReqModule.forRoot(),
+        MnReqModule.forRoot(),
         FlexLayoutModule.forRoot(),
         MnHandsontableModule.forRoot(),
         MnCommonModule.forRoot()

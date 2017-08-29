@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
 import {EchartsService} from './echarts.service';
 import './jquery.resize.js';
 
@@ -97,7 +97,7 @@ declare const mu: any, jQuery: any;
                              [options]="options"
                              [type]="type"
                              [data]="_data"
-                             (result)="result($event)"
+                             (result)="_result($event)"
                              (mycharts)="mycharts($event)"></echarts>
                 </req-http>
             </panel-body>
@@ -137,6 +137,8 @@ export class EchartsPanelComponent implements OnChanges {
             this._title = parent + mu.run(sub, (sub) => `<small>${sub}</small>`, () => '');
         });
     }
+
+    @Output() result: any = new EventEmitter();
 
     _title: string;
     _data: any;
@@ -217,9 +219,11 @@ export class EchartsPanelComponent implements OnChanges {
         });
     }
 
-    result($event) {
+    _result($event) {
         this._options = $event.options;
         this._dataView = $event.dataView;
+
+        this.result.emit($event);
         // this.type === 'radar' && console.debug(JSON.stringify(this._options));
     }
 

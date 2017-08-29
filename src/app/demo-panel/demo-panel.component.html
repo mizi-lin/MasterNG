@@ -3,7 +3,7 @@
         <panel-header>
             <panel-title>
                 Panel
-                <small>flex layout</small>
+                <small>flex layout(row)</small>
             </panel-title>
             <panel-toolbar [tools]="['fullscreen', 'collapse', 'remove']">
                 <cols [order]="21" [gutter]="'4,4'">
@@ -13,41 +13,142 @@
         </panel-header>
 
         <panel-body>
-            <row [style.minHeight.px]="200" [gutter]="16" class="demo-panel-row">
-                <cols [span]="2">
-                    <div class="bordered">1</div>
+            <div>栅格化布局，最大24栅格; 单元格自定义宽度，会破坏栅格化布局</div>
+
+            <row [style.minHeight.px]="100" [gutter]="16" class="demo-panel-row mt-8">
+                <cols [span]="5">
+                    <div class="bordered">5</div>
                 </cols>
                 <cols [span]="4">
+                    <div class="bordered">4</div>
+                </cols>
+
+                <cols [span]="8">
+                    <div class="bordered">8</div>
+                </cols>
+
+                <cols [span]="7">
+                    <div class="bordered">7</div>
+                </cols>
+            </row>
+
+            <row [style.minHeight.px]="100" [gutter]="16" class="demo-panel-row mt-8">
+                <cols [span]="2">
                     <div class="bordered">2</div>
                 </cols>
-
-                <cols [span]="6">
-                    <div class="bordered">3</div>
+                <cols [span]="4">
+                    <div class="bordered">4</div>
                 </cols>
 
-                <cols [span]="12">
+                <cols [span]="8">
+                    <div class="bordered">8</div>
+                </cols>
+            </row>
+
+            <row [style.minHeight.px]="100" [style.background]="'#eee'" [gutter]="16" class="demo-panel-row mt-8">
+                <cols [span]="2">
+                    <div class="bordered">2</div>
+                </cols>
+                <cols [span]="4">
                     <div class="bordered">4</div>
+                </cols>
+
+                <cols [span]="8">
+                    <div class="bordered">8</div>
+                </cols>
+                <cols [span]="2">
+                    <div class="bordered">2</div>
+                </cols>
+                <cols [span]="4">
+                    <div class="bordered">4</div>
+                </cols>
+
+                <cols [span]="8">
+                    <div class="bordered">8</div>
+                </cols>
+            </row>
+
+            <row [style.minHeight.px]="100" [style.background]="'#eee'" [gutter]="16" class="demo-panel-row mt-8">
+                <cols style="width: 700px">
+                    <div class="bordered">style="width: 700px"</div>
+                </cols>
+                <cols [span]="4">
+                    <div class="bordered">4</div>
+                </cols>
+
+                <cols [span]="8">
+                    <div class="bordered">8</div>
                 </cols>
             </row>
         </panel-body>
     </panel>
 
-    <panel-s class="bordered mt-16" title="Panel::simple">
-        <row [style.minHeight.px]="200" [gutter]="16" class="demo-panel-row">
+    <panel-s class="bordered mt-16" title="Panel-Simple::flex layout(fill)">
+        <div>满格化布局，默认单元格铺满宽度；单元格自定义宽度，不会破坏满格化布局</div>
+        <fill [style.minHeight.px]="100" [gutter]="16" class="demo-panel-row mt-8">
+            <cols [span]="5">
+                <div class="bordered">5</div>
+            </cols>
             <cols [span]="4">
-                <div>1</div>
+                <div class="bordered">4</div>
+            </cols>
+
+            <cols [span]="8">
+                <div class="bordered">8</div>
+            </cols>
+
+            <cols [span]="7">
+                <div class="bordered">7</div>
+            </cols>
+        </fill>
+
+        <fill [style.minHeight.px]="100" [gutter]="16" class="demo-panel-row mt-8">
+            <cols [span]="2">
+                <div class="bordered">2</div>
+            </cols>
+            <cols [span]="4">
+                <div class="bordered">4</div>
+            </cols>
+
+            <cols [span]="8">
+                <div class="bordered">8</div>
+            </cols>
+        </fill>
+
+        <fill [style.minHeight.px]="100" [style.background]="'#eee'" [gutter]="16" class="demo-panel-row mt-8">
+            <cols [span]="2">
+                <div class="bordered">2</div>
+            </cols>
+            <cols [span]="4">
+                <div class="bordered">4</div>
+            </cols>
+
+            <cols [span]="8">
+                <div class="bordered">8</div>
+            </cols>
+            <cols [span]="2">
+                <div class="bordered">2</div>
+            </cols>
+            <cols [span]="4">
+                <div class="bordered">4</div>
             </cols>
             <cols [span]="8">
-                <div>2</div>
+                <div class="bordered">8</div>
             </cols>
-            <section cols [span]="8">
-                <div>3</div>
-            </section>
+        </fill>
 
-            <div cols [span]="4">
-                <div>4</div>
-            </div>
-        </row>
+        <fill [style.minHeight.px]="100" [style.background]="'#eee'" [gutter]="16" class="demo-panel-row mt-8">
+            <cols style="width: 700px">
+                <div class="bordered">style="width: 700px"</div>
+            </cols>
+            <cols [span]="4">
+                <div class="bordered">4</div>
+            </cols>
+
+            <cols [span]="8">
+                <div class="bordered">8</div>
+            </cols>
+        </fill>
     </panel-s>
 
     <panel-s class="mt-16 primary bordered" [title]="'将进酒'" [tools]="['collapse']">

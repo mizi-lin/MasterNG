@@ -6,7 +6,7 @@
     </panel-s>
 
     <panel-s class="mt-8 bordered" title="echarts-render::req-http get options">
-        <req-http [req]="{url: './assets/store/echarts-bar.json'}" (result)="bar_options = $event.data; barOptions($event.data)">
+        <req-http [req]="{url: './assets/store/echarts-options-bar.json'}" (result)="bar_options = $event.data; barOptions($event.data)">
             <row>
                 <cols [span]="12">
                     <div echarts-render [options]="bar_options" [style.height.px]="300">
@@ -40,7 +40,7 @@
     <row [gutter]="16">
         <cols [span]="12">
             <echarts-panel class="mt-8 bordered" title="EchartsPanel::bar panel && tools"
-                           [req]="{url: './assets/store/bar-data.json'}"
+                           [req]="{url: './assets/store/echarts-bar.json'}"
                            [type]="'bar'"
                            [tools]="['fullscreen', 'download', 'data_view', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload']"
                            [show_tools]="'toggle'"
@@ -62,6 +62,7 @@
     <row [gutter]="16" class="mt-8">
         <cols [span]="12">
             <echarts-box class="mt-8 bordered"
+                         (result)="radarResult($event)"
                          [req]="{url: './assets/store/echarts-radar.json'}"
                          [type]="'radar'"
                          [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"

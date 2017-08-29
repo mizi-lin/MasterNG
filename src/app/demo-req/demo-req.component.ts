@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import * as mu from 'mzmu';
 import {ResourcePool} from './resource-pool';
+import {Http, ResponseContentType} from '@angular/http';
+import {MnFileSaverServices} from '../../lib/mn-common/services/mn-file-saver.services';
 
 declare const mu: any;
 
@@ -30,9 +31,30 @@ export class DemoReqComponent implements OnInit {
 
     resource_reload: any = () => {
         this.resource_params = mu.clone(this.resource_params);
-    };
+    }
 
-    constructor(private _rp: ResourcePool) {
+    download($event) {
+        this._http.get('./assets/file/MasterNg.csv').subscribe((res) => {
+            this._mnFileServ.fileSaver([res.toString()], 'masterNg.csv');
+        });
+    }
+
+    csvDownload($event) {
+        this._http.get('./assets/store/csv-data.json').subscribe((res) => {
+            const content = this._mnFileServ.csvData(<any[]>res);
+            this._mnFileServ.fileSaver([content], 'csv-data.csv');
+        });
+    }
+
+    zipDownload($event) {
+        this._http.get('./assets/file/download.zip', {
+            responseType: ResponseContentType.Blob
+        }).subscribe((res) => {
+            this._mnFileServ.blobSaver([<Blob>res], 'masterNg.zip');
+        });
+    }
+
+    constructor(private _rp: ResourcePool, private _http: Http, private _mnFileServ: MnFileSaverServices) {
     }
 
     ngOnInit() {

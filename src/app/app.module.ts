@@ -18,7 +18,7 @@ import {FlexLayoutModule} from '../lib/flex-layout/flex-layout.module';
 import {ButtonModule} from '../lib/button/button.module';
 import {CalendarModule} from '../lib/calendar/calendar.module';
 import {DynamicModule} from '../lib/dynamic/dynamic.module';
-import {ReqModule} from '../lib/req/req.module';
+import {MnReqModule} from '../lib/mn-req/mn-req.module';
 import {MnCommonModule} from '../lib/mn-common/mn-common.module';
 import {MnHandsontableModule} from '../lib/mn-handsontable/mn-handsontable.module';
 import { DemoI18nComponent } from './demo-i18n/demo-i18n.component';
@@ -69,7 +69,7 @@ import {MnI18nServices} from '../lib/mn-i18n/mn-i18n.services';
             CalendarModule
         ]),
 
-        ReqModule.forRoot(),
+        MnReqModule.forRoot(),
         EchartsModule.forRoot(),
         MnHandsontableModule.forRoot(),
         MnCommonModule.forRoot(),

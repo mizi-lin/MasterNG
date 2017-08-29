@@ -142,6 +142,10 @@ export class DemoEchartsComponent implements OnInit {
         })['options'];
     }
 
+    radarResult($event) {
+        console.debug(JSON.stringify($event.dataView));
+    }
+
     ngOnInit() {
     }
 

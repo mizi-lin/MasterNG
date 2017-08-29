@@ -22,4 +22,18 @@
     </panel-s>
 
 
+    <panel-s class="bordered mt-8" title="ReqDownload">
+        <row>
+            <cols [span]="8">
+                <button btn (click)="download($event)">（文本）CSV 文件下载</button>
+            </cols>
+            <cols [span]="8">
+                <button btn (click)="csvDownload($event)">（文本）多维数组转CSV下载 </button>
+            </cols>
+            <cols [span]="8">
+                <button btn (click)="zipDownload($event)">（二进制流）压缩包下载</button>
+            </cols>
+        </row>
+    </panel-s>
+
 </div>

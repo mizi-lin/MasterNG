@@ -2,6 +2,7 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RowComponent} from './row.component';
 import {ColComponent} from './col.component';
+import {MnFillComponent} from './mn-fill.compent';
 
 @NgModule({
     imports: [
@@ -9,11 +10,13 @@ import {ColComponent} from './col.component';
     ],
     declarations: [
         RowComponent,
-        ColComponent
+        ColComponent,
+        MnFillComponent
     ],
     exports: [
         RowComponent,
-        ColComponent
+        ColComponent,
+        MnFillComponent
     ],
     providers: [
     ]
