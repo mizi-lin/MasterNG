@@ -1,28 +1,27 @@
 # MasterNG
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.0.
+### JS代码规范
 
-## Development server
+#### 参数命名
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+1. 常量: 两个单词之间下划线连接，必须全大写；USER_NAME
+2. 变量: 两个单词之间下划线连接，必须全小写 user_name
 
-## Code scaffolding
+> 在类里面，private 私有变量以'_'下划线开头区分private 和 public; 如 _user_info;
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+> 只有 jQuery DOM 对象可使用'$'开头，如 $div
 
-## Build
+3. 方法名: 骆驼命名法, 首字母小写; 动名词 如 getUserName
+4. 类，angular模块：Pascal 命名法，首字母大写；名词 如 UserModule, UserDetailComponent
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+##### 其余规则遵循 jslint 配置
 
-## Running unit tests
+### CSS规范
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. 尽量少使用ID选择器
+2. 选择器命名使用中划线链接，.user-name
+3. 若有使用第三方样式库，则选择器命名需要带上前缀以区分，.mn-user-name
 
-## Running end-to-end tests
+------
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+其他的遵循 ant-design 给出的一些 [规范标准](https://ant.design/docs/spec/introduce-cn)
