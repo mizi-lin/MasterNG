@@ -828,52 +828,6 @@ export class EchartsService {
         };
     }
 
-    JSONToCSVConvertor(fileName: string, JSONData: any, colHeaders?: any): any {
-        fileName = fileName + '.csv';
-        const arrData = typeof JSONData !== 'object' ? JSON.parse(JSONData) : JSONData;
-        let CSV = '', row = '';
-
-        // Put the header (based on the colHeaders of my table in my example)
-        for (const index in colHeaders) {
-            row += colHeaders[index] + ',';
-        }
-        row = row.slice(0, -1);
-        CSV += row + '\r\n';
-
-        // Adding each rows of the table
-        for (let i = 0; i < arrData.length; i++) {
-            let row = '';
-            for (const index in arrData[i]) {
-                row += arrData[i][index] + ',';
-            }
-            row = row.slice(0, -1);
-            CSV += row + '\r\n';
-        }
-
-        if (CSV === '') {
-            alert('Invalid data');
-            return;
-        }
-
-        // Downloading the new generated csv.
-        // For IE >= 9
-        if (window.navigator.msSaveOrOpenBlob) {
-            const fileData = [CSV];
-            const blobObject = new Blob(fileData);
-            window.navigator.msSaveOrOpenBlob(blobObject, fileName);
-        } else {
-            // For Chome/Firefox/Opera
-            const link = document.createElement('a');
-            link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(CSV);
-            // link.style = 'visibility:hidden';
-            link.download = fileName;
-
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
-
     /**
      * 顺时针旋转90°多维数组
      * @param {any[]} arr

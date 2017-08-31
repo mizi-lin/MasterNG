@@ -1,5 +1,5 @@
+import {MnResource} from '../../lib/mn-req/mn-resource';
 import {Injectable} from '@angular/core';
-import {MnResource} from 'MasterNG';
 
 @Injectable()
 export class ResourcePool {

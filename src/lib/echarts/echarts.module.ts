@@ -1,24 +1,23 @@
-import {NgModule, ModuleWithProviders} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {EchartsService} from './echarts.service';
-import {EchartsConversionComponent} from './echarts-conversion.component';
-import {EchartsRenderDirective} from './echarts-render.directive';
-import {EchartsPanelComponent} from './echarts-panel.component';
-import {MnReqModule} from '../mn-req';
-import {PanelModule} from '../panel';
-import {FlexLayoutModule} from '../flex-layout';
-import {MnHandsontableModule} from '../mn-handsontable/mn-handsontable.module';
 import {MnCommonModule} from '../mn-common/mn-common.module';
-
+import {PanelModule} from '../panel/panel.module';
+import {MnReqModule} from '../mn-req/mn-req.module';
+import {FlexLayoutModule} from '../flex-layout/flex-layout.module';
+import {MnHandsontableModule} from '../mn-handsontable/mn-handsontable.module';
+import {EchartsRenderDirective} from './echarts-render.directive';
+import {EchartsConversionComponent} from './echarts-conversion.component';
+import {EchartsPanelComponent} from './echarts-panel.component';
+import {EchartsService} from './echarts.service';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 
 @NgModule({
     imports: [
         CommonModule,
+        MnCommonModule.forRoot(),
         PanelModule.forRoot(),
         MnReqModule.forRoot(),
         FlexLayoutModule.forRoot(),
-        MnHandsontableModule.forRoot(),
-        MnCommonModule.forRoot()
+        MnHandsontableModule.forRoot()
     ],
     declarations: [
         EchartsRenderDirective,
@@ -31,8 +30,8 @@ import {MnCommonModule} from '../mn-common/mn-common.module';
      */
     exports: [
         EchartsRenderDirective,
-        EchartsConversionComponent,
-        EchartsPanelComponent
+        EchartsConversionComponent
+        // EchartsPanelComponent
     ],
 
     providers: [

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import * as mu from 'mzmu';
+
 declare const mu: any;
 
 @Injectable()
@@ -12,8 +13,8 @@ export class DynamicService {
         }
     }
 
-    getComponent(name){
-        return this._componentMap[name]
+    getComponent(name) {
+        return this._componentMap[name];
     }
 
     constructor() {

@@ -12,12 +12,14 @@ import {ToolCompressComponent} from './tool-compress.component';
 import {ToolCollapseDownComponent, ToolCollapseUpComponent} from './tool-collapse.component';
 import {PanelSimpleComponent} from './panel-simple.component';
 import {ToolRefreshComponent} from './tool-refresh.component';
-import {FlexLayoutModule} from '../flex-layout';
+import {NgZorroAntdModule} from 'ng-zorro-antd/src/release/ng-zorro-antd.module';
+import {FlexLayoutModule} from '../flex-layout/flex-layout.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        FlexLayoutModule.forRoot()
+        FlexLayoutModule.forRoot(),
+        NgZorroAntdModule.forRoot()
     ],
     declarations: [
         PanelComponent,

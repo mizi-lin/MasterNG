@@ -3,6 +3,7 @@ import {
     Renderer2, DoCheck, ViewChild, AfterViewInit
 } from '@angular/core';
 import * as mu from 'mzmu';
+
 declare const mu: any;
 
 @Component({
@@ -11,7 +12,7 @@ declare const mu: any;
         <label btn [class.active]="checked" class="{{cls}}">
             <input type="radio" [attr.name]="name" />
             <ng-content></ng-content>
-        </label>            
+        </label>
     `
 })
 export class ButtonRadioComponent implements OnInit, OnChanges, DoCheck {
@@ -21,8 +22,9 @@ export class ButtonRadioComponent implements OnInit, OnChanges, DoCheck {
     @Input() name: string;
     @Input() cls: string;
 
-    @HostListener('click', ['$event.target']) onclick(target) {
-        if(target.nodeName === 'INPUT'){
+    @HostListener('click', ['$event.target'])
+    onclick(target) {
+        if (target.nodeName === 'INPUT') {
             this.radio = target;
             this.checked = target.checked;
         }
@@ -30,12 +32,10 @@ export class ButtonRadioComponent implements OnInit, OnChanges, DoCheck {
 
     radio: any;
 
-    //todo ngModel
+    // todo ngModel
 
-    constructor(
-        private _ref: ElementRef,
-        private _render: Renderer2
-    ) {
+    constructor(private _ref: ElementRef,
+                private _render: Renderer2) {
     }
 
     ngOnInit() {

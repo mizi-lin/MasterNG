@@ -8,10 +8,11 @@ import {
     ComponentFactory,
     ModuleWithComponentFactories,
     ComponentRef,
-    ReflectiveInjector, ComponentFactoryResolver, OnDestroy, SimpleChanges
+    ReflectiveInjector, ComponentFactoryResolver, OnDestroy, SimpleChanges, OnChanges
 } from '@angular/core';
 
 import * as mu from 'mzmu';
+
 declare const mu: any;
 
 /**
@@ -89,12 +90,12 @@ declare const mu: any;
  * }
  */
 
-import {RouterModule}  from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 
 export class ExtraModules {
-    items: any[]
+    items: any[];
 }
 
 export function createComponentFactory(compiler: Compiler, template: string, extraModules: any): Promise<ComponentFactory<any>> {
@@ -111,7 +112,6 @@ export function createComponentFactory(compiler: Compiler, template: string, ext
         template: template
     })
     class _DecoratedCmp {
-
     }
 
     @NgModule({
@@ -139,16 +139,16 @@ export function createComponentFactory(compiler: Compiler, template: string, ext
 }
 
 @Directive({selector: 'dynamic-template'})
-export class DynamicTemplateDirective implements OnDestroy {
+export class DynamicTemplateDirective implements OnDestroy, OnChanges {
     @Input() template: string;
     @Input() context: any;
 
-    _cmpRef: ComponentRef<any>;
     instance: any;
+    _cmpRef: ComponentRef<any>;
 
     constructor(private _vcRef: ViewContainerRef,
-                private compiler: Compiler,
-                private extraModules: ExtraModules) {
+                private _compiler: Compiler,
+                private _extraModules: ExtraModules) {
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -161,7 +161,7 @@ export class DynamicTemplateDirective implements OnDestroy {
                 this._cmpRef.destroy();
             }
 
-            createComponentFactory(this.compiler, template, this.extraModules)
+            createComponentFactory(this._compiler, template, this._extraModules)
             .then(factory => {
                 const injector = ReflectiveInjector.fromResolvedProviders([], this._vcRef.parentInjector);
                 this._cmpRef = this._vcRef.createComponent(factory, 0, injector, []);
@@ -179,7 +179,6 @@ export class DynamicTemplateDirective implements OnDestroy {
                 });
             });
         });
-
 
     }
 

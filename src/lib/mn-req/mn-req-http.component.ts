@@ -1,10 +1,7 @@
 import {Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy} from '@angular/core';
 import {Http} from '@angular/http';
-import {Observable, Subscriber} from 'rxjs';
 import {MnReqNoDataComponent} from './mn-req-nodata.component';
-import * as mu from 'mzmu';
-import * as jquery from 'jquery';
-
+import {Subscriber} from 'rxjs/Subscriber';
 declare const mu: any;
 
 @Component({
