@@ -3,7 +3,7 @@ import {
     forwardRef, Inject
 } from '@angular/core';
 import * as mu from 'mzmu';
-import {MnRowComponent} from 'MasterNG';
+import {MnRowComponent} from './mn-row.component';
 declare const mu: any;
 
 @Component({
@@ -17,15 +17,15 @@ export class MnColComponent implements OnInit, OnChanges {
     @Input() span: number = 0;
     @Input() order: number = 0;
 
-    // @HostBinding('style.padding-left.px')
-    // get paddingLeft() {
-    //     return this._rowCmp && this._rowCmp.gutter / 2;
-    // }
-    //
-    // @HostBinding('style.padding-right.px')
-    // get paddingRight() {
-    //     return this._rowCmp && this._rowCmp.gutter / 2;
-    // }
+    @HostBinding('style.padding-left.px')
+    get paddingLeft() {
+        return this._rowCmp && this._rowCmp.gutter / 2;
+    }
+
+    @HostBinding('style.padding-right.px')
+    get paddingRight() {
+        return this._rowCmp && this._rowCmp.gutter / 2;
+    }
 
     constructor(
         // @Optional() @Host() private _rowCmp: MnRowComponent,

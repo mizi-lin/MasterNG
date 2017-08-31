@@ -40,8 +40,8 @@ export class DemoReqComponent implements OnInit {
     }
 
     csvDownload($event) {
-        this._http.get('./assets/store/csv-data.json').subscribe((res) => {
-            const content = this._mnFileServ.csvData(<any[]>res);
+        this._http.get('./assets/store/csv-data.json').subscribe((res: any) => {
+            const content = this._mnFileServ.csvData(res);
             this._mnFileServ.fileSaver([content], 'csv-data.csv');
         });
     }
@@ -49,8 +49,8 @@ export class DemoReqComponent implements OnInit {
     zipDownload($event) {
         this._http.get('./assets/file/download.zip', {
             responseType: ResponseContentType.Blob
-        }).subscribe((res) => {
-            this._mnFileServ.blobSaver([<Blob>res], 'masterNg.zip');
+        }).subscribe((res: any) => {
+            this._mnFileServ.blobSaver([res], 'masterNg.zip');
         });
     }
 

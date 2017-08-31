@@ -30,8 +30,8 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
      */
     exports: [
         EchartsRenderDirective,
-        EchartsConversionComponent
-        // EchartsPanelComponent
+        EchartsConversionComponent,
+        EchartsPanelComponent
     ],
 
     providers: [

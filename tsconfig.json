@@ -15,16 +15,8 @@
         "lib": [
             "es2017",
             "dom"
-        ],
-        "paths": {
-            "MasterNG": [
-                "src/lib"
-            ]
-        }
+        ]
     },
-    "files": [
-        "./src/lib/index.ts"
-    ],
     "exclude": [
         "node_modules"
     ]

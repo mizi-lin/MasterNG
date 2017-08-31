@@ -3,9 +3,8 @@ import {Directive, EventEmitter, HostBinding, HostListener, Input, Output} from 
 declare const mu: any, jQuery: any;
 import './jquery.file-download.js';
 import {Http} from '@angular/http';
-
-import {saveAs} from 'file-saver/FileSaver.js';
 import {MnReqService} from './mn-req.service';
+import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services';
 
 @Directive({selector: '[file-download]'})
 export class MnFileDownloadDirective {
@@ -26,13 +25,13 @@ export class MnFileDownloadDirective {
         // });
 
         this._http.get(this.req.url).subscribe((res) => {
-            this._reqServ.fileSaver([res.toString()], 'aa.csv');
+            this._fileSaverServ.fileSaver([res.toString()], 'aa.csv');
         });
 
         this.download.emit($event);
     }
 
-    constructor(private _http: Http, private _reqServ: MnReqService) {
+    constructor(private _http: Http, private _fileSaverServ: MnFileSaverServices) {
 
     }
 }

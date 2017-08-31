@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MnRuleServices} from '../../lib/mn-rule/mn-rule.services';
+declare const mu: any;
 
 @Component({
   selector: 'mn-demo-rule',
@@ -10,6 +11,8 @@ export class DemoRuleComponent implements OnInit {
 
   constructor(private _ruleServ: MnRuleServices) { }
 
+  rules: any;
+
   ngOnInit() {
   }
 
@@ -17,9 +20,7 @@ export class DemoRuleComponent implements OnInit {
       key = 'aaa.bbb.' + key;
       const rules = this._ruleServ.rules_;
       rules[key] = !rules[key];
-      this._ruleServ.setRules(rules);
-
-      console.debug(this._ruleServ.rules_);
+      this.rules = mu.clone(rules);
   }
 
 }
