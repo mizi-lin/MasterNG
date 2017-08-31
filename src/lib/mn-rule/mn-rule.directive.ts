@@ -1,5 +1,5 @@
 import {
-    Directive, Input, TemplateRef, EmbeddedViewRef, ViewContainerRef, Output, EventEmitter, DoCheck
+    Directive, Input, TemplateRef, EmbeddedViewRef, ViewContainerRef, Output, EventEmitter, DoCheck, OnChanges, SimpleChanges
 } from '@angular/core';
 import {MnRuleServices} from './mn-rule.services';
 
@@ -11,24 +11,24 @@ class AuthRuleContext {
 }
 
 @Directive({selector: '[rule]'})
-export class MnRuleDirective implements DoCheck {
-    private context: AuthRuleContext = new AuthRuleContext();
-    private elseTemplateRef: TemplateRef<AuthRuleContext>;
-    private elseViewRef: EmbeddedViewRef<AuthRuleContext>;
-    private viewRef: EmbeddedViewRef<AuthRuleContext>;
-    private _rules: any = {};
-
-    @Output() rules: EventEmitter<any> = new EventEmitter<any>();
-
+export class MnRuleDirective implements OnChanges {
+    private _context: AuthRuleContext = new AuthRuleContext();
+    private _elseTemplateRef: TemplateRef<AuthRuleContext>;
+    private _elseViewRef: EmbeddedViewRef<AuthRuleContext>;
+    private _viewRef: EmbeddedViewRef<AuthRuleContext>;
     private _rules: any;
-
-    constructor(private _ruleServ: MnRuleServices,
-                private _vcRef: ViewContainerRef,
-                private _tempRef: TemplateRef<AuthRuleContext>) {
-        this._rules = this._ruleServ.rules_;
-    }
-
     private _conditions: any;
+
+    /**
+     * 返回rule验证结果
+     * @type {EventEmitter<any>}
+     */
+    @Output() result: EventEmitter<any> = new EventEmitter<any>();
+
+    /**
+     * 获取权限判断池
+     */
+    @Input() rules: any;
 
     @Input()
     set rule(conditions: any) {
@@ -80,16 +80,31 @@ export class MnRuleDirective implements DoCheck {
 
         // console.debug('ooOOoooOOoo', condition, bool);
 
-        this.rules.emit(condition_ || conditions);
-        this.context.$implicit = this.context.rule = bool;
+        this.result.emit(condition_ || conditions);
+        this._context.$implicit = this._context.rule = bool;
         this._updateView();
     }
 
     @Input()
     set rule4Else(templateRef: TemplateRef<AuthRuleContext>) {
-        this.elseTemplateRef = templateRef;
-        this.elseViewRef = null;
+        this._elseTemplateRef = templateRef;
+        this._elseViewRef = null;
         this._updateView();
+    }
+
+    constructor(private _ruleServ: MnRuleServices,
+                private _vcRef: ViewContainerRef,
+                private _tempRef: TemplateRef<AuthRuleContext>) {
+        mu.empty(this.rules, () => {
+            this._rules = this._ruleServ.rules_;
+        });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        mu.run(mu.prop(changes, 'rules.currentValue'), (rules) => {
+            this._rules = rules;
+            this.rule = this._conditions;
+        });
     }
 
     /**
@@ -133,29 +148,25 @@ export class MnRuleDirective implements DoCheck {
      * @private
      */
     private _updateView(): void {
-        if (this.context.$implicit) {
-            if (!this.viewRef) {
+        if (this._context.$implicit) {
+            if (!this._viewRef) {
                 this._vcRef.clear();
-                this.elseViewRef = null;
+                this._elseViewRef = null;
                 if (this._tempRef) {
-                    this.viewRef = this._vcRef.createEmbeddedView(this._tempRef, this.context);
+                    this._viewRef = this._vcRef.createEmbeddedView(this._tempRef, this._context);
                 }
             }
         } else {
-            if (this.elseViewRef) {
+            if (this._elseViewRef) {
                 return;
             }
 
             this._vcRef.clear();
-            this.viewRef = null;
-            if (this.elseTemplateRef) {
-                this.elseViewRef = this._vcRef.createEmbeddedView(this.elseTemplateRef, this.context);
+            this._viewRef = null;
+            if (this._elseTemplateRef) {
+                this._elseViewRef = this._vcRef.createEmbeddedView(this._elseTemplateRef, this._context);
             }
         }
-    }
-
-    ngDoCheck() {
-        this.rule = this._conditions;
     }
 
 }

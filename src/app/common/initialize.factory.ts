@@ -23,10 +23,10 @@ export function InitializeFactory(_initServ: InitializeService,
          * 规则匹配
          */
         _ruleServ.setRules({
-            'aaa.bbb.ccc': false,
+            'aaa.bbb.ccc': true,
             'aaa.bbb.ddd': false,
             'aaa.bbb.eee': false,
-            'aaa.bbb.fff': false
+            'aaa.bbb.fff': true
         });
     };
 }

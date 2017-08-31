@@ -9,45 +9,32 @@ declare const mu: any;
 @Component({
     selector: 'panel-toolbar',
     template: `
-        <nz-row [nzGutter]="8">
-            <nz-col>
+        <row [gutter]="8" [where]="where">
+            <cols *ngIf="toolMap['fullscreen']" [order]="toolMap['fullscreen'].order">
+                <tool-expand *ngIf="!fullscreen" (fsClick)="fullscreen_click($event)"></tool-expand>
+                <tool-compress *ngIf="fullscreen" (fsClick)="fullscreen_click($event)"></tool-compress>
+            </cols>
+
+            <cols *ngIf="toolMap['remove']" [order]="toolMap['remove'].order">
                 <i class="fa fa-remove" aria-hidden="true"></i>
-            </nz-col>
+            </cols>
 
-            <nz-col>
-                <i class="fa fa-refresh" aria-hidden="true"></i>
-            </nz-col>
+            <cols *ngIf="toolMap['reload']" [order]="toolMap['reload'].order">
+                <tool-refresh (fsClick)="toolMap['reload']._click($event)"></tool-refresh>
+            </cols>
 
-            <ng-content select="nz-col"></ng-content>    
-                
+            <cols *ngIf="toolMap['collapse']" [order]="toolMap['collapse'].order">
+                <tool-collapse-up></tool-collapse-up>
+                <tool-collapse-down></tool-collapse-down>
+            </cols>
 
-        </nz-row>
-        <!--<row [gutter]="8" [where]="where">-->
-            <!--<cols *ngIf="toolMap['fullscreen']" [order]="toolMap['fullscreen'].order">-->
-                <!--<tool-expand *ngIf="!fullscreen" (fsClick)="fullscreen_click($event)"></tool-expand>-->
-                <!--<tool-compress *ngIf="fullscreen" (fsClick)="fullscreen_click($event)"></tool-compress>-->
-            <!--</cols>-->
+            <cols *ngIf="toolMap['|']" [order]="toolMap['|'].order">
+                <ng-content></ng-content>
+            </cols>
 
-            <!--<cols *ngIf="toolMap['remove']" [order]="toolMap['remove'].order">-->
-                <!--<i class="fa fa-remove" aria-hidden="true"></i>-->
-            <!--</cols>-->
-
-            <!--<cols *ngIf="toolMap['reload']" [order]="toolMap['reload'].order">-->
-                <!--<tool-refresh (fsClick)="toolMap['reload']._click($event)"></tool-refresh>-->
-            <!--</cols>-->
-
-            <!--<cols *ngIf="toolMap['collapse']" [order]="toolMap['collapse'].order">-->
-                <!--<tool-collapse-up></tool-collapse-up>-->
-                <!--<tool-collapse-down></tool-collapse-down>-->
-            <!--</cols>-->
-
-            <!--<cols *ngIf="toolMap['|']" [order]="toolMap['|'].order">-->
-                <!--<ng-content></ng-content>-->
-            <!--</cols>-->
-
-            <!--<ng-content select="cols"></ng-content>-->
-            <!--<ng-content select="ng-template"></ng-content>-->
-        <!--</row>-->
+            <ng-content select="cols"></ng-content>
+            <ng-content select="ng-template"></ng-content>
+        </row>
     `,
     styles: [
     ]
