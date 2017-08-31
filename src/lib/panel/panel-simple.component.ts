@@ -13,7 +13,11 @@ declare const mu: any;
             <panel-header>
                 <panel-title [innerHTML]="_title">
                 </panel-title>
-                <panel-toolbar [tools]="tools"></panel-toolbar>
+                <panel-toolbar [tools]="tools">
+                    <nz-col [nzSpan]="6">
+                        <i class="fa fa-remove" aria-hidden="true"></i>
+                    </nz-col>
+                </panel-toolbar>
             </panel-header>
             <panel-body>
                 <ng-content></ng-content>

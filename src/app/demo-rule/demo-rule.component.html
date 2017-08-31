@@ -1,0 +1,59 @@
+<div class="p-16">
+    <panel-s class="bordered" [title]="'Rule 规则匹配'">
+        <fill [gutter]="16" [style.height.px]="200">
+            <cols [span]="1"  *rule="'aaa.bbb.ccc'">
+                <div class="bordered hp-100">
+                    CCC
+                </div>
+            </cols>
+            <cols [span]="2" *rule="'aaa.bbb.ddd'">
+                <div class="bordered hp-100">
+                    DDD
+                </div>
+            </cols>
+            <cols [span]="3" *rule="'aaa.bbb.eee'">
+                <div class="bordered hp-100">
+                    CCC
+                </div>
+            </cols>
+            <cols [span]="4" *rule="'aaa.bbb.fff'">
+                <div class="bordered hp-100">
+                    DDD
+                </div>
+            </cols>
+        </fill>
+
+        <div nz-row [nzGutter]="16">
+            <div nz-col class="gutter-row" [nzSpan]="6" [style.height.px]="200" *rule="'aaa.bbb.ccc'">
+                <div class="bordered hp-100">
+                    CCC
+                </div>
+            </div>
+
+            <div nz-col class="gutter-row" [nzSpan]="6" [style.height.px]="200" *rule="'aaa.bbb.ddd'">
+                <div class="bordered hp-100">
+                    CCC
+                </div>
+            </div>
+
+            <div nz-col class="gutter-row" [nzSpan]="6" [style.height.px]="200" *rule="'aaa.bbb.eee'">
+                <div class="bordered hp-100">
+                    CCC
+                </div>
+            </div>
+
+            <div nz-col class="gutter-row" [nzSpan]="6" [style.height.px]="200" *rule="'aaa.bbb.fff'">
+                <div class="bordered hp-100">
+                    CCC
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <button btn (click)="show('ccc')">CCC</button>
+            <button btn (click)="show('ddd')">DDD</button>
+            <button btn (click)="show('eee')">EEE</button>
+            <button btn (click)="show('fff')">FFF</button>
+        </div>
+    </panel-s>
+</div>

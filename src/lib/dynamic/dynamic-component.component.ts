@@ -9,6 +9,7 @@ import {
 
 import * as mu from 'mzmu';
 import {DynamicService} from './dynamic-component.service';
+
 declare const mu: any;
 
 /**
@@ -39,7 +40,7 @@ declare const mu: any;
 })
 export class DynamicComponentComponent implements OnChanges, OnDestroy {
 
-    @ViewChild("container", {read: ViewContainerRef}) _vcRef;
+    @ViewChild('container', {read: ViewContainerRef}) _vcRef;
 
     @Input() inputs: any;
     @Input() outputs: any;
@@ -65,7 +66,7 @@ export class DynamicComponentComponent implements OnChanges, OnDestroy {
             component = UnknownDynamicComponent;
         }
 
-        let factory = this._cfr.resolveComponentFactory(component);
+        const factory = this._cfr.resolveComponentFactory(component);
         this.componentRef = this._vcRef.createComponent(factory);
         this.instance = <DynamicComponent> this.componentRef.instance;
         this.setInputs(inputs);
@@ -122,7 +123,7 @@ export class DynamicComponentComponent implements OnChanges, OnDestroy {
                 this.instance.ngOnChanges && this.instance.ngOnChanges(mu.map(this.inputs, (v, k) => {
                     return {
                         currentValue: v
-                    }
+                    };
                 }));
             }
         });
@@ -149,7 +150,8 @@ export abstract class DynamicComponent {
  */
 @Component({
     selector: 'unknown-component',
-    template: `<div title="unknown-component">unknown-component</div>`
+    template: `
+        <div title="unknown-component">unknown-component</div>`
 })
 export class UnknownDynamicComponent extends DynamicComponent {
 }

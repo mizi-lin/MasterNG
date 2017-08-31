@@ -1,6 +1,7 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
 import {EchartsService} from './echarts.service';
 import './jquery.resize.js';
+import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services';
 
 declare const mu: any, jQuery: any;
 
@@ -163,6 +164,7 @@ export class EchartsPanelComponent implements OnChanges {
     }
 
     constructor(private _es: EchartsService,
+                private _mnFileSaverServ: MnFileSaverServices,
                 private _ref: ElementRef) {
         if (this._ref.nativeElement.nodeName === 'ECHARTS-BOX') {
             this.hide_title = true;
@@ -232,7 +234,8 @@ export class EchartsPanelComponent implements OnChanges {
     }
 
     download_click($event) {
-        this._es.JSONToCSVConvertor(this.filename, this._dataView);
+        const content = this._mnFileSaverServ.csvData(this._dataView);
+        this._mnFileSaverServ.fileSaver([content], this.filename);
     }
 
     dataView_click($event) {

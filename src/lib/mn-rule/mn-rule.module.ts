@@ -1,27 +1,27 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MnRowComponent} from './mn-row.component';
-import {MnColComponent} from './mn-col.component';
+import {MnRuleServices} from './mn-rule.services';
+import {MnRuleDirective} from './mn-rule.directive';
+
 
 @NgModule({
     imports: [
         CommonModule
     ],
     declarations: [
-        MnRowComponent,
-        MnColComponent
+        MnRuleDirective
     ],
     exports: [
-        MnRowComponent,
-        MnColComponent
+        MnRuleDirective
     ],
     providers: [
+        MnRuleServices
     ]
 })
-export class FlexLayoutModule {
+export class MnRuleModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: FlexLayoutModule
+            ngModule: MnRuleModule
         };
     }
 }

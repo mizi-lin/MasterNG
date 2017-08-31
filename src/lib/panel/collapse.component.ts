@@ -2,18 +2,20 @@ import {Component, OnInit, Input, ContentChildren, AfterViewInit, OnChanges, Sim
 import * as mu from 'mzmu';
 import {PanelComponent} from './panel.component';
 import {PanelSimpleComponent} from './panel-simple.component';
+
 declare const mu: any;
 
 @Component({
     selector: 'collapse',
-    template: `<ng-content></ng-content>`,
+    template: `
+        <ng-content></ng-content>`,
     styles: [
-        `
+            `
             :host {
                 display: block;
                 width: 100%;
             }
-        `
+            `
     ]
 })
 export class CollapseComponent implements OnInit, OnChanges, AfterViewInit {
@@ -42,7 +44,7 @@ export class CollapseComponent implements OnInit, OnChanges, AfterViewInit {
     adjust_panels(_panels: any): void {
         mu.exist(this.accordion, (showIndex) => {
             mu.each(_panels, (_panel, index) => {
-                let _toggle_collapse = _panel.toggle_collapse.bind(_panel);
+                const _toggle_collapse = _panel.toggle_collapse.bind(_panel);
                 _toggle_collapse(showIndex !== index);
                 _panel._toggle_collapse = _toggle_collapse;
                 _panel.collapse = true;
@@ -73,7 +75,7 @@ export class CollapseComponent implements OnInit, OnChanges, AfterViewInit {
             });
 
             mu.run(this._panelSimples, (_ps) => {
-                let _panels = mu.map(_ps._results, (o) => o._panel);
+                const _panels = mu.map(_ps._results, (o) => o._panel);
                 this.adjust_panels(_panels);
             });
 
