@@ -6,18 +6,6 @@ import {DemoI18nComponent} from './demo-i18n/demo-i18n.component';
 import {DemoRuleComponent} from './demo-rule/demo-rule.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule} from '@angular/router';
-import {FlexLayoutModule} from '../lib/flex-layout/flex-layout.module';
-import {PanelModule} from '../lib/panel/panel.module';
-import {ButtonModule} from '../lib/button/button.module';
-import {CalendarModule} from '../lib/calendar/calendar.module';
-import {LoaderBarModule} from '../lib/loader-bar/loader-bar.module';
-import {DynamicModule} from '../lib/dynamic/dynamic.module';
-import {MnReqModule} from '../lib/mn-req/mn-req.module';
-import {EchartsModule} from '../lib/echarts/echarts.module';
-import {MnHandsontableModule} from '../lib/mn-handsontable/mn-handsontable.module';
-import {MnCommonModule} from '../lib/mn-common/mn-common.module';
-import {MnI18nModule} from '../lib/mn-i18n/mn-i18n.module';
-import {MnRuleModule} from '../lib/mn-rule/mn-rule.module';
 import {ResourcePool} from './demo-req/resource-pool';
 import {InitializeService} from './common/initialize.service';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
@@ -25,6 +13,7 @@ import {InitializeFactory} from './common/initialize.factory';
 import {MnI18nServices} from '../lib/mn-i18n/mn-i18n.services';
 import {MnRuleServices} from '../lib/mn-rule/mn-rule.services';
 import {NgZorroAntdModule} from 'ng-zorro-antd/src/release/ng-zorro-antd.module';
+import {MasterNgModule} from '../lib/master-ng.module';
 
 @NgModule({
     declarations: [
@@ -37,9 +26,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd/src/release/ng-zorro-antd.module'
     ],
     imports: [
         BrowserModule,
-
         NgZorroAntdModule.forRoot(),
-
         RouterModule.forRoot([
             {
                 path: 'panel',
@@ -65,24 +52,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd/src/release/ng-zorro-antd.module'
 
         ], {useHash: true}),
 
-        FlexLayoutModule.forRoot(),
-        PanelModule.forRoot(),
-        ButtonModule.forRoot(),
-        CalendarModule.forRoot(),
-        LoaderBarModule.forRoot(),
-        DynamicModule.forRoot([
-            FlexLayoutModule,
-            PanelModule,
-            ButtonModule,
-            CalendarModule
-        ]),
-
-        MnReqModule.forRoot(),
-        EchartsModule.forRoot(),
-        MnHandsontableModule.forRoot(),
-        MnCommonModule.forRoot(),
-        MnI18nModule.forRoot(),
-        MnRuleModule.forRoot()
+        MasterNgModule.forRoot()
 
     ],
     providers: [
