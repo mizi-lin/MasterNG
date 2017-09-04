@@ -7,9 +7,9 @@ import * as mu from 'mzmu';
 declare const mu: any;
 
 @Component({
-    selector: 'btn-radio',
+    selector: 'mn-btn-radio',
     template: `
-        <label btn [class.active]="checked" class="{{cls}}">
+        <label mn-btn [class.active]="checked" class="{{cls}}">
             <input type="radio" [attr.name]="name" />
             <ng-content></ng-content>
         </label>

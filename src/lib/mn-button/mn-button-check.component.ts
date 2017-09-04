@@ -4,9 +4,9 @@ import * as mu from 'mzmu';
 declare const mu: any;
 
 @Component({
-    selector: 'btn-checkbox',
+    selector: 'mn-btn-checkbox',
     template: `
-        <label btn [class.active]="checked">
+        <label mn-btn [class.active]="checked">
             <input type="checkbox" />
             <ng-content></ng-content>
         </label>
