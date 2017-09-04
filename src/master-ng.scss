@@ -94,8 +94,8 @@ body {
  * Panel
  */
 mn-panel,
-panel-s,
-panel-simple {
+mn-panel-s,
+mn-panel-simple {
     position: relative;
     display: block;
     width: 100%;
@@ -217,8 +217,8 @@ panel-simple {
 /**
  * Collapse
  */
-collapse {
-    > panel-s > mn-panel,
+mn-collapse {
+    > mn-panel-s > mn-panel,
     > mn-panel {
         > mn-panel-header {
             > mn-panel-title {
