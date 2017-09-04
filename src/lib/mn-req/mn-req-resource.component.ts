@@ -10,7 +10,7 @@ declare let mu: any;
     template: `
         <mn-loader-bar *ngIf="loading"
                        [progress]="process"></mn-loader-bar>
-        <dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></dynamic-component>
+        <mn-dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
         <ng-content *ngIf="!noData"></ng-content>
     `,
     styles: [

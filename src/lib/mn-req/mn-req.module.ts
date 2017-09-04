@@ -10,7 +10,7 @@ import {MnReqNoDataComponent} from './mn-req-nodata.component';
 import {MnLoaderBarModule} from '../mn-loader-bar/mn-loader-bar.module';
 import {HttpLoaderComponent} from './mn-http-loader.component';
 import {MnReqService} from './mn-req.service';
-import {DynamicModule} from '../dynamic/dynamic.module';
+import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
 
 /**
  * ReqModule
@@ -28,7 +28,7 @@ import {DynamicModule} from '../dynamic/dynamic.module';
     imports: [
         CommonModule,
         HttpModule,
-        DynamicModule.forRoot(),
+        MnDynamicModule.forRoot(),
         MnLoaderBarModule.forRoot()
 
     ],

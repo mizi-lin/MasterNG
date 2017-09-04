@@ -4,7 +4,7 @@ import * as mu from 'mzmu';
 declare const mu: any;
 
 @Injectable()
-export class DynamicService {
+export class MnDynamicService {
     _componentMap: any = {};
 
     setComponentMap(component) {

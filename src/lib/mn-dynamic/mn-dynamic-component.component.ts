@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 
 import * as mu from 'mzmu';
-import {DynamicService} from './dynamic-component.service';
+import {MnDynamicService} from './mn-dynamic-component.service';
 
 declare const mu: any;
 
 /**
- * dynamic-component
+ * mn-dynamic-component
  * 动态加载Component
  *
  * 1. 动态加载的Component必须在ngModule中在enterComponent在声明
@@ -33,12 +33,12 @@ declare const mu: any;
  *
  */
 @Component({
-    selector: 'dynamic-component',
+    selector: 'mn-dynamic-component',
     template: `
         <ng-template #container></ng-template>
     `
 })
-export class DynamicComponentComponent implements OnChanges, OnDestroy {
+export class MnDynamicComponentComponent implements OnChanges, OnDestroy {
 
     @ViewChild('container', {read: ViewContainerRef}) _vcRef;
 
@@ -55,7 +55,7 @@ export class DynamicComponentComponent implements OnChanges, OnDestroy {
 
     constructor(// private _vcRef: ViewContainerRef,
         private _cfr: ComponentFactoryResolver,
-        private _serv: DynamicService) {
+        private _serv: MnDynamicService) {
 
     }
 
@@ -63,7 +63,7 @@ export class DynamicComponentComponent implements OnChanges, OnDestroy {
         this.ngOnDestroy();
 
         if (!component) {
-            component = UnknownDynamicComponent;
+            component = MnUnknownDynamicComponent;
         }
 
         const factory = this._cfr.resolveComponentFactory(component);
@@ -149,11 +149,11 @@ export abstract class DynamicComponent {
  * unknown component
  */
 @Component({
-    selector: 'unknown-component',
+    selector: 'mn-unknown-component',
     template: `
         <div title="unknown-component">unknown-component</div>`
 })
-export class UnknownDynamicComponent extends DynamicComponent {
+export class MnUnknownDynamicComponent extends DynamicComponent {
 }
 
 

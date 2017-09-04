@@ -139,7 +139,7 @@ export function createComponentFactory(compiler: Compiler, template: string, ext
 }
 
 @Directive({selector: 'dynamic-template'})
-export class DynamicTemplateDirective implements OnDestroy, OnChanges {
+export class MnDynamicTemplateDirective implements OnDestroy, OnChanges {
     @Input() template: string;
     @Input() context: any;
 
