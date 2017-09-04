@@ -1,37 +1,37 @@
 <div class="p-16">
     <mn-panel-s class="bordered" [title]="'Rule 规则匹配'">
-        <fill [gutter]="16" [style.height.px]="200">
+        <mn-fill [gutter]="16" [style.height.px]="200">
 
             <ng-template [rule]="'aaa.bbb.ccc'" [rules]="rules">
-                <cols [span]="1">
+                <mn-col [span]="1">
                     <div class="bordered hp-100">
                         CCC
                     </div>
-                </cols>
+                </mn-col>
             </ng-template>
 
             <ng-template [rule]="'aaa.bbb.ddd'" [rules]="rules">
-                <cols [span]="2">
+                <mn-col [span]="2">
                     <div class="bordered hp-100">
                         DDD
                     </div>
-                </cols>
+                </mn-col>
             </ng-template>
 
             <ng-template [rule]="'aaa.bbb.eee'" [rules]="rules">
-                <cols [span]="3">
+                <mn-col [span]="3">
                     <div class="bordered hp-100">
                         EEE
                     </div>
-                </cols>
+                </mn-col>
             </ng-template>
 
-            <cols [span]="4" *rule="'aaa.bbb.fff'">
+            <mn-col [span]="4" *rule="'aaa.bbb.fff'">
                 <div class="bordered hp-100">
                     FFF
                 </div>
-            </cols>
-        </fill>
+            </mn-col>
+        </mn-fill>
 
         <div class="mt-8">
             <button btn (click)="show('ccc')">CCC</button>

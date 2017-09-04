@@ -2,7 +2,7 @@ import {CommonModule} from '@angular/common';
 import {MnCommonModule} from '../mn-common/mn-common.module';
 import {MnPanelModule} from '../mn-panel/mn-panel.module';
 import {MnReqModule} from '../mn-req/mn-req.module';
-import {FlexLayoutModule} from '../flex-layout/flex-layout.module';
+import {MnLayoutModule} from '../mn-layout/mn-layout.module';
 import {MnHandsontableModule} from '../mn-handsontable/mn-handsontable.module';
 import {MnEchartsRenderDirective} from './mn-echarts-render.directive';
 import {MnEchartsConversionComponent} from './mn-echarts.component';
@@ -16,7 +16,7 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
         MnCommonModule.forRoot(),
         MnPanelModule.forRoot(),
         MnReqModule.forRoot(),
-        FlexLayoutModule.forRoot(),
+        MnLayoutModule.forRoot(),
         MnHandsontableModule.forRoot()
     ],
     declarations: [

@@ -9,32 +9,32 @@ declare const mu: any;
 @Component({
     selector: 'mn-panel-toolbar',
     template: `
-        <row [gutter]="8" [where]="where">
-            <cols *ngIf="toolMap['fullscreen']" [order]="toolMap['fullscreen'].order">
+        <mn-row [gutter]="8" [where]="where">
+            <mn-col *ngIf="toolMap['fullscreen']" [order]="toolMap['fullscreen'].order">
                 <tool-expand *ngIf="!fullscreen" (fsClick)="fullscreen_click($event)"></tool-expand>
                 <tool-compress *ngIf="fullscreen" (fsClick)="fullscreen_click($event)"></tool-compress>
-            </cols>
+            </mn-col>
 
-            <cols *ngIf="toolMap['remove']" [order]="toolMap['remove'].order">
+            <mn-col *ngIf="toolMap['remove']" [order]="toolMap['remove'].order">
                 <i class="fa fa-remove" aria-hidden="true"></i>
-            </cols>
+            </mn-col>
 
-            <cols *ngIf="toolMap['reload']" [order]="toolMap['reload'].order">
+            <mn-col *ngIf="toolMap['reload']" [order]="toolMap['reload'].order">
                 <tool-refresh (fsClick)="toolMap['reload']._click($event)"></tool-refresh>
-            </cols>
+            </mn-col>
 
-            <cols *ngIf="toolMap['collapse']" [order]="toolMap['collapse'].order">
+            <mn-col *ngIf="toolMap['collapse']" [order]="toolMap['collapse'].order">
                 <tool-collapse-up></tool-collapse-up>
                 <tool-collapse-down></tool-collapse-down>
-            </cols>
+            </mn-col>
 
-            <cols *ngIf="toolMap['|']" [order]="toolMap['|'].order">
+            <mn-col *ngIf="toolMap['|']" [order]="toolMap['|'].order">
                 <ng-content></ng-content>
-            </cols>
+            </mn-col>
 
-            <ng-content select="cols"></ng-content>
+            <ng-content select="mn-col"></ng-content>
             <ng-content select="ng-template"></ng-content>
-        </row>
+        </mn-row>
     `,
     styles: [
     ]

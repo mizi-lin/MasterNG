@@ -7,38 +7,38 @@
 
     <mn-panel-s class="mt-8 bordered" title="mn-echarts-render::req-http get options">
         <req-http [req]="{url: './assets/store/echarts-options-bar.json'}" (result)="bar_options = $event.data; barOptions($event.data)">
-            <row>
-                <cols [span]="12">
+            <mn-row>
+                <mn-col [span]="12">
                     <div mn-echarts-render [options]="bar_options" [style.height.px]="300">
                     </div>
-                </cols>
+                </mn-col>
 
-                <cols [span]="12">
+                <mn-col [span]="12">
                     <div mn-echarts-render [options]="bar_options2">
                     </div>
-                </cols>
-            </row>
+                </mn-col>
+            </mn-row>
         </req-http>
     </mn-panel-s>
 
     <mn-panel-s class="mt-8 bordered" title="EchartsService::data conversion options">
         <req-http [req]="{url: './assets/store/pie.json'}" (result)="pieConversion($event.data); pie_data = $event.data">
-            <row>
-                <cols [span]="12">
+            <mn-row>
+                <mn-col [span]="12">
                     <div mn-echarts-render [options]="pie_options" [style.height.px]="300">
                     </div>
-                </cols>
+                </mn-col>
 
-                <cols [span]="12">
+                <mn-col [span]="12">
                     <mn-echarts [data]="pie_data" [type]="'pie'" [setting]="{subtype: 'annular', legend_show: false, selected: 1}" [style.height.px]="300">
                     </mn-echarts>
-                </cols>
-            </row>
+                </mn-col>
+            </mn-row>
         </req-http>
     </mn-panel-s>
 
-    <row [gutter]="16">
-        <cols [span]="12">
+    <mn-row [gutter]="16">
+        <mn-col [span]="12">
             <mn-echarts-panel class="mt-8 bordered" title="EchartsPanel::bar mn-panel && tools"
                            [req]="{url: './assets/store/echarts-bar.json'}"
                            [type]="'bar'"
@@ -46,8 +46,8 @@
                            [show_tools]="'toggle'"
                            height="300px">
             </mn-echarts-panel>
-        </cols>
-        <cols [span]="12">
+        </mn-col>
+        <mn-col [span]="12">
             <mn-echarts-box class="mt-8 bordered"
                            [req]="{url: './assets/store/pie.json'}"
                            [type]="'pie'"
@@ -56,11 +56,11 @@
                            [show_tools]="'toggle'"
                            [style.height]="'100%'">
             </mn-echarts-box>
-        </cols>
-    </row>
+        </mn-col>
+    </mn-row>
 
-    <row [gutter]="16" class="mt-8">
-        <cols [span]="12">
+    <mn-row [gutter]="16" class="mt-8">
+        <mn-col [span]="12">
             <mn-echarts-box class="mt-8 bordered"
                          (result)="radarResult($event)"
                          [req]="{url: './assets/store/echarts-radar.json'}"
@@ -69,15 +69,15 @@
                          [setting]="{legend_show: false, tooltip: true}"
                          [style.height]="'100%'">
             </mn-echarts-box>
-        </cols>
-        <cols [span]="12">
+        </mn-col>
+        <mn-col [span]="12">
             <mn-echarts-panel class="mt-8 bordered" title="EchartsPanel::world cloud"
                            [req]="{url: './assets/store/echarts-world-cloud.json'}"
                            [type]="'wordCloud'"
                            [tools]="['fullscreen', 'download', 'data_view', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload']"
                            height="300px">
             </mn-echarts-panel>
-        </cols>
-    </row>
+        </mn-col>
+    </mn-row>
 
 </div>

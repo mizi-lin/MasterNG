@@ -6,7 +6,7 @@ import {
 declare const mu: any;
 
 @Component({
-    selector: 'row, [row], fill, [fill]',
+    selector: 'mn-row, [mn-row], mn-fill, [mn-fill]',
     template: '<ng-content></ng-content>',
     styles: [
             `

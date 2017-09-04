@@ -13,12 +13,12 @@ import {ToolCollapseDownComponent, ToolCollapseUpComponent} from './tool-collaps
 import {MnPanelSimpleComponent} from './mn-panel-simple.component';
 import {ToolRefreshComponent} from './tool-refresh.component';
 import {NgZorroAntdModule} from 'ng-zorro-antd/src/release/ng-zorro-antd.module';
-import {FlexLayoutModule} from '../flex-layout/flex-layout.module';
+import {MnLayoutModule} from '../mn-layout/mn-layout.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        FlexLayoutModule.forRoot(),
+        MnLayoutModule.forRoot(),
         NgZorroAntdModule.forRoot()
     ],
     declarations: [
