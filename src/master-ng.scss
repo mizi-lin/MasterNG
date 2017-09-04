@@ -123,7 +123,7 @@ mn-panel-simple {
         mn-panel-toolbar {
             padding-right: $w2;
 
-            cols {
+            mn-col {
                 &:hover,
                 &.active {
                     color: $primary_background_color;
@@ -231,8 +231,7 @@ mn-collapse {
 /**
  * btn
  */
-
-[btn] {
+.mn-btn {
     display: inline-block;
 
     &:hover, &:focus {
@@ -251,13 +250,13 @@ mn-collapse {
 
         &.light {
             color: $primary_background_color;
-            &:hover, &:focus, &.active  {
+            &:hover, &:focus, &.active {
                 background: $primary_background_color;
                 color: #fff;
             }
         }
 
-        &.master-icon-symbol .symbol {
+        &.mn-icon-symbol .symbol {
             border-left: 1px solid $primary_border_color;
         }
     }
@@ -278,7 +277,7 @@ mn-collapse {
             }
         }
 
-        &.master-icon-symbol .symbol {
+        &.mn-icon-symbol .symbol {
             border-left: 1px solid $success_border_color;
         }
 
@@ -301,7 +300,7 @@ mn-collapse {
             }
         }
 
-        &.master-icon-symbol .symbol {
+        &.mn-icon-symbol .symbol {
             border-left: 1px solid $info_border_color;
         }
     }
@@ -322,7 +321,7 @@ mn-collapse {
             }
         }
 
-        &.master-icon-symbol .symbol {
+        &.mn-icon-symbol .symbol {
             border-left: 1px solid $warning_border_color;
         }
     }
@@ -343,7 +342,7 @@ mn-collapse {
             }
         }
 
-        &.master-icon-symbol .symbol {
+        &.mn-icon-symbol .symbol {
             border-left: 1px solid $danger_border_color;
         }
     }
@@ -356,7 +355,7 @@ mn-collapse {
             color: rgba(0, 0, 0, .3);
         }
 
-        &.master-icon-symbol .symbol {
+        &.mn-icon-symbol .symbol {
             border-left: 1px solid rgba(255, 255, 255, .2);
         }
     }
@@ -376,7 +375,7 @@ mn-collapse {
         }
     }
 
-    &.master-btn-circle {
+    &.mn-btn-circle {
         padding: 0;
         width: $btnHeight;
         border-radius: 50%;
@@ -386,7 +385,7 @@ mn-collapse {
         }
     }
 
-    &.master-btn-square {
+    &.mn-btn-square {
         padding: 0;
         width: $btnHeight;
 
@@ -395,13 +394,13 @@ mn-collapse {
         }
     }
 
-    &.master-btn-full {
+    &.mn-btn-full {
         display: block;
         padding: 0;
         width: 100%;
     }
 
-    &.master-icon-symbol {
+    &.mn-icon-symbol {
         padding-right: 43px;
 
         .symbol {
@@ -418,32 +417,32 @@ mn-collapse {
 
 }
 
-btn-group {
+mn-btn-group {
     display: inline-block;
     font-size: 0;
 
-    > btn-radio + btn-radio [btn].master-btn,
-    > btn-checkbox + btn-checkbox [btn].master-btn,
-    > [btn] + [btn] {
+    > mn-btn-radio + mn-btn-radio .mn-btn,
+    > mn-btn-checkbox + mn-btn-checkbox .mn-btn,
+    > .mn-btn + .mn-btn {
         border-left-color: transparent;
         border-radius: 0;
     }
 
-    > btn-radio:first-child [btn],
-    > btn-checkbox:first-child [btn],
-    > [btn]:first-child {
+    > mn-btn-radio:first-child .mn-btn,
+    > mn-btn-checkbox:first-child .mn-btn,
+    > .mn-btn:first-child {
         border-radius: 3px 0 0 3px;
     }
 
-    > btn-radio:last-child [btn].master-btn,
-    > btn-checkbox:last-child [btn].master-btn,
-    > [btn]:last-child {
+    > mn-btn-radio:last-child .mn-btn.mn-btn,
+    > mn-btn-checkbox:last-child .mn-btn.mn-btn,
+    > .mn-btn:last-child {
         border-radius: 0 3px 3px 0;
     }
 }
 
-btn-checkbox,
-btn-radio {
+mn-btn-checkbox,
+mn-btn-radio {
     input {
         position: absolute;
         left: -9999px;

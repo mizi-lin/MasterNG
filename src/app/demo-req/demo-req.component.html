@@ -25,13 +25,13 @@
     <mn-panel-s class="bordered mt-8" title="ReqDownload">
         <mn-row>
             <mn-col [span]="8">
-                <button btn (click)="download($event)">（文本）CSV 文件下载</button>
+                <button mn-btn (click)="download($event)">（文本）CSV 文件下载</button>
             </mn-col>
             <mn-col [span]="8">
-                <button btn (click)="csvDownload($event)">（文本）多维数组转CSV下载 </button>
+                <button mn-btn (click)="csvDownload($event)">（文本）多维数组转CSV下载 </button>
             </mn-col>
             <mn-col [span]="8">
-                <button btn (click)="zipDownload($event)">（二进制流）压缩包下载</button>
+                <button mn-btn (click)="zipDownload($event)">（二进制流）压缩包下载</button>
             </mn-col>
         </mn-row>
     </mn-panel-s>

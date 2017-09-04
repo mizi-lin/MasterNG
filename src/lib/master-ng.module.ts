@@ -1,7 +1,7 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {MnLayoutModule} from './mn-layout/mn-layout.module';
 import {MnPanelModule} from './mn-panel/mn-panel.module';
-import {ButtonModule} from './button/button.module';
+import {MnButtonModule} from './mn-button/mn-button.module';
 import {CalendarModule} from './calendar/calendar.module';
 import {MnLoaderBarModule} from './mn-loader-bar/mn-loader-bar.module';
 import {DynamicModule} from './dynamic/dynamic.module';
@@ -16,13 +16,13 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
     imports: [
         MnLayoutModule,
         MnPanelModule,
-        ButtonModule,
+        MnButtonModule,
         CalendarModule,
         MnLoaderBarModule,
         DynamicModule.forRoot([
             MnLayoutModule,
             MnPanelModule,
-            ButtonModule,
+            MnButtonModule,
             CalendarModule
         ]),
         MnReqModule,
@@ -35,7 +35,7 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
     exports: [
         MnLayoutModule,
         MnPanelModule,
-        ButtonModule,
+        MnButtonModule,
         CalendarModule,
         MnLoaderBarModule,
         DynamicModule,

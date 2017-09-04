@@ -1,22 +1,22 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ButtonComponent} from './button.component';
-import {ButtonGroupComponent} from './button-group.component';
-import {ButtonRadioComponent} from './button-radio.component';
-import {ButtonCheckComponent} from './button-check.component';
+import {MnButtonComponent} from './mn-button.component';
+import {ButtonGroupComponent} from './mn-button-group.component';
+import {ButtonRadioComponent} from './mn-button-radio.component';
+import {ButtonCheckComponent} from './mn-button-check.component';
 
 @NgModule({
     imports: [
         CommonModule
     ],
     declarations: [
-        ButtonComponent,
+        MnButtonComponent,
         ButtonGroupComponent,
         ButtonRadioComponent,
         ButtonCheckComponent
     ],
     exports: [
-        ButtonComponent,
+        MnButtonComponent,
         ButtonGroupComponent,
         ButtonRadioComponent,
         ButtonCheckComponent
@@ -24,10 +24,10 @@ import {ButtonCheckComponent} from './button-check.component';
     providers: [
     ]
 })
-export class ButtonModule {
+export class MnButtonModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: ButtonModule
+            ngModule: MnButtonModule
         };
     }
 }

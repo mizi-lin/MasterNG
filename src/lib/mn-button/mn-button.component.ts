@@ -3,7 +3,7 @@ import * as mu from 'mzmu';
 declare const mu: any;
 
 @Component({
-    selector: '[btn]',
+    selector: 'mn-btn, [mn-btn]',
     template: `
         <ng-template [ngIf]="icon">
             <i class="fa fa-{{icon}}"></i>
@@ -17,12 +17,12 @@ declare const mu: any;
             
     `
 })
-export class ButtonComponent implements OnInit, OnChanges {
-    @HostBinding('class.master-btn') masterBtn: boolean = true;
-    @HostBinding('class.master-btn-circle') masterBtnCircle: boolean = false;
-    @HostBinding('class.master-btn-square') masterBtnSquare: boolean = false;
-    @HostBinding('class.master-btn-full') masterBtnFull: boolean = false;
-    @HostBinding('class.master-icon-symbol') masterBtnSymbol: boolean = false;
+export class MnButtonComponent implements OnInit, OnChanges {
+    @HostBinding('class.mn-btn') masterBtn: boolean = true;
+    @HostBinding('class.mn-btn-circle') masterBtnCircle: boolean = false;
+    @HostBinding('class.mn-btn-square') masterBtnSquare: boolean = false;
+    @HostBinding('class.mn-btn-full') masterBtnFull: boolean = false;
+    @HostBinding('class.mn-icon-symbol') masterBtnSymbol: boolean = false;
 
     @Input() icon: string;
     @Input() shape: string;

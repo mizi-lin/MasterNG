@@ -3,7 +3,7 @@ import * as mu from 'mzmu';
 declare const mu: any;
 
 @Component({
-    selector: 'btn-group',
+    selector: 'mn-btn-group',
     template: `
         <ng-content></ng-content>            
     `
