@@ -7,7 +7,7 @@ import {MnRowComponent} from './mn-row.component';
 declare const mu: any;
 
 @Component({
-    selector: 'cols',
+    selector: 'mn-col',
     template: `
         <ng-content></ng-content>
     `

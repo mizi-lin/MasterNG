@@ -18,10 +18,10 @@ import {MnColComponent} from './mn-col.component';
     providers: [
     ]
 })
-export class FlexLayoutModule {
+export class MnLayoutModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: FlexLayoutModule
+            ngModule: MnLayoutModule
         };
     }
 }

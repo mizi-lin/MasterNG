@@ -14,78 +14,78 @@ declare const mu: any, jQuery: any;
                 <mn-panel-toolbar [tools]="_tools" [class.toggle]="show_tools === 'toggle'">
 
                     <ng-template [ngIf]="toolMap['download']">
-                        <cols (click)="download_click($event)"
+                        <mn-col (click)="download_click($event)"
                               [order]="toolMap['download'].order">
                             <i class="fa fa-download"></i>
-                        </cols>
+                        </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['data_view']">
-                        <cols (click)="dataView_click($event)"
+                        <mn-col (click)="dataView_click($event)"
                               [order]="toolMap['data_view'].order"
                               [class.active]="statusMap.dataView_click">
                             <i class="fa fa-database"></i>
-                        </cols>
+                        </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['line']">
-                        <cols *ngIf="_src_type | mu:'or':'bar'"
+                        <mn-col *ngIf="_src_type | mu:'or':'bar'"
                               (click)="line_click($event)"
                               [order]="toolMap['line'].order"
                               [class.active]="statusMap.line_click">
                             <i class="fa fa-line-chart"></i>
-                        </cols>
+                        </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['bar']">
-                        <cols *ngIf="_src_type | mu:'or':'line'"
+                        <mn-col *ngIf="_src_type | mu:'or':'line'"
                               (click)="bar_click($event)"
                               [order]="toolMap['bar'].order"
                               [class.active]="statusMap.bar_click">
                             <i class="fa fa-bar-chart"></i>
-                        </cols>
+                        </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['exchange']">
-                        <cols *ngIf="_src_type | mu:'or':'line':'bar'"
+                        <mn-col *ngIf="_src_type | mu:'or':'line':'bar'"
                               (click)="exchange_click($event)"
                               [order]="toolMap['exchange'].order"
                               [class.active]="statusMap.exchange_click">
                             <i class="fa fa-retweet"></i>
-                        </cols>
+                        </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['rate']">
-                        <cols *ngIf="_src_type | mu:'or':'line':'bar'"
+                        <mn-col *ngIf="_src_type | mu:'or':'line':'bar'"
                               (click)="precent_rate_click($event)"
                               [order]="toolMap['rate'].order"
                               [class.active]="statusMap.precent_rate_click">
                             <i class="fa fa-align-justify"></i>
-                        </cols>
+                        </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['label_all']">
-                        <cols *ngIf="_src_type | mu:'or':'line':'bar'"
+                        <mn-col *ngIf="_src_type | mu:'or':'line':'bar'"
                               (click)="label_show_all_click($event)"
                               [order]="toolMap['label_all'].order"
                               [class.active]="statusMap.label_show_all_click">
                             <i class="fa fa-ellipsis-h"></i>
-                        </cols>
+                        </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['legend']">
-                        <cols (click)="legend_show_click($event)"
+                        <mn-col (click)="legend_show_click($event)"
                               [order]="toolMap['legend'].order"
                               [class.active]="statusMap.legend_show_click">
                             <i class="fa fa-bookmark"></i>
-                        </cols>
+                        </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['reload']">
-                        <cols (click)="reload_click($event)"
+                        <mn-col (click)="reload_click($event)"
                               [order]="toolMap['reload'].order">
                             <i class="fa fa-refresh"></i>
-                        </cols>
+                        </mn-col>
                     </ng-template>
                 </mn-panel-toolbar>
             </mn-panel-header>

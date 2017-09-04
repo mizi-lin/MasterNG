@@ -1,5 +1,5 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {FlexLayoutModule} from './flex-layout/flex-layout.module';
+import {MnLayoutModule} from './mn-layout/mn-layout.module';
 import {MnPanelModule} from './mn-panel/mn-panel.module';
 import {ButtonModule} from './button/button.module';
 import {CalendarModule} from './calendar/calendar.module';
@@ -14,13 +14,13 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
 
 @NgModule({
     imports: [
-        FlexLayoutModule,
+        MnLayoutModule,
         MnPanelModule,
         ButtonModule,
         CalendarModule,
         MnLoaderBarModule,
         DynamicModule.forRoot([
-            FlexLayoutModule,
+            MnLayoutModule,
             MnPanelModule,
             ButtonModule,
             CalendarModule
@@ -33,7 +33,7 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
         MnRuleModule
     ],
     exports: [
-        FlexLayoutModule,
+        MnLayoutModule,
         MnPanelModule,
         ButtonModule,
         CalendarModule,
