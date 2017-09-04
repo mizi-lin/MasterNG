@@ -4,7 +4,7 @@
     min-height: 100%;
 }
 
-:host panel-body {
+:host mn-panel-body {
     padding: 0;
 }
 
@@ -13,13 +13,13 @@
 }
 
 :host {
-    panel-toolbar {
+    mn-panel-toolbar {
         &.toggle {
             display: none;
         }
     }
 
-    &:hover panel-toolbar.toggle {
+    &:hover mn-panel-toolbar.toggle {
         display: block;
     }
 }
@@ -27,12 +27,12 @@
 
 
 :host(echarts-box) {
-    panel,
-    panel-body {
+    mn-panel,
+    mn-panel-body {
         height: 100%;
     }
 
-    panel-header {
+    mn-panel-header {
         position: absolute;
         width: 100%;
         visibility: visible;

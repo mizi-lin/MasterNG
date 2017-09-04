@@ -1,13 +1,13 @@
 <div class="demo-req">
 
-    <panel-s class="bordered" title="ReqHttp"
+    <mn-panel-s class="bordered" title="ReqHttp"
         [tools]="[reload]">
         <req-http [req]="user_req" (result)="user_data = $event.data">
             {{user_data | json}}
         </req-http>
-    </panel-s>
+    </mn-panel-s>
 
-    <panel-s class="bordered mt-8" title="ReqResource"
+    <mn-panel-s class="bordered mt-8" title="ReqResource"
              [tools]="[{
                 name: 'reload',
                 click: resource_reload
@@ -19,10 +19,10 @@
                       (result)="demo_data = $event.data">
             {{demo_data | json}}
         </req-resource>
-    </panel-s>
+    </mn-panel-s>
 
 
-    <panel-s class="bordered mt-8" title="ReqDownload">
+    <mn-panel-s class="bordered mt-8" title="ReqDownload">
         <row>
             <cols [span]="8">
                 <button btn (click)="download($event)">（文本）CSV 文件下载</button>
@@ -34,6 +34,6 @@
                 <button btn (click)="zipDownload($event)">（二进制流）压缩包下载</button>
             </cols>
         </row>
-    </panel-s>
+    </mn-panel-s>
 
 </div>

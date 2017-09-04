@@ -29,7 +29,7 @@ import {MasterNgModule} from '../lib/master-ng.module';
         NgZorroAntdModule.forRoot(),
         RouterModule.forRoot([
             {
-                path: 'panel',
+                path: 'mn-panel',
                 component: DemoPanelComponent
             },
             {

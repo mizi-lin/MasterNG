@@ -3,23 +3,23 @@ import {
     Renderer2, OnChanges, SimpleChanges,
     AfterContentChecked
 } from '@angular/core';
-import {PanelComponent} from './panel.component';
+import {MnPanelComponent} from './mn-panel.component';
 declare const mu: any;
 
 @Component({
-    selector: 'panel-s,panel-simple',
+    selector: 'mn-panel-s,mn-panel-simple',
     template: `
-        <panel>
-            <panel-header>
-                <panel-title [innerHTML]="_title">
-                </panel-title>
-                <panel-toolbar [tools]="tools">
-                </panel-toolbar>
-            </panel-header>
-            <panel-body>
+        <mn-panel>
+            <mn-panel-header>
+                <mn-panel-title [innerHTML]="_title">
+                </mn-panel-title>
+                <mn-panel-toolbar [tools]="tools">
+                </mn-panel-toolbar>
+            </mn-panel-header>
+            <mn-panel-body>
                 <ng-content></ng-content>
-            </panel-body>
-        </panel>
+            </mn-panel-body>
+        </mn-panel>
     `,
     styles: [
             `
@@ -30,7 +30,7 @@ declare const mu: any;
             `
     ]
 })
-export class PanelSimpleComponent implements OnChanges, AfterContentChecked {
+export class MnPanelSimpleComponent implements OnChanges, AfterContentChecked {
 
     _title: string;
 
@@ -43,7 +43,7 @@ export class PanelSimpleComponent implements OnChanges, AfterContentChecked {
     @Input() tools: string[];
     @Input() theme: string;
 
-    @ViewChild(PanelComponent) _panel: any;
+    @ViewChild(MnPanelComponent) _panel: any;
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2) {

@@ -3,11 +3,11 @@ import {
     Renderer2, OnChanges, SimpleChanges, forwardRef, Inject, HostListener
 } from '@angular/core';
 import * as mu from 'mzmu';
-import {PanelComponent} from './panel.component';
+import {MnPanelComponent} from './mn-panel.component';
 declare const mu: any;
 
 @Component({
-    selector: 'panel-header',
+    selector: 'mn-panel-header',
     template: `
         <ng-content></ng-content>
     `,
@@ -22,13 +22,13 @@ declare const mu: any;
         `
     ]
 })
-export class PanelHeaderComponent implements OnInit {
+export class MnPanelHeaderComponent implements OnInit {
 
 
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2,
-                @Inject(forwardRef(() => PanelComponent)) private _panel) {
+                @Inject(forwardRef(() => MnPanelComponent)) private _panel) {
     }
 
     ngOnInit(): void {

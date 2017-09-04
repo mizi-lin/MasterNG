@@ -8,10 +8,10 @@ declare const mu: any, jQuery: any;
 @Component({
     selector: 'echarts-panel,echarts-box',
     template: `
-        <panel>
-            <panel-header>
-                <panel-title [innerHTML]="_title"></panel-title>
-                <panel-toolbar [tools]="_tools" [class.toggle]="show_tools === 'toggle'">
+        <mn-panel>
+            <mn-panel-header>
+                <mn-panel-title [innerHTML]="_title"></mn-panel-title>
+                <mn-panel-toolbar [tools]="_tools" [class.toggle]="show_tools === 'toggle'">
 
                     <ng-template [ngIf]="toolMap['download']">
                         <cols (click)="download_click($event)"
@@ -87,9 +87,9 @@ declare const mu: any, jQuery: any;
                             <i class="fa fa-refresh"></i>
                         </cols>
                     </ng-template>
-                </panel-toolbar>
-            </panel-header>
-            <panel-body>
+                </mn-panel-toolbar>
+            </mn-panel-header>
+            <mn-panel-body>
                 <req-http [req]="req" (result)="_data = $event.data" #panel>
                     <mn-handsontable *ngIf="handson" [data]="_dataView"></mn-handsontable>
                     <echarts *ngIf="!handson"
@@ -101,14 +101,14 @@ declare const mu: any, jQuery: any;
                              (result)="_result($event)"
                              (mycharts)="mycharts($event)"></echarts>
                 </req-http>
-            </panel-body>
-        </panel>
+            </mn-panel-body>
+        </mn-panel>
     `,
     styleUrls: ['./echarts.scss']
 })
 export class EchartsPanelComponent implements OnChanges {
 
-    @ViewChild('panel', {read: ElementRef}) _panel: ElementRef;
+    @ViewChild('mn-panel', {read: ElementRef}) _panel: ElementRef;
 
     @Input() req: any;
     @Input() type: string;
