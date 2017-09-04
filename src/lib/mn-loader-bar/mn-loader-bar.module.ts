@@ -1,24 +1,24 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {LoaderBarComponent} from './loader-bar.component';
+import {MnLoaderBarComponent} from './mn-loader-bar.component';
 
 @NgModule({
     imports: [
         CommonModule
     ],
     declarations: [
-        LoaderBarComponent
+        MnLoaderBarComponent
     ],
     exports: [
-        LoaderBarComponent
+        MnLoaderBarComponent
     ],
     providers: [
     ]
 })
-export class LoaderBarModule {
+export class MnLoaderBarModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: LoaderBarModule
+            ngModule: MnLoaderBarModule
         };
     }
 }

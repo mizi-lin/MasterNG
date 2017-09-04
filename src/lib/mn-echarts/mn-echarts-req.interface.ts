@@ -1,4 +1,4 @@
-export interface EchartsReq {
+export interface MnEchartsReq {
     // 异步调用链接
     url?: string;
     // -> method ::: ajax request method; api 和 url 不能同时赋值

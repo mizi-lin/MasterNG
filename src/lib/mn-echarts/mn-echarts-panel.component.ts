@@ -6,7 +6,7 @@ import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services'
 declare const mu: any, jQuery: any;
 
 @Component({
-    selector: 'echarts-panel,echarts-box',
+    selector: 'mn-echarts-panel, mn-echarts-box',
     template: `
         <mn-panel>
             <mn-panel-header>
@@ -92,14 +92,14 @@ declare const mu: any, jQuery: any;
             <mn-panel-body>
                 <req-http [req]="req" (result)="_data = $event.data" #panel>
                     <mn-handsontable *ngIf="handson" [data]="_dataView"></mn-handsontable>
-                    <echarts *ngIf="!handson"
+                    <mn-echarts *ngIf="!handson"
                              [style.height]="height"
                              [setting]="setting"
                              [options]="options"
                              [type]="type"
                              [data]="_data"
                              (result)="_result($event)"
-                             (mycharts)="mycharts($event)"></echarts>
+                             (mycharts)="mycharts($event)"></mn-echarts>
                 </req-http>
             </mn-panel-body>
         </mn-panel>

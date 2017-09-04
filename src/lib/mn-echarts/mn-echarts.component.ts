@@ -9,9 +9,9 @@ declare const mu: any;
  */
 
 @Component({
-    selector: 'echarts',
+    selector: 'mn-echarts',
     template: `
-        <div echarts-render [options]="echarts_options" (mycharts)="mycharts.emit($event)"></div>
+        <div mn-echarts-render [options]="echarts_options" (mycharts)="mycharts.emit($event)"></div>
     `,
     styles: [
             `
@@ -26,7 +26,7 @@ declare const mu: any;
     ]
 
 })
-export class EchartsConversionComponent implements OnInit, OnChanges {
+export class MnEchartsConversionComponent implements OnInit, OnChanges {
 
     @Input() data: any;
     @Input() options: any;

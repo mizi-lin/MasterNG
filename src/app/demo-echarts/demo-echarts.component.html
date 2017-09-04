@@ -1,20 +1,20 @@
 <div class="demo-echarts">
 
-    <mn-panel-s class="bordered" title="echarts-render::injector options">
-        <div echarts-render [options]="options_1" [style.height.px]="300">
+    <mn-panel-s class="bordered" title="mn-echarts-render::injector options">
+        <div mn-echarts-render [options]="options_1" [style.height.px]="300">
         </div>
     </mn-panel-s>
 
-    <mn-panel-s class="mt-8 bordered" title="echarts-render::req-http get options">
+    <mn-panel-s class="mt-8 bordered" title="mn-echarts-render::req-http get options">
         <req-http [req]="{url: './assets/store/echarts-options-bar.json'}" (result)="bar_options = $event.data; barOptions($event.data)">
             <row>
                 <cols [span]="12">
-                    <div echarts-render [options]="bar_options" [style.height.px]="300">
+                    <div mn-echarts-render [options]="bar_options" [style.height.px]="300">
                     </div>
                 </cols>
 
                 <cols [span]="12">
-                    <div echarts-render [options]="bar_options2">
+                    <div mn-echarts-render [options]="bar_options2">
                     </div>
                 </cols>
             </row>
@@ -25,13 +25,13 @@
         <req-http [req]="{url: './assets/store/pie.json'}" (result)="pieConversion($event.data); pie_data = $event.data">
             <row>
                 <cols [span]="12">
-                    <div echarts-render [options]="pie_options" [style.height.px]="300">
+                    <div mn-echarts-render [options]="pie_options" [style.height.px]="300">
                     </div>
                 </cols>
 
                 <cols [span]="12">
-                    <echarts [data]="pie_data" [type]="'pie'" [setting]="{subtype: 'annular', legend_show: false, selected: 1}" [style.height.px]="300">
-                    </echarts>
+                    <mn-echarts [data]="pie_data" [type]="'pie'" [setting]="{subtype: 'annular', legend_show: false, selected: 1}" [style.height.px]="300">
+                    </mn-echarts>
                 </cols>
             </row>
         </req-http>
@@ -39,44 +39,44 @@
 
     <row [gutter]="16">
         <cols [span]="12">
-            <echarts-panel class="mt-8 bordered" title="EchartsPanel::bar mn-panel && tools"
+            <mn-echarts-panel class="mt-8 bordered" title="EchartsPanel::bar mn-panel && tools"
                            [req]="{url: './assets/store/echarts-bar.json'}"
                            [type]="'bar'"
                            [tools]="['fullscreen', 'download', 'data_view', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload']"
                            [show_tools]="'toggle'"
                            height="300px">
-            </echarts-panel>
+            </mn-echarts-panel>
         </cols>
         <cols [span]="12">
-            <echarts-box class="mt-8 bordered"
+            <mn-echarts-box class="mt-8 bordered"
                            [req]="{url: './assets/store/pie.json'}"
                            [type]="'pie'"
                            [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"
                            [setting]="{legend_position: 'center bottom'}"
                            [show_tools]="'toggle'"
                            [style.height]="'100%'">
-            </echarts-box>
+            </mn-echarts-box>
         </cols>
     </row>
 
     <row [gutter]="16" class="mt-8">
         <cols [span]="12">
-            <echarts-box class="mt-8 bordered"
+            <mn-echarts-box class="mt-8 bordered"
                          (result)="radarResult($event)"
                          [req]="{url: './assets/store/echarts-radar.json'}"
                          [type]="'radar'"
                          [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"
                          [setting]="{legend_show: false, tooltip: true}"
                          [style.height]="'100%'">
-            </echarts-box>
+            </mn-echarts-box>
         </cols>
         <cols [span]="12">
-            <echarts-panel class="mt-8 bordered" title="EchartsPanel::world cloud"
+            <mn-echarts-panel class="mt-8 bordered" title="EchartsPanel::world cloud"
                            [req]="{url: './assets/store/echarts-world-cloud.json'}"
                            [type]="'wordCloud'"
                            [tools]="['fullscreen', 'download', 'data_view', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload']"
                            height="300px">
-            </echarts-panel>
+            </mn-echarts-panel>
         </cols>
     </row>
 

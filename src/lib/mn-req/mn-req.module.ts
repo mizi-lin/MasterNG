@@ -7,7 +7,7 @@ import {HttpInterceptorCls} from './mn-httpInterceptor.cls';
 import {MnResource} from './mn-resource';
 import {MnReqNoDataComponent} from './mn-req-nodata.component';
 
-import {LoaderBarModule} from '../loader-bar/loader-bar.module';
+import {MnLoaderBarModule} from '../mn-loader-bar/mn-loader-bar.module';
 import {HttpLoaderComponent} from './mn-http-loader.component';
 import {MnReqService} from './mn-req.service';
 import {DynamicModule} from '../dynamic/dynamic.module';
@@ -29,7 +29,7 @@ import {DynamicModule} from '../dynamic/dynamic.module';
         CommonModule,
         HttpModule,
         DynamicModule.forRoot(),
-        LoaderBarModule.forRoot()
+        MnLoaderBarModule.forRoot()
 
     ],
     declarations: [

@@ -19,9 +19,9 @@ import 'echarts-wordcloud/dist/echarts-wordcloud.min';
 declare const mu: any;
 
 @Directive({
-    selector: '[echarts-render]'
+    selector: '[mn-echarts-render]'
 })
-export class EchartsRenderDirective implements OnChanges, OnDestroy, AfterViewInit {
+export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterViewInit {
     @Input() options: any;
     @Input() dataset: any[];
     @Input() theme: string;
