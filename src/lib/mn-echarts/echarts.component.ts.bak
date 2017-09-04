@@ -1,5 +1,5 @@
 import {Component, Injectable, OnChanges, Input, Output, EventEmitter, SimpleChanges} from '@angular/core';
-import {EchartsReq} from './echarts-req.interface';
+import {MnEchartsReq} from './echarts-req.interface';
 import {EchartsServ} from './echarts.service';
 import './echarts.scss';
 declare const mu: any;
@@ -49,7 +49,7 @@ export class EchartsComponent implements OnChanges {
     @Input() width?: string = '100%';
 
     // -> req ::: 异步请求信息
-    @Input() req?: EchartsReq = {};
+    @Input() req?: MnEchartsReq = {};
 
     // -> data ::: 数据传递
     @Input() data?: any[] = [];

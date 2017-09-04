@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EchartsService} from '../../lib/echarts/echarts.service';
+import {EchartsService} from '../../lib/mn-echarts/echarts.service';
 declare const mu: any;
 
 @Component({

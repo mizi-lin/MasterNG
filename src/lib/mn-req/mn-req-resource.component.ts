@@ -8,8 +8,8 @@ declare let mu: any;
 @Component({
     selector: 'req-resource',
     template: `
-        <loader-bar *ngIf="loading"
-                    [progress]="process"></loader-bar>
+        <mn-loader-bar *ngIf="loading"
+                       [progress]="process"></mn-loader-bar>
         <dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></dynamic-component>
         <ng-content *ngIf="!noData"></ng-content>
     `,

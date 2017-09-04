@@ -4,7 +4,7 @@ import * as mu from 'mzmu';
 declare const mu: any;
 
 @Component({
-    selector: 'loader-bar',
+    selector: 'mn-loader-bar',
     styleUrls: ['./loader-bar.scss'],
     template: `
         <div [style.width.%]="width"
@@ -13,7 +13,7 @@ declare const mu: any;
         </div>
     `
 })
-export class LoaderBarComponent implements OnChanges {
+export class MnLoaderBarComponent implements OnChanges {
 
     @Input() position: string;
 
