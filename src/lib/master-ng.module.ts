@@ -2,9 +2,9 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {MnLayoutModule} from './mn-layout/mn-layout.module';
 import {MnPanelModule} from './mn-panel/mn-panel.module';
 import {MnButtonModule} from './mn-button/mn-button.module';
-import {CalendarModule} from './calendar/calendar.module';
+import {CalendarModule} from './mn-calendar/mn-calendar.module';
 import {MnLoaderBarModule} from './mn-loader-bar/mn-loader-bar.module';
-import {DynamicModule} from './dynamic/dynamic.module';
+import {MnDynamicModule} from './mn-dynamic/mn-dynamic.module';
 import {MnReqModule} from './mn-req/mn-req.module';
 import {MnEchartsModule} from './mn-echarts/mn-echarts.module';
 import {MnHandsontableModule} from './mn-handsontable/mn-handsontable.module';
@@ -19,7 +19,7 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
         MnButtonModule,
         CalendarModule,
         MnLoaderBarModule,
-        DynamicModule.forRoot([
+        MnDynamicModule.forRoot([
             MnLayoutModule,
             MnPanelModule,
             MnButtonModule,
@@ -38,7 +38,7 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
         MnButtonModule,
         CalendarModule,
         MnLoaderBarModule,
-        DynamicModule,
+        MnDynamicModule,
         MnReqModule,
         MnEchartsModule,
         MnHandsontableModule,
