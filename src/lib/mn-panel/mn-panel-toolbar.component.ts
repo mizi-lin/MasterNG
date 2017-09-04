@@ -7,7 +7,7 @@ import * as mu from 'mzmu';
 declare const mu: any;
 
 @Component({
-    selector: 'panel-toolbar',
+    selector: 'mn-panel-toolbar',
     template: `
         <row [gutter]="8" [where]="where">
             <cols *ngIf="toolMap['fullscreen']" [order]="toolMap['fullscreen'].order">

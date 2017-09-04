@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {MnCommonModule} from '../mn-common/mn-common.module';
-import {PanelModule} from '../panel/panel.module';
+import {MnPanelModule} from '../mn-panel/mn-panel.module';
 import {MnReqModule} from '../mn-req/mn-req.module';
 import {FlexLayoutModule} from '../flex-layout/flex-layout.module';
 import {MnHandsontableModule} from '../mn-handsontable/mn-handsontable.module';
@@ -14,7 +14,7 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
     imports: [
         CommonModule,
         MnCommonModule.forRoot(),
-        PanelModule.forRoot(),
+        MnPanelModule.forRoot(),
         MnReqModule.forRoot(),
         FlexLayoutModule.forRoot(),
         MnHandsontableModule.forRoot()

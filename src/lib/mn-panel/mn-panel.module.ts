@@ -1,16 +1,16 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CollapseComponent} from './collapse.component';
-import {PanelComponent} from './panel.component';
-import {PanelHeaderComponent} from './panel-header.component';
-import {PanelTitleComponent} from './panel-title.component';
-import {PanelBodyComponent} from './panel-body.component';
-import {PanelBottomComponent} from './panel-bottom.component';
-import {PanelToolbarComponent} from './panel-toolbar.component';
+import {MnCollapseComponent} from './mn-collapse.component';
+import {MnPanelComponent} from './mn-panel.component';
+import {MnPanelHeaderComponent} from './mn-panel-header.component';
+import {MnPanelTitleComponent} from './mn-panel-title.component';
+import {MnPanelBodyComponent} from './mn-panel-body.component';
+import {MnPanelBottomComponent} from './mn-panel-bottom.component';
+import {PanelToolbarComponent} from './mn-panel-toolbar.component';
 import {ToolExpandComponent} from './tool-expand.component';
 import {ToolCompressComponent} from './tool-compress.component';
 import {ToolCollapseDownComponent, ToolCollapseUpComponent} from './tool-collapse.component';
-import {PanelSimpleComponent} from './panel-simple.component';
+import {MnPanelSimpleComponent} from './mn-panel-simple.component';
 import {ToolRefreshComponent} from './tool-refresh.component';
 import {NgZorroAntdModule} from 'ng-zorro-antd/src/release/ng-zorro-antd.module';
 import {FlexLayoutModule} from '../flex-layout/flex-layout.module';
@@ -22,41 +22,41 @@ import {FlexLayoutModule} from '../flex-layout/flex-layout.module';
         NgZorroAntdModule.forRoot()
     ],
     declarations: [
-        PanelComponent,
-        PanelHeaderComponent,
-        PanelTitleComponent,
+        MnPanelComponent,
+        MnPanelHeaderComponent,
+        MnPanelTitleComponent,
         PanelToolbarComponent,
-        PanelBodyComponent,
-        PanelBottomComponent,
+        MnPanelBodyComponent,
+        MnPanelBottomComponent,
         ToolExpandComponent,
         ToolCompressComponent,
         ToolCollapseDownComponent,
         ToolCollapseUpComponent,
         ToolRefreshComponent,
-        CollapseComponent,
-        PanelSimpleComponent
+        MnCollapseComponent,
+        MnPanelSimpleComponent
     ],
     exports: [
-        PanelComponent,
-        PanelHeaderComponent,
-        PanelTitleComponent,
+        MnPanelComponent,
+        MnPanelHeaderComponent,
+        MnPanelTitleComponent,
         PanelToolbarComponent,
-        PanelBodyComponent,
-        PanelBottomComponent,
+        MnPanelBodyComponent,
+        MnPanelBottomComponent,
         ToolExpandComponent,
         ToolCompressComponent,
         ToolCollapseDownComponent,
         ToolCollapseUpComponent,
-        CollapseComponent,
-        PanelSimpleComponent
+        MnCollapseComponent,
+        MnPanelSimpleComponent
     ],
     providers: [
     ]
 })
-export class PanelModule {
+export class MnPanelModule {
     static forRoot(): ModuleWithProviders {
         return {
-            ngModule: PanelModule
+            ngModule: MnPanelModule
         };
     }
 }

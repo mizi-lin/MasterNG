@@ -6,7 +6,7 @@ import * as mu from 'mzmu';
 declare const mu: any;
 
 @Component({
-    selector: 'panel-body',
+    selector: 'mn-panel-bottom',
     template: `
         <ng-content></ng-content>
     `,
@@ -16,7 +16,7 @@ declare const mu: any;
         `
     ]
 })
-export class PanelBodyComponent implements OnInit {
+export class MnPanelBottomComponent implements OnInit {
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2) {

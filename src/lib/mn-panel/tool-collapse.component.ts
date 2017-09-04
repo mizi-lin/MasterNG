@@ -3,7 +3,7 @@ import {
     Renderer2, OnChanges, SimpleChanges, HostListener, Host, forwardRef, Inject, Output, EventEmitter
 } from '@angular/core';
 import * as mu from 'mzmu';
-import {PanelComponent} from './panel.component';
+import {MnPanelComponent} from './mn-panel.component';
 declare const mu: any;
 
 @Component({
@@ -27,7 +27,7 @@ export class ToolCollapseDownComponent implements OnInit {
                 // -> 父级 component
                 // @Host() private _panel: PanelComponent
                 // -> 祖踪 component
-                @Inject(forwardRef(() => PanelComponent)) public _panel) {
+                @Inject(forwardRef(() => MnPanelComponent)) public _panel) {
     }
 
     ngOnInit(): void {
@@ -56,7 +56,7 @@ export class ToolCollapseUpComponent implements OnInit {
                 // -> 父级 component
                 // @Host() private _panel: PanelComponent
                 // -> 祖踪 component
-                @Inject(forwardRef(() => PanelComponent)) public _panel) {
+                @Inject(forwardRef(() => MnPanelComponent)) public _panel) {
 
     }
 

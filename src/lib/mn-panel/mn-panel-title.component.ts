@@ -3,11 +3,11 @@ import {
     Renderer2, OnChanges, SimpleChanges, forwardRef, Inject, HostListener
 } from '@angular/core';
 import * as mu from 'mzmu';
-import {PanelComponent} from './panel.component';
+import {MnPanelComponent} from './mn-panel.component';
 declare const mu: any;
 
 @Component({
-    selector: 'panel-title',
+    selector: 'mn-panel-title',
     template: `
         <ng-content></ng-content>
     `,
@@ -16,7 +16,7 @@ declare const mu: any;
         `
     ]
 })
-export class PanelTitleComponent implements OnInit {
+export class MnPanelTitleComponent implements OnInit {
 
     @HostListener('click', ['$event']) onClick(event: any) {
         if (this._panel.collapse) {
@@ -26,7 +26,7 @@ export class PanelTitleComponent implements OnInit {
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2,
-                @Inject(forwardRef(() => PanelComponent)) private _panel) {
+                @Inject(forwardRef(() => MnPanelComponent)) private _panel) {
     }
 
     ngOnInit(): void {

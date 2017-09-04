@@ -3,7 +3,7 @@ import {
     Renderer2, OnChanges, SimpleChanges, HostListener, Host, forwardRef, Inject, Output, EventEmitter
 } from '@angular/core';
 import * as mu from 'mzmu';
-import {PanelComponent} from './panel.component';
+import {MnPanelComponent} from './mn-panel.component';
 
 declare const mu: any;
 
@@ -32,7 +32,7 @@ export class ToolCompressComponent implements OnInit {
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2,
-                @Inject(forwardRef(() => PanelComponent)) private _panel) {
+                @Inject(forwardRef(() => MnPanelComponent)) private _panel) {
     }
 
     ngOnInit(): void {

@@ -1,18 +1,18 @@
 <div class="demo-panel">
-    <panel type="portlet" class="mt-16 light bordered">
-        <panel-header>
-            <panel-title>
+    <mn-panel type="portlet" class="mt-16 light bordered">
+        <mn-panel-header>
+            <mn-panel-title>
                 Panel
                 <small>flex layout(row)</small>
-            </panel-title>
-            <panel-toolbar [tools]="['fullscreen', 'collapse', 'remove']">
+            </mn-panel-title>
+            <mn-panel-toolbar [tools]="['fullscreen', 'collapse', 'remove']">
                 <cols [order]="21">
                     <i class="fa fa-battery-1" aria-hidden="true"></i>
                 </cols>
-            </panel-toolbar>
-        </panel-header>
+            </mn-panel-toolbar>
+        </mn-panel-header>
 
-        <panel-body>
+        <mn-panel-body>
             <div>栅格化布局，最大24栅格; 单元格自定义宽度，会破坏栅格化布局</div>
 
             <row [style.minHeight.px]="100" [gutter]="16" class="demo-panel-row mt-8">
@@ -80,10 +80,10 @@
                     <div class="bordered">8</div>
                 </cols>
             </row>
-        </panel-body>
-    </panel>
+        </mn-panel-body>
+    </mn-panel>
 
-    <panel-s class="bordered mt-16" title="Panel-Simple::flex layout(fill)">
+    <mn-panel-s class="bordered mt-16" title="mn-panel-simple::flex layout(fill)">
         <div>满格化布局，默认单元格铺满宽度；单元格自定义宽度，不会破坏满格化布局</div>
         <fill [style.minHeight.px]="100" [gutter]="16" class="demo-panel-row mt-8">
             <cols [span]="5">
@@ -149,17 +149,17 @@
                 <div class="bordered">8</div>
             </cols>
         </fill>
-    </panel-s>
+    </mn-panel-s>
 
-    <panel-s class="mt-16 primary bordered" [title]="'将进酒'" [tools]="['collapse']">
+    <mn-panel-s class="mt-16 primary bordered" [title]="'将进酒'" [tools]="['collapse']">
         君不见黄河之水天上来, 奔流到海不复回
         <br />
         君不见高堂明镜悲白发, 朝如青丝暮成雪
-    </panel-s>
+    </mn-panel-s>
 
-    <panel-s class="mt-16 bordered" [title]="'COLLAPSE::accordion'">
-        <collapse class="bordered" [accordion]="0">
-            <panel-s title="赤壁 <small>杜牧</small>" [tools]="['collapse']">
+    <mn-panel-s class="mt-16 bordered" [title]="'COLLAPSE::accordion'">
+        <mn-collapse class="bordered" [accordion]="0">
+            <mn-panel-s title="赤壁 <small>杜牧</small>" [tools]="['collapse']">
                 折戟沉沙铁未销，
                 <br />
                 自将磨洗认前朝。
@@ -167,8 +167,8 @@
                 东风不与周郎便，
                 <br />
                 铜雀春深锁二乔。
-            </panel-s>
-            <panel-s title="蝉 <small>李商隐</small>" [tools]="['collapse']">
+            </mn-panel-s>
+            <mn-panel-s title="蝉 <small>李商隐</small>" [tools]="['collapse']">
                 本以高难饱，徒劳恨费声。
                 <br />
                 五更疏欲断，一树碧无情。
@@ -176,8 +176,8 @@
                 薄宦梗犹泛，故园芜已平。
                 <br />
                 烦君最相警，我亦举家清。
-            </panel-s>
-            <panel-s title="送人东游 <small>温庭筠</small>"  [tools]="['collapse']">
+            </mn-panel-s>
+            <mn-panel-s title="送人东游 <small>温庭筠</small>"  [tools]="['collapse']">
                 荒戌落黄叶，浩然离故关。
                 <br />
                 高风汉阳渡，初日郢门山。
@@ -185,9 +185,9 @@
                 江上几人在，天涯孤棹还。
                 <br />
                 何当重相见，樽酒慰离颜。
-            </panel-s>
-        </collapse>
-    </panel-s>
+            </mn-panel-s>
+        </mn-collapse>
+    </mn-panel-s>
 
 
 </div>

@@ -2,12 +2,12 @@ import {
     Component, Input, ElementRef, Renderer2, OnChanges, SimpleChanges, ContentChild, HostBinding,
     AfterContentChecked
 } from '@angular/core';
-import {PanelBodyComponent} from './panel-body.component';
+import {MnPanelBodyComponent} from './mn-panel-body.component';
 
 declare const mu: any;
 
 @Component({
-    selector: 'panel',
+    selector: 'mn-panel',
     template: `
         <ng-content></ng-content>
     `,
@@ -19,15 +19,15 @@ declare const mu: any;
             `
     ]
 })
-export class PanelComponent implements OnChanges, AfterContentChecked {
+export class MnPanelComponent implements OnChanges, AfterContentChecked {
 
-    @ContentChild(PanelBodyComponent) panelBody: any;
+    @ContentChild(MnPanelBodyComponent) panelBody: any;
 
     @Input() where: string;
 
-    // @ContentChildren(PanelBodyComponent, {descendants: true}) ss: any;
-    // @ContentChild(forwardRef(() => PanelBodyComponent)) children: any;
-    // @ViewChild(PanelBodyComponent) ss: any;
+    // @ContentChildren(MnPanelBodyComponent, {descendants: true}) ss: any;
+    // @ContentChild(forwardRef(() => MnPanelBodyComponent)) children: any;
+    // @ViewChild(MnPanelBodyComponent) ss: any;
 
     isCollapse = true;
     isChanges = false;
