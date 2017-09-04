@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {MnReqService} from './mn-req.service';
 
-
 @Component({
     selector: 'http-loader',
     template: `
         <mn-loader-bar [progress]="progress" position="fixed" [where]="'http-load'"></mn-loader-bar>
     `
 })
-export class HttpLoaderComponent implements OnInit {
+export class MnHttpLoaderComponent implements OnInit {
 
     progress: number;
 

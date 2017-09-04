@@ -8,9 +8,10 @@ import {MnResource} from './mn-resource';
 import {MnReqNoDataComponent} from './mn-req-nodata.component';
 
 import {MnLoaderBarModule} from '../mn-loader-bar/mn-loader-bar.module';
-import {HttpLoaderComponent} from './mn-http-loader.component';
+import {MnHttpLoaderComponent} from './mn-http-loader.component';
 import {MnReqService} from './mn-req.service';
 import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
+import {MnFileDownloadDirective} from './mn-file-download.directive';
 
 /**
  * ReqModule
@@ -36,12 +37,16 @@ import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
         ReqHttpComponent,
         MnReqResourceComponent,
         MnReqNoDataComponent,
-        HttpLoaderComponent
+        MnHttpLoaderComponent,
+
+        MnFileDownloadDirective
     ],
     exports: [
         ReqHttpComponent,
         MnReqResourceComponent,
-        HttpLoaderComponent
+        MnReqNoDataComponent,
+        MnHttpLoaderComponent,
+        MnFileDownloadDirective
     ],
     entryComponents: [
         MnReqNoDataComponent
