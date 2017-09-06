@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
 import {EchartsService} from './echarts.service';
-import './jquery.resize.js';
+import '../assets/jquery.resize.js';
 import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services';
 
 declare const mu: any, jQuery: any;

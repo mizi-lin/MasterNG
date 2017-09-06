@@ -9,6 +9,9 @@ declare const mu: any;
 })
 export class DemoEchartsComponent implements OnInit {
 
+    bar_options: any;
+    pie_data: any;
+
     options_1: any = {
         title: {
             text: '折线图堆叠'
