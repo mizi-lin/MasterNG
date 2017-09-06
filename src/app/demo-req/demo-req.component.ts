@@ -12,6 +12,9 @@ declare const mu: any;
 })
 export class DemoReqComponent implements OnInit {
 
+    user_data: any;
+    demo_data: any;
+
     user_req: any = {
         url: './assets/store/user.json'
     };
@@ -54,7 +57,7 @@ export class DemoReqComponent implements OnInit {
         });
     }
 
-    constructor(private _rp: ResourcePool, private _http: Http, private _mnFileServ: MnFileSaverServices) {
+    constructor(public _rp: ResourcePool, private _http: Http, private _mnFileServ: MnFileSaverServices) {
     }
 
     ngOnInit() {

@@ -1,7 +1,7 @@
 import {Directive, EventEmitter, HostBinding, HostListener, Input, Output} from '@angular/core';
 
 declare const mu: any, jQuery: any;
-import './jquery.file-download.js';
+import '../assets/jquery.file-download.js';
 import {Http} from '@angular/http';
 import {MnReqService} from './mn-req.service';
 import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services';
