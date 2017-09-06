@@ -1,7 +1,6 @@
 :host {
     display: block;
     width: 100%;
-    min-height: 100%;
 }
 
 :host mn-panel-body {
@@ -24,9 +23,21 @@
     }
 }
 
+:host {
+    /deep/ .mn-dataView {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        z-index: 999;
+        padding: 16px;
+        overflow: auto;
+    }
+}
 
-
-:host(echarts-box) {
+:host(mn-echarts-box) {
     mn-panel,
     mn-panel-body {
         height: 100%;

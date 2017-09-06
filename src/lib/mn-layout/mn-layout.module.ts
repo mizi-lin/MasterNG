@@ -16,6 +16,7 @@ import {MnColComponent} from './mn-col.component';
         MnColComponent
     ],
     providers: [
+        MnRowComponent
     ]
 })
 export class MnLayoutModule {

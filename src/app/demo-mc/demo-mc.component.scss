@@ -1,0 +1,36 @@
+.demo-mc {
+    height: 100%;
+
+    header {
+        font-size: 32px;
+
+        .logo-mc {
+            background: url("../../assets/images/mc/mc.png") center no-repeat;
+            background-size: contain;
+        }
+
+        .logo-roi {
+            background: url("../../assets/images/mc/roi.png") center no-repeat;
+            background-size: contain;
+        }
+
+        .logo-admaster {
+            background: url("../../assets/images/mc/admaster.png") center no-repeat;
+            background-size: contain;
+        }
+
+        .logo-weibo {
+            background: url("../../assets/images/mc/weibo.png") center no-repeat;
+            background-size: contain;
+        }
+    }
+
+    mn-panel-header {
+
+        mn-row mn-col {
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+    }
+}

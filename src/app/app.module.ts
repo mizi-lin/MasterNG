@@ -14,6 +14,7 @@ import {MnI18nServices} from '../lib/mn-i18n/mn-i18n.services';
 import {MnRuleServices} from '../lib/mn-rule/mn-rule.services';
 import {NgZorroAntdModule} from 'ng-zorro-antd/src/release/ng-zorro-antd.module';
 import {MasterNgModule} from '../lib/master-ng.module';
+import {DemoMcComponent} from './demo-mc/demo-mc.component';
 
 @NgModule({
     declarations: [
@@ -22,14 +23,15 @@ import {MasterNgModule} from '../lib/master-ng.module';
         DemoReqComponent,
         DemoEchartsComponent,
         DemoI18nComponent,
-        DemoRuleComponent
+        DemoRuleComponent,
+        DemoMcComponent
     ],
     imports: [
         BrowserModule,
         NgZorroAntdModule.forRoot(),
         RouterModule.forRoot([
             {
-                path: 'mn-panel',
+                path: 'panel',
                 component: DemoPanelComponent
             },
             {
@@ -48,6 +50,11 @@ import {MasterNgModule} from '../lib/master-ng.module';
             {
                 path: 'rule',
                 component: DemoRuleComponent
+            },
+
+            {
+                path: 'mc',
+                component: DemoMcComponent
             }
 
         ], {useHash: true}),

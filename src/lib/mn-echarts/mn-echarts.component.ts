@@ -26,7 +26,7 @@ declare const mu: any;
     ]
 
 })
-export class MnEchartsConversionComponent implements OnInit, OnChanges {
+export class MnEchartsComponent implements OnInit, OnChanges {
 
     @Input() data: any;
     @Input() options: any;
@@ -49,16 +49,15 @@ export class MnEchartsConversionComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-
         mu.run(mu.prop(changes, 'options.currentValue'), (options) => {
             this.echarts_options = options;
             this.result.emit(this.echarts_options);
         });
 
         mu.run(mu.prop(changes, 'data.currentValue'), (data) => {
-            const result = this._serv.getEchartResult(this.type, data, this.setting);
-            this.echarts_options = result['options'];
-            this.result.emit(result);
+            const _result = this._serv.getEchartResult(this.type, data, this.setting);
+            this.echarts_options = _result['options'];
+            this.result.emit(_result);
         });
 
         mu.run(changes['setting'], (settingListener) => {

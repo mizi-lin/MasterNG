@@ -14,6 +14,7 @@ declare const mu: any;
     styles: [
             `
             :host {
+                height: 100%;
                 width: 100%;
             }
             `
@@ -59,6 +60,7 @@ export class MnPanelComponent implements OnChanges, AfterContentChecked {
     @Input() collapse: string;
     @HostBinding('class.collapse-up') class_collapse_up: boolean;
     @HostBinding('class.collapse-drop') class_collapse_drop: boolean;
+
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2) {

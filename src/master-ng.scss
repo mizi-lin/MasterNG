@@ -84,6 +84,34 @@ i.fa {
     }
 }
 
+.table {
+    width: 100%;
+
+    td {
+        padding: 8px;
+    }
+
+    &.td-top-bordered,
+    &.td-top-bd {
+        > tr,
+        > tbody > tr {
+            & + tr > td {
+                border-top: 1px solid $light_border_color;
+            }
+        }
+    }
+
+    &.td-left-bordered,
+    &.td-left-bd {
+        > tr,
+        > tbody > tr {
+            & > td + td {
+                border-left: 1px solid $light_border_color;
+            }
+        }
+    }
+}
+
 body {
     font-family: Helvetica Neue For Number, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 14px;
