@@ -5,8 +5,8 @@ import {MnReqModule} from '../mn-req/mn-req.module';
 import {MnLayoutModule} from '../mn-layout/mn-layout.module';
 import {MnHandsontableModule} from '../mn-handsontable/mn-handsontable.module';
 import {MnEchartsRenderDirective} from './mn-echarts-render.directive';
-import {MnEchartsConversionComponent} from './mn-echarts.component';
-import {EchartsPanelComponent} from './mn-echarts-panel.component';
+import {MnEchartsComponent} from './mn-echarts.component';
+import {MnEchartsPanelComponent} from './mn-echarts-panel.component';
 import {EchartsService} from './echarts.service';
 import {ModuleWithProviders, NgModule} from '@angular/core';
 
@@ -21,8 +21,8 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
     ],
     declarations: [
         MnEchartsRenderDirective,
-        MnEchartsConversionComponent,
-        EchartsPanelComponent
+        MnEchartsComponent,
+        MnEchartsPanelComponent
     ],
 
     /**
@@ -30,8 +30,8 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
      */
     exports: [
         MnEchartsRenderDirective,
-        MnEchartsConversionComponent,
-        EchartsPanelComponent
+        MnEchartsComponent,
+        MnEchartsPanelComponent
     ],
 
     providers: [

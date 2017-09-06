@@ -16,7 +16,8 @@ import {
 
 import * as echarts from 'echarts';
 import 'echarts-wordcloud/dist/echarts-wordcloud.min';
-declare const mu: any;
+
+declare const mu: any, jQuery: any;
 
 @Directive({
     selector: '[mn-echarts-render]'
@@ -52,11 +53,16 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     }
 
     private getWidth(elm: Element): number {
-        return elm.clientWidth || this.getWidth(elm.parentElement);
+        if (elm) {
+            const $el = jQuery(elm);
+            return $el.width() || this.getWidth(elm.parentElement);
+        } else {
+            return 0;
+        }
     }
 
     private getHeight(elm: Element): number {
-        return elm.clientHeight || this.getHeight(elm.parentElement);
+        return elm && (elm.clientHeight || this.getHeight(elm.parentElement));
     }
 
     private createChart(): any {
@@ -68,11 +74,15 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     }
 
     private updateChart(): void {
-        this._chart.clear();
+        // this._chart.clear();
 
         const width = this.getWidth(this._ref.nativeElement);
-        this._ref.nativeElement.style.width = width + 'px';
-        this._ref.nativeElement.style.height = this.getHeight(this._ref.nativeElement) + 'px';
+        const height = this.getHeight(this._ref.nativeElement);
+        mu.run(width || height, () => {
+            this._ref.nativeElement.style.width = width + 'px';
+            this._ref.nativeElement.style.height = height + 'px';
+
+        });
 
         /**
          * 根据 legend， 调整 grid.top || grid bottom

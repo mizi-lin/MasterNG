@@ -3,6 +3,7 @@ import {
     Renderer2, OnChanges, SimpleChanges
 } from '@angular/core';
 import * as mu from 'mzmu';
+
 declare const mu: any;
 
 @Component({
@@ -11,9 +12,11 @@ declare const mu: any;
         <ng-content></ng-content>
     `,
     styles: [
-        `
-            
-        `
+            `:host {
+            display: block;
+            width: 100%;
+            height: calc(100% - 40px);
+        }`
     ]
 })
 export class MnPanelBodyComponent implements OnInit {

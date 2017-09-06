@@ -15,75 +15,75 @@ declare const mu: any, jQuery: any;
 
                     <ng-template [ngIf]="toolMap['download']">
                         <mn-col (click)="download_click($event)"
-                              [order]="toolMap['download'].order">
+                                [order]="toolMap['download'].order">
                             <i class="fa fa-download"></i>
                         </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['data_view']">
                         <mn-col (click)="dataView_click($event)"
-                              [order]="toolMap['data_view'].order"
-                              [class.active]="statusMap.dataView_click">
+                                [order]="toolMap['data_view'].order"
+                                [class.active]="statusMap.dataView_click">
                             <i class="fa fa-database"></i>
                         </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['line']">
                         <mn-col *ngIf="_src_type | mu:'or':'bar'"
-                              (click)="line_click($event)"
-                              [order]="toolMap['line'].order"
-                              [class.active]="statusMap.line_click">
+                                (click)="line_click($event)"
+                                [order]="toolMap['line'].order"
+                                [class.active]="statusMap.line_click">
                             <i class="fa fa-line-chart"></i>
                         </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['bar']">
                         <mn-col *ngIf="_src_type | mu:'or':'line'"
-                              (click)="bar_click($event)"
-                              [order]="toolMap['bar'].order"
-                              [class.active]="statusMap.bar_click">
+                                (click)="bar_click($event)"
+                                [order]="toolMap['bar'].order"
+                                [class.active]="statusMap.bar_click">
                             <i class="fa fa-bar-chart"></i>
                         </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['exchange']">
                         <mn-col *ngIf="_src_type | mu:'or':'line':'bar'"
-                              (click)="exchange_click($event)"
-                              [order]="toolMap['exchange'].order"
-                              [class.active]="statusMap.exchange_click">
+                                (click)="exchange_click($event)"
+                                [order]="toolMap['exchange'].order"
+                                [class.active]="statusMap.exchange_click">
                             <i class="fa fa-retweet"></i>
                         </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['rate']">
                         <mn-col *ngIf="_src_type | mu:'or':'line':'bar'"
-                              (click)="precent_rate_click($event)"
-                              [order]="toolMap['rate'].order"
-                              [class.active]="statusMap.precent_rate_click">
+                                (click)="precent_rate_click($event)"
+                                [order]="toolMap['rate'].order"
+                                [class.active]="statusMap.precent_rate_click">
                             <i class="fa fa-align-justify"></i>
                         </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['label_all']">
                         <mn-col *ngIf="_src_type | mu:'or':'line':'bar'"
-                              (click)="label_show_all_click($event)"
-                              [order]="toolMap['label_all'].order"
-                              [class.active]="statusMap.label_show_all_click">
+                                (click)="label_show_all_click($event)"
+                                [order]="toolMap['label_all'].order"
+                                [class.active]="statusMap.label_show_all_click">
                             <i class="fa fa-ellipsis-h"></i>
                         </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['legend']">
                         <mn-col (click)="legend_show_click($event)"
-                              [order]="toolMap['legend'].order"
-                              [class.active]="statusMap.legend_show_click">
+                                [order]="toolMap['legend'].order"
+                                [class.active]="statusMap.legend_show_click">
                             <i class="fa fa-bookmark"></i>
                         </mn-col>
                     </ng-template>
 
                     <ng-template [ngIf]="toolMap['reload']">
                         <mn-col (click)="reload_click($event)"
-                              [order]="toolMap['reload'].order">
+                                [order]="toolMap['reload'].order">
                             <i class="fa fa-refresh"></i>
                         </mn-col>
                     </ng-template>
@@ -91,24 +91,36 @@ declare const mu: any, jQuery: any;
             </mn-panel-header>
             <mn-panel-body>
                 <req-http [req]="req" (result)="_data = $event.data" #panel>
-                    <mn-handsontable *ngIf="handson" [data]="_dataView"></mn-handsontable>
-                    <mn-echarts *ngIf="!handson"
-                             [style.height]="height"
-                             [setting]="setting"
-                             [options]="options"
-                             [type]="type"
-                             [data]="_data"
-                             (result)="_result($event)"
-                             (mycharts)="mycharts($event)"></mn-echarts>
+
+                    <div class="mn-dataView" *ngIf="_show_dataView">
+                        <table class="table bordered td-top-bd td-left-bd">
+                            <tbody>
+                                <tr *ngFor="let dd of _dataView">
+                                    <td *ngFor="let d of dd">
+                                        {{d || '-' | mu:'format'}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <mn-echarts [style.height]="height"
+                                [setting]="setting"
+                                [options]="options"
+                                [type]="type"
+                                [data]="data"
+                                (result)="_result($event)"
+                                (mycharts)="mycharts($event)"></mn-echarts>
+
                 </req-http>
             </mn-panel-body>
         </mn-panel>
     `,
-    styleUrls: ['./echarts.scss']
+    styleUrls: ['../assets/echarts.scss']
 })
-export class EchartsPanelComponent implements OnChanges {
+export class MnEchartsPanelComponent implements OnChanges {
 
-    @ViewChild('mn-panel', {read: ElementRef}) _panel: ElementRef;
+    @ViewChild('panel', {read: ElementRef}) _panel: ElementRef;
 
     @Input() req: any;
     @Input() type: string;
@@ -125,10 +137,7 @@ export class EchartsPanelComponent implements OnChanges {
      */
     @Input() show_tools = 'show';
 
-    @Input()
-    set data(v) {
-        this._data = v;
-    }
+    @Input() data: any;
 
     @Input()
     set title(v) {
@@ -147,12 +156,10 @@ export class EchartsPanelComponent implements OnChanges {
     _src_type: any;
     _myChart: any;
     _options: any;
-
-    _dataView: any;
+    _show_dataView = false;
+    _dataView: any = [];
     // fullscreen, download, data_view, line, bar, exchange, rate, label_all, legend, reload
     _tools: any[] = [];
-
-
 
     handson: any;
     statusMap: any = {};
@@ -224,7 +231,6 @@ export class EchartsPanelComponent implements OnChanges {
     _result($event) {
         this._options = $event.options;
         this._dataView = $event.dataView;
-
         this.result.emit($event);
         // this.type === 'radar' && console.debug(JSON.stringify(this._options));
     }
@@ -239,7 +245,7 @@ export class EchartsPanelComponent implements OnChanges {
     }
 
     dataView_click($event) {
-        this.handson = !this.handson;
+        this._show_dataView = !this._show_dataView;
         this.setStatus('dataView_click');
     }
 
@@ -289,7 +295,6 @@ export class EchartsPanelComponent implements OnChanges {
 
     fullscreen_click: any = (full: any, $event: any) => {
         const $el = jQuery(this._panel.nativeElement);
-
         $el.mnResize(() => {
             this._myChart.resize({
                 width: $el.width(),

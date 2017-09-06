@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import * as mu from 'mzmu';
 import {MnRowComponent} from './mn-row.component';
+
 declare const mu: any;
 
 @Component({
@@ -27,11 +28,14 @@ export class MnColComponent implements OnInit, OnChanges {
         return this._rowCmp && this._rowCmp.gutter / 2;
     }
 
-    constructor(
-        // @Optional() @Host() private _rowCmp: MnRowComponent,
-        @Inject(forwardRef(() => MnRowComponent)) private _rowCmp,
-        private _ref: ElementRef,
-        private _renderer: Renderer2) {
+    // todo padding
+    constructor(@Optional() @Host() private _rowCmp: MnRowComponent,
+                private _ref: ElementRef,
+                private _renderer: Renderer2) {
+
+        // setTimeout(() => {
+        //     console.debug(this._rowCmp);
+        // }, 10);
     }
 
     ngOnInit(): void {
