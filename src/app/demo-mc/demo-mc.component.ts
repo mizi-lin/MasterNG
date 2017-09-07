@@ -12,32 +12,45 @@ declare const mu: any;
 })
 export class DemoMcComponent implements OnInit {
 
-    categorys: string[] = ['华扬联众', '二更', '琥珀', 'McCann & Spencer', '华邑'];
+    categorys: string[] = [
+        '华扬联众',
+        '二更',
+        '琥珀',
+        'McCann & Spencer',
+        '华邑'
+    ];
     data: any[] = [];
     total_data: any[];
 
-    _weibo_data: any[] = [];
+    _weibo_data_boi: any[] = [];
+    _weibo_data_mc: any[] = [];
     weibo_data: any[] = [];
 
-    constructor(
-        private _es: EchartsService,
-        private _http: Http
-    ) {
-        this._http.get('/assets/store/weibo.json').subscribe((res) => {
-            this._weibo_data = res['data'];
-            this.weibo_data.unshift(this._weibo_data.shift());
-            this.weibo_data.unshift(this._weibo_data.shift());
-            this.weibo_data.unshift(this._weibo_data.shift());
-            setInterval(() => {
-                mu.run(this._weibo_data, (ds) => {
-                    this.weibo_data.unshift(ds.shift());
-                });
-            }, 5000);
+    constructor(private _es: EchartsService,
+                private _http: Http) {
+        this._http.get('/assets/store/a.csv.json').subscribe((res_boi) => {
+            this._weibo_data_boi = res_boi['data'];
+            this._http.get('/assets/store/b.csv.json').subscribe((res) => {
+                this._weibo_data_mc = res['data'];
+                this.weibo_data.unshift(this._weibo_data_boi.shift());
+                this.weibo_data.unshift(this._weibo_data_mc.shift());
+                this.weibo_data.unshift(this._weibo_data_boi.shift());
+                this.weibo_data.unshift(this._weibo_data_mc.shift());
+                setInterval(() => {
+                    mu.run(this._weibo_data_boi, (ds) => {
+                        this.weibo_data.unshift(ds.shift());
+                    });
+
+                    mu.run(this._weibo_data_mc, (ds) => {
+                        this.weibo_data.unshift(ds.shift());
+                    });
+                }, 4500);
+            });
         });
     }
 
     ngOnInit() {
-        let d = + new Date();
+        let d = +new Date();
         d = this.setData(d);
         d = this.setData(d);
         d = this.setData(d);
@@ -81,7 +94,5 @@ export class DemoMcComponent implements OnInit {
         d = d || +new Date();
         return mu.format(new Date(d), 'yyyy-MM-dd');
     }
-
-
 
 }

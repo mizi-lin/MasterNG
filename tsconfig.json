@@ -22,9 +22,9 @@
     ],
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,
-        "debug": true
+        "strictMetadataEmit": true
     },
     "files": [
-        "src/lib/master-ng.module.ts"
+        "src/lib/index.ts"
     ]
 }
