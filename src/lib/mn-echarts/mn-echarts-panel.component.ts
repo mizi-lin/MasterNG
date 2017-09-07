@@ -116,7 +116,7 @@ declare const mu: any, jQuery: any;
             </mn-panel-body>
         </mn-panel>
     `,
-    styleUrls: ['../assets/echarts.scss']
+    styleUrls: ['../assets/mn-echarts.scss']
 })
 export class MnEchartsPanelComponent implements OnChanges {
 
