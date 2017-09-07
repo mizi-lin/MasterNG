@@ -112,6 +112,7 @@ export class EchartsService {
 
                 'yAxis_value_percent',
                 'yAxis_percent_rate',
+                'yAxis_zero',
 
                 'grid_position',
                 'tooltip',
@@ -136,6 +137,7 @@ export class EchartsService {
 
                 'yAxis_value_percent',
                 'yAxis_percent_rate',
+                'yAxis_zero',
 
                 'grid_position',
 
@@ -372,8 +374,8 @@ export class EchartsService {
                 options.legend.show = true;
             }, () => {
                 options.legend.show = false;
-                options.grid.top = '1%';
-                options.grid.bottom = '1%';
+                options.grid.top = '2%';
+                options.grid.bottom = '2%';
             });
         };
 
@@ -424,7 +426,7 @@ export class EchartsService {
          * tooltip 默认显示
          */
         fn.tooltip = () => {
-            let _tt = mu.ifnvl(setting.tooltip, true);
+            const _tt = mu.ifnvl(setting.tooltip, true);
             options.tooltip = options.tooltip || {};
             options.tooltip.show = !!_tt;
             if (!mu.type(_tt, 'boolean') && options.tooltip.formatter) {
@@ -508,6 +510,12 @@ export class EchartsService {
         fn.yAxis_percent_rate = () => {
             mu.if(setting.percent_rate, (fn) => {
                 this.percent_rate(options, data, fn);
+            });
+        };
+
+        fn.yAxis_zero = () => {
+            mu.exist(setting.zero, (zero) => {
+                options.yAxis[0].scale = zero;
             });
         };
 
@@ -699,7 +707,7 @@ export class EchartsService {
             const _col_headers = mu.clone(_x_axis || _legend);
             _series_data = mu.clone(_series_data);
 
-            let _dataView = mu.map(_series_data, (v, k) => {
+            const _dataView = mu.map(_series_data, (v, k) => {
                 v = mu.map(v, (d) => mu.ifnvl(d.value, d));
                 return [
                     k,

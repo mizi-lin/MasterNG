@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {EchartsService} from '../../lib/mn-echarts/echarts.service';
+import {Http} from '@angular/http';
 
 declare const mu: any;
 
@@ -12,18 +13,33 @@ declare const mu: any;
 export class DemoMcComponent implements OnInit {
 
     categorys: string[] = ['华扬联众', '二更', '琥珀', 'McCann & Spencer', '华邑'];
-
     data: any[] = [];
-
     total_data: any[];
 
+    _weibo_data: any[] = [];
+    weibo_data: any[] = [];
+
     constructor(
-        private _es: EchartsService
+        private _es: EchartsService,
+        private _http: Http
     ) {
+        this._http.get('/assets/store/weibo.json').subscribe((res) => {
+            this._weibo_data = res['data'];
+            this.weibo_data.unshift(this._weibo_data.shift());
+            this.weibo_data.unshift(this._weibo_data.shift());
+            this.weibo_data.unshift(this._weibo_data.shift());
+            setInterval(() => {
+                mu.run(this._weibo_data, (ds) => {
+                    this.weibo_data.unshift(ds.shift());
+                });
+            }, 5000);
+        });
     }
 
     ngOnInit() {
         let d = + new Date();
+        d = this.setData(d);
+        d = this.setData(d);
         d = this.setData(d);
         setInterval(() => {
             d = this.setData(d);
