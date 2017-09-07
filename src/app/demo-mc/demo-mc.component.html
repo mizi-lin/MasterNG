@@ -62,10 +62,8 @@
                             <span [style.backgroundImage]="'url(' + tw.img + ')'"></span>
                             {{tw.name}}
                         </h5>
-                        <div class="mt-8">
-                            <small>{{'from ' + tw.platform | uppercase}}</small>
-                        </div>
-                        <div [innerHTML]="tw.text"></div>
+
+                        <div class="mt-8" [innerHTML]="tw.text"></div>
                     </li>
                 </ol>
             </mn-panel-s>
