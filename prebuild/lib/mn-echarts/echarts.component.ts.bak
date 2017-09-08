@@ -1,0 +1,247 @@
+import {Component, Injectable, OnChanges, Input, Output, EventEmitter, SimpleChanges} from '@angular/core';
+import {MnEchartsReq} from './echarts-req.interface';
+import {EchartsServ} from './echarts.service';
+import './echarts.scss';
+declare const mu: any;
+
+@Component({
+    selector: 'echarts',
+    template: `
+            <div *ngIf="!hasData" class="no-data-hask">
+                <i class="icon icon-exclamation"></i> Ooops, none data to display.
+            </div>
+            <div *ngIf="hasData">
+                <div echarts-render
+                     [style.height]="height"
+                     [loading]="loading"
+                     [options]="echartsOptions"
+                     (element)="element($event)"
+                     (mycharts)="mycharts($event)"></div>
+            </div>
+            
+    `,
+    styles: [
+        `
+        :host {
+            display: block;
+        }
+        
+        :host [echarts-render] {
+            display: block;
+            height: 100%;
+        }
+    `
+    ]
+})
+
+@Injectable()
+export class EchartsComponent implements OnChanges {
+    // -> debug ::: 是否显示debug信息
+    @Input() debug?: boolean = false;
+
+    // -> useloading ::: 是否使用loading
+    @Input() useloading?: boolean = true;
+
+    // -> height ::: chart 显示高度
+    @Input() height?: string;
+
+    // -> weight ::: chart 显示宽度
+    @Input() width?: string = '100%';
+
+    // -> req ::: 异步请求信息
+    @Input() req?: MnEchartsReq = {};
+
+    // -> data ::: 数据传递
+    @Input() data?: any[] = [];
+
+    // -> options ::: Echarts options
+    @Input() options?: any;
+
+    // -> setting ::: 快捷设置 options 属性
+    @Input() setting?: any = {};
+
+    // -> type ::: echarts 显示图表的类型
+    @Input() type?: string = 'line';
+
+    // -> adjust ::: req 回调 req请求获得数据data以及对数据处理产生的options, 返回client进行个性化处理
+    @Output() adjust?: EventEmitter<any> = new EventEmitter<any>();
+
+    // -> dataset ::: data 回调 处理后的options, 返回client进行个性化处理
+    @Output() dataset?: EventEmitter<any> = new EventEmitter<any>();
+
+    // -> result ::: options 回调 处理后的options, 返回client进行个性化处理
+    @Output() result?: EventEmitter<any> = new EventEmitter<any>();
+
+    /**
+     * echarts 本身所带的事件
+     * @type {EventEmitter<any>}
+     */
+    @Output() chartClick?: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartDblClick?: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseDown?: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseUp?: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseOver?: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseOut?: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartGlobalOut?: EventEmitter<any> = new EventEmitter<any>();
+
+    // -> loading ::: 是否显示chart加载效果
+    loading: boolean = false;
+
+    //请求之后是否有数据
+    private hasData: boolean = true;
+
+    // -> echartsOptions ::: 最终echarts接收到的options
+    echartsOptions: any = {};
+
+    // -> nodata ::: 数据为空, 或请求为空
+    nodata: boolean = false;
+
+    $charts: any;
+    $mycharts: any;
+
+
+    constructor(private G: GLOBAL,
+                private $$BS: $$BaseService,
+                private $$es: EchartsServ,
+                private $$: $$ResourcePool) {
+    }
+
+    element(elm: any): any {
+        // this.setting.width = elm.clientWidth;
+        // this.setting.height = elm.clientHeight;
+        this.$charts = elm;
+    }
+
+    mycharts($mycharts: any): any {
+        this.$mycharts = $mycharts;
+        if ($mycharts) {
+            // register mouse events:
+            $mycharts.on('click', (e: any) => {
+                this.chartClick.emit(e);
+            });
+            $mycharts.on('dblClick', (e: any) => {
+                this.chartDblClick.emit(e);
+            });
+            $mycharts.on('mousedown', (e: any) => {
+                this.chartMouseDown.emit(e);
+            });
+            $mycharts.on('mouseup', (e: any) => {
+                this.chartMouseUp.emit(e);
+            });
+            $mycharts.on('mouseover', (e: any) => {
+                this.chartMouseOver.emit(e);
+            });
+            $mycharts.on('mouseout', (e: any) => {
+                this.chartMouseOut.emit(e);
+            });
+            $mycharts.on('globalout', (e: any) => {
+                this.chartGlobalOut.emit(e);
+            });
+        }
+    }
+
+    debugView(...message: any[]): void {
+        this.debug && console.debug(message);
+    }
+
+    reqDebounce: any = mu.debounce((req) => {
+        req = this.$$BS.rereq(req);
+        this.$$[req.api][req.method || 'post'](req.params, req.payload).subscribe((response) => {
+            this.loading = false;
+            this.data = response.data;
+            this.dataHandle(this.data);
+            this.adjust.emit({
+                data: this.data,
+                options: this.echartsOptions
+            });
+        });
+    }, 500);
+
+    dataDebounce: any = mu.debounce((data) => {
+        this.dataHandle(data);
+        this.loading = false;
+        this.adjust.emit({
+            data: data,
+            options: this.echartsOptions
+        });
+    }, 300);
+
+    optionsDebounce: any = mu.debounce((options) => {
+        this.optionsAdjust(options);
+        this.loading = false;
+        this.adjust.emit({
+            options: this.echartsOptions
+        });
+    }, 300);
+
+    dataHandle(data: any): void {
+        if (data && data.length) {
+            let options = this.$$es.getOptions(this.type, data, this.setting, this.$charts, this.$mycharts);
+            this.echartsOptions = this.$$es.adjustECharOptions(options);
+            this.debug && console.debug(JSON.stringify(this.echartsOptions));
+        } else {
+            //如果没有数据
+            this.hasData = false;
+            this.$mycharts.clear();
+        }
+
+    };
+
+    optionsAdjust(options: any): void {
+        options = mu.clone(options);
+        this.echartsOptions = this.$$es.adjustECharOptions(options);
+        this.debug && console.debug(JSON.stringify(this.echartsOptions));
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        // 如果任何产生变化, 则引起 loading 变化
+        mu.run(this.useloading, () => {
+            this.loading = true;
+        });
+
+        // req信息接入, 则异步请求数据
+        mu.exist(changes['req'], (req) => {
+            mu.run(req.currentValue, (req) => {
+                // debounce 防止短期时间内多次调用
+                this.reqDebounce(req);
+            }, () => {
+                this.loading = false;
+                this.nodata = true;
+            });
+        });
+
+        // data信息接入
+        mu.exist(changes['data'], (data) => {
+            mu.run(data.currentValue, (data) => {
+                // debounce 防止短期时间内多次调用
+                this.dataDebounce(data);
+            }, () => {
+                this.loading = false;
+                this.nodata = true;
+            });
+        });
+
+        // options信息接入
+        mu.exist(changes['options'], (options) => {
+            mu.run(options.currentValue, (options) => {
+                // 校验options.series 是否为空数据
+                mu.run(options.series, () => {
+                    this.optionsDebounce(options);
+                }, () => {
+                    this.loading = false;
+                    this.nodata = true;
+                });
+            }, () => {
+                this.loading = false;
+                this.nodata = true;
+            });
+        });
+
+        mu.exist(changes['setting'], () => {
+            mu.run(this.data, (data) => {
+                this.dataDebounce(data);
+            });
+        });
+
+    }
+}

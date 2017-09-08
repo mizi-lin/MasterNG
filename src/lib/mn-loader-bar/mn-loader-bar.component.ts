@@ -5,7 +5,7 @@ declare const mu: any;
 
 @Component({
     selector: 'mn-loader-bar',
-    styleUrls: ['../assets/mn-loader-bar.scss'],
+    styleUrls: ['./mn-loader-bar.scss'],
     template: `
         <div [style.width.%]="width"
              [style.height.px]="height"

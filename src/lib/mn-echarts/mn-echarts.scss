@@ -1,0 +1,55 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
+:host mn-panel-body {
+    padding: 0;
+}
+
+:host req-http {
+    padding: 16px;
+}
+
+:host {
+    mn-panel-toolbar {
+        &.toggle {
+            display: none;
+        }
+    }
+
+    &:hover mn-panel-toolbar.toggle {
+        display: block;
+    }
+}
+
+:host {
+    /deep/ .mn-dataView {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        z-index: 999;
+        padding: 16px;
+        overflow: auto;
+    }
+}
+
+:host(mn-echarts-box) {
+    mn-panel,
+    mn-panel-body {
+        height: 100%;
+    }
+
+    mn-panel-header {
+        position: absolute;
+        width: 100%;
+        visibility: visible;
+        z-index: 200;
+        border-bottom: 1px transparent solid;
+    }
+}
+
+

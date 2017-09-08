@@ -1,0 +1,75 @@
+<div class="demo-mc p-16">
+    <header>
+
+        <mn-fill>
+            <mn-col [span]="3">金投赏品牌创意大赛创意轮播监测</mn-col>
+            <mn-col [span]="1">
+                <mn-row class="logo" [style.height.%]="100">
+                    <mn-col [span]="3" class="logo-mc"></mn-col>
+                    <mn-col [span]="3" class="logo-roi"></mn-col>
+                    <mn-col [span]="12" class="logo-admaster"></mn-col>
+                    <mn-col [span]="6" class="logo-weibo"></mn-col>
+                </mn-row>
+            </mn-col>
+        </mn-fill>
+
+    </header>
+
+    <mn-row class="mt-16" [gutter]="16">
+        <mn-col [span]="18">
+
+            <mn-echarts-panel class="bordered"
+                              [style.height.px]="380"
+                              [title]="'创意每日播放量'"
+                              [data]="data"
+                              [type]="'line'"
+                              [tools]="['fullscreen', 'download', 'data_view', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend']"
+                              [setting]="{stack: false, area: false}">
+            </mn-echarts-panel>
+
+            <mn-row class="mt-8" [gutter]="16">
+
+                <mn-col [span]="12">
+                    <mn-echarts-panel class="mt-8 bordered"
+                                      [title]="'总播放量'"
+                                      [data]="total_data"
+                                      [type]="'bar'"
+                                      [setting]="{zero: false, legend_show: false}"
+                                      [style.height.px]="480">
+                    </mn-echarts-panel>
+                </mn-col>
+
+                <mn-col [span]="12">
+                    <mn-echarts-panel class="mt-8 bordered"
+                                      [title]="'播放占比'"
+                                      [data]="total_data"
+                                      [type]="'pie'"
+                                      [setting]="{convert: ['x-:>name']}"
+                                      [style.height.px]="480">
+                    </mn-echarts-panel>
+                </mn-col>
+
+            </mn-row>
+
+        </mn-col>
+
+        <mn-col [span]="6">
+
+            <mn-panel-s class="bordered tweets" [title]="'微博实时监控'">
+                <ol>
+                    <li *ngFor="let tw of weibo_data">
+                        <h5>
+                            <span [style.backgroundImage]="'url(' + tw.img + ')'"></span>
+                            {{tw.name}}
+                        </h5>
+
+                        <div class="mt-8" [innerHTML]="tw.text"></div>
+                    </li>
+                </ol>
+            </mn-panel-s>
+
+        </mn-col>
+
+    </mn-row>
+
+</div>
