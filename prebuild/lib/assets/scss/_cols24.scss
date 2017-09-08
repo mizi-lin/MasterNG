@@ -1,0 +1,434 @@
+$col-1: 4.16666667%;
+$col-2: 8.33333333%;
+$col-3: 12.5%;
+$col-4: 16.66666667%;
+$col-5: 20.83333333%;
+$col-6: 25%;
+$col-7: 29.16666667%;
+$col-8: 33.33333333%;
+$col-9: 37.5%;
+$col-10: 41.66666667%;
+$col-11: 45.83333333%;
+$col-12: 50%;
+$col-13: 54.16666667%;
+$col-14: 58.33333333%;
+$col-15: 62.5%;
+$col-16: 66.66666667%;
+$col-17: 70.83333333%;
+$col-18: 75%;
+$col-19: 79.16666667%;
+$col-20: 83.33333333%;
+$col-21: 87.5%;
+$col-22: 91.66666667%;
+$col-23: 95.83333333%;
+$col-24: 100%;
+
+mn-row, [mn-row] {
+    & > {
+        .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col-13, .col-14, .col-15, .col-16, .col-17, .col-18, .col-19, .col-20, .col-21, .col-22, .col-23, .col-24 {
+            flex: 0 0 auto;
+        }
+
+        .col-1 {
+            width: $col-1;
+        }
+
+        .col-2 {
+            width: $col-2;
+        }
+
+        .col-3 {
+            width: $col-3;
+        }
+
+        .col-4 {
+            width: $col-4;
+        }
+
+        .col-5 {
+            width: $col-5;
+        }
+
+        .col-6 {
+            width: $col-6;
+        }
+
+        .col-7 {
+            width: $col-7;
+        }
+
+        .col-8 {
+            width: $col-8;
+        }
+
+        .col-9 {
+            width: $col-9;
+        }
+
+        .col-10 {
+            width: $col-10;
+        }
+
+        .col-11 {
+            width: $col-11;
+        }
+
+        .col-12 {
+            width: $col-12;
+        }
+
+        .col-13 {
+            width: $col-13;
+        }
+
+        .col-14 {
+            width: $col-14;
+        }
+
+        .col-15 {
+            width: $col-15;
+        }
+
+        .col-16 {
+            width: $col-16;
+        }
+
+        .col-17 {
+            width: $col-17;
+        }
+
+        .col-18 {
+            width: $col-18;
+        }
+
+        .col-19 {
+            width: $col-19;
+        }
+
+        .col-20 {
+            width: $col-20;
+        }
+
+        .col-21 {
+            width: $col-21;
+        }
+
+        .col-22 {
+            width: $col-22;
+        }
+
+        .col-23 {
+            width: $col-23;
+        }
+
+        .col-24 {
+            width: $col-24;
+        }
+    }
+}
+
+mn-fill, [mn-fill] {
+    & > {
+        .col-1 {
+            flex: 1;
+        }
+        .col-2 {
+            flex: 2;
+        }
+        .col-3 {
+            flex: 3;
+        }
+        .col-4 {
+            flex: 4;
+        }
+        .col-5 {
+            flex: 5;
+        }
+        .col-6 {
+            flex: 6;
+        }
+        .col-7 {
+            flex: 7;
+        }
+        .col-8 {
+            flex: 8;
+        }
+        .col-9 {
+            flex: 9;
+        }
+        .col-10 {
+            flex: 10;
+        }
+        .col-11 {
+            flex: 11;
+        }
+        .col-12 {
+            flex: 12;
+        }
+        .col-13 {
+            flex: 13;
+        }
+        .col-14 {
+            flex: 14;
+        }
+        .col-15 {
+            flex: 15;
+        }
+        .col-16 {
+            flex: 16;
+        }
+        .col-17 {
+            flex: 17;
+        }
+        .col-18 {
+            flex: 18;
+        }
+        .col-19 {
+            flex: 19;
+        }
+        .col-20 {
+            flex: 20;
+        }
+        .col-21 {
+            flex: 21;
+        }
+        .col-22 {
+            flex: 22;
+        }
+        .col-23 {
+            flex: 23;
+        }
+        .col-24 {
+            flex: 24;
+        }
+        .col-25 {
+            flex: 25;
+        }
+        .col-26 {
+            flex: 26;
+        }
+        .col-27 {
+            flex: 27;
+        }
+        .col-28 {
+            flex: 28;
+        }
+        .col-29 {
+            flex: 29;
+        }
+        .col-30 {
+            flex: 30;
+        }
+        .col-31 {
+            flex: 31;
+        }
+        .col-32 {
+            flex: 32;
+        }
+        .col-33 {
+            flex: 33;
+        }
+        .col-34 {
+            flex: 34;
+        }
+        .col-35 {
+            flex: 35;
+        }
+        .col-36 {
+            flex: 36;
+        }
+        .col-37 {
+            flex: 37;
+        }
+        .col-38 {
+            flex: 38;
+        }
+        .col-39 {
+            flex: 39;
+        }
+        .col-40 {
+            flex: 40;
+        }
+        .col-41 {
+            flex: 41;
+        }
+        .col-42 {
+            flex: 42;
+        }
+        .col-43 {
+            flex: 43;
+        }
+        .col-44 {
+            flex: 44;
+        }
+        .col-45 {
+            flex: 45;
+        }
+        .col-46 {
+            flex: 46;
+        }
+        .col-47 {
+            flex: 47;
+        }
+        .col-48 {
+            flex: 48;
+        }
+        .col-49 {
+            flex: 49;
+        }
+        .col-50 {
+            flex: 50;
+        }
+        .col-51 {
+            flex: 51;
+        }
+        .col-52 {
+            flex: 52;
+        }
+        .col-53 {
+            flex: 53;
+        }
+        .col-54 {
+            flex: 54;
+        }
+        .col-55 {
+            flex: 55;
+        }
+        .col-56 {
+            flex: 56;
+        }
+        .col-57 {
+            flex: 57;
+        }
+        .col-58 {
+            flex: 58;
+        }
+        .col-59 {
+            flex: 59;
+        }
+        .col-60 {
+            flex: 60;
+        }
+        .col-61 {
+            flex: 61;
+        }
+        .col-62 {
+            flex: 62;
+        }
+        .col-63 {
+            flex: 63;
+        }
+        .col-64 {
+            flex: 64;
+        }
+        .col-65 {
+            flex: 65;
+        }
+        .col-66 {
+            flex: 66;
+        }
+        .col-67 {
+            flex: 67;
+        }
+        .col-68 {
+            flex: 68;
+        }
+        .col-69 {
+            flex: 69;
+        }
+        .col-70 {
+            flex: 70;
+        }
+        .col-71 {
+            flex: 71;
+        }
+        .col-72 {
+            flex: 72;
+        }
+        .col-73 {
+            flex: 73;
+        }
+        .col-74 {
+            flex: 74;
+        }
+        .col-75 {
+            flex: 75;
+        }
+        .col-76 {
+            flex: 76;
+        }
+        .col-77 {
+            flex: 77;
+        }
+        .col-78 {
+            flex: 78;
+        }
+        .col-79 {
+            flex: 79;
+        }
+        .col-80 {
+            flex: 80;
+        }
+        .col-81 {
+            flex: 81;
+        }
+        .col-82 {
+            flex: 82;
+        }
+        .col-83 {
+            flex: 83;
+        }
+        .col-84 {
+            flex: 84;
+        }
+        .col-85 {
+            flex: 85;
+        }
+        .col-86 {
+            flex: 86;
+        }
+        .col-87 {
+            flex: 87;
+        }
+        .col-88 {
+            flex: 88;
+        }
+        .col-89 {
+            flex: 89;
+        }
+        .col-90 {
+            flex: 90;
+        }
+        .col-91 {
+            flex: 91;
+        }
+        .col-92 {
+            flex: 92;
+        }
+        .col-93 {
+            flex: 93;
+        }
+        .col-94 {
+            flex: 94;
+        }
+        .col-95 {
+            flex: 95;
+        }
+        .col-96 {
+            flex: 96;
+        }
+        .col-97 {
+            flex: 97;
+        }
+        .col-98 {
+            flex: 98;
+        }
+        .col-99 {
+            flex: 99;
+        }
+        .col-100 {
+            flex: 100;
+        }
+    }
+
+}

@@ -3,7 +3,7 @@
     "compilerOptions": {
         "outDir": "./dist",
         "sourceMap": true,
-        "declaration": false,
+        "declaration": true,
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -13,7 +13,7 @@
             "node_modules/@types"
         ],
         "lib": [
-            "es2017",
+            "es2016",
             "dom"
         ]
     },
@@ -25,6 +25,7 @@
         "strictMetadataEmit": true
     },
     "files": [
-        "src/lib/index.ts"
+        "prebuild/lib/index.ts"
     ]
 }
+

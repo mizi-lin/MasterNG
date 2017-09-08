@@ -1,0 +1,13 @@
+<div class="p-16">
+    <h1>{{'HELLO_WORD' | i18n: 'i18n tester'}} <small [i18n]>MASTER_NG</small></h1>
+
+    <div class="mt-8">
+        <button mn-btn [class.primary]="lang === 'zh-cn'" (click)="setLang('zh-cn')">中文</button>
+        <button mn-btn [class.primary]="lang === 'en'" (click)="setLang('en')">英文</button>
+    </div>
+
+    <mn-panel-s class="bordered mt-8" [title]="'jing ye shi' | i18n: {name: '李白', caodai: '唐'}">
+        <div [i18n]>jing_ye_shi_content</div>
+    </mn-panel-s>
+</div>
+

@@ -1,0 +1,214 @@
+{
+    "data": [
+        {
+            "brand": "Clear",
+            "name": "Negative",
+            "sentiment": "Negative",
+            "value": 55,
+            "x": "Clear"
+        },
+        {
+            "brand": "Clear",
+            "name": "Neutral",
+            "sentiment": "Neutral",
+            "value": 1054,
+            "x": "Clear"
+        },
+        {
+            "brand": "Clear",
+            "name": "Positive",
+            "sentiment": "Positive",
+            "value": 191,
+            "x": "Clear"
+        },
+        {
+            "brand": "Dove",
+            "name": "Negative",
+            "sentiment": "Negative",
+            "value": 45,
+            "x": "Dove"
+        },
+        {
+            "brand": "Dove",
+            "name": "Neutral",
+            "sentiment": "Neutral",
+            "value": 976,
+            "x": "Dove"
+        },
+        {
+            "brand": "Dove",
+            "name": "Positive",
+            "sentiment": "Positive",
+            "value": 282,
+            "x": "Dove"
+        },
+        {
+            "brand": "HNS",
+            "name": "Negative",
+            "sentiment": "Negative",
+            "value": 283,
+            "x": "HNS"
+        },
+        {
+            "brand": "HNS",
+            "name": "Neutral",
+            "sentiment": "Neutral",
+            "value": 3940,
+            "x": "HNS"
+        },
+        {
+            "brand": "HNS",
+            "name": "Positive",
+            "sentiment": "Positive",
+            "value": 874,
+            "x": "HNS"
+        },
+        {
+            "brand": "Loreal Paris",
+            "name": "Negative",
+            "sentiment": "Negative",
+            "value": 190,
+            "x": "Loreal Paris"
+        },
+        {
+            "brand": "Loreal Paris",
+            "name": "Neutral",
+            "sentiment": "Neutral",
+            "value": 2781,
+            "x": "Loreal Paris"
+        },
+        {
+            "brand": "Loreal Paris",
+            "name": "Positive",
+            "sentiment": "Positive",
+            "value": 1088,
+            "x": "Loreal Paris"
+        },
+        {
+            "brand": "Loreal Paris Men",
+            "name": "Negative",
+            "sentiment": "Negative",
+            "value": 261,
+            "x": "Loreal Paris Men"
+        },
+        {
+            "brand": "Loreal Paris Men",
+            "name": "Neutral",
+            "sentiment": "Neutral",
+            "value": 29225,
+            "x": "Loreal Paris Men"
+        },
+        {
+            "brand": "Loreal Paris Men",
+            "name": "Positive",
+            "sentiment": "Positive",
+            "value": 10654,
+            "x": "Loreal Paris Men"
+        },
+        {
+            "brand": "Lux",
+            "name": "Negative",
+            "sentiment": "Negative",
+            "value": 70,
+            "x": "Lux"
+        },
+        {
+            "brand": "Lux",
+            "name": "Neutral",
+            "sentiment": "Neutral",
+            "value": 1711,
+            "x": "Lux"
+        },
+        {
+            "brand": "Lux",
+            "name": "Positive",
+            "sentiment": "Positive",
+            "value": 551,
+            "x": "Lux"
+        },
+        {
+            "brand": "Pantene",
+            "name": "Negative",
+            "sentiment": "Negative",
+            "value": 345,
+            "x": "Pantene"
+        },
+        {
+            "brand": "Pantene",
+            "name": "Neutral",
+            "sentiment": "Neutral",
+            "value": 19178,
+            "x": "Pantene"
+        },
+        {
+            "brand": "Pantene",
+            "name": "Positive",
+            "sentiment": "Positive",
+            "value": 8313,
+            "x": "Pantene"
+        },
+        {
+            "brand": "Rejoice",
+            "name": "Negative",
+            "sentiment": "Negative",
+            "value": 789,
+            "x": "Rejoice"
+        },
+        {
+            "brand": "Rejoice",
+            "name": "Neutral",
+            "sentiment": "Neutral",
+            "value": 6423,
+            "x": "Rejoice"
+        },
+        {
+            "brand": "Rejoice",
+            "name": "Positive",
+            "sentiment": "Positive",
+            "value": 2643,
+            "x": "Rejoice"
+        },
+        {
+            "brand": "Seeyoung",
+            "name": "Negative",
+            "sentiment": "Negative",
+            "value": 136,
+            "x": "Seeyoung"
+        },
+        {
+            "brand": "Seeyoung",
+            "name": "Neutral",
+            "sentiment": "Neutral",
+            "value": 2591,
+            "x": "Seeyoung"
+        },
+        {
+            "brand": "Seeyoung",
+            "name": "Positive",
+            "sentiment": "Positive",
+            "value": 370,
+            "x": "Seeyoung"
+        },
+        {
+            "brand": "VS",
+            "name": "Negative",
+            "sentiment": "Negative",
+            "value": 1079,
+            "x": "VS"
+        },
+        {
+            "brand": "VS",
+            "name": "Neutral",
+            "sentiment": "Neutral",
+            "value": 3434,
+            "x": "VS"
+        },
+        {
+            "brand": "VS",
+            "name": "Positive",
+            "sentiment": "Positive",
+            "value": 1598,
+            "x": "VS"
+        }
+    ]
+}

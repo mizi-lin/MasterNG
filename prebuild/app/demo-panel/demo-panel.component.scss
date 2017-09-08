@@ -1,0 +1,14 @@
+.demo-panel {
+    padding: 8px;
+
+    .demo-panel-row {
+        cols,
+        [cols] {
+            > div {
+                height: 100%;
+                padding: 8px;
+                border: 1px solid #dedede;
+            }
+        }
+    }
+}

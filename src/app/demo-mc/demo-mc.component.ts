@@ -28,9 +28,9 @@ export class DemoMcComponent implements OnInit {
 
     constructor(private _es: EchartsService,
                 private _http: Http) {
-        this._http.get('/assets/store/a.csv.json').subscribe((res_boi) => {
+        this._http.get('assets/store/a.csv.json').subscribe((res_boi) => {
             this._weibo_data_boi = res_boi['data'];
-            this._http.get('/assets/store/b.csv.json').subscribe((res) => {
+            this._http.get('assets/store/b.csv.json').subscribe((res) => {
                 this._weibo_data_mc = res['data'];
                 this.weibo_data.unshift(this._weibo_data_boi.shift());
                 this.weibo_data.unshift(this._weibo_data_mc.shift());
@@ -50,13 +50,24 @@ export class DemoMcComponent implements OnInit {
     }
 
     ngOnInit() {
-        let d = +new Date();
+        let d = new Date();
+        let i = 0;
+        d.setSeconds(0, 0);
+        d = +d - 120 * 1000;
         d = this.setData(d);
         d = this.setData(d);
         d = this.setData(d);
         setInterval(() => {
             d = this.setData(d);
-        }, 5000);
+            i++;
+            if (i > 9) {
+                this.data = [];
+                d = this.setData(d);
+                d = this.setData(d);
+                d = this.setData(d);
+                i = 0;
+            }
+        }, 15000);
 
     }
 
@@ -73,7 +84,7 @@ export class DemoMcComponent implements OnInit {
 
         this.data = mu.clone(this.data);
 
-        d += (60 * 60 * 24 * 1000);
+        d += (15 * 1000);
 
         const totals = mu.map(mu.groupArray(this.data, 'name'), (o) => this._es.total(o, 'value'));
 
@@ -92,7 +103,7 @@ export class DemoMcComponent implements OnInit {
 
     getDate(d?: any) {
         d = d || +new Date();
-        return mu.format(new Date(d), 'yyyy-MM-dd');
+        return mu.format(new Date(d), 'hh:mm:ss');
     }
 
 }

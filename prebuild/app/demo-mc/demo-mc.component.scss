@@ -1,0 +1,81 @@
+.demo-mc {
+    height: 100%;
+
+    header {
+        font-size: 32px;
+
+        .logo-mc {
+            background: url("../../assets/images/mc/mc.png") center no-repeat;
+            background-size: contain;
+        }
+
+        .logo-roi {
+            background: url("../../assets/images/mc/roi.png") center no-repeat;
+            background-size: contain;
+        }
+
+        .logo-admaster {
+            background: url("../../assets/images/mc/admaster.png") center no-repeat;
+            background-size: contain;
+        }
+
+        .logo-weibo {
+            background: url("../../assets/images/mc/weibo.png") center no-repeat;
+            background-size: contain;
+        }
+    }
+
+    mn-panel-header {
+
+        mn-row mn-col {
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+    }
+
+    .tweets {
+        border-radius: 5px;
+        background: rgb(242, 242, 242);
+        height: 100%;
+        position: relative;
+
+        mn-panel-body {
+            position: absolute;
+            top: 42px;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            overflow-y: scroll;
+        }
+
+
+        li {
+            padding: 15px;
+
+            h5 {
+                color: rgb(127, 149, 209);
+                line-height: 32px;
+                font-size: 18px;
+
+                span {
+                    display: inline-block;
+                    margin-right: 10px;
+                    margin-top: -5px;
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    background-size: cover;
+                    vertical-align: middle;
+                    box-shadow: 3px 4px 10px 1px #888888;
+                }
+
+
+            }
+
+            + li {
+                border-top: 1px dashed #999;
+            }
+        }
+    }
+}

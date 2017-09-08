@@ -19,7 +19,7 @@
             "testTsconfig": "tsconfig.spec.json",
             "prefix": "mn",
             "styles": [
-                "lib/master-ng.scss",
+                "lib/assets/master-ng.scss",
                 "../node_modules/font-awesome/scss/font-awesome.scss",
                 "../node_modules/normalize.css/normalize.css"
             ],
