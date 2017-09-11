@@ -52,7 +52,14 @@
         visibility: visible;
         z-index: 200;
         border-bottom: 1px transparent solid;
+        pointer-events: none;
+
+        mn-panel-toolbar {
+            pointer-events: auto;
+        }
     }
+
+
 }
 
 
