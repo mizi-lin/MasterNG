@@ -108,7 +108,7 @@ declare const mu: any, jQuery: any;
                                 [setting]="setting"
                                 [options]="options"
                                 [type]="type"
-                                [data]="data"
+                                [data]="_data || data"
                                 (result)="_result($event)"
                                 (mycharts)="mycharts($event)"></mn-echarts>
 

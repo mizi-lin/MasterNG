@@ -49,22 +49,25 @@ export class MnEchartsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+
+        console.debug(':::::mn-echarts', this.options, this.data);
+
         mu.run(mu.prop(changes, 'options.currentValue'), (options) => {
             this.echarts_options = options;
             this.result.emit(this.echarts_options);
         });
 
         mu.run(mu.prop(changes, 'data.currentValue'), (data) => {
-            const _result = this._serv.getEchartResult(this.type, data, this.setting);
-            this.echarts_options = _result['options'];
-            this.result.emit(_result);
+            const result_ = this._serv.getEchartResult(this.type, data, this.setting);
+            this.echarts_options = result_['options'];
+            this.result.emit(result_);
         });
 
         mu.run(changes['setting'], (settingListener) => {
             if (!settingListener.firstChange) {
-                const result = this._serv.getEchartResult(this.type, this.data, this.setting);
-                this.echarts_options = result['options'];
-                this.result.emit(result);
+                const result_ = this._serv.getEchartResult(this.type, this.data, this.setting);
+                this.echarts_options = result_['options'];
+                this.result.emit(result_);
             }
         });
 
