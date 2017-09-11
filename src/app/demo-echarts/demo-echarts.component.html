@@ -37,9 +37,9 @@
         </req-http>
     </mn-panel-s>
 
-    <mn-row [gutter]="16">
+    <mn-row class="mt-8" [gutter]="16">
         <mn-col [span]="12">
-            <mn-echarts-panel class="mt-8 bordered" title="EchartsPanel::bar mn-panel && tools"
+            <mn-echarts-panel class="bordered" title="EchartsPanel::bar mn-panel && tools"
                            [req]="{url: './assets/store/echarts-bar.json'}"
                            [type]="'bar'"
                            [tools]="['fullscreen', 'download', 'data_view', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload']"
@@ -48,30 +48,28 @@
             </mn-echarts-panel>
         </mn-col>
         <mn-col [span]="12">
-            <mn-echarts-box class="mt-8 bordered"
+            <mn-echarts-box class="bordered"
                            [req]="{url: './assets/store/pie.json'}"
                            [type]="'pie'"
                            [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"
                            [setting]="{legend_position: 'center bottom'}"
-                           [show_tools]="'toggle'"
-                           [style.height]="'100%'">
+                           [show_tools]="'toggle'">
             </mn-echarts-box>
         </mn-col>
     </mn-row>
 
     <mn-row [gutter]="16" class="mt-8">
         <mn-col [span]="12">
-            <mn-echarts-box class="mt-8 bordered"
-                         (result)="radarResult($event)"
-                         [req]="{url: './assets/store/echarts-radar.json'}"
-                         [type]="'radar'"
-                         [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"
-                         [setting]="{legend_show: false, tooltip: true}"
-                         [style.height]="'100%'">
+            <mn-echarts-box class="bordered"
+                            (result)="radarResult($event)"
+                            [req]="{url: './assets/store/echarts-radar.json'}"
+                            [type]="'radar'"
+                            [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"
+                            [setting]="{legend_show: false, tooltip: true}">
             </mn-echarts-box>
         </mn-col>
         <mn-col [span]="12">
-            <mn-echarts-panel class="mt-8 bordered" title="EchartsPanel::world cloud"
+            <mn-echarts-panel class="bordered" title="EchartsPanel::world cloud"
                            [req]="{url: './assets/store/echarts-world-cloud.json'}"
                            [type]="'wordCloud'"
                            [tools]="['fullscreen', 'download', 'data_view', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload']"
