@@ -50,7 +50,6 @@ export class MnEchartsComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
 
-        console.debug(':::::mn-echarts', this.options, this.data);
 
         mu.run(mu.prop(changes, 'options.currentValue'), (options) => {
             this.echarts_options = options;
