@@ -68,8 +68,7 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     private createChart(): any {
         this.theme = this.theme || 'default';
         this.currentWindowWidth = window.innerWidth;
-        console.debug('ooOoooOoooOOOooo');
-        let echarts_ = echarts.init(this._ref.nativeElement);
+        const echarts_ = echarts.init(this._ref.nativeElement);
         this.mycharts.emit(echarts_);
         return echarts_;
     }
@@ -141,8 +140,6 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     }
 
     private onOptionsChange(opt: any): void {
-
-        console.debug(':::::opt', opt);
 
         if (opt) {
             if (!this._chart) {

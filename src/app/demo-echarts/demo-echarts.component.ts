@@ -146,7 +146,6 @@ export class DemoEchartsComponent implements OnInit {
     }
 
     radarResult($event) {
-        console.debug(JSON.stringify($event.dataView));
     }
 
     ngOnInit() {

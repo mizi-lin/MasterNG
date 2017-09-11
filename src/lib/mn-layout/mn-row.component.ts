@@ -8,16 +8,7 @@ declare const mu: any;
 @Component({
     selector: 'mn-row, [mn-row], mn-fill, [mn-fill]',
     template: '<ng-content></ng-content>',
-    styles: [
-            `
-            :host {
-                display: flex;
-                flex-wrap: wrap;
-                align-items: stretch;
-                box-sizing: border-box;
-            }
-            `
-    ]
+    styleUrls: ['./layout.scss']
 })
 export class MnRowComponent implements OnChanges {
     @Input() gutter;
@@ -25,12 +16,21 @@ export class MnRowComponent implements OnChanges {
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2) {
+
+        let rst = [];
+        mu.each(32, (i) => {
+            rst.push(`.gutter-${i} > mn-col {padding-left: ${i}px;padding-right: ${i}px;}`);
+        });
+
+        console.debug(rst.join(''));
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         mu.exist(changes['gutter'], () => {
-            this._renderer.setStyle(this._ref.nativeElement, 'marginLeft', -this.gutter / 2 + 'px');
-            this._renderer.setStyle(this._ref.nativeElement, 'marginRight', -this.gutter / 2 + 'px');
+            const i = Math.ceil(this.gutter / 2);
+            this._renderer.setStyle(this._ref.nativeElement, 'marginLeft', -i + 'px');
+            this._renderer.setStyle(this._ref.nativeElement, 'marginRight', -i + 'px');
+            this._renderer.addClass(this._ref.nativeElement, 'gutter-' + i);
         });
     }
 }
