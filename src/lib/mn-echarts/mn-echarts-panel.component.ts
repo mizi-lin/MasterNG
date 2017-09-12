@@ -80,6 +80,29 @@ declare const mu: any, jQuery: any;
                             <i class="fa fa-bookmark"></i>
                         </mn-col>
                     </ng-template>
+                    
+                    <ng-template [ngIf]="toolMap['sort']">
+                        <mn-col [order]="toolMap['sort'].order"
+                                [class.active]="statusMap.sort_click">
+
+                            <!-- <todo 暂时先使用 nz-zorro> -->
+                            
+                            <nz-dropdown>
+                                <a class="ant-dropdown-link" nz-dropdown>
+                                    <i class="fa fa-sort-amount-desc"></i>
+                                </a>
+                                <ul nz-menu>
+                                    <li nz-menu-item 
+                                        *ngFor="let legend of _options?.legend?.data"
+                                        (click)="sort_click(legend.name, $event)">
+                                        {{legend.name}}
+                                    </li>
+                                </ul>
+                            </nz-dropdown>
+                        </mn-col>
+                    </ng-template>
+                    
+                    
 
                     <ng-template [ngIf]="toolMap['reload']">
                         <mn-col (click)="reload_click($event)"
@@ -161,10 +184,13 @@ export class MnEchartsPanelComponent implements OnChanges {
     // fullscreen, download, data_view, line, bar, exchange, rate, label_all, legend, reload
     _tools: any[] = [];
 
-    handson: any;
+    _sort: string;
+
     statusMap: any = {};
     toolMap: any = {};
     hide_title: boolean = false;
+
+    legends: any[] = [];
 
     setStatus(fnKey: string): void {
         this.statusMap[fnKey] = !this.statusMap[fnKey];
@@ -293,6 +319,14 @@ export class MnEchartsPanelComponent implements OnChanges {
         this.setStatus('reload_click');
     }
 
+    sort_click(legend): void {
+        this._sort = this._sort === 'desc' ? 'asc' : 'desc';
+        this.setting = mu.clone(this.setting || {});
+        this.setting.legend_show = true;
+        this.setting.sort = `${legend}:${this._sort}`;
+        this.setStatus('sort_click');
+    }
+
     fullscreen_click: any = (full: any, $event: any) => {
         const $el = jQuery(this._panel.nativeElement);
         $el.mnResize(() => {
@@ -306,5 +340,5 @@ export class MnEchartsPanelComponent implements OnChanges {
         mu.run(this.toolMap['fullscreen'].click, fn => fn(full, $event));
 
         this.setStatus('fullscreen_click');
-    };
+    }
 }

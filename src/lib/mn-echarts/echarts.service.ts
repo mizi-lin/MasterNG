@@ -11,6 +11,10 @@ export class EchartsService {
 
     colorsMap: any = {};
 
+    GRID_TOP: number = 60;
+    GRID_BOTTOM: number = 60;
+
+
     /**
      *
      * @param arr
@@ -50,14 +54,14 @@ export class EchartsService {
             pie: [
                 '$module',
                 'convert',
-                'sort',
                 '$series',
+                'series_sort',
                 'series_subtype',
                 'series_selected',
 
                 '$legend',
-                'legend_show',
                 'legend_position',
+                'legend_show',
                 'grid_position',
                 'tooltip'
             ],
@@ -66,14 +70,14 @@ export class EchartsService {
                 '$module',
                 'data_cut',
                 'convert',
-                'sort',
                 '$series',
+                'series_sort',
                 'series_transparent',
                 // 'series_resize',
 
                 '$legend',
-                'legend_show',
                 'legend_position',
+                'legend_show',
 
                 'grid_position',
                 'tooltip'
@@ -82,7 +86,7 @@ export class EchartsService {
             radar: [
                 '$module',
                 'convert',
-                'sort',
+                'series_sort',
                 '$series',
 
                 '$legend',
@@ -98,7 +102,7 @@ export class EchartsService {
             line: [
                 '$module',
                 'convert',
-                'sort',
+                'series_sort',
                 '$series',
                 'series_subtype',
 
@@ -124,7 +128,7 @@ export class EchartsService {
             bar: [
                 '$module',
                 'convert',
-                'sort',
+                'series_sort',
                 '$series',
                 'series_subtype',
 
@@ -196,20 +200,22 @@ export class EchartsService {
          * @sort {boolean | string}
          * exp. sort = 'value:asc'
          */
-        fn.sort = () => {
-            // 排序
-            mu.run(setting.module === 'single', () => {
-                mu.run(setting.sort, (sortInfo) => {
-                    sortInfo = mu.type(sortInfo, 'boolean') ? Y_VALUE : sortInfo;
-                    const sortInfo_ = sortInfo.split(':');
-                    const key = sortInfo_[0] || Y_VALUE;
-                    const sort = sortInfo_[1] || 'desc';
-                    data = data.sort((a, b) => {
-                        return sort === 'desc' ? (b[key] - a[key]) : (a[key] - b[key]);
-                    });
-                });
-            });
-        };
+        // fn.sort = () => {
+        //     // 排序
+        //     mu.run(setting.module !== 'single', () => {
+        //         mu.run(setting.sort, (sortInfo) => {
+        //             sortInfo = mu.type(sortInfo, 'boolean') ? Y_VALUE : sortInfo;
+        //             const sortInfo_ = sortInfo.split(':');
+        //             const key = sortInfo_[0] || Y_VALUE;
+        //             const sort = sortInfo_[1] || 'desc';
+        //             data = data.sort((a, b) => {
+        //                 return sort === 'desc' ? (b[key] - a[key]) : (a[key] - b[key]);
+        //             });
+        //         });
+        //     });
+        //
+        //     console.debug(mu.clone(data));
+        // };
 
         // -> 关键步骤
         // series 处理
@@ -226,6 +232,43 @@ export class EchartsService {
                         _series_data = mu.groupArray(data, NAME);
                         break;
                 }
+            });
+
+            /**
+             * 对数据进行排序
+             */
+            mu.run(setting.sort, (info) => {
+                let [legend, sort] = info.split(':');
+                legend = mu.trim(legend || setting.single_name);
+                sort = mu.trim(sort || 'desc');
+
+                let sort_data = mu.clone(_series_data[legend]);
+                sort_data = sort_data.sort((a, b) => {
+                    return sort === 'desc' ? (b.value - a.value) : (a.value - b.value);
+                });
+
+                let series_data = mu.map(_series_data, (data, legend) => {
+                    data = mu.map(data, (d) => ({
+                        __key__: d['x'],
+                        __val__: d
+                    }), {});
+
+                    return data;
+                });
+
+                _series_data = mu.map(_series_data, (data, legend) => {
+                    mu.each(sort_data, (sd, i) => {
+                        data[i] = series_data[legend][sd.x];
+                    });
+
+                    return data;
+                });
+
+                // 修改 legend 的显示状态
+                options.legend.selected = {
+                    [legend]: true
+                };
+
             });
 
             /**
@@ -365,6 +408,19 @@ export class EchartsService {
                 _legend = options.legend.data = mu.map(_series_data, (o, name) => name, []);
             });
 
+            /**
+             * sort
+             * 关联设置
+             */
+            mu.run(setting.sort, () => {
+                const selected = mu.map(_legend, (l) => ({
+                    __key__: l,
+                    __val__: false
+                }), {});
+
+                options.legend.selected = mu.extend(selected, options.legend.selected);
+            });
+
         };
 
         fn.legend_show = () => {
@@ -372,13 +428,16 @@ export class EchartsService {
              * setting.legend_show
              * 设置 legend.show 是否显示
              */
+
             mu.run(setting.legend_show, () => {
                 options.legend.show = true;
+                options.grid.top = this.GRID_TOP;
+                options.grid.bottom = this.GRID_BOTTOM;
             }, () => {
                 options.legend.show = false;
-                options.grid.top = '2%';
-                options.grid.bottom = '2%';
+                options.grid.top = this.GRID_TOP / 2 ;
             });
+
         };
 
         /**
@@ -442,6 +501,8 @@ export class EchartsService {
             /**
              * setting.module
              * 显示模式
+             *
+             * todo 修改 xAxis 获得值方法
              */
             mu.run(setting.module, (module) => {
                 switch (module) {
@@ -459,7 +520,7 @@ export class EchartsService {
                         break;
                     case 'group':
                     case 'mix':
-                        _x_axis = options.xAxis[0].data = mu.map(mu.groupArray(data, X_VALUE), (o, x) => x, []);
+                        _x_axis = options.xAxis[0].data = mu.map(options.series[0].data, (o) => o.x, []);
                         break;
                 }
             });
@@ -483,7 +544,7 @@ export class EchartsService {
         // };
 
         fn.xAxis_rotate = () => {
-            mu.run(setting.rotate, (rotate) => {
+            mu.exist(setting.rotate, (rotate) => {
                 options.xAxis[0].axisLabel.interval = 0;
                 options.xAxis[0].axisLabel.rotate = rotate;
                 // 默认数值
