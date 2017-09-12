@@ -23,6 +23,10 @@
             overflow: auto;
         }
 
+        nz-dropdown a {
+            color: inherit;
+        }
+
         mn-panel-toolbar {
             &.toggle {
                 display: none;
