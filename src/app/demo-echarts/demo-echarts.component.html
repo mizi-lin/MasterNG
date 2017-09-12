@@ -21,8 +21,10 @@
         </req-http>
     </mn-panel-s>
 
-    <mn-panel-s class="mt-8 bordered" title="EchartsService::data conversion options">
-        <req-http [req]="{url: './assets/store/pie.json'}" (result)="pieConversion($event.data); pie_data = $event.data">
+    <mn-panel-s class="mt-8 bordered" title="EchartsService::data conversion options" mn-element #abc="element">
+        <req-http [req]="{url: './assets/store/pie.json'}"
+                  [loader]="abc.elementRef"
+                  (result)="pieConversion($event.data); pie_data = $event.data">
             <mn-row>
                 <mn-col [span]="12">
                     <div mn-echarts-render [options]="pie_options" [style.height.px]="300">

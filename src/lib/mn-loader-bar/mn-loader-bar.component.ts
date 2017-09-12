@@ -16,6 +16,7 @@ declare const mu: any;
 export class MnLoaderBarComponent implements OnChanges {
 
     @Input() position: string;
+    @Input() loader: ElementRef;
 
     @HostBinding('style.position') _position = this.position || 'relative';
 
@@ -36,11 +37,21 @@ export class MnLoaderBarComponent implements OnChanges {
     constructor(private _ref: ElementRef, private _render: Renderer2) {
 
         setTimeout(() => {
+
+            mu.run(this.loader, (ref) => {
+                ref.nativeElement.appendChild(_ref.nativeElement);
+            });
+
+            /**
+             * 设置父元素的style.position
+             * 以及自身style.position
+             */
             const parent = _ref.nativeElement.parentElement;
             if (!mu.or(parent.style.position, 'absolute', 'fixed')) {
                 _render.setStyle(parent, 'position', 'relative');
                 this._position = this.position === 'fixed' ? 'fixed' : 'absolute';
             }
+
         }, 1);
     }
 
@@ -51,7 +62,9 @@ export class MnLoaderBarComponent implements OnChanges {
                 this.height = this._height;
             });
 
-            this.go(this.progress);
+            setTimeout(() => {
+                this.go(this.progress);
+            }, 100);
         });
     }
 

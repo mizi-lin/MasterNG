@@ -16,13 +16,6 @@ export class MnRowComponent implements OnChanges {
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2) {
-
-        let rst = [];
-        mu.each(32, (i) => {
-            rst.push(`.gutter-${i} > mn-col {padding-left: ${i}px;padding-right: ${i}px;}`);
-        });
-
-        console.debug(rst.join(''));
     }
 
     ngOnChanges(changes: SimpleChanges): void {
