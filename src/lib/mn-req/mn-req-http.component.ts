@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy, ElementRef, Host} from '@angular/core';
 import {Http} from '@angular/http';
 import {MnReqNoDataComponent} from './mn-req-nodata.component';
 import {Subscriber} from 'rxjs/Subscriber';
@@ -7,7 +7,7 @@ declare const mu: any;
 @Component({
     selector: 'req-http',
     template: `
-        <mn-loader-bar *ngIf="loading"
+        <mn-loader-bar *ngIf="loading" [loader]="loader"
                        [progress]="process"></mn-loader-bar>
         <mn-dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
         <ng-content *ngIf="!noData"></ng-content>
@@ -27,6 +27,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     @Input() payload: any;
     @Input() data: any;
     @Input() context: any;
+    @Input() loader: ElementRef;
 
     // todo
     @Input() loading: boolean = true;
