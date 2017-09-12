@@ -39,7 +39,7 @@ export class MnLoaderBarComponent implements OnChanges {
                 private _lbs: MnLoaderBarServices) {
 
         // 若loader不作用，则删除
-        if (this._lbs.config.loader) {
+        if (!this._lbs.config.loader) {
             setTimeout(() => {
                 const elm_ = this._ref.nativeElement;
                 elm_.parentElement.removeChild(elm_);
@@ -67,7 +67,7 @@ export class MnLoaderBarComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (this._lbs.config.loader) {
+        if (!this._lbs.config.loader) {
             return;
         }
 
