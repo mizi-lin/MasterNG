@@ -1,6 +1,7 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MnLoaderBarComponent} from './mn-loader-bar.component';
+import {MnLoaderBarServices} from './mn-loader-bar.services';
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import {MnLoaderBarComponent} from './mn-loader-bar.component';
         MnLoaderBarComponent
     ],
     providers: [
+        MnLoaderBarServices
     ]
 })
 export class MnLoaderBarModule {

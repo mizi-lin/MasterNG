@@ -7,7 +7,7 @@ declare const mu: any;
 @Component({
     selector: 'req-http',
     template: `
-        <mn-loader-bar *ngIf="loading" [loader]="loader"
+        <mn-loader-bar *ngIf="loader" [loaderRef]="loaderRef"
                        [progress]="process"></mn-loader-bar>
         <mn-dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
         <ng-content *ngIf="!noData"></ng-content>
@@ -27,10 +27,8 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     @Input() payload: any;
     @Input() data: any;
     @Input() context: any;
-    @Input() loader: ElementRef;
-
-    // todo
-    @Input() loading: boolean = true;
+    @Input('mnLoaderRef') loaderRef?: ElementRef;
+    @Input('mnLoader') loader?: boolean = true;
 
     @Output() result: any = new EventEmitter<any>();
 

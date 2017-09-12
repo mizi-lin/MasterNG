@@ -1,5 +1,5 @@
 import {Component, ElementRef, EventEmitter, HostBinding, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges} from '@angular/core';
-import * as mu from 'mzmu';
+import {MnLoaderBarServices} from './mn-loader-bar.services';
 
 declare const mu: any;
 
@@ -16,7 +16,7 @@ declare const mu: any;
 export class MnLoaderBarComponent implements OnChanges {
 
     @Input() position: string;
-    @Input() loader: ElementRef;
+    @Input() loaderRef: ElementRef;
 
     @HostBinding('style.position') _position = this.position || 'relative';
 
@@ -34,11 +34,22 @@ export class MnLoaderBarComponent implements OnChanges {
     height = this._height;
     on = 0;
 
-    constructor(private _ref: ElementRef, private _render: Renderer2) {
+    constructor(private _ref: ElementRef,
+                private _render: Renderer2,
+                private _lbs: MnLoaderBarServices) {
+
+        // 若loader不作用，则删除
+        if (this._lbs.config.loader) {
+            setTimeout(() => {
+                const elm_ = this._ref.nativeElement;
+                elm_.parentElement.removeChild(elm_);
+            }, 0);
+            return;
+        }
 
         setTimeout(() => {
 
-            mu.run(this.loader, (ref) => {
+            mu.run(this.loaderRef, (ref) => {
                 ref.nativeElement.appendChild(_ref.nativeElement);
             });
 
@@ -56,6 +67,10 @@ export class MnLoaderBarComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
+        if (this._lbs.config.loader) {
+            return;
+        }
+
         mu.exist(changes['progress'], () => {
             mu.run(this.width >= 100, () => {
                 this.width = this._width;
