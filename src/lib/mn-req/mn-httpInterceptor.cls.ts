@@ -33,6 +33,7 @@ declare let mu: any, console: any;
 @Injectable()
 export class HttpInterceptorCls extends Http {
     router: Router;
+
     // reqServ: ReqService;
 
     constructor(backend: ConnectionBackend,
@@ -106,7 +107,7 @@ export class HttpInterceptorCls extends Http {
 
     beforeRequest(url: string, config: any): void {
         const progress = this.reqServ.progress;
-        mu.run( progress > 0 && progress < 100, () => {
+        mu.run(progress > 0 && progress < 100, () => {
             this.reqServ.progress += (100 - progress) * (Math.random() * .5);
         }, () => {
             this.reqServ.progress = mu.randomInt(5, 25);
