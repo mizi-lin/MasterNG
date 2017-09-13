@@ -14,7 +14,7 @@ var tool_compress_component_1 = require("./tool-compress.component");
 var tool_collapse_component_1 = require("./tool-collapse.component");
 var mn_panel_simple_component_1 = require("./mn-panel-simple.component");
 var tool_refresh_component_1 = require("./tool-refresh.component");
-var ng_zorro_antd_module_1 = require("ng-zorro-antd/src/release/ng-zorro-antd.module");
+var ng_zorro_antd_1 = require("ng-zorro-antd");
 var mn_layout_module_1 = require("../mn-layout/mn-layout.module");
 var MnPanelModule = (function () {
     function MnPanelModule() {
@@ -31,7 +31,7 @@ MnPanelModule.decorators = [
                 imports: [
                     common_1.CommonModule,
                     mn_layout_module_1.MnLayoutModule.forRoot(),
-                    ng_zorro_antd_module_1.NgZorroAntdModule.forRoot()
+                    ng_zorro_antd_1.NgZorroAntdModule.forRoot()
                 ],
                 declarations: [
                     mn_panel_component_1.MnPanelComponent,

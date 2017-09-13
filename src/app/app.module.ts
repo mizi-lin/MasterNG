@@ -12,7 +12,7 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {InitializeFactory} from './common/initialize.factory';
 import {MnI18nServices} from '../lib/mn-i18n/mn-i18n.services';
 import {MnRuleServices} from '../lib/mn-rule/mn-rule.services';
-import {NgZorroAntdModule} from 'ng-zorro-antd/src/release/ng-zorro-antd.module';
+import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {MasterNgModule} from '../lib/master-ng.module';
 import {DemoMcComponent} from './demo-mc/demo-mc.component';
 
