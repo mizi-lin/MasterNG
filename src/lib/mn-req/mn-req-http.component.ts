@@ -2,6 +2,7 @@ import {Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter
 import {Http} from '@angular/http';
 import {MnReqNoDataComponent} from './mn-req-nodata.component';
 import {Subscriber} from 'rxjs/Subscriber';
+
 declare const mu: any;
 
 @Component({
@@ -68,8 +69,12 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
             }, () => {
                 this.noData = true;
             });
-
+        }, () => {
+            this.process = 100;
+        }, () => {
+            this.process = 100;
         });
+
     }
 
     debounce_req_http: any = mu.debounce((req: any) => {
@@ -81,7 +86,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     ngOnChanges(changes: SimpleChanges) {
 
         mu.run(this.req, () => {
-            this.process = 50;
+            this.process = mu.randomInt(0, 49);
         });
 
         mu.run(changes['params'] && this.req, () => {
