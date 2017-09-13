@@ -14,7 +14,7 @@ var core_1 = require("@angular/core");
 var initialize_factory_1 = require("./common/initialize.factory");
 var mn_i18n_services_1 = require("../lib/mn-i18n/mn-i18n.services");
 var mn_rule_services_1 = require("../lib/mn-rule/mn-rule.services");
-var ng_zorro_antd_module_1 = require("ng-zorro-antd/src/release/ng-zorro-antd.module");
+var ng_zorro_antd_1 = require("ng-zorro-antd");
 var master_ng_module_1 = require("../lib/master-ng.module");
 var demo_mc_component_1 = require("./demo-mc/demo-mc.component");
 var AppModule = (function () {
@@ -35,7 +35,7 @@ AppModule.decorators = [
                 ],
                 imports: [
                     platform_browser_1.BrowserModule,
-                    ng_zorro_antd_module_1.NgZorroAntdModule.forRoot(),
+                    ng_zorro_antd_1.NgZorroAntdModule.forRoot(),
                     router_1.RouterModule.forRoot([
                         {
                             path: 'panel',

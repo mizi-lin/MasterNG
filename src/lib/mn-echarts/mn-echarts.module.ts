@@ -9,8 +9,8 @@ import {MnEchartsComponent} from './mn-echarts.component';
 import {MnEchartsPanelComponent} from './mn-echarts-panel.component';
 import {EchartsService} from './echarts.service';
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {NgZorroAntdModule} from 'ng-zorro-antd/src/release/ng-zorro-antd.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NgZorroAntdModule} from 'ng-zorro-antd';
 
 @NgModule({
     imports: [

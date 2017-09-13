@@ -11,8 +11,8 @@ var mn_echarts_component_1 = require("./mn-echarts.component");
 var mn_echarts_panel_component_1 = require("./mn-echarts-panel.component");
 var echarts_service_1 = require("./echarts.service");
 var core_1 = require("@angular/core");
-var ng_zorro_antd_module_1 = require("ng-zorro-antd/src/release/ng-zorro-antd.module");
 var animations_1 = require("@angular/platform-browser/animations");
+var ng_zorro_antd_1 = require("ng-zorro-antd");
 var MnEchartsModule = (function () {
     function MnEchartsModule() {
     }
@@ -32,7 +32,7 @@ MnEchartsModule.decorators = [
                     mn_req_module_1.MnReqModule.forRoot(),
                     mn_layout_module_1.MnLayoutModule.forRoot(),
                     mn_handsontable_module_1.MnHandsontableModule.forRoot(),
-                    ng_zorro_antd_module_1.NgZorroAntdModule,
+                    ng_zorro_antd_1.NgZorroAntdModule,
                     animations_1.BrowserAnimationsModule
                 ],
                 declarations: [
