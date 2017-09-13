@@ -8,7 +8,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:lib": "npm run clean && node build.js && ngc mkdir dist && ngc && npm run cp && npm run clean:prebuild",
+    "build:lib": "npm run clean && node build.js && ngc mkdir dist && ngc -p ./build.json && npm run cp && npm run clean:prebuild",
     "cp": "cp -R ./src/lib/assets/ ./dist/assets/ && copyfiles package.json README.md LICENSE dist/",
     "test": "ng test",
     "lint": "ng lint",

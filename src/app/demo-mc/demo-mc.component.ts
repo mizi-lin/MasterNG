@@ -50,7 +50,7 @@ export class DemoMcComponent implements OnInit {
     }
 
     ngOnInit() {
-        let d = new Date();
+        let d: any = new Date();
         let i = 0;
         d.setSeconds(0, 0);
         d = +d - 120 * 1000;
