@@ -1,16 +1,16 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "outDir": "../dist",
-    "baseUrl": ".",
-    "module": "es2015",
-    "sourceMap": true,
-    "types": [],
-    "paths": {
-    }
-  },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
-  ]
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../dist",
+        "baseUrl": ".",
+        "module": "es2015",
+        "sourceMap": true,
+        "types": [],
+        "paths": {
+        }
+    },
+    "exclude": [
+        "test.ts",
+        "**/*.spec.ts"
+    ]
 }
