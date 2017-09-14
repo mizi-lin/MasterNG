@@ -36,7 +36,7 @@ rimraf.sync('prebuild', fs, (err) => {
 });
 
 console.log('*******\n cloning src 2 prebuild..');
-ncp('src', 'prebuild', (err) => {
+ncp('src/lib', 'prebuild', (err) => {
     if(err) {
         return console.error(err);
     }
