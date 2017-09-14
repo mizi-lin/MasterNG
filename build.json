@@ -7,7 +7,6 @@
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "baseUrl": ".",
         "target": "es5",
         "typeRoots": [
             "node_modules/@types"
@@ -25,6 +24,6 @@
         "strictMetadataEmit": true
     },
     "files": [
-        "prebuild/lib/index.ts"
+        "./prebuild/index.ts"
     ]
 }
