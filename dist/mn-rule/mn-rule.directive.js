@@ -17,6 +17,7 @@ var MnRuleDirective = (function () {
         this._vcRef = _vcRef;
         this._tempRef = _tempRef;
         this._context = new AuthRuleContext();
+        this._conditions = {};
         /**
          * 返回rule验证结果
          * @type {EventEmitter<any>}
@@ -28,7 +29,7 @@ var MnRuleDirective = (function () {
     }
     Object.defineProperty(MnRuleDirective.prototype, "rule", {
         set: function (conditions) {
-            this._conditions = conditions;
+            this._conditions = conditions || {};
             var bool = true;
             var condition_;
             switch (mu.type(conditions)) {

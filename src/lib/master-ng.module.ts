@@ -7,7 +7,6 @@ import {MnLoaderBarModule} from './mn-loader-bar/mn-loader-bar.module';
 import {MnDynamicModule} from './mn-dynamic/mn-dynamic.module';
 import {MnReqModule} from './mn-req/mn-req.module';
 import {MnEchartsModule} from './mn-echarts/mn-echarts.module';
-import {MnHandsontableModule} from './mn-handsontable/mn-handsontable.module';
 import {MnCommonModule} from './mn-common/mn-common.module';
 import {MnI18nModule} from './mn-i18n/mn-i18n.module';
 import {MnRuleModule} from './mn-rule/mn-rule.module';
@@ -27,7 +26,6 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
         ]),
         MnReqModule,
         MnEchartsModule,
-        MnHandsontableModule,
         MnCommonModule,
         MnI18nModule,
         MnRuleModule
@@ -41,7 +39,6 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
         MnDynamicModule,
         MnReqModule,
         MnEchartsModule,
-        MnHandsontableModule,
         MnCommonModule,
         MnI18nModule,
         MnRuleModule

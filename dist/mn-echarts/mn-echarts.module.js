@@ -5,7 +5,6 @@ var mn_common_module_1 = require("../mn-common/mn-common.module");
 var mn_panel_module_1 = require("../mn-panel/mn-panel.module");
 var mn_req_module_1 = require("../mn-req/mn-req.module");
 var mn_layout_module_1 = require("../mn-layout/mn-layout.module");
-var mn_handsontable_module_1 = require("../mn-handsontable/mn-handsontable.module");
 var mn_echarts_render_directive_1 = require("./mn-echarts-render.directive");
 var mn_echarts_component_1 = require("./mn-echarts.component");
 var mn_echarts_panel_component_1 = require("./mn-echarts-panel.component");
@@ -31,7 +30,6 @@ MnEchartsModule.decorators = [
                     mn_panel_module_1.MnPanelModule.forRoot(),
                     mn_req_module_1.MnReqModule.forRoot(),
                     mn_layout_module_1.MnLayoutModule.forRoot(),
-                    mn_handsontable_module_1.MnHandsontableModule.forRoot(),
                     ng_zorro_antd_1.NgZorroAntdModule,
                     animations_1.BrowserAnimationsModule
                 ],

@@ -40,20 +40,20 @@ var mn_req_service_1 = require("./mn-req.service");
 var HttpInterceptorCls = (function (_super) {
     __extends(HttpInterceptorCls, _super);
     // reqServ: ReqService;
-    function HttpInterceptorCls(backend, defaultOptions, injector, reqServ) {
+    function HttpInterceptorCls(_backend, _defaultOptions, _injector, _reqServ) {
         var _this = 
         // super(backend, defaultOptions, injector);
-        _super.call(this, backend, defaultOptions) || this;
-        _this.reqServ = reqServ;
+        _super.call(this, _backend, _defaultOptions) || this;
+        _this._reqServ = _reqServ;
         _this.loadComplete = mu.debounce(function () {
-            _this.reqServ.progress = 100;
+            _this._reqServ.progress = 100;
         }, 500);
         /**
          * 修正 ng-module 中 $$HttpInterceptor deps 中添加 Router 与 APP_INITIALIZE 冲突
          * fix bug: Cannot instantiate cyclic dependency
          */
         setTimeout(function () {
-            _this.router = injector.get(router_1.Router);
+            _this.router = _injector.get(router_1.Router);
         }, 0);
         return _this;
     }
@@ -64,9 +64,13 @@ var HttpInterceptorCls = (function (_super) {
         headers.append('Cache-control', 'no-store');
         headers.append('Pragma', 'no-cache');
         headers.append('Expires', '0');
-        headers.append('X-TOKEN', mu.storage('X-TOKEN'));
-        headers.append('X-ACCESS-TOKEN', mu.storage('X-ACCESS-TOKEN'));
-        headers.append('X-ORIGIN', location.host);
+        this._reqServ.getHeaders(function (headers_map) {
+            mu.each(headers_map, function (header) {
+                mu.if(headers[header.method], function () {
+                    headers[header.method](header.key, header.value);
+                });
+            });
+        });
         return headers;
     };
     HttpInterceptorCls.prototype.map = function (observable) {
@@ -100,11 +104,11 @@ var HttpInterceptorCls = (function (_super) {
     };
     HttpInterceptorCls.prototype.beforeRequest = function (url, config) {
         var _this = this;
-        var progress = this.reqServ.progress;
+        var progress = this._reqServ.progress;
         mu.run(progress > 0 && progress < 100, function () {
-            _this.reqServ.progress += (100 - progress) * (Math.random() * .5);
+            _this._reqServ.progress += (100 - progress) * (Math.random() * .5);
         }, function () {
-            _this.reqServ.progress = mu.randomInt(5, 25);
+            _this._reqServ.progress = mu.randomInt(5, 25);
         });
         console.debug('before:::: -> ', url);
     };

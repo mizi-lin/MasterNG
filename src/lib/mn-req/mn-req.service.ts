@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+
 declare const mu: any;
 
 @Injectable()
@@ -14,6 +15,18 @@ export class MnReqService {
     set progress(value: any) {
         this.progress_ = value;
         this.progress$.next(value);
+    }
+
+    /**
+     * httpInterceptor headers
+     */
+    _headers: any;
+    setHeaders(headers: any) {
+        this._headers = headers;
+    }
+
+    getHeaders(fn: any) {
+        return fn ? fn(this._headers) : this._headers;
     }
 
     constructor() {

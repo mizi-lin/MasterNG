@@ -3,7 +3,6 @@ import {MnCommonModule} from '../mn-common/mn-common.module';
 import {MnPanelModule} from '../mn-panel/mn-panel.module';
 import {MnReqModule} from '../mn-req/mn-req.module';
 import {MnLayoutModule} from '../mn-layout/mn-layout.module';
-import {MnHandsontableModule} from '../mn-handsontable/mn-handsontable.module';
 import {MnEchartsRenderDirective} from './mn-echarts-render.directive';
 import {MnEchartsComponent} from './mn-echarts.component';
 import {MnEchartsPanelComponent} from './mn-echarts-panel.component';
@@ -19,7 +18,6 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
         MnPanelModule.forRoot(),
         MnReqModule.forRoot(),
         MnLayoutModule.forRoot(),
-        MnHandsontableModule.forRoot(),
 
         NgZorroAntdModule,
         BrowserAnimationsModule

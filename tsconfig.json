@@ -23,10 +23,6 @@
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true
-    },
-
-    "files": [
-        "./prebuild/index.ts"
-    ]
+    }
 }
 

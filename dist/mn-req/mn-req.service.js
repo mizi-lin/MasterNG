@@ -17,6 +17,12 @@ var MnReqService = (function () {
         enumerable: true,
         configurable: true
     });
+    MnReqService.prototype.setHeaders = function (headers) {
+        this._headers = headers;
+    };
+    MnReqService.prototype.getHeaders = function (fn) {
+        return fn ? fn(this._headers) : this._headers;
+    };
     return MnReqService;
 }());
 MnReqService.decorators = [
