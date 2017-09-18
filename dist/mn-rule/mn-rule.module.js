@@ -17,7 +17,7 @@ var MnRuleModule = (function () {
 MnRuleModule.decorators = [
     { type: core_1.NgModule, args: [{
                 imports: [
-                    common_1.CommonModule
+                    common_1.CommonModule,
                 ],
                 declarations: [
                     mn_rule_directive_1.MnRuleDirective

@@ -26,9 +26,9 @@ import { MnReqService } from './mn-req.service';
  * subscribe()：订阅流（即执行）
  */
 export declare class HttpInterceptorCls extends Http {
-    private reqServ;
+    private _reqServ;
     router: Router;
-    constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, injector: Injector, reqServ: MnReqService);
+    constructor(_backend: ConnectionBackend, _defaultOptions: RequestOptions, _injector: Injector, _reqServ: MnReqService);
     loadComplete: any;
     addHeaderWithToken(headers: Headers): Headers;
     map(observable: Observable<Response>): Observable<Response>;

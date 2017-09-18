@@ -17,7 +17,7 @@ export class MnRuleDirective implements OnChanges {
     private _elseViewRef: EmbeddedViewRef<AuthRuleContext>;
     private _viewRef: EmbeddedViewRef<AuthRuleContext>;
     private _rules: any;
-    private _conditions: any;
+    private _conditions: any = {};
 
     /**
      * 返回rule验证结果
@@ -33,7 +33,7 @@ export class MnRuleDirective implements OnChanges {
     @Input()
     set rule(conditions: any) {
 
-        this._conditions = conditions;
+        this._conditions = conditions || {};
 
         let bool: boolean = true;
         let condition_: any;

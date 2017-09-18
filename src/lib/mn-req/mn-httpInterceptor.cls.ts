@@ -36,24 +36,24 @@ export class HttpInterceptorCls extends Http {
 
     // reqServ: ReqService;
 
-    constructor(backend: ConnectionBackend,
-                defaultOptions: RequestOptions,
-                injector: Injector,
-                private reqServ: MnReqService) {
+    constructor(_backend: ConnectionBackend,
+                _defaultOptions: RequestOptions,
+                _injector: Injector,
+                private _reqServ: MnReqService) {
         // super(backend, defaultOptions, injector);
-        super(backend, defaultOptions);
+        super(_backend, _defaultOptions);
 
         /**
          * 修正 ng-module 中 $$HttpInterceptor deps 中添加 Router 与 APP_INITIALIZE 冲突
          * fix bug: Cannot instantiate cyclic dependency
          */
         setTimeout(() => {
-            this.router = injector.get(Router);
+            this.router = _injector.get(Router);
         }, 0);
     }
 
     loadComplete: any = mu.debounce(() => {
-        this.reqServ.progress = 100;
+        this._reqServ.progress = 100;
     }, 500);
 
     addHeaderWithToken(headers: Headers): Headers {
@@ -63,9 +63,15 @@ export class HttpInterceptorCls extends Http {
         headers.append('Cache-control', 'no-store');
         headers.append('Pragma', 'no-cache');
         headers.append('Expires', '0');
-        headers.append('X-TOKEN', mu.storage('X-TOKEN'));
-        headers.append('X-ACCESS-TOKEN', mu.storage('X-ACCESS-TOKEN'));
-        headers.append('X-ORIGIN', location.host);
+
+        this._reqServ.getHeaders((headers_map) => {
+            mu.each(headers_map, (header) => {
+                mu.if(headers[header.method], () => {
+                    headers[header.method](header.key, header.value);
+                });
+            });
+        });
+
         return headers;
     }
 
@@ -106,11 +112,11 @@ export class HttpInterceptorCls extends Http {
     }
 
     beforeRequest(url: string, config: any): void {
-        const progress = this.reqServ.progress;
+        const progress = this._reqServ.progress;
         mu.run(progress > 0 && progress < 100, () => {
-            this.reqServ.progress += (100 - progress) * (Math.random() * .5);
+            this._reqServ.progress += (100 - progress) * (Math.random() * .5);
         }, () => {
-            this.reqServ.progress = mu.randomInt(5, 25);
+            this._reqServ.progress = mu.randomInt(5, 25);
         });
 
         console.debug('before:::: -> ', url);

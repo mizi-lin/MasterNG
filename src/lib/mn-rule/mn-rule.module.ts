@@ -6,7 +6,7 @@ import {MnRuleDirective} from './mn-rule.directive';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
     ],
     declarations: [
         MnRuleDirective

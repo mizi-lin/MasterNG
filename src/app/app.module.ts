@@ -15,6 +15,7 @@ import {MnRuleServices} from '../lib/mn-rule/mn-rule.services';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {MasterNgModule} from '../lib/master-ng.module';
 import {DemoMcComponent} from './demo-mc/demo-mc.component';
+import {MnReqService} from '../lib/mn-req/mn-req.service';
 
 @NgModule({
     declarations: [
@@ -74,7 +75,8 @@ import {DemoMcComponent} from './demo-mc/demo-mc.component';
             deps: [
                 InitializeService,
                 MnI18nServices,
-                MnRuleServices
+                MnRuleServices,
+                MnReqService
             ],
             multi: true
         },
