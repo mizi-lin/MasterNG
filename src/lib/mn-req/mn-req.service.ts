@@ -21,8 +21,14 @@ export class MnReqService {
      * httpInterceptor headers
      */
     _headers: any;
-    setHeaders(headers: any) {
-        this._headers = headers;
+
+    setHeaders(headers: any, type: string = 'extend') {
+        // type: extend and new
+        if (type === 'extend') {
+            this._headers = this._headers.concat(headers);
+        } else if (type === 'new') {
+            this._headers = headers;
+        }
     }
 
     getHeaders(fn: any) {

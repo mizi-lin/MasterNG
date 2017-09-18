@@ -7,7 +7,7 @@ export declare class MnReqService {
      * httpInterceptor headers
      */
     _headers: any;
-    setHeaders(headers: any): void;
+    setHeaders(headers: any, type?: string): void;
     getHeaders(fn: any): any;
     constructor();
 }

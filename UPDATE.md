@@ -3,3 +3,6 @@
 ### 0.0.9 remove handsontableModule and update @angular/cli@1.4.2
 
 ### 0.1.0 add ReqServices.setHeaders with HttpInterceptor
+
+### 0.1.1 fixed node compile scss error with mn-echarts.scss
+

@@ -2,7 +2,7 @@
     display: block;
     width: 100%;
 
-    /deep/ {
+    &/deep/ {
         mn-panel-body {
             padding: 0;
         }
@@ -62,8 +62,6 @@
             pointer-events: auto;
         }
     }
-
-
 }
 
 

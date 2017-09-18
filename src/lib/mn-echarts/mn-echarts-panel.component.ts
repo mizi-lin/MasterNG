@@ -7,6 +7,7 @@ declare const mu: any, jQuery: any;
 
 @Component({
     selector: 'mn-echarts-panel, mn-echarts-box',
+    styleUrls: ['./mn-echarts.scss'],
     template: `
         <mn-panel>
             <mn-panel-header>
@@ -138,8 +139,8 @@ declare const mu: any, jQuery: any;
                 </req-http>
             </mn-panel-body>
         </mn-panel>
-    `,
-    styleUrls: ['./mn-echarts.scss']
+    `
+
 })
 export class MnEchartsPanelComponent implements OnChanges {
 
