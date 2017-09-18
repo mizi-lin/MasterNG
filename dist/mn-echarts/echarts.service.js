@@ -132,7 +132,6 @@ var EchartsService = (function () {
             mu.run(mu.or(type, 'pie'), function () {
                 setting.module = 'single';
                 setting.subtype = mu.ifempty(setting.subtype, 'disc');
-                setting.sort = true;
             });
             mu.run(mu.or(type, 'wordCloud'), function () {
                 setting.module = 'single';

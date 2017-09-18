@@ -17,8 +17,15 @@ var MnReqService = (function () {
         enumerable: true,
         configurable: true
     });
-    MnReqService.prototype.setHeaders = function (headers) {
-        this._headers = headers;
+    MnReqService.prototype.setHeaders = function (headers, type) {
+        if (type === void 0) { type = 'extend'; }
+        // type: extend and new
+        if (type === 'extend') {
+            this._headers = this._headers.concat(headers);
+        }
+        else if (type === 'new') {
+            this._headers = headers;
+        }
     };
     MnReqService.prototype.getHeaders = function (fn) {
         return fn ? fn(this._headers) : this._headers;

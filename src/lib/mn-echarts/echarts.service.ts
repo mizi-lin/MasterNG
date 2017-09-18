@@ -161,7 +161,6 @@ export class EchartsService {
             mu.run(mu.or(type, 'pie'), () => {
                 setting.module = 'single';
                 setting.subtype = mu.ifempty(setting.subtype, 'disc');
-                setting.sort = true;
             });
 
             mu.run(mu.or(type, 'wordCloud'), () => {

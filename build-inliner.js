@@ -3,14 +3,12 @@
 const fs = require('fs');
 const path = require('path');
 const less = require('less');
+const colors = require('colors');
 
 module.exports = function(content, options, targetDir) {
     options = options || {};
     options.base = options.base || './';
-
-    return processStyleUrls(content, options, targetDir)
-        .then(
-            (r) => processTemplateUrl(r, options, targetDir));
+    return processStyleUrls(content, options, targetDir).then((r) => processTemplateUrl(r, options, targetDir));
 };
 
 function processStyleUrls(content, options, targetDir) {
@@ -28,42 +26,47 @@ function processStyleUrls(content, options, targetDir) {
         let urls = exec[1];
         urls = urls.replace(/'/g, '"');
         urls = JSON.parse(urls);
-        return Promise.all(urls.map(function(url) {
-            let file = fs.readFileSync(getAbsoluteUrl(url, options, targetDir),
-                'utf-8');
 
+
+        return Promise.all(urls.map(function(url) {
+
+            let file = fs.readFileSync(getAbsoluteUrl(url, options, targetDir), 'utf-8');
             let fileNamePartsRe = /^[\./]*([^]*)\.(css|less|scss)$/g;
             let fileNamePartsMatches = url.match(fileNamePartsRe);
+
+
             if(fileNamePartsMatches === null || fileNamePartsMatches.length <= 0) {
                 // Unsupported file mode / malformed url
                 return file;
             }
 
+
             let fileNamePartsExec = fileNamePartsRe.exec(url);
             let fileName = fileNamePartsExec[1];
             let extension = fileNamePartsExec[2];
             let promise;
+
+
             if(extension === 'less' || extension === 'scss') {
-                promise = less.render(
-                    file,
-                    {
+
+                promise = less.render(file,{
                         paths: [options.base ? options.base : '.'],
                         filename: targetDir ? path.join(targetDir, fileName) : fileName,
                         compress: options.compress
                     }
-                )
-                    .then((output) => {
-                        return output.css;
-                    }, (e) => {
-                        throw e;
-                    });
+                ).then((output) => {
+                    console.log('analysis success -> :::::::'.green, url);
+                    return output.css;
+                }, (e) => {
+                    console.log('analysis error -> :::::::'.red, url, '\n', e);
+                    throw e;
+                });
             } else {
                 promise = Promise.resolve(file);
             }
 
             return promise.then((processed) => {
                 processed = processed.replace(/[\r\n]/g, '');
-
                 // escape quote chars
                 processed = processed.replace(new RegExp('\'', 'g'), '\\\'');
                 return processed;
@@ -105,8 +108,7 @@ function processTemplateUrl(content, options, targetDir) {
             quote = '\'';
         }
 
-        let file = fs.readFileSync(getAbsoluteUrl(url, options, targetDir),
-            'utf-8');
+        let file = fs.readFileSync(getAbsoluteUrl(url, options, targetDir),'utf-8');
 
         file = file.replace(/\n|\t/g, ' ');
 
