@@ -22,17 +22,25 @@ export class MnReqService {
      */
     _headers: any;
 
-    setHeaders(headers: any, type: string = 'extend') {
-        // type: extend and new
-        if (type === 'extend') {
-            this._headers = this._headers.concat(headers);
-        } else if (type === 'new') {
-            this._headers = headers;
-        }
+    setHeaders(headers: any) {
+        this._headers = headers;
     }
 
-    getHeaders(fn: any) {
+    getHeaders(fn?: any) {
         return fn ? fn(this._headers) : this._headers;
+    }
+
+    /**
+     * resource
+     */
+    _resources: any;
+
+    setResources(resources: any) {
+        this._resources = resources;
+    }
+
+    getResources(fn?: any) {
+        return fn ? fn(this._resources) : this._resources;
     }
 
     constructor() {

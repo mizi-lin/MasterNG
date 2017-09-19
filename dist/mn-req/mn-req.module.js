@@ -4,7 +4,6 @@ var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var http_1 = require("@angular/http");
 var mn_req_http_component_1 = require("./mn-req-http.component");
-var mn_req_resource_component_1 = require("./mn-req-resource.component");
 var mn_httpInterceptor_cls_1 = require("./mn-httpInterceptor.cls");
 var mn_resource_1 = require("./mn-resource");
 var mn_req_nodata_component_1 = require("./mn-req-nodata.component");
@@ -45,14 +44,12 @@ MnReqModule.decorators = [
                 ],
                 declarations: [
                     mn_req_http_component_1.ReqHttpComponent,
-                    mn_req_resource_component_1.MnReqResourceComponent,
                     mn_req_nodata_component_1.MnReqNoDataComponent,
                     mn_http_loader_component_1.MnHttpLoaderComponent,
                     mn_file_download_directive_1.MnFileDownloadDirective
                 ],
                 exports: [
                     mn_req_http_component_1.ReqHttpComponent,
-                    mn_req_resource_component_1.MnReqResourceComponent,
                     mn_req_nodata_component_1.MnReqNoDataComponent,
                     mn_http_loader_component_1.MnHttpLoaderComponent,
                     mn_file_download_directive_1.MnFileDownloadDirective

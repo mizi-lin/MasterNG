@@ -76,7 +76,8 @@ import {MnReqService} from '../lib/mn-req/mn-req.service';
                 InitializeService,
                 MnI18nServices,
                 MnRuleServices,
-                MnReqService
+                MnReqService,
+                ResourcePool
             ],
             multi: true
         },

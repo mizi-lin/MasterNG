@@ -3,10 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var mn_req_nodata_component_1 = require("./mn-req-nodata.component");
+var mn_req_service_1 = require("./mn-req.service");
 var ReqHttpComponent = (function () {
-    function ReqHttpComponent(_http) {
+    function ReqHttpComponent(_http, _rs) {
         var _this = this;
         this._http = _http;
+        this._rs = _rs;
         this.loader = true;
         this.result = new core_1.EventEmitter();
         this.noData = false;
@@ -35,7 +37,15 @@ var ReqHttpComponent = (function () {
                 ];
                 break;
         }
-        this._observable = (_a = this._http)[method].apply(_a, [req.url].concat(args)).subscribe(function (res) {
+        var source = mu.run(req.url, function (url) {
+            return (_a = _this._http)[method].apply(_a, [url].concat(args));
+            var _a;
+        }, function () {
+            var _resources = _this._rs.getResources();
+            return (_a = _resources[req.api])[method].apply(_a, args);
+            var _a;
+        });
+        this._observable = source.subscribe(function (res) {
             _this.process = 100;
             res = res || {};
             mu.run(res.data, function () {
@@ -48,7 +58,6 @@ var ReqHttpComponent = (function () {
         }, function () {
             _this.process = 100;
         });
-        var _a;
     };
     ReqHttpComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
@@ -88,6 +97,7 @@ ReqHttpComponent.decorators = [
 /** @nocollapse */
 ReqHttpComponent.ctorParameters = function () { return [
     { type: http_1.Http, },
+    { type: mn_req_service_1.MnReqService, },
 ]; };
 ReqHttpComponent.propDecorators = {
     'req': [{ type: core_1.Input },],

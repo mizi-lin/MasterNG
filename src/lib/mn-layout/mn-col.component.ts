@@ -10,8 +10,14 @@ declare const mu: any;
 @Component({
     selector: 'mn-col',
     template: `
-        <ng-content></ng-content>
-    `
+        <div class="mn-col-content">
+            <ng-content></ng-content>
+        </div>
+    `,
+    styles: [`:host /deep/ .mn-col-content { 
+        width: 100%;
+        height: 100%;
+    }`]
 })
 export class MnColComponent implements OnInit, OnChanges {
 
