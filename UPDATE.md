@@ -6,3 +6,6 @@
 
 ### 0.1.1 fixed node compile scss error with mn-echarts.scss
 
+### 0.1.2 mn-col add wrapper of div.mn-col-content
+
+### 0.1.3 [MnReqModule] remove mn-req-resource, resource merge mn-req-http

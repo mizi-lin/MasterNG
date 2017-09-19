@@ -2,6 +2,7 @@ import {Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter
 import {Http} from '@angular/http';
 import {MnReqNoDataComponent} from './mn-req-nodata.component';
 import {Subscriber} from 'rxjs/Subscriber';
+import {MnReqService} from './mn-req.service';
 
 declare const mu: any;
 
@@ -40,7 +41,10 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
 
     process: number = 0;
 
-    constructor(private _http: Http) {
+    constructor(
+        private _http: Http,
+        private _rs: MnReqService
+    ) {
     }
 
     req_http(req: any): void {
@@ -61,7 +65,14 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
                 break;
         }
 
-        this._observable = this._http[method](req.url, ...args).subscribe((res) => {
+        const source = mu.run(req.url, (url) => {
+            return this._http[method](url, ...args);
+        }, () => {
+            const _resources = this._rs.getResources();
+            return _resources[req.api][method](...args);
+        });
+
+        this._observable = source.subscribe((res) => {
             this.process = 100;
             res = res || {};
             mu.run(res.data, () => {

@@ -1,24 +1,22 @@
 <div class="demo-req">
 
-    <mn-panel-s class="bordered" title="ReqHttp"
+    <mn-panel-s class="bordered" title="Use Http"
         [tools]="[reload]">
         <req-http [req]="user_req" (result)="user_data = $event.data">
             {{user_data | json}}
         </req-http>
     </mn-panel-s>
 
-    <mn-panel-s class="bordered mt-8" title="ReqResource"
-             [tools]="[{
-                name: 'reload',
-                click: resource_reload
-             }]">
+    <mn-panel-s class="bordered mt-8" title="Use Resource">
+        <req-http [req]="{
+            api: 'demo',
+            method: 'get',
+            params: {name: 'user', store: 'store', a: 1, b: 2}
+        }" (result)="user_data = $event.data">
+            {{user_data | json}}
+        </req-http>
 
-        <req-resource [pool]="_rp"
-                      [req]="{method: 'get', key: 'demo' }"
-                      [params]="resource_params"
-                      (result)="demo_data = $event.data">
-            {{demo_data | json}}
-        </req-resource>
+
     </mn-panel-s>
 
 

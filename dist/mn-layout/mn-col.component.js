@@ -45,7 +45,8 @@ var MnColComponent = (function () {
 MnColComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'mn-col',
-                template: "\n        <ng-content></ng-content>\n    "
+                template: "\n        <div class=\"mn-col-content\">\n            <ng-content></ng-content>\n        </div>\n    ",
+                styles: [":host /deep/ .mn-col-content { \n        width: 100%;\n        height: 100%;\n    }"]
             },] },
 ];
 /** @nocollapse */
