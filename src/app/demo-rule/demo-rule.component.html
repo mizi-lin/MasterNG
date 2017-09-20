@@ -40,4 +40,32 @@
             <button mn-btn (click)="show('fff')">FFF(no work is no change rules)</button>
         </div>
     </mn-panel-s>
+
+    <mn-panel-s class="bordered" [title]="'Rule Group 规则匹配'">
+        <mn-fill [gutter]="16" class="p-16 bordered" [style.height.px]="200">
+            <ng-template [rule]="'aaa.bbb.ccc'" [rules]="rules">
+                <mn-col [span]="1">
+                    <div class="bordered hp-100">
+                        CCC
+                    </div>
+                </mn-col>
+            </ng-template>
+
+            <ng-template [rule]="'aaa.bbb.ddd'" [rules]="rules">
+                <mn-col [span]="2">
+                    <div class="bordered hp-100">
+                        DDD
+                    </div>
+                </mn-col>
+            </ng-template>
+
+            <ng-template [rule]="'aaa.bbb.eee'" [rules]="rules">
+                <mn-col [span]="3">
+                    <div class="bordered hp-100">
+                        EEE
+                    </div>
+                </mn-col>
+            </ng-template>
+        </mn-fill>
+    </mn-panel-s>
 </div>

@@ -69,7 +69,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
             return this._http[method](url, ...args);
         }, () => {
             const _resources = this._rs.getResources();
-            return _resources[req.api][method](...args);
+            return _resources[req.api][method](req.params || {}, req.payload || {});
         });
 
         this._observable = source.subscribe((res) => {

@@ -16,12 +16,11 @@ declare const mu: any;
     styles: [
             `
             :host,
-            [echarts-render] {
+            :host /deep/ [mn-echarts-render] {
                 display: block;
                 width: 100%;
                 height: 100%;
             }
-
             `
     ]
 
@@ -49,7 +48,6 @@ export class MnEchartsComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-
 
         mu.run(mu.prop(changes, 'options.currentValue'), (options) => {
             this.echarts_options = options;

@@ -43,6 +43,15 @@ var EchartsService = (function () {
         var default_options = echarts_default_options_1.DEFAULT_ECHART_OPTIONS[type];
         var options = mu.clone(default_options);
         var _series_data, _x_axis, _legend;
+        /**
+         * 校验各options项
+         */
+        mu.run(function () {
+            options.title = options.title || {};
+            options.legend = options.legend || {};
+            options.grid = options.grid || {};
+            options.tooltip = options.tooltip || {};
+        });
         var type_setting = {
             pie: [
                 '$module',
@@ -95,6 +104,7 @@ var EchartsService = (function () {
                 '$xAxis',
                 // 'xAxis_show_all',
                 'xAxis_rotate',
+                'xAxis_interval',
                 'yAxis_value_percent',
                 'yAxis_percent_rate',
                 'yAxis_zero',
@@ -116,6 +126,7 @@ var EchartsService = (function () {
                 '$xAxis',
                 // 'xAxis_show_all',
                 'xAxis_rotate',
+                'xAxis_interval',
                 'yAxis_value_percent',
                 'yAxis_percent_rate',
                 'yAxis_zero',
@@ -473,10 +484,15 @@ var EchartsService = (function () {
         // };
         fn.xAxis_rotate = function () {
             mu.exist(setting.rotate, function (rotate) {
-                options.xAxis[0].axisLabel.interval = 0;
                 options.xAxis[0].axisLabel.rotate = rotate;
+                options.xAxis[0].axisLabel.interval = rotate ? 0 : 'auto';
                 // 默认数值
                 options.grid.bottom = 50;
+            });
+        };
+        fn.xAxis_interval = function () {
+            mu.exist(setting.interval, function (interval) {
+                options.xAxis[0].axisLabel.interval = interval;
             });
         };
         fn.dataZoom = function () {
@@ -493,7 +509,9 @@ var EchartsService = (function () {
                         'end': 100,
                     }
                 ] : false;
-                _dataZoom && (options.dataZoom = _dataZoom);
+                mu.run(_dataZoom, function () {
+                    options.dataZoom = _dataZoom;
+                });
             });
         };
         fn.yAxis_value_percent = function () {
@@ -674,7 +692,7 @@ var EchartsService = (function () {
         // type === 'radar' && console.debug(JSON.stringify(options));
         options = this.adjustECharOptions(options);
         /**
-         * DateView 计算
+         * DataView 计算
          */
         var dataView = mu.run(function () {
             var _col_headers = mu.clone(_x_axis || _legend);
@@ -691,6 +709,7 @@ var EchartsService = (function () {
             });
             return _this.transpose(_dataView);
         });
+        console.debug(mu.clone(options));
         return {
             // echart 数据视图
             dataView: dataView,

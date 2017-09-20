@@ -75,28 +75,14 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
 
     private updateChart(): void {
         // this._chart.clear();
-
-        const width = this.getWidth(this._ref.nativeElement);
-        const height = this.getHeight(this._ref.nativeElement);
-        mu.run(width || height, () => {
+        mu.run(this.getWidth(this._ref.nativeElement), (width) => {
             this._ref.nativeElement.style.width = width + 'px';
-            this._ref.nativeElement.style.height = height + 'px';
-
         });
 
-        /**
-         * 根据 legend， 调整 grid.top || grid bottom
-         */
-        // mu.run(mu.prop(this.options, 'legend.show'), () => {
-        //     let legend = mu.map(mu.prop(this.options, 'legend.data'), (o) => o.name || o);
-        //     let len = legend.join(',').length + 5 * legend.length;
-        //     let h = Math.ceil(len * 7 / width) + 1.5;
-        //
-        //     this.options.grid.bottom = h * 54;
-        //
-        //     console.debug(this.options.grid.bottom, h, len, width);
-        //
-        // });
+        mu.run(this.getHeight(this._ref.nativeElement), (height) => {
+            this._ref.nativeElement.style.height = height + 'px';
+        });
+
         this._chart.setOption(this.options);
         this._chart.resize();
     }

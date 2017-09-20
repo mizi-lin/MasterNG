@@ -52,7 +52,7 @@ MnEchartsComponent.decorators = [
                 selector: 'mn-echarts',
                 template: "\n        <div mn-echarts-render [options]=\"echarts_options\" (mycharts)=\"mycharts.emit($event)\"></div>\n    ",
                 styles: [
-                    "\n            :host,\n            [echarts-render] {\n                display: block;\n                width: 100%;\n                height: 100%;\n            }\n\n            "
+                    "\n            :host,\n            :host /deep/ [mn-echarts-render] {\n                display: block;\n                width: 100%;\n                height: 100%;\n            }\n            "
                 ]
             },] },
 ];
