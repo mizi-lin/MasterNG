@@ -42,8 +42,7 @@ var ReqHttpComponent = (function () {
             var _a;
         }, function () {
             var _resources = _this._rs.getResources();
-            return (_a = _resources[req.api])[method].apply(_a, args);
-            var _a;
+            return _resources[req.api][method](req.params || {}, req.payload || {});
         });
         this._observable = source.subscribe(function (res) {
             _this.process = 100;

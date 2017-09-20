@@ -50,6 +50,16 @@ export class EchartsService {
         let options: any = mu.clone(default_options);
         let _series_data: any, _x_axis: any, _legend: any;
 
+        /**
+         * 校验各options项
+         */
+        mu.run(() => {
+            options.title = options.title || {};
+            options.legend = options.legend || {};
+            options.grid = options.grid || {};
+            options.tooltip = options.tooltip || {};
+        });
+
         const type_setting: any = {
             pie: [
                 '$module',
@@ -113,6 +123,7 @@ export class EchartsService {
                 '$xAxis',
                 // 'xAxis_show_all',
                 'xAxis_rotate',
+                'xAxis_interval',
 
                 'yAxis_value_percent',
                 'yAxis_percent_rate',
@@ -140,6 +151,7 @@ export class EchartsService {
                 '$xAxis',
                 // 'xAxis_show_all',
                 'xAxis_rotate',
+                'xAxis_interval',
 
                 'yAxis_value_percent',
                 'yAxis_percent_rate',
@@ -544,10 +556,16 @@ export class EchartsService {
 
         fn.xAxis_rotate = () => {
             mu.exist(setting.rotate, (rotate) => {
-                options.xAxis[0].axisLabel.interval = 0;
                 options.xAxis[0].axisLabel.rotate = rotate;
+                options.xAxis[0].axisLabel.interval = rotate ? 0 : 'auto';
                 // 默认数值
                 options.grid.bottom = 50;
+            });
+        };
+
+        fn.xAxis_interval = () => {
+            mu.exist(setting.interval, (interval) => {
+                options.xAxis[0].axisLabel.interval = interval;
             });
         };
 
@@ -567,7 +585,9 @@ export class EchartsService {
                     }
                 ] : false;
 
-                _dataZoom && (options.dataZoom = _dataZoom);
+                mu.run(_dataZoom, () => {
+                    options.dataZoom = _dataZoom;
+                });
 
             });
         };
@@ -783,7 +803,7 @@ export class EchartsService {
         options = this.adjustECharOptions(options);
 
         /**
-         * DateView 计算
+         * DataView 计算
          */
 
         const dataView = mu.run(() => {
@@ -805,6 +825,8 @@ export class EchartsService {
 
             return this.transpose(_dataView);
         });
+
+        console.debug(mu.clone(options));
 
         return {
             // echart 数据视图

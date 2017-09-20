@@ -61,6 +61,7 @@ function processStyleUrls(content, options, targetDir) {
                     console.log('analysis error -> :::::::'.red, url, '\n', e);
                     throw e;
                 });
+
             } else {
                 promise = Promise.resolve(file);
             }

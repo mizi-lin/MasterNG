@@ -49,27 +49,14 @@ var MnEchartsRenderDirective = (function () {
         return echarts_;
     };
     MnEchartsRenderDirective.prototype.updateChart = function () {
-        // this._chart.clear();
         var _this = this;
-        var width = this.getWidth(this._ref.nativeElement);
-        var height = this.getHeight(this._ref.nativeElement);
-        mu.run(width || height, function () {
+        // this._chart.clear();
+        mu.run(this.getWidth(this._ref.nativeElement), function (width) {
             _this._ref.nativeElement.style.width = width + 'px';
+        });
+        mu.run(this.getHeight(this._ref.nativeElement), function (height) {
             _this._ref.nativeElement.style.height = height + 'px';
         });
-        /**
-         * 根据 legend， 调整 grid.top || grid bottom
-         */
-        // mu.run(mu.prop(this.options, 'legend.show'), () => {
-        //     let legend = mu.map(mu.prop(this.options, 'legend.data'), (o) => o.name || o);
-        //     let len = legend.join(',').length + 5 * legend.length;
-        //     let h = Math.ceil(len * 7 / width) + 1.5;
-        //
-        //     this.options.grid.bottom = h * 54;
-        //
-        //     console.debug(this.options.grid.bottom, h, len, width);
-        //
-        // });
         this._chart.setOption(this.options);
         this._chart.resize();
     };
