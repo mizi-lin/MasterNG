@@ -81,19 +81,19 @@ declare const mu: any, jQuery: any;
                             <i class="fa fa-bookmark"></i>
                         </mn-col>
                     </ng-template>
-                    
+
                     <ng-template [ngIf]="toolMap['sort']">
                         <mn-col [order]="toolMap['sort'].order"
                                 [class.active]="statusMap.sort_click">
 
                             <!-- <todo 暂时先使用 nz-zorro> -->
-                            
+
                             <nz-dropdown>
                                 <a class="ant-dropdown-link" nz-dropdown>
                                     <i class="fa fa-sort-amount-desc"></i>
                                 </a>
                                 <ul nz-menu>
-                                    <li nz-menu-item 
+                                    <li nz-menu-item
                                         *ngFor="let legend of _options?.legend?.data"
                                         (click)="sort_click(legend.name, $event)">
                                         {{legend.name}}
@@ -102,8 +102,6 @@ declare const mu: any, jQuery: any;
                             </nz-dropdown>
                         </mn-col>
                     </ng-template>
-                    
-                    
 
                     <ng-template [ngIf]="toolMap['reload']">
                         <mn-col (click)="reload_click($event)"
@@ -114,7 +112,7 @@ declare const mu: any, jQuery: any;
                 </mn-panel-toolbar>
             </mn-panel-header>
             <mn-panel-body>
-                <req-http [req]="req" (result)="_data = $event.data" #panel>
+                <mn-req [req]="req" (result)="_data = $event.data" #panel>
 
                     <div class="mn-dataView" *ngIf="_show_dataView">
                         <table class="table bordered td-top-bd td-left-bd">
@@ -136,7 +134,7 @@ declare const mu: any, jQuery: any;
                                 (result)="_result($event)"
                                 (mycharts)="mycharts($event)"></mn-echarts>
 
-                </req-http>
+                </mn-req>
             </mn-panel-body>
         </mn-panel>
     `

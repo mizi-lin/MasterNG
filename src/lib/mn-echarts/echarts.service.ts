@@ -826,8 +826,6 @@ export class EchartsService {
             return this.transpose(_dataView);
         });
 
-        console.debug(mu.clone(options));
-
         return {
             // echart 数据视图
             dataView,

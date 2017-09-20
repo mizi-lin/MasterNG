@@ -1,13 +1,13 @@
 import {ModuleWithProviders, NgModule, Injector} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HttpModule, Http, XHRBackend, RequestOptions} from '@angular/http';
-import {ReqHttpComponent} from './mn-req-http.component';
-import {HttpInterceptorCls} from './mn-httpInterceptor.cls';
+import {ReqHttpComponent} from './mn-req.component';
+import {MnReqInterceptorFactory} from './mn-req-interceptor.factory';
 import {MnResource} from './mn-resource';
 import {MnReqNoDataComponent} from './mn-req-nodata.component';
 
 import {MnLoaderBarModule} from '../mn-loader-bar/mn-loader-bar.module';
-import {MnHttpLoaderComponent} from './mn-http-loader.component';
+import {MnReqLoaderComponent} from './mn-req-loader.component';
 import {MnReqService} from './mn-req.service';
 import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
 import {MnFileDownloadDirective} from './mn-file-download.directive';
@@ -35,14 +35,14 @@ import {MnFileDownloadDirective} from './mn-file-download.directive';
     declarations: [
         ReqHttpComponent,
         MnReqNoDataComponent,
-        MnHttpLoaderComponent,
+        MnReqLoaderComponent,
 
         MnFileDownloadDirective
     ],
     exports: [
         ReqHttpComponent,
         MnReqNoDataComponent,
-        MnHttpLoaderComponent,
+        MnReqLoaderComponent,
         MnFileDownloadDirective
     ],
     entryComponents: [
@@ -53,7 +53,7 @@ import {MnFileDownloadDirective} from './mn-file-download.directive';
 
         {
             provide: Http,
-            useClass: HttpInterceptorCls,
+            useClass: MnReqInterceptorFactory,
             deps: [
                 XHRBackend,
                 RequestOptions,

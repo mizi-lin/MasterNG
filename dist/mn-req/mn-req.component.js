@@ -86,7 +86,7 @@ var ReqHttpComponent = (function () {
 }());
 ReqHttpComponent.decorators = [
     { type: core_1.Component, args: [{
-                selector: 'req-http',
+                selector: 'mn-req',
                 template: "\n        <mn-loader-bar *ngIf=\"loader\" [loaderRef]=\"loaderRef\"\n                       [progress]=\"process\"></mn-loader-bar>\n        <mn-dynamic-component *ngIf=\"noData\" [component]=\"noDataComponent\" [inputs]=\"context\"></mn-dynamic-component>\n        <ng-content *ngIf=\"!noData\"></ng-content>\n    ",
                 styles: [
                     ":host {\n            display: block;\n            width: 100%;\n            height: 100%;\n        }"
@@ -109,4 +109,4 @@ ReqHttpComponent.propDecorators = {
     'result': [{ type: core_1.Output },],
 };
 exports.ReqHttpComponent = ReqHttpComponent;
-//# sourceMappingURL=mn-req-http.component.js.map
+//# sourceMappingURL=mn-req.component.js.map

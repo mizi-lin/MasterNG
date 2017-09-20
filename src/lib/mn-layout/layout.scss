@@ -4,134 +4,133 @@
     align-items: stretch;
     box-sizing: border-box;
 
-    & {
-        .gutter-1 /deep/ > mn-col {
-            padding-left: 1px;
-            padding-right: 1px;
-        }
-        .gutter-2 /deep/ > mn-col {
-            padding-left: 2px;
-            padding-right: 2px;
-        }
-        .gutter-3 /deep/ > mn-col {
-            padding-left: 3px;
-            padding-right: 3px;
-        }
-        .gutter-4 /deep/ > mn-col {
-            padding-left: 4px;
-            padding-right: 4px;
-        }
-        .gutter-5 /deep/ > mn-col {
-            padding-left: 5px;
-            padding-right: 5px;
-        }
-        .gutter-6 /deep/ > mn-col {
-            padding-left: 6px;
-            padding-right: 6px;
-        }
-        .gutter-7 /deep/ > mn-col {
-            padding-left: 7px;
-            padding-right: 7px;
-        }
-        .gutter-8 /deep/ > mn-col {
-            padding-left: 8px;
-            padding-right: 8px;
-        }
-        .gutter-9 /deep/ > mn-col {
-            padding-left: 9px;
-            padding-right: 9px;
-        }
-        .gutter-10 /deep/ > mn-col {
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-        .gutter-11 /deep/ > mn-col {
-            padding-left: 11px;
-            padding-right: 11px;
-        }
-        .gutter-12 /deep/ > mn-col {
-            padding-left: 12px;
-            padding-right: 12px;
-        }
-        .gutter-13 /deep/ > mn-col {
-            padding-left: 13px;
-            padding-right: 13px;
-        }
-        .gutter-14 /deep/ > mn-col {
-            padding-left: 14px;
-            padding-right: 14px;
-        }
-        .gutter-15 /deep/ > mn-col {
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-        .gutter-16 /deep/ > mn-col {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-        .gutter-17 /deep/ > mn-col {
-            padding-left: 17px;
-            padding-right: 17px;
-        }
-        .gutter-18 /deep/ > mn-col {
-            padding-left: 18px;
-            padding-right: 18px;
-        }
-        .gutter-19 /deep/ > mn-col {
-            padding-left: 19px;
-            padding-right: 19px;
-        }
-        .gutter-20 /deep/ > mn-col {
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-        .gutter-21 /deep/ > mn-col {
-            padding-left: 21px;
-            padding-right: 21px;
-        }
-        .gutter-22 /deep/ > mn-col {
-            padding-left: 22px;
-            padding-right: 22px;
-        }
-        .gutter-23 /deep/ > mn-col {
-            padding-left: 23px;
-            padding-right: 23px;
-        }
-        .gutter-24 /deep/ > mn-col {
-            padding-left: 24px;
-            padding-right: 24px;
-        }
-        .gutter-25 /deep/ > mn-col {
-            padding-left: 25px;
-            padding-right: 25px;
-        }
-        .gutter-26 /deep/ > mn-col {
-            padding-left: 26px;
-            padding-right: 26px;
-        }
-        .gutter-27 /deep/ > mn-col {
-            padding-left: 27px;
-            padding-right: 27px;
-        }
-        .gutter-28 /deep/ > mn-col {
-            padding-left: 28px;
-            padding-right: 28px;
-        }
-        .gutter-29 /deep/ > mn-col {
-            padding-left: 29px;
-            padding-right: 29px;
-        }
-        .gutter-30 /deep/ > mn-col {
-            padding-left: 30px;
-            padding-right: 30px;
-        }
-        .gutter-31 /deep/ > mn-col {
-            padding-left: 31px;
-            padding-right: 31px;
-        }
-        .gutter-32 /deep/ > mn-col {
-            padding-left: 32px;
-            padding-right: 32px;
-        }
+    &.gutter-1 ::ng-deep > mn-col {
+        padding-left: 1px;
+        padding-right: 1px;
+    }
+    
+    &.gutter-2 ::ng-deep > mn-col {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    &.gutter-3 ::ng-deep > mn-col {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+    &.gutter-4 ::ng-deep > mn-col {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    &.gutter-5 ::ng-deep > mn-col {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    &.gutter-6 ::ng-deep > mn-col {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+    &.gutter-7 ::ng-deep > mn-col {
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+    &.gutter-8 ::ng-deep > mn-col {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    &.gutter-9 ::ng-deep > mn-col {
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+    &.gutter-10 ::ng-deep > mn-col {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    &.gutter-11 ::ng-deep > mn-col {
+        padding-left: 11px;
+        padding-right: 11px;
+    }
+    &.gutter-12 ::ng-deep > mn-col {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    &.gutter-13 ::ng-deep > mn-col {
+        padding-left: 13px;
+        padding-right: 13px;
+    }
+    &.gutter-14 ::ng-deep > mn-col {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+    &.gutter-15 ::ng-deep > mn-col {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    &.gutter-16 ::ng-deep > mn-col {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    &.gutter-17 ::ng-deep > mn-col {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+    &.gutter-18 ::ng-deep > mn-col {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+    &.gutter-19 ::ng-deep > mn-col {
+        padding-left: 19px;
+        padding-right: 19px;
+    }
+    &.gutter-20 ::ng-deep > mn-col {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    &.gutter-21 ::ng-deep > mn-col {
+        padding-left: 21px;
+        padding-right: 21px;
+    }
+    &.gutter-22 ::ng-deep > mn-col {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+    &.gutter-23 ::ng-deep > mn-col {
+        padding-left: 23px;
+        padding-right: 23px;
+    }
+    &.gutter-24 ::ng-deep > mn-col {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+    &.gutter-25 ::ng-deep > mn-col {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+    &.gutter-26 ::ng-deep > mn-col {
+        padding-left: 26px;
+        padding-right: 26px;
+    }
+    &.gutter-27 ::ng-deep > mn-col {
+        padding-left: 27px;
+        padding-right: 27px;
+    }
+    &.gutter-28 ::ng-deep > mn-col {
+        padding-left: 28px;
+        padding-right: 28px;
+    }
+    &.gutter-29 ::ng-deep > mn-col {
+        padding-left: 29px;
+        padding-right: 29px;
+    }
+    &.gutter-30 ::ng-deep > mn-col {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    &.gutter-31 ::ng-deep > mn-col {
+        padding-left: 31px;
+        padding-right: 31px;
+    }
+    &.gutter-32 ::ng-deep > mn-col {
+        padding-left: 32px;
+        padding-right: 32px;
     }
 }
