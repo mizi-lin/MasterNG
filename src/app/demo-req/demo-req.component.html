@@ -2,19 +2,19 @@
 
     <mn-panel-s class="bordered" title="Use Http"
         [tools]="[reload]">
-        <req-http [req]="user_req" (result)="user_data = $event.data">
+        <mn-req [req]="user_req" (result)="user_data = $event.data">
             {{user_data | json}}
-        </req-http>
+        </mn-req>
     </mn-panel-s>
 
     <mn-panel-s class="bordered mt-8" title="Use Resource">
-        <req-http [req]="{
+        <mn-req [req]="{
             api: 'demo',
             method: 'get',
             params: {name: 'user', store: 'store', a: 1, b: 2}
         }" (result)="user_data = $event.data">
             {{user_data | json}}
-        </req-http>
+        </mn-req>
 
 
     </mn-panel-s>

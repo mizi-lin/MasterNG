@@ -31,7 +31,7 @@ declare let mu: any, console: any;
  * subscribe()：订阅流（即执行）
  */
 @Injectable()
-export class HttpInterceptorCls extends Http {
+export class MnReqInterceptorFactory extends Http {
     router: Router;
 
     // reqServ: ReqService;
@@ -119,7 +119,12 @@ export class HttpInterceptorCls extends Http {
             this._reqServ.progress = mu.randomInt(5, 25);
         });
 
-        console.debug('before:::: -> ', url);
+        console.log(
+            'before request:::: -> ',
+            url,
+            mu.prop(config, 'method'),
+            mu.run(mu.prop(config, 'options.search'), search => search.toString())
+        );
     }
 
     afterRequest(url): void {

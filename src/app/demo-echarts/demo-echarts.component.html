@@ -6,7 +6,7 @@
     </mn-panel-s>
 
     <mn-panel-s class="mt-8 bordered" title="mn-echarts-render::req-http get options">
-        <req-http [req]="{url: './assets/store/echarts-options-bar.json'}" (result)="bar_options = $event.data; barOptions($event.data)">
+        <mn-req [req]="{url: './assets/store/echarts-options-bar.json'}" (result)="bar_options = $event.data; barOptions($event.data)">
             <mn-row>
                 <mn-col [span]="12">
                     <div mn-echarts-render [options]="bar_options" [style.height.px]="300">
@@ -18,13 +18,13 @@
                     </div>
                 </mn-col>
             </mn-row>
-        </req-http>
+        </mn-req>
     </mn-panel-s>
 
     <mn-panel-s class="mt-8 bordered" title="EchartsService::data conversion options" mn-element #abc="element">
-        <req-http [req]="{url: './assets/store/pie.json'}"
-                  [mnLoaderRef]="abc.elementRef"
-                  (result)="pieConversion($event.data); pie_data = $event.data">
+        <mn-req [req]="{url: './assets/store/pie.json'}"
+                [mnLoaderRef]="abc.elementRef"
+                (result)="pieConversion($event.data); pie_data = $event.data">
             <mn-row>
                 <mn-col [span]="12">
                     <div mn-echarts-render [options]="pie_options" [style.height.px]="300">
@@ -36,7 +36,7 @@
                     </mn-echarts>
                 </mn-col>
             </mn-row>
-        </req-http>
+        </mn-req>
     </mn-panel-s>
 
     <mn-fill class="mt-8" [gutter]="16">

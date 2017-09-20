@@ -25,7 +25,7 @@ import { MnReqService } from './mn-req.service';
  * catch()：捕获异常
  * subscribe()：订阅流（即执行）
  */
-export declare class HttpInterceptorCls extends Http {
+export declare class MnReqInterceptorFactory extends Http {
     private _reqServ;
     router: Router;
     constructor(_backend: ConnectionBackend, _defaultOptions: RequestOptions, _injector: Injector, _reqServ: MnReqService);

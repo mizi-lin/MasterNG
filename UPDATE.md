@@ -15,3 +15,5 @@
 ### 0.1.5 【MnEchart】 fixed bug when rotate = 0 then interval = 0；
 
 ### 0.1.6 【SCSS ANALYSIS】 scss analysis not support /deep/ then change ::ng-deep
+
+### 0.1.7 modify file name with 'mn'

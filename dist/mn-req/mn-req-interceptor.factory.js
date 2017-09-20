@@ -37,10 +37,10 @@ var mn_req_service_1 = require("./mn-req.service");
  * catch()：捕获异常
  * subscribe()：订阅流（即执行）
  */
-var HttpInterceptorCls = (function (_super) {
-    __extends(HttpInterceptorCls, _super);
+var MnReqInterceptorFactory = (function (_super) {
+    __extends(MnReqInterceptorFactory, _super);
     // reqServ: ReqService;
-    function HttpInterceptorCls(_backend, _defaultOptions, _injector, _reqServ) {
+    function MnReqInterceptorFactory(_backend, _defaultOptions, _injector, _reqServ) {
         var _this = 
         // super(backend, defaultOptions, injector);
         _super.call(this, _backend, _defaultOptions) || this;
@@ -57,7 +57,7 @@ var HttpInterceptorCls = (function (_super) {
         }, 0);
         return _this;
     }
-    HttpInterceptorCls.prototype.addHeaderWithToken = function (headers) {
+    MnReqInterceptorFactory.prototype.addHeaderWithToken = function (headers) {
         headers = headers || new http_1.Headers();
         // Caching von Ajax Requests verhindern, vor allem vom IE
         headers.append('Cache-control', 'no-cache');
@@ -73,7 +73,7 @@ var HttpInterceptorCls = (function (_super) {
         });
         return headers;
     };
-    HttpInterceptorCls.prototype.map = function (observable) {
+    MnReqInterceptorFactory.prototype.map = function (observable) {
         return observable.map(function (response) {
             try {
                 return response.json() || {};
@@ -83,7 +83,7 @@ var HttpInterceptorCls = (function (_super) {
             }
         });
     };
-    HttpInterceptorCls.prototype.onCatch = function (error, caught, url) {
+    MnReqInterceptorFactory.prototype.onCatch = function (error, caught, url) {
         console.error('catch::::', url);
         // Observable.empty()
         // 则不会到do中onError 中调用
@@ -93,16 +93,16 @@ var HttpInterceptorCls = (function (_super) {
         }
         return Observable_1.Observable.throw(error);
     };
-    HttpInterceptorCls.prototype.onSuccess = function (res, url) {
+    MnReqInterceptorFactory.prototype.onSuccess = function (res, url) {
         // console.log(res);
     };
-    HttpInterceptorCls.prototype.onError = function (error, url) {
+    MnReqInterceptorFactory.prototype.onError = function (error, url) {
         console.error('error::::', url);
     };
-    HttpInterceptorCls.prototype.onFinally = function (url) {
+    MnReqInterceptorFactory.prototype.onFinally = function (url) {
         this.afterRequest(url);
     };
-    HttpInterceptorCls.prototype.beforeRequest = function (url, config) {
+    MnReqInterceptorFactory.prototype.beforeRequest = function (url, config) {
         var _this = this;
         var progress = this._reqServ.progress;
         mu.run(progress > 0 && progress < 100, function () {
@@ -110,13 +110,13 @@ var HttpInterceptorCls = (function (_super) {
         }, function () {
             _this._reqServ.progress = mu.randomInt(5, 25);
         });
-        console.debug('before:::: -> ', url);
+        console.log('before request:::: -> ', url, mu.prop(config, 'method'), mu.run(mu.prop(config, 'options.search'), function (search) { return search.toString(); }));
     };
-    HttpInterceptorCls.prototype.afterRequest = function (url) {
+    MnReqInterceptorFactory.prototype.afterRequest = function (url) {
         this.loadComplete();
         // console.debug('after:::: -> ', url);
     };
-    HttpInterceptorCls.prototype.intercept = function (observable, url) {
+    MnReqInterceptorFactory.prototype.intercept = function (observable, url) {
         var _this = this;
         return observable.catch(function (error, caught) {
             return _this.onCatch(error, caught, url);
@@ -130,7 +130,7 @@ var HttpInterceptorCls = (function (_super) {
             _this.onFinally(url);
         });
     };
-    HttpInterceptorCls.prototype._like_get = function (method, url, options) {
+    MnReqInterceptorFactory.prototype._like_get = function (method, url, options) {
         if (options === void 0) { options = {}; }
         options.headers = this.addHeaderWithToken(options.headers);
         var observable = _super.prototype[method].call(this, url, options);
@@ -141,7 +141,7 @@ var HttpInterceptorCls = (function (_super) {
         observable = this.map(observable);
         return this.intercept(observable, url);
     };
-    HttpInterceptorCls.prototype._like_post = function (method, url, body, options) {
+    MnReqInterceptorFactory.prototype._like_post = function (method, url, body, options) {
         if (body === void 0) { body = {}; }
         if (options === void 0) { options = {}; }
         options.headers = this.addHeaderWithToken(options.headers);
@@ -155,50 +155,50 @@ var HttpInterceptorCls = (function (_super) {
         observable = this.map(observable);
         return this.intercept(observable, url);
     };
-    HttpInterceptorCls.prototype.get = function (url, options) {
+    MnReqInterceptorFactory.prototype.get = function (url, options) {
         if (options === void 0) { options = {}; }
         var method = 'get';
         return this._like_get(method, url, options);
     };
-    HttpInterceptorCls.prototype.delete = function (url, options) {
+    MnReqInterceptorFactory.prototype.delete = function (url, options) {
         var method = 'delete';
         return this._like_get(method, url, options);
     };
-    HttpInterceptorCls.prototype.head = function (url, options) {
+    MnReqInterceptorFactory.prototype.head = function (url, options) {
         var method = 'head';
         return this._like_get(method, url, options);
     };
-    HttpInterceptorCls.prototype.options = function (url, options) {
+    MnReqInterceptorFactory.prototype.options = function (url, options) {
         var method = 'options';
         return this._like_get(method, url, options);
     };
-    HttpInterceptorCls.prototype.post = function (url, body, options) {
+    MnReqInterceptorFactory.prototype.post = function (url, body, options) {
         if (body === void 0) { body = {}; }
         if (options === void 0) { options = {}; }
         var method = 'post';
         return this._like_post(method, url, body, options);
     };
-    HttpInterceptorCls.prototype.patch = function (url, body, options) {
+    MnReqInterceptorFactory.prototype.patch = function (url, body, options) {
         if (body === void 0) { body = {}; }
         if (options === void 0) { options = {}; }
         var method = 'patch';
         return this._like_post(method, url, body, options);
     };
-    HttpInterceptorCls.prototype.put = function (url, body, options) {
+    MnReqInterceptorFactory.prototype.put = function (url, body, options) {
         var method = 'put';
         return this._like_post(method, url, body, options);
     };
-    return HttpInterceptorCls;
+    return MnReqInterceptorFactory;
 }(http_1.Http));
-HttpInterceptorCls.decorators = [
+MnReqInterceptorFactory.decorators = [
     { type: core_1.Injectable },
 ];
 /** @nocollapse */
-HttpInterceptorCls.ctorParameters = function () { return [
+MnReqInterceptorFactory.ctorParameters = function () { return [
     { type: http_1.ConnectionBackend, },
     { type: http_1.RequestOptions, },
     { type: core_1.Injector, },
     { type: mn_req_service_1.MnReqService, },
 ]; };
-exports.HttpInterceptorCls = HttpInterceptorCls;
-//# sourceMappingURL=mn-httpInterceptor.cls.js.map
+exports.MnReqInterceptorFactory = MnReqInterceptorFactory;
+//# sourceMappingURL=mn-req-interceptor.factory.js.map

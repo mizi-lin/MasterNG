@@ -7,7 +7,7 @@ import {MnReqService} from './mn-req.service';
 declare const mu: any;
 
 @Component({
-    selector: 'req-http',
+    selector: 'mn-req',
     template: `
         <mn-loader-bar *ngIf="loader" [loaderRef]="loaderRef"
                        [progress]="process"></mn-loader-bar>
