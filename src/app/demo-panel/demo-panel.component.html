@@ -2,8 +2,8 @@
     <mn-panel type="portlet" class="mt-16 light bordered">
         <mn-panel-header>
             <mn-panel-title>
-                Panel
-                <small>flex layout(mn-row)</small>
+                Panel - portlet
+                <small>栅格化布局 mn-row</small>
             </mn-panel-title>
             <mn-panel-toolbar [tools]="['fullscreen', 'collapse', 'remove']">
                 <mn-col [order]="21">
@@ -13,140 +13,197 @@
         </mn-panel-header>
 
         <mn-panel-body>
-            <div>栅格化布局，最大24栅格; 单元格自定义宽度，会破坏栅格化布局</div>
 
-            <mn-row [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-8">
+            <h5>栅格化布局，最大24栅格; 单元格自定义宽度，会破坏栅格化布局</h5>
+
+            <mn-row [style.height.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
                 <mn-col [span]="5">
-                    <div class="bordered">5</div>
+                    5
                 </mn-col>
                 <mn-col [span]="4">
-                    <div class="bordered">4</div>
+                    4
                 </mn-col>
 
                 <mn-col [span]="8">
-                    <div class="bordered">8</div>
+                    8
                 </mn-col>
 
                 <mn-col [span]="7">
-                    <div class="bordered">7</div>
+                    7
                 </mn-col>
             </mn-row>
 
-            <mn-row [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-8">
+            <mn-row [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
                 <mn-col [span]="2">
-                    <div class="bordered">2</div>
+                    2
                 </mn-col>
                 <mn-col [span]="4">
-                    <div class="bordered">4</div>
+                    4
                 </mn-col>
 
                 <mn-col [span]="8">
-                    <div class="bordered">8</div>
+                    8
                 </mn-col>
             </mn-row>
 
-            <mn-row [style.minHeight.px]="100" [style.background]="'#eee'" [gutter]="16" class="demo-panel-mn-row mt-8">
+            <mn-row [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
                 <mn-col [span]="2">
-                    <div class="bordered">2</div>
+                    2
                 </mn-col>
-                <mn-col [span]="4">
-                    <div class="bordered">4</div>
-                </mn-col>
-
-                <mn-col [span]="8">
-                    <div class="bordered">8</div>
-                </mn-col>
-                <mn-col [span]="2">
-                    <div class="bordered">2</div>
-                </mn-col>
-                <mn-col [span]="4">
-                    <div class="bordered">4</div>
+                <mn-col [span]="7">
+                    4
                 </mn-col>
 
                 <mn-col [span]="8">
-                    <div class="bordered">8</div>
+                    8
+                </mn-col>
+
+                <mn-col [span]="13">
+                    13
                 </mn-col>
             </mn-row>
 
-            <mn-row [style.minHeight.px]="100" [style.background]="'#eee'" [gutter]="16" class="demo-panel-mn-row mt-8">
-                <mn-col style="width: 700px">
-                    <div class="bordered">style="width: 700px"</div>
-                </mn-col>
-                <mn-col [span]="4">
-                    <div class="bordered">4</div>
-                </mn-col>
-
-                <mn-col [span]="8">
-                    <div class="bordered">8</div>
-                </mn-col>
-            </mn-row>
         </mn-panel-body>
     </mn-panel>
 
-    <mn-panel-s class="bordered mt-16" title="mn-panel-simple::flex layout(mn-fill)">
-        <div>满格化布局，默认单元格铺满宽度；单元格自定义宽度，不会破坏满格化布局</div>
-        <mn-fill [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-8">
+    <mn-panel-s class="bordered mt-16" title="Panel simple::满格化布局 mn-fill">
+        <h5>满格化布局，默认单元格铺满宽度；单元格自定义宽度，不会破坏满格化布局</h5>
+        <mn-fill [style.height.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
             <mn-col [span]="5">
-                <div class="bordered">5</div>
+                5
             </mn-col>
             <mn-col [span]="4">
-                <div class="bordered">4</div>
+                4
             </mn-col>
 
-            <mn-col [span]="18">
-                <div class="bordered">8</div>
+            <mn-col [span]="8">
+                8
             </mn-col>
 
             <mn-col [span]="7">
-                <div class="bordered">7</div>
+                7
             </mn-col>
         </mn-fill>
 
-        <mn-fill [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-8">
+        <mn-fill [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
             <mn-col [span]="2">
-                <div class="bordered">2</div>
+                2
             </mn-col>
             <mn-col [span]="4">
-                <div class="bordered">4</div>
+                4
             </mn-col>
 
             <mn-col [span]="8">
-                <div class="bordered">8</div>
+                8
             </mn-col>
         </mn-fill>
 
-        <mn-fill [style.minHeight.px]="100" [style.background]="'#eee'" [gutter]="16" class="demo-panel-mn-row mt-8">
+        <mn-fill [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
             <mn-col [span]="2">
-                <div class="bordered">2</div>
+                2
             </mn-col>
-            <mn-col [span]="4">
-                <div class="bordered">4</div>
+            <mn-col [span]="7">
+                4
             </mn-col>
 
             <mn-col [span]="8">
-                <div class="bordered">8</div>
+                8
             </mn-col>
-            <mn-col [span]="2">
-                <div class="bordered">2</div>
+
+            <mn-col [span]="13">
+                13
+            </mn-col>
+        </mn-fill>
+    </mn-panel-s>
+
+    <mn-panel-s class="bordered mt-16" title="Panel simple::宽度和span混用">
+        <h5>固定宽度与span混用</h5>
+        <mn-row [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
+            <mn-col [style.width.px]="200">
+                200px
             </mn-col>
             <mn-col [span]="4">
-                <div class="bordered">4</div>
+                4
             </mn-col>
-            <mn-col [span]="8">
-                <div class="bordered">8</div>
+
+            <mn-col [style.width.px]="140">
+                140px
+            </mn-col>
+
+            <mn-col [span]="7">
+                7
+            </mn-col>
+
+            <mn-col [span]="13">
+                13
+            </mn-col>
+        </mn-row>
+
+        <mn-row [style.height.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
+            <mn-col [style.width.px]="200">
+                200px
+            </mn-col>
+            <mn-col [span]="4">
+                4
+            </mn-col>
+
+            <mn-col [style.width.px]="140">
+                140px
+            </mn-col>
+
+            <mn-col [span]="7">
+                7
+            </mn-col>
+        </mn-row>
+
+        <mn-fill [style.height.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
+            <mn-col [style.width.px]="200">
+                200px
+            </mn-col>
+            <mn-col [span]="4">
+                4
+            </mn-col>
+
+            <mn-col [style.width.px]="140">
+                140px
+            </mn-col>
+
+            <mn-col [span]="7">
+                7
             </mn-col>
         </mn-fill>
 
-        <mn-fill [style.minHeight.px]="100" [style.background]="'#eee'" [gutter]="16" class="demo-panel-mn-row mt-8">
-            <mn-col style="width: 700px">
-                <div class="bordered">style="width: 700px"</div>
+        <mn-row [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
+            <mn-col [style.width.px]="200">
+                200px
             </mn-col>
             <mn-col [span]="4">
-                <div class="bordered">4</div>
+                4
             </mn-col>
 
-            <mn-col [span]="8">
-                <div class="bordered">8</div>
+            <mn-col [style.width.px]="540">
+                540px
+            </mn-col>
+
+            <mn-col [span]="7">
+                7
+            </mn-col>
+        </mn-row>
+
+        <mn-fill [style.height.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
+            <mn-col [style.width.px]="200">
+                200px
+            </mn-col>
+            <mn-col [span]="4">
+                4
+            </mn-col>
+
+            <mn-col [style.width.px]="540">
+                540px
+            </mn-col>
+
+            <mn-col [span]="7">
+                7
             </mn-col>
         </mn-fill>
     </mn-panel-s>
