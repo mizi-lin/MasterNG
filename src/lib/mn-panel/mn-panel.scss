@@ -1,0 +1,16 @@
+:host {
+    height: 100%;
+    width: 100%;
+
+    &.class_collapse_up {
+        &::ng-deep mn-panel-body {
+            display: none;
+        }
+    }
+
+    &.class_collapse_drop {
+        &::ng-deep mn-panel-body {
+            display: block;
+        }
+    }
+}

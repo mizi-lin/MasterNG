@@ -1,14 +1,32 @@
 .demo-panel {
-    padding: 8px;
+    padding: 16px;
 
-    .demo-panel-row {
-        cols,
-        [cols] {
-            > div {
-                height: 100%;
-                padding: 8px;
-                border: 1px solid #dedede;
+    mn-panel-body {
+        > mn-row {
+            padding: 8px 0;
+            border: 1px solid rgba(142, 219, 80, .5);
+            > mn-col > div.mn-col-content {
+                background: rgba(142, 219, 80, .5);
             }
         }
+
+        > mn-fill {
+            padding: 8px 0;
+            border: 1px solid rgba(80, 142, 219, .5);
+        }
+
+        > mn-row,
+        > mn-fill {
+            > mn-col {
+                > .mn-col-content {
+                    padding: 8px;
+                    background: rgba(80, 142, 219, .5);
+                    color: #fff;
+                    font-size: 32px;
+                    border-top: 1px solid #fff;
+                }
+            }
+        }
+
     }
 }

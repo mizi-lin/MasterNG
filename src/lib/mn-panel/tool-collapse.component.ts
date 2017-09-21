@@ -38,7 +38,7 @@ export class ToolCollapseDownComponent implements OnInit {
 @Component({
     selector: 'tool-collapse-up',
     template: `
-        <i class="fa fa-chevron-up" aria-hidden="true" *ngIf="!this._panel.isCollapse"></i>
+        <i class="fa fa-chevron-up"  *ngIf="!this._panel.isCollapse"></i>
     `
 })
 export class ToolCollapseUpComponent implements OnInit {

@@ -11,14 +11,7 @@ declare const mu: any;
     template: `
         <ng-content></ng-content>
     `,
-    styles: [
-            `
-            :host {
-                height: 100%;
-                width: 100%;
-            }
-            `
-    ]
+    styleUrls: ['./mn-panel.scss']
 })
 export class MnPanelComponent implements OnChanges, AfterContentChecked {
 
@@ -40,8 +33,8 @@ export class MnPanelComponent implements OnChanges, AfterContentChecked {
 
         mu.run(this.panelBody, (cmp) => {
             this.isCollapse
-                ? cmp._renderer.setAttribute(cmp._ref.nativeElement, 'hidden')
-                : cmp._renderer.removeAttribute(cmp._ref.nativeElement, 'hidden');
+                ? cmp._renderer.setStyle(cmp._ref.nativeElement, 'display', 'block')
+                : cmp._renderer.setStyle(cmp._ref.nativeElement, 'display', 'none');
             this.isCollapse = !this.isCollapse;
             this.class_collapse_drop = this.isCollapse;
             this.class_collapse_up = !this.isCollapse;

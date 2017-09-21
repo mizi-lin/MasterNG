@@ -25,7 +25,6 @@ declare const mu: any;
 export class MnPanelHeaderComponent implements OnInit {
 
 
-
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2,
                 @Inject(forwardRef(() => MnPanelComponent)) private _panel) {
