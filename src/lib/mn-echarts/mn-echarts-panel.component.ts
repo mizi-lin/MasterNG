@@ -195,6 +195,9 @@ export class MnEchartsPanelComponent implements OnChanges {
 
     _sort: string;
 
+    // 数据源
+    _source: any;
+
     statusMap: any = {};
     toolMap: any = {};
     hide_title: boolean = false;
@@ -266,6 +269,7 @@ export class MnEchartsPanelComponent implements OnChanges {
     _result($event) {
         this._options = $event.options;
         this._dataView = $event.dataView;
+        this._source = $event.source;
         this.result.emit($event);
         // this.type === 'radar' && console.debug(JSON.stringify(this._options));
     }
