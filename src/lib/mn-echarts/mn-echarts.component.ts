@@ -56,6 +56,7 @@ export class MnEchartsComponent implements OnInit, OnChanges {
 
         mu.run(mu.prop(changes, 'data.currentValue'), (data) => {
             const result_ = this._serv.getEchartResult(this.type, data, this.setting);
+            result_.source = mu.clone(this.data);
             this.echarts_options = result_['options'];
             this.result.emit(result_);
         });
@@ -63,6 +64,7 @@ export class MnEchartsComponent implements OnInit, OnChanges {
         mu.run(changes['setting'], (settingListener) => {
             if (!settingListener.firstChange) {
                 const result_ = this._serv.getEchartResult(this.type, this.data, this.setting);
+                result_.source = mu.clone(this.data);
                 this.echarts_options = result_['options'];
                 this.result.emit(result_);
             }
@@ -70,9 +72,10 @@ export class MnEchartsComponent implements OnInit, OnChanges {
 
         mu.run(changes['type'], (typeListener) => {
             if (!typeListener.firstChange) {
-                const result = this._serv.getEchartResult(this.type, this.data, this.setting);
-                this.echarts_options = result['options'];
-                this.result.emit(result);
+                const result_ = this._serv.getEchartResult(this.type, this.data, this.setting);
+                result_.source = mu.clone(this.data);
+                this.echarts_options = result_['options'];
+                this.result.emit(result_);
             }
         });
 
