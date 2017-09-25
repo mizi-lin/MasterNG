@@ -15,7 +15,7 @@ declare const mu: any;
             `:host {
             display: block;
             width: 100%;
-            height: calc(100% - 40px);
+            height: calc(100% - 42px);
         }`
     ]
 })

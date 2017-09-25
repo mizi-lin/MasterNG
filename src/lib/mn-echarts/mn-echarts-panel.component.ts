@@ -1,4 +1,7 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
+import {
+    Component, ElementRef, EventEmitter, HostBinding, Input, OnChanges, Output, SimpleChanges, ViewChild,
+    ViewChildren
+} from '@angular/core';
 import {EchartsService} from './echarts.service';
 import '../assets/jquery.resize.js';
 import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services';
@@ -9,7 +12,7 @@ declare const mu: any, jQuery: any;
     selector: 'mn-echarts-panel, mn-echarts-box',
     styleUrls: ['./mn-echarts.scss'],
     template: `
-        <mn-panel>
+        <mn-panel [hph]="hph">
             <mn-panel-header>
                 <mn-panel-title [innerHTML]="_title"></mn-panel-title>
                 <mn-panel-toolbar [tools]="_tools" [class.toggle]="show_tools === 'toggle'">
@@ -160,6 +163,13 @@ export class MnEchartsPanelComponent implements OnChanges {
     @Input() show_tools = 'show';
 
     @Input() data: any;
+
+    // 让控件支持高度100%
+    // height percent hundred
+    @Input() hph: boolean | string = true;
+    @HostBinding('style.height') get getHph() {
+        return this.hph === true ? '100%' : this.hph === false ? 'auto' : this.hph;
+    }
 
     @Input()
     set title(v) {

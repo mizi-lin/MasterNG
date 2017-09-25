@@ -17,7 +17,12 @@ export class MnPanelComponent implements OnChanges, AfterContentChecked {
 
     @ContentChild(MnPanelBodyComponent) panelBody: any;
 
-    @Input() where: string;
+    // 让控件支持高度100%
+    // height percent hundred
+    @Input() hph: boolean | string = true;
+    @HostBinding('style.height') get getHph() {
+        return this.hph === true ? '100%' : this.hph === false ? 'auto' : this.hph;
+    }
 
     // @ContentChildren(MnPanelBodyComponent, {descendants: true}) ss: any;
     // @ContentChild(forwardRef(() => MnPanelBodyComponent)) children: any;

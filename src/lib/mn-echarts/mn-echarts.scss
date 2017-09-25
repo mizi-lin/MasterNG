@@ -2,7 +2,7 @@
     display: block;
     width: 100%;
 
-    &/deep/ {
+    &::ng-deep {
         mn-panel-body {
             padding: 0;
         }
@@ -36,21 +36,11 @@
         &:hover mn-panel-toolbar.toggle {
             display: block;
         }
-
-        [mn-echarts-render] {
-            height: 100%;
-        }
     }
 }
 
 :host(mn-echarts-box) {
-    height: 100%;
-
-    mn-panel {
-        height: 100%;
-    }
-
-    mn-panel-header {
+    ::ng-deep mn-panel-header {
         position: absolute;
         width: 100%;
         visibility: visible;
@@ -61,6 +51,10 @@
         mn-panel-toolbar {
             pointer-events: auto;
         }
+    }
+
+    ::ng-deep mn-panel-body {
+        height: 100%;
     }
 }
 

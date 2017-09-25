@@ -16,7 +16,7 @@ declare const mu: any;
     styles: [
             `
             :host,
-            :host /deep/ [mn-echarts-render] {
+            :host ::ng-deep [mn-echarts-render] {
                 display: block;
                 width: 100%;
                 height: 100%;
