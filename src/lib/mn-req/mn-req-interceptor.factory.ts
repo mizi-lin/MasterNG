@@ -56,6 +56,15 @@ export class MnReqInterceptorFactory extends Http {
         this._reqServ.progress = 100;
     }, 500);
 
+    progressStep(): void {
+        if (this._reqServ.progress < 90) {
+            setTimeout(() => {
+                this._reqServ.progress = this._reqServ.progress * 1.05;
+                this.progressStep();
+            }, mu.randomInt(300, 1200));
+        }
+    }
+
     addHeaderWithToken(headers: Headers): Headers {
         headers = headers || new Headers();
         // Caching von Ajax Requests verhindern, vor allem vom IE
@@ -82,7 +91,6 @@ export class MnReqInterceptorFactory extends Http {
             } catch (e) {
                 return response.text();
             }
-
         });
     }
 
@@ -92,11 +100,11 @@ export class MnReqInterceptorFactory extends Http {
         // Observable.empty()
         // 则不会到do中onError 中调用
         // 默认 error.status === 401 时不返回错误
-        if (error && error.status) {
-            return Observable.empty();
+        if (this._reqServ.reqCatch) {
+            return this._reqServ.reqCatch(error, caught, url);
+        } else {
+            return Observable.throw(error);
         }
-
-        return Observable.throw(error);
     }
 
     onSuccess(res: Response, url?: string): void {
@@ -105,6 +113,9 @@ export class MnReqInterceptorFactory extends Http {
 
     onError(error: any, url?: string): void {
         console.error('error::::', url);
+        if (this._reqServ.reqError) {
+            return this._reqServ.reqError(error, url);
+        }
     }
 
     onFinally(url?: string): void {
@@ -118,6 +129,8 @@ export class MnReqInterceptorFactory extends Http {
         }, () => {
             this._reqServ.progress = mu.randomInt(5, 25);
         });
+
+        this.progressStep();
 
         console.log(
             'before request:::: -> ',

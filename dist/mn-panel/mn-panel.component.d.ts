@@ -3,7 +3,8 @@ export declare class MnPanelComponent implements OnChanges, AfterContentChecked 
     private _ref;
     private _renderer;
     panelBody: any;
-    where: string;
+    hph: boolean | string;
+    readonly getHph: string;
     isCollapse: boolean;
     isChanges: boolean;
     toggle_collapse(state?: boolean): void;

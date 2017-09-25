@@ -17,3 +17,7 @@
 ### 0.1.6 【SCSS ANALYSIS】 scss analysis not support /deep/ then change ::ng-deep
 
 ### 0.1.7 modify file name with 'mn'
+
+### 0.1.8 every box support hph (height percent hundred) && mn-echart result add source
+
+### 0.1.9 ReqInterceptor with reqCatch, reqError handling exceptions

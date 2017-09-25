@@ -3,6 +3,7 @@ import {MnI18nServices} from '../../lib/mn-i18n/mn-i18n.services';
 import {MnRuleServices} from '../../lib/mn-rule/mn-rule.services';
 import {MnReqService} from '../../lib/mn-req/mn-req.service';
 import {ResourcePool} from '../demo-req/resource-pool';
+import {Observable} from 'rxjs/Observable';
 
 export function InitializeFactory(_initServ: InitializeService,
                                   _i18nServ: MnI18nServices,
@@ -25,12 +26,33 @@ export function InitializeFactory(_initServ: InitializeService,
         });
 
         _reqServ.setHeaders([
-            {method: 'append', key: 'X-TOKEN', value: '-----'},
-            {method: 'append', key: 'X-ORIGIN', value: '|||||'},
-            {method: 'append', key: 'X-ACCESS-TOKEN', value: ':::::'}
+            {
+                method: 'append',
+                key: 'X-TOKEN',
+                value: '-----'
+            },
+            {
+                method: 'append',
+                key: 'X-ORIGIN',
+                value: '|||||'
+            },
+            {
+                method: 'append',
+                key: 'X-ACCESS-TOKEN',
+                value: ':::::'
+            }
         ]);
 
         _reqServ.setResources(_rp);
+
+        _reqServ.reqCatch = ((error, caught, url) => {
+            if (error.status === 404) {
+                return Observable.empty();
+            }
+        });
+
+        _reqServ.reqError = ((error, url) => {
+        });
 
         /**
          * 规则匹配

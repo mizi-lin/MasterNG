@@ -15,7 +15,7 @@ MnPanelBodyComponent.decorators = [
                 selector: 'mn-panel-body',
                 template: "\n        <ng-content></ng-content>\n    ",
                 styles: [
-                    ":host {\n            display: block;\n            width: 100%;\n            height: calc(100% - 40px);\n        }"
+                    ":host {\n            display: block;\n            width: 100%;\n            height: calc(100% - 42px);\n        }"
                 ]
             },] },
 ];

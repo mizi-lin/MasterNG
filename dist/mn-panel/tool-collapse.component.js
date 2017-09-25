@@ -67,7 +67,7 @@ var ToolCollapseUpComponent = (function () {
 ToolCollapseUpComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'tool-collapse-up',
-                template: "\n        <i class=\"fa fa-chevron-up\" aria-hidden=\"true\" *ngIf=\"!this._panel.isCollapse\"></i>\n    "
+                template: "\n        <i class=\"fa fa-chevron-up\"  *ngIf=\"!this._panel.isCollapse\"></i>\n    "
             },] },
 ];
 /** @nocollapse */

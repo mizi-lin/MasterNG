@@ -30,6 +30,7 @@ export declare class MnReqInterceptorFactory extends Http {
     router: Router;
     constructor(_backend: ConnectionBackend, _defaultOptions: RequestOptions, _injector: Injector, _reqServ: MnReqService);
     loadComplete: any;
+    progressStep(): void;
     addHeaderWithToken(headers: Headers): Headers;
     map(observable: Observable<Response>): Observable<Response>;
     onCatch(error: any, caught: Observable<any>, url?: string): Observable<any>;

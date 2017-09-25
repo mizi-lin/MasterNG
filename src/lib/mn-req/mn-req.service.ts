@@ -43,6 +43,9 @@ export class MnReqService {
         return fn ? fn(this._resources) : this._resources;
     }
 
+    reqCatch: any;
+    reqError: any;
+
     constructor() {
     }
 }
