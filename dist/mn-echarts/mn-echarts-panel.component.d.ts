@@ -21,6 +21,8 @@ export declare class MnEchartsPanelComponent implements OnChanges {
      */
     show_tools: string;
     data: any;
+    hph: boolean | string;
+    readonly getHph: string;
     title: any;
     result: any;
     _title: string;
@@ -33,6 +35,7 @@ export declare class MnEchartsPanelComponent implements OnChanges {
     _dataView: any;
     _tools: any[];
     _sort: string;
+    _source: any;
     statusMap: any;
     toolMap: any;
     hide_title: boolean;

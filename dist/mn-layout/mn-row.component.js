@@ -5,7 +5,17 @@ var MnRowComponent = (function () {
     function MnRowComponent(_ref, _renderer) {
         this._ref = _ref;
         this._renderer = _renderer;
+        // 让控件支持高度100%
+        // height percent hundred
+        this.hph = true;
     }
+    Object.defineProperty(MnRowComponent.prototype, "getHph", {
+        get: function () {
+            return this.hph === true ? '100%' : this.hph === false ? 'auto' : this.hph;
+        },
+        enumerable: true,
+        configurable: true
+    });
     MnRowComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
         mu.exist(changes['gutter'], function () {
@@ -32,6 +42,8 @@ MnRowComponent.ctorParameters = function () { return [
 MnRowComponent.propDecorators = {
     'gutter': [{ type: core_1.Input },],
     'where': [{ type: core_1.Input },],
+    'hph': [{ type: core_1.Input },],
+    'getHph': [{ type: core_1.HostBinding, args: ['style.height',] },],
 };
 exports.MnRowComponent = MnRowComponent;
 //# sourceMappingURL=mn-row.component.js.map

@@ -6,6 +6,8 @@ export declare class MnPanelSimpleComponent implements OnChanges, AfterContentCh
     title: any;
     tools: string[];
     theme: string;
+    hph: boolean | string;
+    readonly getHph: string;
     _panel: any;
     constructor(_ref: ElementRef, _renderer: Renderer2);
     ngOnChanges(changes: SimpleChanges): void;

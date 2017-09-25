@@ -24,21 +24,24 @@ var MnEchartsComponent = (function () {
         });
         mu.run(mu.prop(changes, 'data.currentValue'), function (data) {
             var result_ = _this._serv.getEchartResult(_this.type, data, _this.setting);
+            result_.source = mu.clone(_this.data);
             _this.echarts_options = result_['options'];
             _this.result.emit(result_);
         });
         mu.run(changes['setting'], function (settingListener) {
             if (!settingListener.firstChange) {
                 var result_ = _this._serv.getEchartResult(_this.type, _this.data, _this.setting);
+                result_.source = mu.clone(_this.data);
                 _this.echarts_options = result_['options'];
                 _this.result.emit(result_);
             }
         });
         mu.run(changes['type'], function (typeListener) {
             if (!typeListener.firstChange) {
-                var result = _this._serv.getEchartResult(_this.type, _this.data, _this.setting);
-                _this.echarts_options = result['options'];
-                _this.result.emit(result);
+                var result_ = _this._serv.getEchartResult(_this.type, _this.data, _this.setting);
+                result_.source = mu.clone(_this.data);
+                _this.echarts_options = result_['options'];
+                _this.result.emit(result_);
             }
         });
     };
@@ -52,7 +55,7 @@ MnEchartsComponent.decorators = [
                 selector: 'mn-echarts',
                 template: "\n        <div mn-echarts-render [options]=\"echarts_options\" (mycharts)=\"mycharts.emit($event)\"></div>\n    ",
                 styles: [
-                    "\n            :host,\n            :host /deep/ [mn-echarts-render] {\n                display: block;\n                width: 100%;\n                height: 100%;\n            }\n            "
+                    "\n            :host,\n            :host ::ng-deep [mn-echarts-render] {\n                display: block;\n                width: 100%;\n                height: 100%;\n            }\n            "
                 ]
             },] },
 ];

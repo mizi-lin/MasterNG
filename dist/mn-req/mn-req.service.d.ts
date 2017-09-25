@@ -15,5 +15,7 @@ export declare class MnReqService {
     _resources: any;
     setResources(resources: any): void;
     getResources(fn?: any): any;
+    reqCatch: any;
+    reqError: any;
     constructor();
 }

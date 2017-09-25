@@ -6,12 +6,22 @@ var MnPanelComponent = (function () {
     function MnPanelComponent(_ref, _renderer) {
         this._ref = _ref;
         this._renderer = _renderer;
+        // 让控件支持高度100%
+        // height percent hundred
+        this.hph = true;
         // @ContentChildren(MnPanelBodyComponent, {descendants: true}) ss: any;
         // @ContentChild(forwardRef(() => MnPanelBodyComponent)) children: any;
         // @ViewChild(MnPanelBodyComponent) ss: any;
         this.isCollapse = true;
         this.isChanges = false;
     }
+    Object.defineProperty(MnPanelComponent.prototype, "getHph", {
+        get: function () {
+            return this.hph === true ? '100%' : this.hph === false ? 'auto' : this.hph;
+        },
+        enumerable: true,
+        configurable: true
+    });
     MnPanelComponent.prototype.toggle_collapse = function (state) {
         var _this = this;
         mu.exist(state, function () {
@@ -19,8 +29,8 @@ var MnPanelComponent = (function () {
         });
         mu.run(this.panelBody, function (cmp) {
             _this.isCollapse
-                ? cmp._renderer.setAttribute(cmp._ref.nativeElement, 'hidden')
-                : cmp._renderer.removeAttribute(cmp._ref.nativeElement, 'hidden');
+                ? cmp._renderer.setStyle(cmp._ref.nativeElement, 'display', 'block')
+                : cmp._renderer.setStyle(cmp._ref.nativeElement, 'display', 'none');
             _this.isCollapse = !_this.isCollapse;
             _this.class_collapse_drop = _this.isCollapse;
             _this.class_collapse_up = !_this.isCollapse;
@@ -49,9 +59,7 @@ MnPanelComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'mn-panel',
                 template: "\n        <ng-content></ng-content>\n    ",
-                styles: [
-                    "\n            :host {\n                height: 100%;\n                width: 100%;\n            }\n            "
-                ]
+                styles: [':host {  display: block;  width: 100%;}:host.class_collapse_up::ng-deep mn-panel-body {  display: none;}:host.class_collapse_drop::ng-deep mn-panel-body {  display: block;}']
             },] },
 ];
 /** @nocollapse */
@@ -61,7 +69,8 @@ MnPanelComponent.ctorParameters = function () { return [
 ]; };
 MnPanelComponent.propDecorators = {
     'panelBody': [{ type: core_1.ContentChild, args: [mn_panel_body_component_1.MnPanelBodyComponent,] },],
-    'where': [{ type: core_1.Input },],
+    'hph': [{ type: core_1.Input },],
+    'getHph': [{ type: core_1.HostBinding, args: ['style.height',] },],
     'collapse': [{ type: core_1.Input },],
     'class_collapse_up': [{ type: core_1.HostBinding, args: ['class.collapse-up',] },],
     'class_collapse_drop': [{ type: core_1.HostBinding, args: ['class.collapse-drop',] },],

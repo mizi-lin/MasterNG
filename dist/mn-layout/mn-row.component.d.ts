@@ -4,6 +4,8 @@ export declare class MnRowComponent implements OnChanges {
     private _renderer;
     gutter: any;
     where: any;
+    hph: boolean | string;
+    readonly getHph: string;
     constructor(_ref: ElementRef, _renderer: Renderer2);
     ngOnChanges(changes: SimpleChanges): void;
 }

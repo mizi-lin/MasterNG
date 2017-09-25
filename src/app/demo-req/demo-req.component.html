@@ -16,6 +16,14 @@
             {{user_data | json}}
         </mn-req>
 
+    </mn-panel-s>
+
+    <mn-panel-s class="bordered mt-8" title="Req Error">
+        <mn-req [req]="{
+            url: 'aaa.json'
+        }" (result)="aaa = $event.data">
+            {{aaa | json}}
+        </mn-req>
 
     </mn-panel-s>
 

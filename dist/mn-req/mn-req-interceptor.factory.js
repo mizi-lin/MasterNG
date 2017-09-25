@@ -57,6 +57,15 @@ var MnReqInterceptorFactory = (function (_super) {
         }, 0);
         return _this;
     }
+    MnReqInterceptorFactory.prototype.progressStep = function () {
+        var _this = this;
+        if (this._reqServ.progress < 90) {
+            setTimeout(function () {
+                _this._reqServ.progress = _this._reqServ.progress * 1.05;
+                _this.progressStep();
+            }, mu.randomInt(300, 1200));
+        }
+    };
     MnReqInterceptorFactory.prototype.addHeaderWithToken = function (headers) {
         headers = headers || new http_1.Headers();
         // Caching von Ajax Requests verhindern, vor allem vom IE
@@ -88,16 +97,21 @@ var MnReqInterceptorFactory = (function (_super) {
         // Observable.empty()
         // 则不会到do中onError 中调用
         // 默认 error.status === 401 时不返回错误
-        if (error && error.status) {
-            return Observable_1.Observable.empty();
+        if (this._reqServ.reqCatch) {
+            return this._reqServ.reqCatch(error, caught, url);
         }
-        return Observable_1.Observable.throw(error);
+        else {
+            return Observable_1.Observable.throw(error);
+        }
     };
     MnReqInterceptorFactory.prototype.onSuccess = function (res, url) {
         // console.log(res);
     };
     MnReqInterceptorFactory.prototype.onError = function (error, url) {
         console.error('error::::', url);
+        if (this._reqServ.reqError) {
+            return this._reqServ.reqError(error, url);
+        }
     };
     MnReqInterceptorFactory.prototype.onFinally = function (url) {
         this.afterRequest(url);
@@ -110,6 +124,7 @@ var MnReqInterceptorFactory = (function (_super) {
         }, function () {
             _this._reqServ.progress = mu.randomInt(5, 25);
         });
+        this.progressStep();
         console.log('before request:::: -> ', url, mu.prop(config, 'method'), mu.run(mu.prop(config, 'options.search'), function (search) { return search.toString(); }));
     };
     MnReqInterceptorFactory.prototype.afterRequest = function (url) {
