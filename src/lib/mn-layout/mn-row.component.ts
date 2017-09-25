@@ -1,6 +1,6 @@
 import {
     Component, OnInit, Input, AfterViewInit, ElementRef,
-    Renderer2, OnChanges, SimpleChanges
+    Renderer2, OnChanges, SimpleChanges, HostListener, HostBinding
 } from '@angular/core';
 // import {ColComponent} from './col.component';
 declare const mu: any;
@@ -13,6 +13,13 @@ declare const mu: any;
 export class MnRowComponent implements OnChanges {
     @Input() gutter;
     @Input() where;
+
+    // 让控件支持高度100%
+    // height percent hundred
+    @Input() hph: boolean | string = true;
+    @HostBinding('style.height') get getHph() {
+        return this.hph === true ? '100%' : this.hph === false ? 'auto' : this.hph;
+    }
 
     constructor(private _ref: ElementRef,
                 private _renderer: Renderer2) {

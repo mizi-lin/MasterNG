@@ -1,7 +1,7 @@
 import {
     Component, Input, ElementRef, ViewChild,
     Renderer2, OnChanges, SimpleChanges,
-    AfterContentChecked
+    AfterContentChecked, HostBinding
 } from '@angular/core';
 import {MnPanelComponent} from './mn-panel.component';
 declare const mu: any;
@@ -9,7 +9,7 @@ declare const mu: any;
 @Component({
     selector: 'mn-panel-s,mn-panel-simple',
     template: `
-        <mn-panel>
+        <mn-panel [hph]="hph">
             <mn-panel-header>
                 <mn-panel-title [innerHTML]="_title">
                 </mn-panel-title>
@@ -42,6 +42,13 @@ export class MnPanelSimpleComponent implements OnChanges, AfterContentChecked {
 
     @Input() tools: string[];
     @Input() theme: string;
+
+    // 让控件支持高度100%
+    // height percent hundred
+    @Input() hph: boolean | string = true;
+    @HostBinding('style.height') get getHph() {
+        return this.hph === true ? '100%' : this.hph === false ? 'auto' : this.hph;
+    }
 
     @ViewChild(MnPanelComponent) _panel: any;
 

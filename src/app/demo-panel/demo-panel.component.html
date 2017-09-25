@@ -12,26 +12,28 @@
             </mn-panel-toolbar>
         </mn-panel-header>
 
-        <mn-panel-body>
+        <mn-panel-body >
 
             <h5>栅格化布局，最大24栅格; 单元格自定义宽度，会破坏栅格化布局</h5>
 
-            <mn-row [style.height.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
-                <mn-col [span]="5">
-                    5
-                </mn-col>
-                <mn-col [span]="4">
-                    4
-                </mn-col>
+            <div style="height: 300px;">
+                <mn-row [hph]="true" [gutter]="16" class="demo-panel-mn-row mt-16">
+                    <mn-col [span]="5">
+                        5
+                    </mn-col>
+                    <mn-col [span]="4">
+                        4
+                    </mn-col>
 
-                <mn-col [span]="8">
-                    8
-                </mn-col>
+                    <mn-col [span]="8">
+                        8
+                    </mn-col>
 
-                <mn-col [span]="7">
-                    7
-                </mn-col>
-            </mn-row>
+                    <mn-col [span]="7">
+                        7
+                    </mn-col>
+                </mn-row>
+            </div>
 
             <mn-row [style.minHeight.px]="100" [gutter]="16" class="demo-panel-mn-row mt-16">
                 <mn-col [span]="2">

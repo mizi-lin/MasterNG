@@ -6,7 +6,10 @@
     </mn-panel-s>
 
     <mn-panel-s class="mt-8 bordered" title="mn-echarts-render::req-http get options">
-        <mn-req [req]="{url: './assets/store/echarts-options-bar.json'}" (result)="bar_options = $event.data; barOptions($event.data)">
+        <mn-req [style.height.px]="600"
+                [req]="{url: './assets/store/echarts-options-bar.json'}"
+                (result)="bar_options = $event.data; barOptions($event.data)">
+
             <mn-row>
                 <mn-col [span]="12">
                     <div mn-echarts-render [options]="bar_options" [style.height.px]="300">
