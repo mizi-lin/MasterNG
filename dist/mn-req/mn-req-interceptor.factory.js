@@ -76,7 +76,14 @@ var MnReqInterceptorFactory = (function (_super) {
         this._reqServ.getHeaders(function (headers_map) {
             mu.each(headers_map, function (header) {
                 mu.if(headers[header.method], function () {
-                    headers[header.method](header.key, header.value);
+                    var val;
+                    if (typeof header.value === 'function') {
+                        val = header.value();
+                    }
+                    else {
+                        val = header.value;
+                    }
+                    headers[header.method](header.key, val);
                 });
             });
         });

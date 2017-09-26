@@ -76,7 +76,14 @@ export class MnReqInterceptorFactory extends Http {
         this._reqServ.getHeaders((headers_map) => {
             mu.each(headers_map, (header) => {
                 mu.if(headers[header.method], () => {
-                    headers[header.method](header.key, header.value);
+                    let val;
+                    if (typeof header.value === 'function') {
+                        val = header.value();
+                    } else {
+                        val = header.value;
+                    }
+
+                    headers[header.method](header.key, val);
                 });
             });
         });
