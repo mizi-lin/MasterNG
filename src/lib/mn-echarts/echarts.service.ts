@@ -14,7 +14,6 @@ export class EchartsService {
     GRID_TOP: number = 60;
     GRID_BOTTOM: number = 60;
 
-
     /**
      *
      * @param arr
@@ -47,6 +46,7 @@ export class EchartsService {
         const X_VALUE = 'x';
         const Y_VALUE = 'value';
         const default_options = DEFAULT_ECHART_OPTIONS[type];
+        const source = mu.clone(data);
         let options: any = mu.clone(default_options);
         let _series_data: any, _x_axis: any, _legend: any;
 
@@ -89,8 +89,9 @@ export class EchartsService {
                 'legend_position',
                 'legend_show',
 
-                'grid_position',
-                'tooltip'
+                'tooltip',
+
+                'grid_position'
             ],
 
             radar: [
@@ -103,10 +104,11 @@ export class EchartsService {
                 'legend_show',
                 'legend_position',
 
-                'grid_position',
                 'tooltip',
 
-                'indicator'
+                'indicator',
+
+                'grid_position'
             ],
 
             line: [
@@ -131,9 +133,10 @@ export class EchartsService {
 
                 'dataZoom',
 
-                'grid_position',
                 'tooltip',
-                'xy_exchange'
+                'xy_exchange',
+
+                'grid_position'
             ],
 
             bar: [
@@ -158,8 +161,10 @@ export class EchartsService {
                 'yAxis_zero',
                 'dataZoom',
 
-                'grid_position',
-                'xy_exchange'
+                'xy_exchange',
+
+                'grid_position'
+
             ]
 
         };
@@ -439,14 +444,10 @@ export class EchartsService {
              * setting.legend_show
              * 设置 legend.show 是否显示
              */
-
             mu.run(setting.legend_show, () => {
                 options.legend.show = true;
-                options.grid.top = this.GRID_TOP;
-                options.grid.bottom = this.GRID_BOTTOM;
             }, () => {
                 options.legend.show = false;
-                options.grid.top = this.GRID_TOP / 2 ;
             });
 
         };
@@ -461,35 +462,7 @@ export class EchartsService {
                 mu.run(left, () => options.legend.left = left);
                 mu.run(top, () => {
                     options.legend.top = top;
-                    if (top === 'bottom') {
-                        options.grid.top = 20;
-                        options.grid.bottom = 60;
-                        // todo 根据宽度 重新计算
-                        mu.run(options.legend.data.length, (len) => {
-                            options.grid.bottom = len > 6 ? 32 * (len / 6) : 32;
-                        });
-                    }
                 });
-            });
-        };
-
-        /**
-         * setting.grid_position
-         * 设置grid所在的位置
-         */
-        fn.grid_position = () => {
-            const [top, right, bottom, left] = (setting.grid_position || '').replace(/\s{1,}/gi, ' ').split(' ');
-            const ps = {
-                top: mu.ifnvl(setting.grid_position_top, top),
-                right: mu.ifnvl(setting.grid_position_right, right),
-                bottom: mu.ifnvl(setting.grid_position_bottom, mu.ifnvl(bottom, top)),
-                left: mu.ifnvl(setting.grid_position_left, mu.ifnvl(left, right))
-            };
-
-            mu.each(ps, (v, p) => {
-                if (mu.isExist(v) && v !== 'auto' && v !== '') {
-                    options.grid[p] = v;
-                }
             });
         };
 
@@ -558,8 +531,6 @@ export class EchartsService {
             mu.exist(setting.rotate, (rotate) => {
                 options.xAxis[0].axisLabel.rotate = rotate;
                 options.xAxis[0].axisLabel.interval = rotate ? 0 : 'auto';
-                // 默认数值
-                options.grid.bottom = 50;
             });
         };
 
@@ -601,6 +572,11 @@ export class EchartsService {
                 options.yAxis[0].axisLabel = options.yAxis.axisLabel || {};
                 options.yAxis[0].axisLabel.formatter = (value, index) => {
                     return value * 100 + '%';
+                };
+            }, () => {
+                options.yAxis[0].axisLabel = options.yAxis.axisLabel || {};
+                options.yAxis[0].axisLabel.formatter = (value, index) => {
+                    return value;
                 };
             });
         };
@@ -657,6 +633,65 @@ export class EchartsService {
                     min
                 };
             }, []);
+        };
+
+        /**
+         * setting.grid_position
+         * 重新计算grid边界
+         * 设置grid所在的位置
+         */
+        fn.grid_position = () => {
+
+            options.grid = options.grid || {};
+
+            const BIG = 64;
+            const BOTTOM_SMALL = 32;
+            const TOP_SMALL = 16;
+
+            // 1. legend 隐藏;
+            // 2. legend 显示，根据legend显示方位，显示上下边距
+            // 3. rotate > 0 时，bottom = BIG;
+            mu.run(mu.prop(options, 'legend.show'), () => {
+                // legend 显示，根据legend显示方位，显示上下边距
+                const orient = mu.ifnvl(mu.prop(options, 'legend.orient'), 'horizontal');
+                const top = mu.ifnvl(mu.prop(options, 'legend.top'), 'top');
+                if (orient === 'horizontal') {
+                    if (top === 'top') {
+                        options.grid.top = BIG;
+                        options.grid.bottom = BOTTOM_SMALL;
+                    }
+
+                    if (top === 'bottom') {
+                        options.grid.top = TOP_SMALL;
+                        options.grid.bottom = BIG;
+                    }
+                }
+            }, () => {
+                // legend 隐藏, top = bottom = SMALL;
+                options.grid.top = TOP_SMALL;
+                options.grid.bottom = BOTTOM_SMALL;
+            });
+
+            // rotate > 0 时，bottom = BIG;
+            mu.run(mu.prop(options, 'xAxis.0.axisLabel.rotate'), (rotate) => {
+                options.grid.bottom = options.grid.bottom + 24;
+            }, () => {
+                options.grid.bottom = options.grid.bottom - 24;
+            });
+
+            const [top, right, bottom, left] = (setting.grid_position || '').replace(/\s{1,}/gi, ' ').split(' ');
+            const ps = {
+                top: mu.ifnvl(setting.grid_position_top, top),
+                right: mu.ifnvl(setting.grid_position_right, right),
+                bottom: mu.ifnvl(setting.grid_position_bottom, mu.ifnvl(bottom, top)),
+                left: mu.ifnvl(setting.grid_position_left, mu.ifnvl(left, right))
+            };
+
+            mu.each(ps, (v, p) => {
+                if (mu.isExist(v) && v !== 'auto' && v !== '') {
+                    options.grid[p] = v;
+                }
+            });
         };
 
         setting = mu.extend(true, {}, {
@@ -830,7 +865,9 @@ export class EchartsService {
             // echart 数据视图
             dataView,
             // echart options
-            options
+            options,
+            // data source
+            source
         };
     }
 

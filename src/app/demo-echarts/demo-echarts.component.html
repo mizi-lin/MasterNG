@@ -48,7 +48,7 @@
                               [req]="{url: './assets/store/echarts-bar.json'}"
                               [type]="'bar'"
                               [tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"
-                              [setting]="{legend_show: false, rotate: 20}"
+                              [setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}"
                               height="300px">
             </mn-echarts-panel>
         </mn-col>
@@ -58,6 +58,7 @@
                             [type]="'pie'"
                             [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"
                             [setting]="{legend_position: 'center top'}"
+                            (result)="a = $event.options"
                             [show_tools]="'toggle'">
             </mn-echarts-box>
         </mn-col>
