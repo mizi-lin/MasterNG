@@ -21,3 +21,5 @@
 ### 0.1.8 every box support hph (height percent hundred) && mn-echart result add source
 
 ### 0.1.9 ReqInterceptor with reqCatch, reqError handling exceptions
+
+### 0.1.10 ReqInterceptor setHeaders of value support function

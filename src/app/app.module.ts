@@ -16,6 +16,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {MasterNgModule} from '../lib/master-ng.module';
 import {DemoMcComponent} from './demo-mc/demo-mc.component';
 import {MnReqService} from '../lib/mn-req/mn-req.service';
+import { HeatWidgetComponent } from './common/widgets/heat-widget/heat-widget.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import {MnReqService} from '../lib/mn-req/mn-req.service';
         DemoEchartsComponent,
         DemoI18nComponent,
         DemoRuleComponent,
-        DemoMcComponent
+        DemoMcComponent,
+        HeatWidgetComponent
     ],
     imports: [
         BrowserModule,
