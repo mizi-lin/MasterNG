@@ -74,15 +74,79 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     }
 
     private updateChart(): void {
+
+        let _width, _height;
+
         // this._chart.clear();
         mu.run(this.getWidth(this._ref.nativeElement), (width) => {
+            _width = width;
             this._ref.nativeElement.style.width = width + 'px';
         });
 
         mu.run(this.getHeight(this._ref.nativeElement), (height) => {
+            _height = height;
             this._ref.nativeElement.style.height = height + 'px';
         });
 
+        let options = this.options;
+        const type = mu.prop(options, 'series.0.type');
+
+        mu.run(mu.prop(options, 'legend.show'), () => {
+            // legend 显示，根据legend显示方位，显示上下边距
+            const orient = mu.ifnvl(mu.prop(options, 'legend.orient'), 'horizontal');
+            const top = mu.ifnvl(mu.prop(options, 'legend.top'), 'top');
+            const legend = mu.map(mu.prop(options, 'legend.data'), o => o.name || o);
+            const size = (legend.length * 9) + legend.join(',').length;
+            const h = Math.ceil((size * 7) / _width);
+            const height = 16 * (h + 2.5);
+
+            if (orient === 'horizontal') {
+                if (top === 'top') {
+                    options.grid.top = height;
+                }
+
+                if (top === 'bottom') {
+                    options.grid.bottom = height;
+                }
+            }
+
+            if (mu.or(type, 'pie', 'radar')) {
+                const radius = mu.prop(options, 'series.0.radius');
+                const y = mu.format((1 + height / _height) / 2, '::');
+                const radius_ = mu.format(0.75 - height / _height / 4, '::');
+
+                if (type === 'pie') {
+                    options.series[0].center = [
+                        '50%',
+                        y
+                    ];
+
+                    options.series[0].radius = radius_;
+                }
+
+                if (type === 'radar') {
+                    options.radar.center = [
+                        '50%',
+                        y
+                    ];
+
+                    options.radar.radius = radius_;
+                }
+            }
+        }, () => {
+            if (type === 'pie') {
+                options.series[0].center = [
+                    '50%',
+                    '50%'
+                ];
+
+                options.series[0].radius = '75%';
+            }
+        });
+
+        console.debug(mu.prop(options, 'series.0.center'));
+
+        this.options = options;
         this._chart.setOption(this.options);
         this._chart.resize();
     }
