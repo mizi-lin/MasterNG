@@ -835,7 +835,7 @@ export class EchartsService {
 
         // type === 'radar' && console.debug(JSON.stringify(options));
 
-        options = this.adjustECharOptions(options);
+        options = this.adjustOptionsWithColors(options);
 
         /**
          * DataView 计算
@@ -899,51 +899,6 @@ export class EchartsService {
         });
     }
 
-    /**
-     * 调整 echart 颜色 以及 legend 的样式
-     * @param options
-     */
-    adjustECharOptions(options: any): any {
-        const legend_colors = COLORS_POOL;
-        const legend_color_map = this.colorsMap;
-
-        /**
-         * 固定Legend样式
-         */
-        mu.run(mu.prop(options, 'legend.data'), (data: any[]) => {
-            const names: string[] = [];
-            options.legend.data = mu.map(data, (o) => {
-                if (mu.isObject(o)) {
-                    o.icon = 'roundRect';
-                } else {
-                    o = {
-                        name: o,
-                        icon: 'roundRect'
-                    };
-                }
-                names.push(o.name);
-                return o;
-            });
-
-            // legend 的颜色控制有 option.color 来控制
-            // legend 的颜色控制着相对应的柱形图线形图等itemStyle的颜色
-            // so, legend.data 必须存在
-            mu.run(names, () => {
-                options['color'] = mu.map(names, (name, index) => {
-                    name = name.toLowerCase();
-                    return legend_color_map[name] || mu.run(() => {
-                        const color = legend_colors[index % legend_colors.length];
-                        legend_color_map[name] = color;
-                        return color;
-                    });
-                });
-            });
-
-        });
-
-        return options;
-    }
-
     percent_rate(options: any, data: any, fn: any): void {
         if (typeof fn !== 'function') {
             fn = mu.noop();
@@ -989,4 +944,138 @@ export class EchartsService {
         });
     }
 
+    morphArray(o: any, def: any, def2?: any): any[] {
+        if (mu.type(o) !== 'array') {
+            return [def, o || def2];
+        }
+
+        return o;
+    }
+
+    /**
+     * 调整 echart 颜色 以及 legend 的样式
+     * @param options
+     */
+    adjustOptionsWithColors(options: any): any {
+        const legend_colors = COLORS_POOL;
+        const legend_color_map = this.colorsMap;
+
+        /**
+         * 固定Legend样式
+         */
+        mu.run(mu.prop(options, 'legend.data'), (data: any[]) => {
+            const names: string[] = [];
+            options.legend.data = mu.map(data, (o) => {
+                if (mu.isObject(o)) {
+                    o.icon = 'roundRect';
+                } else {
+                    o = {
+                        name: o,
+                        icon: 'roundRect'
+                    };
+                }
+                names.push(o.name);
+                return o;
+            });
+
+            // legend 的颜色控制有 option.color 来控制
+            // legend 的颜色控制着相对应的柱形图线形图等itemStyle的颜色
+            // so, legend.data 必须存在
+            mu.run(names, () => {
+                options['color'] = mu.map(names, (name, index) => {
+                    name = name.toLowerCase();
+                    return legend_color_map[name] || mu.run(() => {
+                        const color = legend_colors[index % legend_colors.length];
+                        legend_color_map[name] = color;
+                        return color;
+                    });
+                });
+            });
+
+        });
+
+        return options;
+    }
+
+    /**
+     * 调整legend显示/隐藏图表主体位置
+     * 调整legend的个数对图表主体位置的影响
+     */
+    adjustOptionsWithLegend(options: any, _width: number, _height: number): any {
+        const type = mu.prop(options, 'series.0.type');
+        let old_radius, old_center;
+        switch (type) {
+            case 'pie':
+                old_radius = this.morphArray(mu.prop(options, 'series.0.radius'), '0%', '75%');
+                old_center = this.morphArray(mu.prop(options, 'series.0.center'), '50%', '50%');
+                break;
+            case 'radar':
+                old_radius = mu.ifnvl(mu.prop(options, 'series.0.radius'), '75%');
+                old_center = this.morphArray(mu.prop(options, 'series.0.center'), '50%', '50%');
+                break;
+        }
+
+
+        mu.run(mu.prop(options, 'legend.show'), () => {
+            // legend 显示，根据legend显示方位，显示上下边距
+            const orient = mu.ifnvl(mu.prop(options, 'legend.orient'), 'horizontal');
+            const top = mu.ifnvl(mu.prop(options, 'legend.top'), 'top');
+            const legend = mu.map(mu.prop(options, 'legend.data'), o => o.name || o);
+            // 默认一个legend的图标占9个字符
+            // 获得legend的总长度
+            const size = (legend.length * 9) + legend.join(',').length;
+            // 默认一个字符宽度大概为7px
+            // 计算legend有多少行
+            const h = Math.ceil((size * 7) / _width);
+            // 默认legend的间距大概为2.5行
+            // 默认每行行高16px(font size 12px)
+            const height = 16 * (h + 2.5);
+
+            // 常规图标，主画布对 grid
+            if (orient === 'horizontal') {
+                if (top === 'top') {
+                    options.grid.top = height;
+                }
+
+                if (top === 'bottom') {
+                    options.grid.bottom = height;
+                }
+            }
+
+            // pie, radar 等，主画布为 dom
+            // center 图表的中心区域
+            // radius 图表的半径
+            if (mu.or(type, 'pie', 'radar')) {
+
+                const y = mu.format((1 + height / _height) / 2, '::');
+                const radius_ = mu.format(0.75 - height / _height / 2.5, '::');
+
+                switch (type) {
+                    case 'pie':
+                        options.series[0].center = [old_center[0], y];
+                        options.series[0].radius = [old_radius[0], radius_];
+                        break;
+                    case 'radar':
+                        options.radar.center = [old_center[0], y];
+                        options.radar.radius = radius_;
+                        break;
+                }
+            }
+        }, () => {
+            switch (type) {
+                case 'pie':
+                    options.series[0].center = old_center;
+                    options.series[0].radius = old_radius;
+                    break;
+                case 'radar':
+                    options.radar.center = old_center;
+                    options.radar.radius = old_radius;
+
+                    console.debug(options)
+                    break;
+            }
+        });
+
+        return options;
+    }
 }

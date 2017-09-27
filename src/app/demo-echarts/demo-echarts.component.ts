@@ -135,7 +135,7 @@ export class DemoEchartsComponent implements OnInit {
     bar_options2: any;
 
     barOptions(options) {
-        this.bar_options2 = this._serv.adjustECharOptions(mu.clone(options));
+        this.bar_options2 = this._serv.adjustOptionsWithColors(mu.clone(options));
     }
 
     pie_options: any;

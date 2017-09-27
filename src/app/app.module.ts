@@ -17,6 +17,7 @@ import {MasterNgModule} from '../lib/master-ng.module';
 import {DemoMcComponent} from './demo-mc/demo-mc.component';
 import {MnReqService} from '../lib/mn-req/mn-req.service';
 import { HeatWidgetComponent } from './common/widgets/heat-widget/heat-widget.component';
+import { DemoEchart2Component } from './demo-echart2/demo-echart2.component';
 
 @NgModule({
     declarations: [
@@ -27,7 +28,8 @@ import { HeatWidgetComponent } from './common/widgets/heat-widget/heat-widget.co
         DemoI18nComponent,
         DemoRuleComponent,
         DemoMcComponent,
-        HeatWidgetComponent
+        HeatWidgetComponent,
+        DemoEchart2Component
     ],
     imports: [
         BrowserModule,
@@ -46,6 +48,12 @@ import { HeatWidgetComponent } from './common/widgets/heat-widget/heat-widget.co
                 path: 'echarts',
                 component: DemoEchartsComponent
             },
+
+            {
+                path: 'echarts2',
+                component: DemoEchart2Component
+            },
+
             {
                 path: 'i18n',
                 component: DemoI18nComponent
