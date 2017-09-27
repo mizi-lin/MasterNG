@@ -28,12 +28,15 @@ export class MnRuleDirective implements OnChanges {
     /**
      * 获取权限判断池
      */
-    @Input() rules: any;
+    @Input() rules: any = {};
 
     @Input()
     set rule(conditions: any) {
+        if (mu.isNotExist(conditions)) {
+            return;
+        }
 
-        this._conditions = conditions || {};
+        this._conditions = conditions;
 
         let bool: boolean = true;
         let condition_: any;
@@ -96,13 +99,13 @@ export class MnRuleDirective implements OnChanges {
                 private _vcRef: ViewContainerRef,
                 private _tempRef: TemplateRef<AuthRuleContext>) {
         mu.empty(this.rules, () => {
-            this._rules = this._ruleServ.rules_;
+            this._rules = this._ruleServ.rules_ || {};
         });
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         mu.run(mu.prop(changes, 'rules.currentValue'), (rules) => {
-            this._rules = rules;
+            this._rules = rules || {};
             this.rule = this._conditions;
         });
     }
