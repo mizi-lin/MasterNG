@@ -5,7 +5,7 @@ import {COLORS_POOL} from './color-pool';
 declare const mu: any;
 
 @Injectable()
-export class EchartsService {
+export class MnEchartsService {
     constructor() {
     }
 
@@ -1004,6 +1004,8 @@ export class EchartsService {
     adjustOptionsWithLegend(options: any, _width: number, _height: number): any {
         const type = mu.prop(options, 'series.0.type');
         let old_radius, old_center;
+
+        // 获取原值
         switch (type) {
             case 'pie':
                 old_radius = this.morphArray(mu.prop(options, 'series.0.radius'), '0%', '75%');
@@ -1014,7 +1016,6 @@ export class EchartsService {
                 old_center = this.morphArray(mu.prop(options, 'series.0.center'), '50%', '50%');
                 break;
         }
-
 
         mu.run(mu.prop(options, 'legend.show'), () => {
             // legend 显示，根据legend显示方位，显示上下边距
@@ -1078,4 +1079,7 @@ export class EchartsService {
 
         return options;
     }
+
+
+
 }

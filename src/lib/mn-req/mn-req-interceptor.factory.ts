@@ -57,12 +57,14 @@ export class MnReqInterceptorFactory extends Http {
     }, 500);
 
     progressStep(): void {
-        if (this._reqServ.progress < 90) {
-            setTimeout(() => {
+        const tid = setTimeout(() => {
+            if (this._reqServ.progress < mu.randomInt(80, 90)) {
                 this._reqServ.progress = this._reqServ.progress * 1.05;
                 this.progressStep();
-            }, mu.randomInt(300, 1200));
-        }
+            } else {
+                clearTimeout(tid);
+            }
+        }, mu.randomInt(300, 1200));
     }
 
     addHeaderWithToken(headers: Headers): Headers {
@@ -155,13 +157,11 @@ export class MnReqInterceptorFactory extends Http {
     intercept(observable: Observable<Response>, url: string): Observable<Response> {
         return observable.catch((error: any, caught: Observable<any>) => {
             return this.onCatch(error, caught, url);
-        })
-        .do((res: Response) => {
+        }).do((res: Response) => {
             this.onSuccess(res, url);
         }, (error: any) => {
             this.onError(error, url);
-        })
-        .finally(() => {
+        }).finally(() => {
             this.onFinally(url);
         });
     }

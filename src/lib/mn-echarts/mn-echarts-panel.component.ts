@@ -2,7 +2,7 @@ import {
     Component, ElementRef, EventEmitter, HostBinding, Input, OnChanges, Output, SimpleChanges, ViewChild,
     ViewChildren
 } from '@angular/core';
-import {EchartsService} from './echarts.service';
+import {MnEchartsService} from './mn-echarts.service';
 import '../assets/jquery.resize.js';
 import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services';
 
@@ -134,8 +134,7 @@ declare const mu: any, jQuery: any;
                                 [options]="options"
                                 [type]="type"
                                 [data]="_data || data"
-                                (result)="_result($event)"
-                                (mycharts)="mycharts($event)"></mn-echarts>
+                                (result)="_result($event)"></mn-echarts>
 
                 </mn-req>
             </mn-panel-body>
@@ -186,7 +185,7 @@ export class MnEchartsPanelComponent implements OnChanges {
     _data: any;
     _src_setting: any;
     _src_type: any;
-    _myChart: any;
+    _chart: any;
     _options: any;
     _show_dataView = false;
     _dataView: any = [];
@@ -208,7 +207,7 @@ export class MnEchartsPanelComponent implements OnChanges {
         this.statusMap[fnKey] = !this.statusMap[fnKey];
     }
 
-    constructor(private _es: EchartsService,
+    constructor(private _es: MnEchartsService,
                 private _mnFileSaverServ: MnFileSaverServices,
                 private _ref: ElementRef) {
         if (this._ref.nativeElement.nodeName === 'ECHARTS-BOX') {
@@ -266,16 +265,12 @@ export class MnEchartsPanelComponent implements OnChanges {
         });
     }
 
-    _result($event) {
-        this._options = $event.options;
-        this._dataView = $event.dataView;
-        this._source = $event.source;
-        this.result.emit($event);
-        // this.type === 'radar' && console.debug(JSON.stringify(this._options));
-    }
-
-    mycharts($event) {
-        this._myChart = $event;
+    _result(rst: any) {
+        this._options = rst.options;
+        this._dataView = rst.dataView;
+        this._source = rst.source;
+        this._chart = rst.$chart;
+        this.result.emit(rst);
     }
 
     download_click($event) {
@@ -343,7 +338,7 @@ export class MnEchartsPanelComponent implements OnChanges {
     fullscreen_click: any = (full: any, $event: any) => {
         const $el = jQuery(this._panel.nativeElement);
         $el.mnResize(() => {
-            this._myChart.resize({
+            this._chart.resize({
                 width: $el.width(),
                 height: $el.height()
             });

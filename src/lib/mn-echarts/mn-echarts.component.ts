@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import * as mu from 'mzmu';
-import {EchartsService} from './echarts.service';
+import {MnEchartsService} from './mn-echarts.service';
 
 declare const mu: any;
 
@@ -11,7 +11,7 @@ declare const mu: any;
 @Component({
     selector: 'mn-echarts',
     template: `
-        <div mn-echarts-render [options]="echarts_options" (mycharts)="mycharts.emit($event)"></div>
+        <div mn-echarts-render [options]="echarts_options" (result)="getRenderResult($event)"></div>
     `,
     styles: [
             `
@@ -35,13 +35,14 @@ export class MnEchartsComponent implements OnInit, OnChanges {
 
     @Input() type?: string;
 
-    echarts_options: any;
-    echarts_data: any;
-
-    @Output() mycharts: any = new EventEmitter<any>();
     @Output() result: any = new EventEmitter<any>();
 
-    constructor(private _serv: EchartsService) {
+    echarts_options: any;
+
+    _result: any = {};
+
+
+    constructor(private _es: MnEchartsService) {
     }
 
     ngOnInit() {
@@ -51,38 +52,43 @@ export class MnEchartsComponent implements OnInit, OnChanges {
 
         mu.run(mu.prop(changes, 'options.currentValue'), (options) => {
             this.echarts_options = options;
-            this.result.emit(this.echarts_options);
+            this._result['options'] = options;
+            this.result.emit(this._result);
         });
 
         mu.run(mu.prop(changes, 'data.currentValue'), (data) => {
-            const result_ = this._serv.getEchartResult(this.type, data, this.setting);
-            result_.source = mu.clone(this.data);
+            const result_ = this._es.getEchartResult(this.type, data, this.setting);
             this.echarts_options = result_['options'];
-            this.result.emit(result_);
+            this._result.source = mu.clone(this.data);
+            this._result = mu.extend(this._result, result_);
+            this.result.emit(this._result);
         });
 
         mu.run(changes['setting'], (settingListener) => {
             if (!settingListener.firstChange) {
-                const result_ = this._serv.getEchartResult(this.type, this.data, this.setting);
-                result_.source = mu.clone(this.data);
+                const result_ = this._es.getEchartResult(this.type, this.data, this.setting);
                 this.echarts_options = result_['options'];
-                this.result.emit(result_);
+                this._result.source = mu.clone(this.data);
+                this._result = mu.extend(this._result, result_);
+                this.result.emit(this._result);
             }
         });
 
         mu.run(changes['type'], (typeListener) => {
             if (!typeListener.firstChange) {
-                const result_ = this._serv.getEchartResult(this.type, this.data, this.setting);
-                result_.source = mu.clone(this.data);
+                const result_ = this._es.getEchartResult(this.type, this.data, this.setting);
                 this.echarts_options = result_['options'];
-                this.result.emit(result_);
+                this._result.source = mu.clone(this.data);
+                this._result = mu.extend(this._result, result_);
+                this.result.emit(this._result);
             }
         });
 
     }
 
-    // mycharts_(_mycharts): void {
-    //     this.mycharts.emit(_mycharts);
-    // }
+    getRenderResult(rst: any) {
+        this._result = mu.extend(this._result, rst);
+        this.result.emit(this._result);
+    }
 
 }

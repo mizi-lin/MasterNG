@@ -6,7 +6,7 @@ import {MnLayoutModule} from '../mn-layout/mn-layout.module';
 import {MnEchartsRenderDirective} from './mn-echarts-render.directive';
 import {MnEchartsComponent} from './mn-echarts.component';
 import {MnEchartsPanelComponent} from './mn-echarts-panel.component';
-import {EchartsService} from './echarts.service';
+import {MnEchartsService} from './mn-echarts.service';
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
@@ -38,7 +38,7 @@ import {NgZorroAntdModule} from 'ng-zorro-antd';
     ],
 
     providers: [
-        EchartsService
+        MnEchartsService
     ]
 })
 export class MnEchartsModule {

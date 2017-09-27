@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {EchartsService} from '../../lib/mn-echarts/echarts.service';
+import {MnEchartsService} from '../../lib/mn-echarts/mn-echarts.service';
 declare const mu: any;
 
 @Component({
@@ -129,7 +129,7 @@ export class DemoEchartsComponent implements OnInit {
         ]
     };
 
-    constructor(private _serv: EchartsService) {
+    constructor(private _serv: MnEchartsService) {
     }
 
     bar_options2: any;
