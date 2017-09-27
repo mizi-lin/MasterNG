@@ -9,10 +9,13 @@ export class MnEchartsService {
     constructor() {
     }
 
-    colorsMap: any = {};
+    _colors_map: any = {};
 
-    GRID_TOP: number = 60;
-    GRID_BOTTOM: number = 60;
+    // 外部配置匹配颜色
+    setColorsMap(colors_map: any = {}) {
+        this._colors_map = colors_map;
+    }
+
 
     /**
      *
@@ -957,8 +960,8 @@ export class MnEchartsService {
      * @param options
      */
     adjustOptionsWithColors(options: any): any {
-        const legend_colors = COLORS_POOL;
-        const legend_color_map = this.colorsMap;
+        const colors = COLORS_POOL;
+        const color_map = this._colors_map;
 
         /**
          * 固定Legend样式
@@ -984,9 +987,9 @@ export class MnEchartsService {
             mu.run(names, () => {
                 options['color'] = mu.map(names, (name, index) => {
                     name = name.toLowerCase();
-                    return legend_color_map[name] || mu.run(() => {
-                        const color = legend_colors[index % legend_colors.length];
-                        legend_color_map[name] = color;
+                    return color_map[name] || mu.run(() => {
+                        const color = colors[index % colors.length];
+                        color_map[name] = color;
                         return color;
                     });
                 });
