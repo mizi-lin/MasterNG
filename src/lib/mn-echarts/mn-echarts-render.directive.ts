@@ -16,7 +16,7 @@ import {
 
 import * as echarts from 'echarts';
 import 'echarts-wordcloud/dist/echarts-wordcloud.min';
-import {EchartsService} from './echarts.service';
+import {MnEchartsService} from './mn-echarts.service';
 
 declare const mu: any, jQuery: any;
 
@@ -29,9 +29,8 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     @Input() theme: string;
     @Input() loading: boolean;
 
-    // chart events:
-    @Output() mycharts: EventEmitter<any> = new EventEmitter<any>();
-    @Output() element: EventEmitter<any> = new EventEmitter<any>();
+    @Output() result: EventEmitter<any> = new EventEmitter<any>();
+
     @Output() chartClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() chartDblClick: EventEmitter<any> = new EventEmitter<any>();
     @Output() chartMouseDown: EventEmitter<any> = new EventEmitter<any>();
@@ -40,16 +39,23 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     @Output() chartMouseOut: EventEmitter<any> = new EventEmitter<any>();
     @Output() chartGlobalOut: EventEmitter<any> = new EventEmitter<any>();
 
+    // callback 返回对象
+    // ref, $chart, width, height
+    private _result: any = {};
+
     private _chart: any = null;
     private currentWindowWidth: any = null;
 
     constructor(
         private _ref: ElementRef,
-        private _es: EchartsService) {
+        private _es: MnEchartsService) {
+
+        this._result['ref'] = this._ref;
+        this.result.emit(this._result);
+
     }
 
     ngAfterViewInit(): void {
-        this.element.emit(this._ref.nativeElement);
         mu.run(this._chart, () => {
             this._chart.resize();
         });
@@ -71,26 +77,25 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     private createChart(): any {
         this.theme = this.theme || 'default';
         this.currentWindowWidth = window.innerWidth;
-        const echarts_ = echarts.init(this._ref.nativeElement);
-        this.mycharts.emit(echarts_);
-        return echarts_;
+        const $chart = echarts.init(this._ref.nativeElement);
+        this._result['$chart'] = $chart;
+        this.result.emit(this._result);
+        return $chart;
     }
 
     private updateChart(): void {
-
-        let _width, _height;
-
-        // this._chart.clear();
+        let _width = 0, _height = 0;
         mu.run(this.getWidth(this._ref.nativeElement), (width) => {
             _width = width;
             this._ref.nativeElement.style.width = width + 'px';
         });
-
         mu.run(this.getHeight(this._ref.nativeElement), (height) => {
             _height = height;
             this._ref.nativeElement.style.height = height + 'px';
         });
-
+        this._result['width'] = _width;
+        this._result['height'] = _height;
+        this.result.emit(this._result);
         this.options = this._es.adjustOptionsWithLegend(this.options, _width, _height);
         this._chart.setOption(this.options);
         this._chart.resize();
@@ -139,8 +144,6 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         if (opt) {
             if (!this._chart) {
                 this._chart = this.createChart();
-
-                // register events:
                 this.registerEvents(this._chart);
             }
 
@@ -209,28 +212,28 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         return false;
     }
 
-    private registerEvents(myChart: any): void {
-        if (myChart) {
+    private registerEvents(_chart: any): void {
+        if (_chart) {
             // register mouse events:
-            myChart.on('click', (e: any) => {
+            _chart.on('click', (e: any) => {
                 this.chartClick.emit(e);
             });
-            myChart.on('dblClick', (e: any) => {
+            _chart.on('dblClick', (e: any) => {
                 this.chartDblClick.emit(e);
             });
-            myChart.on('mousedown', (e: any) => {
+            _chart.on('mousedown', (e: any) => {
                 this.chartMouseDown.emit(e);
             });
-            myChart.on('mouseup', (e: any) => {
+            _chart.on('mouseup', (e: any) => {
                 this.chartMouseUp.emit(e);
             });
-            myChart.on('mouseover', (e: any) => {
+            _chart.on('mouseover', (e: any) => {
                 this.chartMouseOver.emit(e);
             });
-            myChart.on('mouseout', (e: any) => {
+            _chart.on('mouseout', (e: any) => {
                 this.chartMouseOut.emit(e);
             });
-            myChart.on('globalout', (e: any) => {
+            _chart.on('globalout', (e: any) => {
                 this.chartGlobalOut.emit(e);
             });
         }

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {EchartsService} from '../../lib/mn-echarts/echarts.service';
+import {MnEchartsService} from '../../lib/mn-echarts/mn-echarts.service';
 import {Http} from '@angular/http';
 
 declare const mu: any;
@@ -26,7 +26,7 @@ export class DemoMcComponent implements OnInit {
     _weibo_data_mc: any[] = [];
     weibo_data: any[] = [];
 
-    constructor(private _es: EchartsService,
+    constructor(private _es: MnEchartsService,
                 private _http: Http) {
         this._http.get('assets/store/a.csv.json').subscribe((res_boi) => {
             this._weibo_data_boi = res_boi['data'];

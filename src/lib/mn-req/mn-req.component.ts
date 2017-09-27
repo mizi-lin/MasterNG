@@ -41,10 +41,8 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
 
     process: number = 0;
 
-    constructor(
-        private _http: Http,
-        private _rs: MnReqService
-    ) {
+    constructor(private _http: Http,
+                private _rs: MnReqService) {
     }
 
     req_http(req: any): void {
@@ -94,10 +92,22 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
         });
     }, 300);
 
+    processStep(): any {
+        const tid = setTimeout(() => {
+            if (this.process < mu.randomInt(75, 85)) {
+                this.process = this.process * 1.05;
+                this.processStep();
+            } else {
+                clearTimeout(tid);
+            }
+        }, mu.randomInt(300, 1200));
+    }
+
     ngOnChanges(changes: SimpleChanges) {
 
         mu.run(this.req, () => {
             this.process = mu.randomInt(0, 49);
+            this.processStep();
         });
 
         mu.run(changes['params'] && this.req, () => {
