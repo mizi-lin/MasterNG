@@ -9,7 +9,7 @@ declare const mu: any;
 @Component({
     selector: 'mn-panel-s,mn-panel-simple',
     template: `
-        <mn-panel [hph]="hph">
+        <mn-panel [hph]="true">
             <mn-panel-header>
                 <mn-panel-title [innerHTML]="_title">
                 </mn-panel-title>
