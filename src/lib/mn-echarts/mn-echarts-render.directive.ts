@@ -53,6 +53,16 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         this._result['ref'] = this._ref;
         this.result.emit(this._result);
 
+        const $el = jQuery(this._ref.nativeElement.parentElement);
+        $el.mnResize(() => {
+            mu.run(this._chart, () => {
+                this._chart.resize({
+                    width: $el.width(),
+                    height: $el.height()
+                });
+            });
+        });
+
     }
 
     ngAfterViewInit(): void {
