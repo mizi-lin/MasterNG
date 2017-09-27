@@ -12,7 +12,7 @@ declare const mu: any, jQuery: any;
     selector: 'mn-echarts-panel, mn-echarts-box',
     styleUrls: ['./mn-echarts.scss'],
     template: `
-        <mn-panel [hph]="hph">
+        <mn-panel [hph]="true">
             <mn-panel-header>
                 <mn-panel-title [innerHTML]="_title"></mn-panel-title>
                 <mn-panel-toolbar [tools]="_tools" [class.toggle]="show_tools === 'toggle'">
@@ -134,6 +134,13 @@ declare const mu: any, jQuery: any;
                                 [options]="options"
                                 [type]="type"
                                 [data]="_data || data"
+                                (chartClick)="chartClick.emit($event)"
+                                (chartDblClick)="chartDblClick.emit($event)"
+                                (chartMouseDown)="chartMouseDown.emit($event)"
+                                (chartMouseUp)="chartMouseUp.emit($event)"
+                                (chartMouseOver)="chartMouseOver.emit($event)"
+                                (chartMouseOut)="chartMouseOut.emit($event)"
+                                (chartGlobalOut)="chartGlobalOut.emit($event)"
                                 (result)="_result($event)"></mn-echarts>
 
                 </mn-req>
@@ -180,28 +187,32 @@ export class MnEchartsPanelComponent implements OnChanges {
     }
 
     @Output() result: any = new EventEmitter();
+    @Output() chartClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartDblClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseDown: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseUp: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseOver: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseOut: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartGlobalOut: EventEmitter<any> = new EventEmitter<any>();
 
     _title: string;
     _data: any;
     _src_setting: any;
     _src_type: any;
-    _chart: any;
-    _options: any;
     _show_dataView = false;
-    _dataView: any = [];
     // fullscreen, download, data_view, line, bar, exchange, rate, label_all, legend, reload
     _tools: any[] = [];
-
     _sort: string;
 
+    _chart: any;
+    _dataView: any = [];
+    _options: any;
     // 数据源
     _source: any;
 
     statusMap: any = {};
     toolMap: any = {};
     hide_title: boolean = false;
-
-    legends: any[] = [];
 
     setStatus(fnKey: string): void {
         this.statusMap[fnKey] = !this.statusMap[fnKey];

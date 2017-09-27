@@ -11,7 +11,17 @@ declare const mu: any;
 @Component({
     selector: 'mn-echarts',
     template: `
-        <div mn-echarts-render [options]="echarts_options" (result)="getRenderResult($event)"></div>
+        <div 
+                mn-echarts-render 
+                [options]="echarts_options" 
+                (chartClick)="chartClick.emit($event)"
+                (chartDblClick)="chartDblClick.emit($event)"
+                (chartMouseDown)="chartMouseDown.emit($event)"
+                (chartMouseUp)="chartMouseUp.emit($event)"
+                (chartMouseOver)="chartMouseOver.emit($event)"
+                (chartMouseOut)="chartMouseOut.emit($event)"
+                (chartGlobalOut)="chartGlobalOut.emit($event)"
+                (result)="getRenderResult($event)"></div>
     `,
     styles: [
             `
@@ -36,6 +46,13 @@ export class MnEchartsComponent implements OnInit, OnChanges {
     @Input() type?: string;
 
     @Output() result: any = new EventEmitter<any>();
+    @Output() chartClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartDblClick: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseDown: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseUp: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseOver: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartMouseOut: EventEmitter<any> = new EventEmitter<any>();
+    @Output() chartGlobalOut: EventEmitter<any> = new EventEmitter<any>();
 
     echarts_options: any;
 
