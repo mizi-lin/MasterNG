@@ -58,10 +58,23 @@ var ReqHttpComponent = (function () {
             _this.process = 100;
         });
     };
+    ReqHttpComponent.prototype.processStep = function () {
+        var _this = this;
+        var tid = setTimeout(function () {
+            if (_this.process < mu.randomInt(75, 85)) {
+                _this.process = _this.process * 1.05;
+                _this.processStep();
+            }
+            else {
+                clearTimeout(tid);
+            }
+        }, mu.randomInt(300, 1200));
+    };
     ReqHttpComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
         mu.run(this.req, function () {
             _this.process = mu.randomInt(0, 49);
+            _this.processStep();
         });
         mu.run(changes['params'] && this.req, function () {
             _this.req.params = {

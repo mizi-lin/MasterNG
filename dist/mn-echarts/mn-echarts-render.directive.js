@@ -6,12 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var echarts = require("echarts");
 require("echarts-wordcloud/dist/echarts-wordcloud.min");
+var mn_echarts_service_1 = require("./mn-echarts.service");
 var MnEchartsRenderDirective = (function () {
-    function MnEchartsRenderDirective(_ref) {
+    function MnEchartsRenderDirective(_ref, _es) {
+        var _this = this;
         this._ref = _ref;
-        // chart events:
-        this.mycharts = new core_1.EventEmitter();
-        this.element = new core_1.EventEmitter();
+        this._es = _es;
+        this.result = new core_1.EventEmitter();
         this.chartClick = new core_1.EventEmitter();
         this.chartDblClick = new core_1.EventEmitter();
         this.chartMouseDown = new core_1.EventEmitter();
@@ -19,12 +20,25 @@ var MnEchartsRenderDirective = (function () {
         this.chartMouseOver = new core_1.EventEmitter();
         this.chartMouseOut = new core_1.EventEmitter();
         this.chartGlobalOut = new core_1.EventEmitter();
+        // callback 返回对象
+        // ref, $chart, width, height
+        this._result = {};
         this._chart = null;
         this.currentWindowWidth = null;
+        this._result['ref'] = this._ref;
+        this.result.emit(this._result);
+        var $el = jQuery(this._ref.nativeElement.parentElement);
+        $el.mnResize(function () {
+            mu.run(_this._chart, function () {
+                _this._chart.resize({
+                    width: $el.width(),
+                    height: $el.height()
+                });
+            });
+        });
     }
     MnEchartsRenderDirective.prototype.ngAfterViewInit = function () {
         var _this = this;
-        this.element.emit(this._ref.nativeElement);
         mu.run(this._chart, function () {
             _this._chart.resize();
         });
@@ -44,19 +58,26 @@ var MnEchartsRenderDirective = (function () {
     MnEchartsRenderDirective.prototype.createChart = function () {
         this.theme = this.theme || 'default';
         this.currentWindowWidth = window.innerWidth;
-        var echarts_ = echarts.init(this._ref.nativeElement);
-        this.mycharts.emit(echarts_);
-        return echarts_;
+        var $chart = echarts.init(this._ref.nativeElement);
+        this._result['$chart'] = $chart;
+        this.result.emit(this._result);
+        return $chart;
     };
     MnEchartsRenderDirective.prototype.updateChart = function () {
         var _this = this;
-        // this._chart.clear();
+        var _width = 0, _height = 0;
         mu.run(this.getWidth(this._ref.nativeElement), function (width) {
+            _width = width;
             _this._ref.nativeElement.style.width = width + 'px';
         });
         mu.run(this.getHeight(this._ref.nativeElement), function (height) {
+            _height = height;
             _this._ref.nativeElement.style.height = height + 'px';
         });
+        this._result['width'] = _width;
+        this._result['height'] = _height;
+        this.result.emit(this._result);
+        this.options = this._es.adjustOptionsWithLegend(this.options, _width, _height);
         this._chart.setOption(this.options);
         this._chart.resize();
     };
@@ -94,7 +115,6 @@ var MnEchartsRenderDirective = (function () {
         if (opt) {
             if (!this._chart) {
                 this._chart = this.createChart();
-                // register events:
                 this.registerEvents(this._chart);
             }
             if (this.hasData()) {
@@ -159,29 +179,29 @@ var MnEchartsRenderDirective = (function () {
         }
         return false;
     };
-    MnEchartsRenderDirective.prototype.registerEvents = function (myChart) {
+    MnEchartsRenderDirective.prototype.registerEvents = function (_chart) {
         var _this = this;
-        if (myChart) {
+        if (_chart) {
             // register mouse events:
-            myChart.on('click', function (e) {
+            _chart.on('click', function (e) {
                 _this.chartClick.emit(e);
             });
-            myChart.on('dblClick', function (e) {
+            _chart.on('dblClick', function (e) {
                 _this.chartDblClick.emit(e);
             });
-            myChart.on('mousedown', function (e) {
+            _chart.on('mousedown', function (e) {
                 _this.chartMouseDown.emit(e);
             });
-            myChart.on('mouseup', function (e) {
+            _chart.on('mouseup', function (e) {
                 _this.chartMouseUp.emit(e);
             });
-            myChart.on('mouseover', function (e) {
+            _chart.on('mouseover', function (e) {
                 _this.chartMouseOver.emit(e);
             });
-            myChart.on('mouseout', function (e) {
+            _chart.on('mouseout', function (e) {
                 _this.chartMouseOut.emit(e);
             });
-            myChart.on('globalout', function (e) {
+            _chart.on('globalout', function (e) {
                 _this.chartGlobalOut.emit(e);
             });
         }
@@ -196,14 +216,14 @@ MnEchartsRenderDirective.decorators = [
 /** @nocollapse */
 MnEchartsRenderDirective.ctorParameters = function () { return [
     { type: core_1.ElementRef, },
+    { type: mn_echarts_service_1.MnEchartsService, },
 ]; };
 MnEchartsRenderDirective.propDecorators = {
     'options': [{ type: core_1.Input },],
     'dataset': [{ type: core_1.Input },],
     'theme': [{ type: core_1.Input },],
     'loading': [{ type: core_1.Input },],
-    'mycharts': [{ type: core_1.Output },],
-    'element': [{ type: core_1.Output },],
+    'result': [{ type: core_1.Output },],
     'chartClick': [{ type: core_1.Output },],
     'chartDblClick': [{ type: core_1.Output },],
     'chartMouseDown': [{ type: core_1.Output },],

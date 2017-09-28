@@ -3,19 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var echarts_default_options_1 = require("./echarts.default.options");
 var color_pool_1 = require("./color-pool");
-var EchartsService = (function () {
-    function EchartsService() {
-        this.colorsMap = {};
-        this.GRID_TOP = 60;
-        this.GRID_BOTTOM = 60;
+var MnEchartsService = (function () {
+    function MnEchartsService() {
+        this._colors_map = {};
     }
+    // 外部配置匹配颜色
+    MnEchartsService.prototype.setColorsMap = function (colors_map) {
+        if (colors_map === void 0) { colors_map = {}; }
+        this._colors_map = colors_map;
+    };
     /**
      *
      * @param arr
      * @param key
      * @return {any}
      */
-    EchartsService.prototype.pick = function (arr, key) {
+    MnEchartsService.prototype.pick = function (arr, key) {
         return mu.map(arr, function (o) {
             return mu.prop(o, key);
         });
@@ -26,7 +29,7 @@ var EchartsService = (function () {
      * @param key
      * @return {number}
      */
-    EchartsService.prototype.total = function (arr, key) {
+    MnEchartsService.prototype.total = function (arr, key) {
         var items = this.pick(arr, key);
         var total = 0;
         mu.each(items, function (o) {
@@ -34,13 +37,14 @@ var EchartsService = (function () {
         });
         return total;
     };
-    EchartsService.prototype.getEchartResult = function (type, data, setting, $charts, $mycharts) {
+    MnEchartsService.prototype.getEchartResult = function (type, data, setting, $charts, $mycharts) {
         var _this = this;
         if (setting === void 0) { setting = {}; }
         var NAME = 'name';
         var X_VALUE = 'x';
         var Y_VALUE = 'value';
         var default_options = echarts_default_options_1.DEFAULT_ECHART_OPTIONS[type];
+        var source = mu.clone(data);
         var options = mu.clone(default_options);
         var _series_data, _x_axis, _legend;
         /**
@@ -77,8 +81,8 @@ var EchartsService = (function () {
                 '$legend',
                 'legend_position',
                 'legend_show',
-                'grid_position',
-                'tooltip'
+                'tooltip',
+                'grid_position'
             ],
             radar: [
                 '$module',
@@ -88,9 +92,9 @@ var EchartsService = (function () {
                 '$legend',
                 'legend_show',
                 'legend_position',
-                'grid_position',
                 'tooltip',
-                'indicator'
+                'indicator',
+                'grid_position'
             ],
             line: [
                 '$module',
@@ -109,9 +113,9 @@ var EchartsService = (function () {
                 'yAxis_percent_rate',
                 'yAxis_zero',
                 'dataZoom',
-                'grid_position',
                 'tooltip',
-                'xy_exchange'
+                'xy_exchange',
+                'grid_position'
             ],
             bar: [
                 '$module',
@@ -131,8 +135,8 @@ var EchartsService = (function () {
                 'yAxis_percent_rate',
                 'yAxis_zero',
                 'dataZoom',
-                'grid_position',
-                'xy_exchange'
+                'xy_exchange',
+                'grid_position'
             ]
         };
         var fn = {};
@@ -379,11 +383,8 @@ var EchartsService = (function () {
              */
             mu.run(setting.legend_show, function () {
                 options.legend.show = true;
-                options.grid.top = _this.GRID_TOP;
-                options.grid.bottom = _this.GRID_BOTTOM;
             }, function () {
                 options.legend.show = false;
-                options.grid.top = _this.GRID_TOP / 2;
             });
         };
         /**
@@ -396,33 +397,7 @@ var EchartsService = (function () {
                 mu.run(left, function () { return options.legend.left = left; });
                 mu.run(top, function () {
                     options.legend.top = top;
-                    if (top === 'bottom') {
-                        options.grid.top = 20;
-                        options.grid.bottom = 60;
-                        // todo 根据宽度 重新计算
-                        mu.run(options.legend.data.length, function (len) {
-                            options.grid.bottom = len > 6 ? 32 * (len / 6) : 32;
-                        });
-                    }
                 });
-            });
-        };
-        /**
-         * setting.grid_position
-         * 设置grid所在的位置
-         */
-        fn.grid_position = function () {
-            var _a = (setting.grid_position || '').replace(/\s{1,}/gi, ' ').split(' '), top = _a[0], right = _a[1], bottom = _a[2], left = _a[3];
-            var ps = {
-                top: mu.ifnvl(setting.grid_position_top, top),
-                right: mu.ifnvl(setting.grid_position_right, right),
-                bottom: mu.ifnvl(setting.grid_position_bottom, mu.ifnvl(bottom, top)),
-                left: mu.ifnvl(setting.grid_position_left, mu.ifnvl(left, right))
-            };
-            mu.each(ps, function (v, p) {
-                if (mu.isExist(v) && v !== 'auto' && v !== '') {
-                    options.grid[p] = v;
-                }
             });
         };
         /**
@@ -486,8 +461,6 @@ var EchartsService = (function () {
             mu.exist(setting.rotate, function (rotate) {
                 options.xAxis[0].axisLabel.rotate = rotate;
                 options.xAxis[0].axisLabel.interval = rotate ? 0 : 'auto';
-                // 默认数值
-                options.grid.bottom = 50;
             });
         };
         fn.xAxis_interval = function () {
@@ -523,6 +496,11 @@ var EchartsService = (function () {
                 options.yAxis[0].axisLabel = options.yAxis.axisLabel || {};
                 options.yAxis[0].axisLabel.formatter = function (value, index) {
                     return value * 100 + '%';
+                };
+            }, function () {
+                options.yAxis[0].axisLabel = options.yAxis.axisLabel || {};
+                options.yAxis[0].axisLabel.formatter = function (value, index) {
+                    return value;
                 };
             });
         };
@@ -574,6 +552,57 @@ var EchartsService = (function () {
                     min: min
                 };
             }, []);
+        };
+        /**
+         * setting.grid_position
+         * 重新计算grid边界
+         * 设置grid所在的位置
+         */
+        fn.grid_position = function () {
+            options.grid = options.grid || {};
+            var BIG = 64;
+            var BOTTOM_SMALL = 32;
+            var TOP_SMALL = 16;
+            // 1. legend 隐藏;
+            // 2. legend 显示，根据legend显示方位，显示上下边距
+            // 3. rotate > 0 时，bottom = BIG;
+            mu.run(mu.prop(options, 'legend.show'), function () {
+                // legend 显示，根据legend显示方位，显示上下边距
+                var orient = mu.ifnvl(mu.prop(options, 'legend.orient'), 'horizontal');
+                var top = mu.ifnvl(mu.prop(options, 'legend.top'), 'top');
+                if (orient === 'horizontal') {
+                    if (top === 'top') {
+                        options.grid.top = BIG;
+                        options.grid.bottom = BOTTOM_SMALL;
+                    }
+                    if (top === 'bottom') {
+                        options.grid.top = TOP_SMALL;
+                        options.grid.bottom = BIG;
+                    }
+                }
+            }, function () {
+                // legend 隐藏, top = bottom = SMALL;
+                options.grid.top = TOP_SMALL;
+                options.grid.bottom = BOTTOM_SMALL;
+            });
+            // rotate > 0 时，bottom = BIG;
+            mu.run(mu.prop(options, 'xAxis.0.axisLabel.rotate'), function (rotate) {
+                options.grid.bottom = options.grid.bottom + 24;
+            }, function () {
+                options.grid.bottom = options.grid.bottom - 24;
+            });
+            var _a = (setting.grid_position || '').replace(/\s{1,}/gi, ' ').split(' '), top = _a[0], right = _a[1], bottom = _a[2], left = _a[3];
+            var ps = {
+                top: mu.ifnvl(setting.grid_position_top, top),
+                right: mu.ifnvl(setting.grid_position_right, right),
+                bottom: mu.ifnvl(setting.grid_position_bottom, mu.ifnvl(bottom, top)),
+                left: mu.ifnvl(setting.grid_position_left, mu.ifnvl(left, right))
+            };
+            mu.each(ps, function (v, p) {
+                if (mu.isExist(v) && v !== 'auto' && v !== '') {
+                    options.grid[p] = v;
+                }
+            });
         };
         setting = mu.extend(true, {}, {
             /**
@@ -690,7 +719,7 @@ var EchartsService = (function () {
             });
         });
         // type === 'radar' && console.debug(JSON.stringify(options));
-        options = this.adjustECharOptions(options);
+        options = this.adjustOptionsWithColors(options);
         /**
          * DataView 计算
          */
@@ -713,7 +742,9 @@ var EchartsService = (function () {
             // echart 数据视图
             dataView: dataView,
             // echart options
-            options: options
+            options: options,
+            // data source
+            source: source
         };
     };
     /**
@@ -722,7 +753,7 @@ var EchartsService = (function () {
      * @param convert
      * @return {any[]}
      */
-    EchartsService.prototype.convert = function (data, convert) {
+    MnEchartsService.prototype.convert = function (data, convert) {
         if (!convert) {
             return data;
         }
@@ -741,48 +772,7 @@ var EchartsService = (function () {
             return o;
         });
     };
-    /**
-     * 调整 echart 颜色 以及 legend 的样式
-     * @param options
-     */
-    EchartsService.prototype.adjustECharOptions = function (options) {
-        var legend_colors = color_pool_1.COLORS_POOL;
-        var legend_color_map = this.colorsMap;
-        /**
-         * 固定Legend样式
-         */
-        mu.run(mu.prop(options, 'legend.data'), function (data) {
-            var names = [];
-            options.legend.data = mu.map(data, function (o) {
-                if (mu.isObject(o)) {
-                    o.icon = 'roundRect';
-                }
-                else {
-                    o = {
-                        name: o,
-                        icon: 'roundRect'
-                    };
-                }
-                names.push(o.name);
-                return o;
-            });
-            // legend 的颜色控制有 option.color 来控制
-            // legend 的颜色控制着相对应的柱形图线形图等itemStyle的颜色
-            // so, legend.data 必须存在
-            mu.run(names, function () {
-                options['color'] = mu.map(names, function (name, index) {
-                    name = name.toLowerCase();
-                    return legend_color_map[name] || mu.run(function () {
-                        var color = legend_colors[index % legend_colors.length];
-                        legend_color_map[name] = color;
-                        return color;
-                    });
-                });
-            });
-        });
-        return options;
-    };
-    EchartsService.prototype.percent_rate = function (options, data, fn) {
+    MnEchartsService.prototype.percent_rate = function (options, data, fn) {
         var _this = this;
         if (typeof fn !== 'function') {
             fn = mu.noop();
@@ -816,19 +806,139 @@ var EchartsService = (function () {
      * @param {any[]} arr
      * @return {any[]}
      */
-    EchartsService.prototype.transpose = function (arr) {
+    MnEchartsService.prototype.transpose = function (arr) {
         return mu.map(arr[0], function (v, i) {
             return mu.map(arr, function (items) {
                 return items[i];
             });
         });
     };
-    return EchartsService;
+    MnEchartsService.prototype.morphArray = function (o, def, def2) {
+        if (mu.type(o) !== 'array') {
+            return [def, o || def2];
+        }
+        return o;
+    };
+    /**
+     * 调整 echart 颜色 以及 legend 的样式
+     * @param options
+     */
+    MnEchartsService.prototype.adjustOptionsWithColors = function (options) {
+        var colors = color_pool_1.COLORS_POOL;
+        var color_map = this._colors_map;
+        /**
+         * 固定Legend样式
+         */
+        mu.run(mu.prop(options, 'legend.data'), function (data) {
+            var names = [];
+            options.legend.data = mu.map(data, function (o) {
+                if (mu.isObject(o)) {
+                    o.icon = 'roundRect';
+                }
+                else {
+                    o = {
+                        name: o,
+                        icon: 'roundRect'
+                    };
+                }
+                names.push(o.name);
+                return o;
+            });
+            // legend 的颜色控制有 option.color 来控制
+            // legend 的颜色控制着相对应的柱形图线形图等itemStyle的颜色
+            // so, legend.data 必须存在
+            mu.run(names, function () {
+                options['color'] = mu.map(names, function (name, index) {
+                    name = name.toLowerCase();
+                    return color_map[name] || mu.run(function () {
+                        var color = colors[index % colors.length];
+                        color_map[name] = color;
+                        return color;
+                    });
+                });
+            });
+        });
+        return options;
+    };
+    /**
+     * 调整legend显示/隐藏图表主体位置
+     * 调整legend的个数对图表主体位置的影响
+     */
+    MnEchartsService.prototype.adjustOptionsWithLegend = function (options, _width, _height) {
+        var type = mu.prop(options, 'series.0.type');
+        var old_radius, old_center;
+        // 获取原值
+        switch (type) {
+            case 'pie':
+                old_radius = this.morphArray(mu.prop(options, 'series.0.radius'), '0%', '75%');
+                old_center = this.morphArray(mu.prop(options, 'series.0.center'), '50%', '50%');
+                break;
+            case 'radar':
+                old_radius = mu.ifnvl(mu.prop(options, 'series.0.radius'), '75%');
+                old_center = this.morphArray(mu.prop(options, 'series.0.center'), '50%', '50%');
+                break;
+        }
+        mu.run(mu.prop(options, 'legend.show'), function () {
+            // legend 显示，根据legend显示方位，显示上下边距
+            var orient = mu.ifnvl(mu.prop(options, 'legend.orient'), 'horizontal');
+            var top = mu.ifnvl(mu.prop(options, 'legend.top'), 'top');
+            var legend = mu.map(mu.prop(options, 'legend.data'), function (o) { return o.name || o; });
+            // 默认一个legend的图标占9个字符
+            // 获得legend的总长度
+            var size = (legend.length * 9) + legend.join(',').length;
+            // 默认一个字符宽度大概为7px
+            // 计算legend有多少行
+            var h = Math.ceil((size * 7) / _width);
+            // 默认legend的间距大概为2.5行
+            // 默认每行行高16px(font size 12px)
+            var height = 16 * (h + 2.5);
+            // 常规图标，主画布对 grid
+            if (orient === 'horizontal') {
+                if (top === 'top') {
+                    options.grid.top = height;
+                }
+                if (top === 'bottom') {
+                    options.grid.bottom = height;
+                }
+            }
+            // pie, radar 等，主画布为 dom
+            // center 图表的中心区域
+            // radius 图表的半径
+            if (mu.or(type, 'pie', 'radar')) {
+                var y = mu.format((1 + height / _height) / 2, '::');
+                var radius_ = mu.format(0.75 - height / _height / 2.5, '::');
+                switch (type) {
+                    case 'pie':
+                        options.series[0].center = [old_center[0], y];
+                        options.series[0].radius = [old_radius[0], radius_];
+                        break;
+                    case 'radar':
+                        options.radar.center = [old_center[0], y];
+                        options.radar.radius = radius_;
+                        break;
+                }
+            }
+        }, function () {
+            switch (type) {
+                case 'pie':
+                    options.series[0].center = old_center;
+                    options.series[0].radius = old_radius;
+                    break;
+                case 'radar':
+                    options.radar.center = old_center;
+                    options.radar.radius = old_radius;
+                    console.debug(options);
+                    break;
+            }
+        });
+        return options;
+    };
+    return MnEchartsService;
 }());
-EchartsService.decorators = [
+MnEchartsService.decorators = [
     { type: core_1.Injectable },
 ];
 /** @nocollapse */
-EchartsService.ctorParameters = function () { return []; };
-exports.EchartsService = EchartsService;
-//# sourceMappingURL=echarts.service.js.map
+MnEchartsService.ctorParameters = function () { return []; };
+exports.MnEchartsService = MnEchartsService;
+//# sourceMappingURL=mn-echarts.service.js.map

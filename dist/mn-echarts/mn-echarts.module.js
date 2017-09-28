@@ -8,7 +8,7 @@ var mn_layout_module_1 = require("../mn-layout/mn-layout.module");
 var mn_echarts_render_directive_1 = require("./mn-echarts-render.directive");
 var mn_echarts_component_1 = require("./mn-echarts.component");
 var mn_echarts_panel_component_1 = require("./mn-echarts-panel.component");
-var echarts_service_1 = require("./echarts.service");
+var mn_echarts_service_1 = require("./mn-echarts.service");
 var core_1 = require("@angular/core");
 var animations_1 = require("@angular/platform-browser/animations");
 var ng_zorro_antd_1 = require("ng-zorro-antd");
@@ -47,7 +47,7 @@ MnEchartsModule.decorators = [
                     mn_echarts_panel_component_1.MnEchartsPanelComponent
                 ],
                 providers: [
-                    echarts_service_1.EchartsService
+                    mn_echarts_service_1.MnEchartsService
                 ]
             },] },
 ];

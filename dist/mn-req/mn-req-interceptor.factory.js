@@ -59,12 +59,15 @@ var MnReqInterceptorFactory = (function (_super) {
     }
     MnReqInterceptorFactory.prototype.progressStep = function () {
         var _this = this;
-        if (this._reqServ.progress < 90) {
-            setTimeout(function () {
+        var tid = setTimeout(function () {
+            if (_this._reqServ.progress < mu.randomInt(80, 90)) {
                 _this._reqServ.progress = _this._reqServ.progress * 1.05;
                 _this.progressStep();
-            }, mu.randomInt(300, 1200));
-        }
+            }
+            else {
+                clearTimeout(tid);
+            }
+        }, mu.randomInt(300, 1200));
     };
     MnReqInterceptorFactory.prototype.addHeaderWithToken = function (headers) {
         headers = headers || new http_1.Headers();
@@ -142,13 +145,11 @@ var MnReqInterceptorFactory = (function (_super) {
         var _this = this;
         return observable.catch(function (error, caught) {
             return _this.onCatch(error, caught, url);
-        })
-            .do(function (res) {
+        }).do(function (res) {
             _this.onSuccess(res, url);
         }, function (error) {
             _this.onError(error, url);
-        })
-            .finally(function () {
+        }).finally(function () {
             _this.onFinally(url);
         });
     };

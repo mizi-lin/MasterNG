@@ -23,13 +23,20 @@ var MnRuleDirective = (function () {
          * @type {EventEmitter<any>}
          */
         this.result = new core_1.EventEmitter();
+        /**
+         * 获取权限判断池
+         */
+        this.rules = {};
         mu.empty(this.rules, function () {
-            _this._rules = _this._ruleServ.rules_;
+            _this._rules = _this._ruleServ.rules_ || {};
         });
     }
     Object.defineProperty(MnRuleDirective.prototype, "rule", {
         set: function (conditions) {
-            this._conditions = conditions || {};
+            if (mu.isNotExist(conditions)) {
+                return;
+            }
+            this._conditions = conditions;
             var bool = true;
             var condition_;
             switch (mu.type(conditions)) {
@@ -87,7 +94,7 @@ var MnRuleDirective = (function () {
     MnRuleDirective.prototype.ngOnChanges = function (changes) {
         var _this = this;
         mu.run(mu.prop(changes, 'rules.currentValue'), function (rules) {
-            _this._rules = rules;
+            _this._rules = rules || {};
             _this.rule = _this._conditions;
         });
     };

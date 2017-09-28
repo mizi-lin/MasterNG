@@ -18,6 +18,7 @@ import {DemoMcComponent} from './demo-mc/demo-mc.component';
 import {MnReqService} from '../lib/mn-req/mn-req.service';
 import { HeatWidgetComponent } from './common/widgets/heat-widget/heat-widget.component';
 import { DemoEchart2Component } from './demo-echart2/demo-echart2.component';
+import {MnEchartsService} from '../lib/mn-echarts/mn-echarts.service';
 
 @NgModule({
     declarations: [
@@ -87,7 +88,8 @@ import { DemoEchart2Component } from './demo-echart2/demo-echart2.component';
                 MnI18nServices,
                 MnRuleServices,
                 MnReqService,
-                ResourcePool
+                ResourcePool,
+                MnEchartsService
             ],
             multi: true
         },

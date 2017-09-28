@@ -4,9 +4,20 @@
                       [hph]="true"
                       [req]="{url: './assets/store/echarts-bar.json'}"
                       [type]="'bar'"
-                      [tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"
                       [setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}">
     </mn-echarts-panel>
+
+    <mn-echarts-box class="bordered"
+                    [req]="{url: './assets/store/echarts-radar.json'}"
+                    [type]="'radar'"
+                    [show_tools]="'show'"
+                    [loader]="abc"
+                    [setting]="{legend_show: false, tooltip: true}">
+    </mn-echarts-box>
+
+    <div class="mt-16 mb-16" mn-element #abc="element" [ngStyle]="{'height': '200px', 'background': '#f00'}">
+
+    </div>
 
 </div>
 

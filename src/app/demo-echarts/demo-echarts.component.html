@@ -26,7 +26,7 @@
 
     <mn-panel-s class="mt-8 bordered" title="MnEchartsService::data conversion options" mn-element #abc="element">
         <mn-req [req]="{url: './assets/store/pie.json'}"
-                [mnLoaderRef]="abc.elementRef"
+                [loader]="abc.elementRef"
                 (result)="pieConversion($event.data); pie_data = $event.data">
             <mn-row>
                 <mn-col [span]="12">

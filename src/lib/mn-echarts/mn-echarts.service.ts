@@ -16,6 +16,31 @@ export class MnEchartsService {
         this._colors_map = colors_map;
     }
 
+    _colors: any;
+
+    setColors(colors: any = []) {
+        this._colors = colors;
+    }
+
+    _config: any = {
+        // toolbar: boolean | string
+        // string: simple, all, def
+        toolbars: false,
+        toggle_toolbar: false,
+        line: ['download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload', 'fullscreen'],
+        bar: ['download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload', 'fullscreen'],
+        pie: ['download', 'data_view', 'legend', 'reload', 'fullscreen'],
+        radar: ['download', 'data_view', 'legend', 'reload', 'fullscreen'],
+        wordCloud: ['download', 'data_view', 'legend', 'reload', 'fullscreen']
+    };
+
+    setConfig(config: any = {}) {
+        this._config = mu.extend(this._config, config);
+    }
+
+    getConfig(): any {
+        return this._config;
+    }
 
     /**
      *
@@ -108,9 +133,7 @@ export class MnEchartsService {
                 'legend_position',
 
                 'tooltip',
-
                 'indicator',
-
                 'grid_position'
             ],
 
@@ -307,6 +330,7 @@ export class MnEchartsService {
                             symbol: 'none'
                         };
                     }, []);
+
                     break;
 
                 default:
@@ -504,6 +528,7 @@ export class MnEchartsService {
                         });
 
                         _x_axis = options.xAxis[0].data = mu.map(data, (o, x) => o[X_VALUE], []);
+
                         break;
                     case 'group':
                     case 'mix':
@@ -619,6 +644,8 @@ export class MnEchartsService {
 
         /**
          * radar only
+         *
+         * indicator 其实就是 radar 的 xAxis
          */
         fn.indicator = () => {
             options['radar'].indicator = mu.map(mu.groupArray(data, X_VALUE), (o, name) => {
@@ -636,6 +663,9 @@ export class MnEchartsService {
                     min
                 };
             }, []);
+
+            _x_axis = mu.map(options['radar'].indicator, o => o.name);
+
         };
 
         /**
@@ -845,14 +875,22 @@ export class MnEchartsService {
          */
 
         const dataView = mu.run(() => {
-            const _col_headers = mu.clone(_x_axis || _legend);
+            let _col_headers = mu.clone(_x_axis);
             _series_data = mu.clone(_series_data);
 
+            // not xAxis
+            mu.empty(_col_headers, () => {
+                _col_headers = mu.map(_series_data, (v, k) => {
+                    return mu.map(v, (d) => mu.ifnvl(d.name, d));
+                }, []);
+                _col_headers = _col_headers[0];
+            });
+
             const _dataView = mu.map(_series_data, (v, k) => {
-                v = mu.map(v, (d) => mu.ifnvl(d.value, d));
+                const v_ = mu.map(v, (d) => mu.ifnvl(d.value, d));
                 return [
                     k,
-                    ...v
+                    ...v_
                 ];
             }, []);
 
@@ -960,7 +998,7 @@ export class MnEchartsService {
      * @param options
      */
     adjustOptionsWithColors(options: any): any {
-        const colors = COLORS_POOL;
+        const colors = mu.ifempty(this._colors, COLORS_POOL);
         const color_map = this._colors_map;
 
         /**
@@ -1074,15 +1112,11 @@ export class MnEchartsService {
                 case 'radar':
                     options.radar.center = old_center;
                     options.radar.radius = old_radius;
-
-                    console.debug(options)
                     break;
             }
         });
 
         return options;
     }
-
-
 
 }
