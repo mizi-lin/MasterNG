@@ -9,6 +9,7 @@ var MnLoaderBarComponent = (function () {
         this._render = _render;
         this._lbs = _lbs;
         this._position = this.position || 'relative';
+        this.loaderStyle = {};
         this.done = new core_1.EventEmitter();
         this._width = 0;
         this._height = 3;
@@ -25,8 +26,9 @@ var MnLoaderBarComponent = (function () {
             return;
         }
         setTimeout(function () {
-            mu.run(_this.loaderRef, function (ref) {
-                ref.nativeElement.appendChild(_ref.nativeElement);
+            mu.run(_this.loader, function (ref) {
+                var el = mu.prop(ref, 'elementRef.nativeElement') || mu.prop(ref, 'nativeElement');
+                el.appendChild(_ref.nativeElement);
             });
             /**
              * 设置父元素的style.position
@@ -93,7 +95,7 @@ MnLoaderBarComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'mn-loader-bar',
                 styles: [':host {  display: block;  width: 100%;  z-index: 9999;  line-height: 0;  top: 0;  left: 0;  font-size: 0;}:host > .bar {  transition: height .3s;  background: #108ee9;}'],
-                template: "\n        <div [style.width.%]=\"width\"\n             [style.height.px]=\"height\"\n             class=\"bar\">\n        </div>\n    "
+                template: "\n        <div [style.width.%]=\"width\"\n             [style.height.px]=\"height\"\n             [ngStyle]=\"loaderStyle\"\n             class=\"bar\">\n        </div>\n    "
             },] },
 ];
 /** @nocollapse */
@@ -104,11 +106,12 @@ MnLoaderBarComponent.ctorParameters = function () { return [
 ]; };
 MnLoaderBarComponent.propDecorators = {
     'position': [{ type: core_1.Input },],
-    'loaderRef': [{ type: core_1.Input },],
+    'loader': [{ type: core_1.Input },],
     '_position': [{ type: core_1.HostBinding, args: ['style.position',] },],
     'target': [{ type: core_1.Input },],
     'progress': [{ type: core_1.Input },],
     'where': [{ type: core_1.Input },],
+    'loaderStyle': [{ type: core_1.Input },],
     'done': [{ type: core_1.Output },],
 };
 exports.MnLoaderBarComponent = MnLoaderBarComponent;

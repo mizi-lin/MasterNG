@@ -165,6 +165,12 @@ mn-panel-simple {
         padding: $w2;
     }
 
+    &.nop {
+        mn-panel-body {
+            padding: 0;
+        }
+    }
+
     mn-panel-bottom {
         display: block;
     }
@@ -235,6 +241,12 @@ mn-panel-simple {
 
         mn-panel-body {
             padding: $w2 0;
+        }
+
+        &.nop {
+            mn-panel-body {
+                padding: 0;
+            }
         }
 
         mn-panel-bottom {

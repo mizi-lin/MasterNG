@@ -15,6 +15,8 @@ export declare class MnEchartsPanelComponent implements OnChanges {
     where: any;
     tools: string;
     filename: string;
+    loader: ElementRef;
+    loaderStyle: any;
     /**
      * show_tools
      * show, toggle
@@ -47,9 +49,11 @@ export declare class MnEchartsPanelComponent implements OnChanges {
     toolMap: any;
     hide_title: boolean;
     setStatus(fnKey: string): void;
+    _config: any;
     constructor(_es: MnEchartsService, _mnFileSaverServ: MnFileSaverServices, _ref: ElementRef);
     ngOnChanges(changes: SimpleChanges): void;
     _result(rst: any): void;
+    _getToolMap(maps?: any): any;
     download_click($event: any): void;
     dataView_click($event: any): void;
     line_click($event: any): void;

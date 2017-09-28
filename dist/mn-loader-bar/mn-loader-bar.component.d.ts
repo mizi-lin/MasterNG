@@ -5,11 +5,12 @@ export declare class MnLoaderBarComponent implements OnChanges {
     private _render;
     private _lbs;
     position: string;
-    loaderRef: ElementRef;
+    loader: ElementRef;
     _position: string;
     target: string | ElementRef;
     progress: number;
     where: number;
+    loaderStyle: any;
     done: any;
     _width: number;
     _height: number;
