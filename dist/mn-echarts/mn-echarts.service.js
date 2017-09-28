@@ -6,11 +6,33 @@ var color_pool_1 = require("./color-pool");
 var MnEchartsService = (function () {
     function MnEchartsService() {
         this._colors_map = {};
+        this._config = {
+            // toolbar: boolean | string
+            // string: simple, all, def
+            toolbars: false,
+            toggle_toolbar: false,
+            line: ['download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload', 'fullscreen'],
+            bar: ['download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload', 'fullscreen'],
+            pie: ['download', 'data_view', 'legend', 'reload', 'fullscreen'],
+            radar: ['download', 'data_view', 'legend', 'reload', 'fullscreen'],
+            wordCloud: ['download', 'data_view', 'legend', 'reload', 'fullscreen']
+        };
     }
     // 外部配置匹配颜色
     MnEchartsService.prototype.setColorsMap = function (colors_map) {
         if (colors_map === void 0) { colors_map = {}; }
         this._colors_map = colors_map;
+    };
+    MnEchartsService.prototype.setColors = function (colors) {
+        if (colors === void 0) { colors = []; }
+        this._colors = colors;
+    };
+    MnEchartsService.prototype.setConfig = function (config) {
+        if (config === void 0) { config = {}; }
+        this._config = mu.extend(this._config, config);
+    };
+    MnEchartsService.prototype.getConfig = function () {
+        return this._config;
     };
     /**
      *
@@ -535,6 +557,8 @@ var MnEchartsService = (function () {
         };
         /**
          * radar only
+         *
+         * indicator 其实就是 radar 的 xAxis
          */
         fn.indicator = function () {
             options['radar'].indicator = mu.map(mu.groupArray(data, X_VALUE), function (o, name) {
@@ -552,6 +576,7 @@ var MnEchartsService = (function () {
                     min: min
                 };
             }, []);
+            _x_axis = mu.map(options['radar'].indicator, function (o) { return o.name; });
         };
         /**
          * setting.grid_position
@@ -724,13 +749,20 @@ var MnEchartsService = (function () {
          * DataView 计算
          */
         var dataView = mu.run(function () {
-            var _col_headers = mu.clone(_x_axis || _legend);
+            var _col_headers = mu.clone(_x_axis);
             _series_data = mu.clone(_series_data);
+            // not xAxis
+            mu.empty(_col_headers, function () {
+                _col_headers = mu.map(_series_data, function (v, k) {
+                    return mu.map(v, function (d) { return mu.ifnvl(d.name, d); });
+                }, []);
+                _col_headers = _col_headers[0];
+            });
             var _dataView = mu.map(_series_data, function (v, k) {
-                v = mu.map(v, function (d) { return mu.ifnvl(d.value, d); });
+                var v_ = mu.map(v, function (d) { return mu.ifnvl(d.value, d); });
                 return [
                     k
-                ].concat(v);
+                ].concat(v_);
             }, []);
             mu.run(_col_headers, function (_ch) {
                 _ch.unshift('');
@@ -824,7 +856,7 @@ var MnEchartsService = (function () {
      * @param options
      */
     MnEchartsService.prototype.adjustOptionsWithColors = function (options) {
-        var colors = color_pool_1.COLORS_POOL;
+        var colors = mu.ifempty(this._colors, color_pool_1.COLORS_POOL);
         var color_map = this._colors_map;
         /**
          * 固定Legend样式
@@ -927,7 +959,6 @@ var MnEchartsService = (function () {
                 case 'radar':
                     options.radar.center = old_center;
                     options.radar.radius = old_radius;
-                    console.debug(options);
                     break;
             }
         });

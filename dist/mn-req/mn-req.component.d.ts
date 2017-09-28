@@ -10,8 +10,9 @@ export declare class ReqHttpComponent implements OnChanges, OnDestroy {
     payload: any;
     data: any;
     context: any;
-    loaderRef?: ElementRef;
-    loader?: boolean;
+    loader: ElementRef;
+    loading: boolean;
+    loaderStyle: any;
     result: any;
     _observable: Subscriber<any>;
     noData: boolean;

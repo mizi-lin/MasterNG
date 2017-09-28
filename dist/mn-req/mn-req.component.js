@@ -9,7 +9,7 @@ var ReqHttpComponent = (function () {
         var _this = this;
         this._http = _http;
         this._rs = _rs;
-        this.loader = true;
+        this.loading = true;
         this.result = new core_1.EventEmitter();
         this.noData = false;
         this.noDataComponent = mn_req_nodata_component_1.MnReqNoDataComponent;
@@ -100,7 +100,7 @@ var ReqHttpComponent = (function () {
 ReqHttpComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'mn-req',
-                template: "\n        <mn-loader-bar *ngIf=\"loader\" [loaderRef]=\"loaderRef\"\n                       [progress]=\"process\"></mn-loader-bar>\n        <mn-dynamic-component *ngIf=\"noData\" [component]=\"noDataComponent\" [inputs]=\"context\"></mn-dynamic-component>\n        <ng-content *ngIf=\"!noData\"></ng-content>\n    ",
+                template: "\n        <ng-template [ngIf]=\"loading\">\n            <mn-loader-bar [loader]=\"loader\"\n                           [loaderStyle]=\"loaderStyle\"\n                           [progress]=\"process\"></mn-loader-bar>\n        </ng-template>\n\n        <mn-dynamic-component *ngIf=\"noData\" [component]=\"noDataComponent\" [inputs]=\"context\"></mn-dynamic-component>\n        <ng-content *ngIf=\"!noData\"></ng-content>\n    ",
                 styles: [
                     ":host {\n            display: block;\n            width: 100%;\n            height: 100%;\n        }"
                 ]
@@ -117,8 +117,9 @@ ReqHttpComponent.propDecorators = {
     'payload': [{ type: core_1.Input },],
     'data': [{ type: core_1.Input },],
     'context': [{ type: core_1.Input },],
-    'loaderRef': [{ type: core_1.Input, args: ['mnLoaderRef',] },],
-    'loader': [{ type: core_1.Input, args: ['mnLoader',] },],
+    'loader': [{ type: core_1.Input },],
+    'loading': [{ type: core_1.Input },],
+    'loaderStyle': [{ type: core_1.Input },],
     'result': [{ type: core_1.Output },],
 };
 exports.ReqHttpComponent = ReqHttpComponent;

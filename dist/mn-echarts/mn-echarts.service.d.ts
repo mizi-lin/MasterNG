@@ -2,6 +2,11 @@ export declare class MnEchartsService {
     constructor();
     _colors_map: any;
     setColorsMap(colors_map?: any): void;
+    _colors: any;
+    setColors(colors?: any): void;
+    _config: any;
+    setConfig(config?: any): void;
+    getConfig(): any;
     /**
      *
      * @param arr
