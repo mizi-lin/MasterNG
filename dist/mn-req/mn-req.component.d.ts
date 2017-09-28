@@ -20,6 +20,7 @@ export declare class ReqHttpComponent implements OnChanges, OnDestroy {
     constructor(_http: Http, _rs: MnReqService);
     req_http(req: any): void;
     debounce_req_http: any;
+    processStep(): any;
     ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
 }

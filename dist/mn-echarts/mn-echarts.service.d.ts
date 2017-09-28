@@ -1,8 +1,7 @@
-export declare class EchartsService {
+export declare class MnEchartsService {
     constructor();
-    colorsMap: any;
-    GRID_TOP: number;
-    GRID_BOTTOM: number;
+    _colors_map: any;
+    setColorsMap(colors_map?: any): void;
     /**
      *
      * @param arr
@@ -25,11 +24,6 @@ export declare class EchartsService {
      * @return {any[]}
      */
     convert(data: any[], convert?: any): any[];
-    /**
-     * 调整 echart 颜色 以及 legend 的样式
-     * @param options
-     */
-    adjustECharOptions(options: any): any;
     percent_rate(options: any, data: any, fn: any): void;
     /**
      * 顺时针旋转90°多维数组
@@ -37,4 +31,15 @@ export declare class EchartsService {
      * @return {any[]}
      */
     transpose(arr: any[]): any[];
+    morphArray(o: any, def: any, def2?: any): any[];
+    /**
+     * 调整 echart 颜色 以及 legend 的样式
+     * @param options
+     */
+    adjustOptionsWithColors(options: any): any;
+    /**
+     * 调整legend显示/隐藏图表主体位置
+     * 调整legend的个数对图表主体位置的影响
+     */
+    adjustOptionsWithLegend(options: any, _width: number, _height: number): any;
 }

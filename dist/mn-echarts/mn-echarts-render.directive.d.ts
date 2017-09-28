@@ -3,14 +3,15 @@
  */
 import { ElementRef, OnChanges, OnDestroy, SimpleChange, EventEmitter, AfterViewInit } from '@angular/core';
 import 'echarts-wordcloud/dist/echarts-wordcloud.min';
+import { MnEchartsService } from './mn-echarts.service';
 export declare class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterViewInit {
     private _ref;
+    private _es;
     options: any;
     dataset: any[];
     theme: string;
     loading: boolean;
-    mycharts: EventEmitter<any>;
-    element: EventEmitter<any>;
+    result: EventEmitter<any>;
     chartClick: EventEmitter<any>;
     chartDblClick: EventEmitter<any>;
     chartMouseDown: EventEmitter<any>;
@@ -18,9 +19,10 @@ export declare class MnEchartsRenderDirective implements OnChanges, OnDestroy, A
     chartMouseOver: EventEmitter<any>;
     chartMouseOut: EventEmitter<any>;
     chartGlobalOut: EventEmitter<any>;
+    private _result;
     private _chart;
     private currentWindowWidth;
-    constructor(_ref: ElementRef);
+    constructor(_ref: ElementRef, _es: MnEchartsService);
     ngAfterViewInit(): void;
     private getWidth(elm);
     private getHeight(elm);
@@ -39,5 +41,5 @@ export declare class MnEchartsRenderDirective implements OnChanges, OnDestroy, A
      * method to check if the option has dataset.
      */
     private hasData();
-    private registerEvents(myChart);
+    private registerEvents(_chart);
 }

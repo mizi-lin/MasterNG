@@ -23,3 +23,21 @@
 ### 0.1.9 ReqInterceptor with reqCatch, reqError handling exceptions
 
 ### 0.1.10 ReqInterceptor setHeaders of value support function
+
+### 0.2.0
+
+* LoaderBar process ued best
+* Echart legend cover chart optimization algorithm
+* Echart series (result) out ref, chart, width, height, options, source, dataView
+* Echart series register event
+* Echart listener parent dom resize then chart.resize()
+* Echart support set colors_map and colors
+* Rule fixed bugs with set default value
+* Fixed bugs repeat hph setting
+
+# 0.2.1
+
+* LoaderBar can target
+* LoaderBar can set style
+* Echart can set base colors
+* Echart set config with def tools

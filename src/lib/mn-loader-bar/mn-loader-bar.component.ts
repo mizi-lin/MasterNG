@@ -9,6 +9,7 @@ declare const mu: any;
     template: `
         <div [style.width.%]="width"
              [style.height.px]="height"
+             [ngStyle]="loaderStyle"
              class="bar">
         </div>
     `
@@ -16,13 +17,14 @@ declare const mu: any;
 export class MnLoaderBarComponent implements OnChanges {
 
     @Input() position: string;
-    @Input() loaderRef: ElementRef;
+    @Input() loader: ElementRef;
 
     @HostBinding('style.position') _position = this.position || 'relative';
 
     @Input() target: string | ElementRef;
     @Input() progress: number;
     @Input() where: number;
+    @Input() loaderStyle: any = {};
 
     @Output() done: any = new EventEmitter<any>();
 
@@ -49,8 +51,9 @@ export class MnLoaderBarComponent implements OnChanges {
 
         setTimeout(() => {
 
-            mu.run(this.loaderRef, (ref) => {
-                ref.nativeElement.appendChild(_ref.nativeElement);
+            mu.run(this.loader, (ref) => {
+                const el = mu.prop(ref, 'elementRef.nativeElement') || mu.prop(ref, 'nativeElement');
+                el.appendChild(_ref.nativeElement);
             });
 
             /**

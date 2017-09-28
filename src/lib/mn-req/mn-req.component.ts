@@ -9,8 +9,12 @@ declare const mu: any;
 @Component({
     selector: 'mn-req',
     template: `
-        <mn-loader-bar *ngIf="loader" [loaderRef]="loaderRef"
-                       [progress]="process"></mn-loader-bar>
+        <ng-template [ngIf]="loading">
+            <mn-loader-bar [loader]="loader"
+                           [loaderStyle]="loaderStyle"
+                           [progress]="process"></mn-loader-bar>
+        </ng-template>
+
         <mn-dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
         <ng-content *ngIf="!noData"></ng-content>
     `,
@@ -29,8 +33,9 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     @Input() payload: any;
     @Input() data: any;
     @Input() context: any;
-    @Input('mnLoaderRef') loaderRef?: ElementRef;
-    @Input('mnLoader') loader?: boolean = true;
+    @Input() loader: ElementRef;
+    @Input() loading: boolean = true;
+    @Input() loaderStyle: any;
 
     @Output() result: any = new EventEmitter<any>();
 

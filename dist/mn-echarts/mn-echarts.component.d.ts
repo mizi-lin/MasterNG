@@ -1,19 +1,26 @@
-import { OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { EchartsService } from './echarts.service';
+import { EventEmitter, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MnEchartsService } from './mn-echarts.service';
 /**
  * 处理数据，将data转为echart_options
  */
 export declare class MnEchartsComponent implements OnInit, OnChanges {
-    private _serv;
+    private _es;
     data: any;
     options: any;
     setting?: any;
     type?: string;
-    echarts_options: any;
-    echarts_data: any;
-    mycharts: any;
     result: any;
-    constructor(_serv: EchartsService);
+    chartClick: EventEmitter<any>;
+    chartDblClick: EventEmitter<any>;
+    chartMouseDown: EventEmitter<any>;
+    chartMouseUp: EventEmitter<any>;
+    chartMouseOver: EventEmitter<any>;
+    chartMouseOut: EventEmitter<any>;
+    chartGlobalOut: EventEmitter<any>;
+    echarts_options: any;
+    _result: any;
+    constructor(_es: MnEchartsService);
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;
+    getRenderResult(rst: any): void;
 }

@@ -4,12 +4,14 @@ import {MnRuleServices} from '../../lib/mn-rule/mn-rule.services';
 import {MnReqService} from '../../lib/mn-req/mn-req.service';
 import {ResourcePool} from '../demo-req/resource-pool';
 import {Observable} from 'rxjs/Observable';
+import {MnEchartsService} from '../../lib/mn-echarts/mn-echarts.service';
 
 export function InitializeFactory(_initServ: InitializeService,
                                   _i18nServ: MnI18nServices,
                                   _ruleServ: MnRuleServices,
                                   _reqServ: MnReqService,
-                                  _rp: ResourcePool) {
+                                  _rp: ResourcePool,
+                                  _ecServ: MnEchartsService) {
     return () => {
 
         /**
@@ -62,6 +64,11 @@ export function InitializeFactory(_initServ: InitializeService,
             'aaa.bbb.ddd': false,
             'aaa.bbb.eee': false,
             'aaa.bbb.fff': true
+        });
+
+        _ecServ.setConfig({
+            toolbars: true,
+            show_tools: 'toggle'
         });
     };
 }

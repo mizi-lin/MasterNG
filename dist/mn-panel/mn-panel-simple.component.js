@@ -34,7 +34,7 @@ var MnPanelSimpleComponent = (function () {
 MnPanelSimpleComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'mn-panel-s,mn-panel-simple',
-                template: "\n        <mn-panel [hph]=\"hph\">\n            <mn-panel-header>\n                <mn-panel-title [innerHTML]=\"_title\">\n                </mn-panel-title>\n                <mn-panel-toolbar [tools]=\"tools\">\n                </mn-panel-toolbar>\n            </mn-panel-header>\n            <mn-panel-body>\n                <ng-content></ng-content>\n            </mn-panel-body>\n        </mn-panel>\n    ",
+                template: "\n        <mn-panel [hph]=\"true\">\n            <mn-panel-header>\n                <mn-panel-title [innerHTML]=\"_title\">\n                </mn-panel-title>\n                <mn-panel-toolbar [tools]=\"tools\">\n                </mn-panel-toolbar>\n            </mn-panel-header>\n            <mn-panel-body>\n                <ng-content></ng-content>\n            </mn-panel-body>\n        </mn-panel>\n    ",
                 styles: [
                     "\n            :host {\n                display: block;\n                width: 100%;\n            }\n            "
                 ]

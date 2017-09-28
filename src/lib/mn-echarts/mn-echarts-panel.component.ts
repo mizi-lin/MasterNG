@@ -115,7 +115,11 @@ declare const mu: any, jQuery: any;
                 </mn-panel-toolbar>
             </mn-panel-header>
             <mn-panel-body>
-                <mn-req [req]="req" (result)="_data = $event.data" #panel>
+                <mn-req #panel
+                        [loader]="loader"
+                        [loaderStyle]="loaderStyle"
+                        [req]="req"  
+                        (result)="_data = $event.data">
 
                     <div class="mn-dataView" *ngIf="_show_dataView">
                         <table class="table bordered td-top-bd td-left-bd">
@@ -162,6 +166,9 @@ export class MnEchartsPanelComponent implements OnChanges {
     @Input() tools: string;
     @Input() filename: string = 'MasterNg';
 
+    @Input() loader: ElementRef;
+    @Input() loaderStyle: any;
+
     /**
      * show_tools
      * show, toggle
@@ -173,7 +180,9 @@ export class MnEchartsPanelComponent implements OnChanges {
     // 让控件支持高度100%
     // height percent hundred
     @Input() hph: boolean | string = true;
-    @HostBinding('style.height') get getHph() {
+
+    @HostBinding('style.height')
+    get getHph() {
         return this.hph === true ? '100%' : this.hph === false ? 'auto' : this.hph;
     }
 
@@ -218,15 +227,29 @@ export class MnEchartsPanelComponent implements OnChanges {
         this.statusMap[fnKey] = !this.statusMap[fnKey];
     }
 
+    _config: any;
+
     constructor(private _es: MnEchartsService,
                 private _mnFileSaverServ: MnFileSaverServices,
                 private _ref: ElementRef) {
         if (this._ref.nativeElement.nodeName === 'ECHARTS-BOX') {
             this.hide_title = true;
         }
+
+        this._config = this._es.getConfig();
     }
 
     ngOnChanges(changes: SimpleChanges) {
+
+        /**
+         * show_tools 设置值
+         */
+        mu.empty(mu.prop(changes, 'show_tools.currentValue'), () => {
+            if (this._config.show_tools) {
+                this.show_tools = this._config.show_tools;
+            }
+        });
+
         mu.exist(changes['setting'], (changes_setting) => {
             if (changes_setting.first) {
                 this._src_setting = mu.clone(this.setting);
@@ -238,33 +261,18 @@ export class MnEchartsPanelComponent implements OnChanges {
         mu.exist(changes['type'], (type_changes) => {
             if (type_changes.firstChange) {
                 this._src_type = type_changes.currentValue;
+
+                mu.empty(this.toolMap, () => {
+                    if (this._config.toolbars) {
+                        this.toolMap = this._getToolMap(this._config[type_changes.currentValue]);
+                    }
+                });
+
             }
         });
 
         mu.exist(changes['tools'], () => {
-            this.toolMap = mu.map(this.tools || [], (key, i) => {
-
-                if (typeof key === 'string') {
-                    key = {
-                        name: key
-                    };
-                }
-
-                key.order = key.order || (i + 1) * 10;
-                // key.click = key.click || mu.noop;
-
-                key._click = ($event) => {
-                    if (key.click) {
-                        return key.click($event);
-                    }
-                };
-
-                return {
-                    __key__: key.name,
-                    __val__: key
-                };
-            }, {});
-
+            this.toolMap = this._getToolMap(this.tools);
             mu.run(this.toolMap['fullscreen'], (o) => {
                 this._tools.push({
                     name: 'fullscreen',
@@ -284,9 +292,33 @@ export class MnEchartsPanelComponent implements OnChanges {
         this.result.emit(rst);
     }
 
+    _getToolMap(maps: any = []): any {
+        return mu.map(maps, (key, i) => {
+            if (typeof key === 'string') {
+                key = {
+                    name: key
+                };
+            }
+
+            key.order = key.order || (i + 1) * 10;
+            // key.click = key.click || mu.noop;
+
+            key._click = ($event) => {
+                if (key.click) {
+                    return key.click($event);
+                }
+            };
+
+            return {
+                __key__: key.name,
+                __val__: key
+            };
+        }, {});
+    }
+
     download_click($event) {
         const content = this._mnFileSaverServ.csvData(this._dataView);
-        this._mnFileSaverServ.fileSaver([content], this.filename);
+        this._mnFileSaverServ.fileSaver([content], this.filename + '.csv');
     }
 
     dataView_click($event) {
@@ -359,5 +391,5 @@ export class MnEchartsPanelComponent implements OnChanges {
         mu.run(this.toolMap['fullscreen'].click, fn => fn(full, $event));
 
         this.setStatus('fullscreen_click');
-    }
+    };
 }
