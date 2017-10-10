@@ -135,8 +135,8 @@ var MnEchartsService = (function () {
                 'yAxis_percent_rate',
                 'yAxis_zero',
                 'dataZoom',
-                'tooltip',
                 'xy_exchange',
+                'tooltip',
                 'grid_position'
             ],
             bar: [
@@ -148,7 +148,6 @@ var MnEchartsService = (function () {
                 '$legend',
                 'legend_show',
                 'legend_position',
-                'tooltip',
                 '$xAxis',
                 // 'xAxis_show_all',
                 'xAxis_rotate',
@@ -158,6 +157,7 @@ var MnEchartsService = (function () {
                 'yAxis_zero',
                 'dataZoom',
                 'xy_exchange',
+                'tooltip',
                 'grid_position'
             ]
         };
@@ -245,7 +245,12 @@ var MnEchartsService = (function () {
                 sort = mu.trim(sort || 'desc');
                 var sort_data = mu.clone(_series_data[legend]);
                 sort_data = sort_data.sort(function (a, b) {
-                    return sort === 'desc' ? (b.value - a.value) : (a.value - b.value);
+                    if (setting.yAxis_value_percent) {
+                        return sort === 'desc' ? (b._rate - a._rate) : (a._rate - b._rate);
+                    }
+                    else {
+                        return sort === 'desc' ? (b.value - a.value) : (a.value - b.value);
+                    }
                 });
                 var series_data = mu.map(_series_data, function (data, legend) {
                     data = mu.map(data, function (d) { return ({
@@ -517,7 +522,7 @@ var MnEchartsService = (function () {
             mu.run(setting.yAxis_value_percent, function () {
                 options.yAxis[0].axisLabel = options.yAxis.axisLabel || {};
                 options.yAxis[0].axisLabel.formatter = function (value, index) {
-                    return value * 100 + '%';
+                    return mu.format(value, '::2');
                 };
             }, function () {
                 options.yAxis[0].axisLabel = options.yAxis.axisLabel || {};
@@ -534,6 +539,16 @@ var MnEchartsService = (function () {
         fn.yAxis_percent_rate = function () {
             mu.if(setting.percent_rate, function (fn) {
                 _this.percent_rate(options, data, fn);
+            });
+            /**
+             * fixed echart bug
+             * echart 使用 setOptions 切换 Option 时
+             * 会莫名其妙的继承上次Option tooltip 中的 formatter 值
+             */
+            mu.exist(setting.percent_rate, function () {
+                if (!setting.percent_rate) {
+                    options.tooltip.formatter = void 0;
+                }
             });
         };
         fn.yAxis_zero = function () {
@@ -736,6 +751,20 @@ var MnEchartsService = (function () {
             rate: 200 / 1200
         }, setting);
         /**
+         * 预先计算分组数值
+         */
+        mu.run(mu.groupArray(data, 'x'), function (xs) {
+            if (mu.len(xs) > 1) {
+                var totals_1 = mu.map(xs, function (o) { return _this.total(o, 'value'); });
+                mu.each(data, function (o) {
+                    o._old_value = o.value;
+                    o._total = totals_1[o.x];
+                    o._rate = o._old_value / o._total;
+                    o._percent = mu.format(Math.abs(o._rate), '::2');
+                });
+            }
+        });
+        /**
          * 遍历执行各方法
          */
         mu.each(type_setting[type], function (key, index) {
@@ -805,16 +834,13 @@ var MnEchartsService = (function () {
         });
     };
     MnEchartsService.prototype.percent_rate = function (options, data, fn) {
-        var _this = this;
         if (typeof fn !== 'function') {
             fn = mu.noop();
         }
-        var totals = mu.map(mu.groupArray(data, 'x'), function (o) { return _this.total(o, 'value'); });
         options.series = mu.map(options.series, function (o) {
             o.data = mu.map(o.data, function (d) {
-                d.v = d.value;
-                d.value = d.value / totals[d.x];
-                d.percent = mu.format(Math.abs(d.value), '::2');
+                d.value = d._rate;
+                d.percent = d._percent;
                 d = mu.isFunction(fn) ? fn.call(null, d) : d;
                 return d;
             });

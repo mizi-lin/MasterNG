@@ -48,6 +48,7 @@ export declare class MnEchartsPanelComponent implements OnChanges {
     statusMap: any;
     toolMap: any;
     hide_title: boolean;
+    def: any;
     setStatus(fnKey: string): void;
     _config: any;
     constructor(_es: MnEchartsService, _mnFileSaverServ: MnFileSaverServices, _ref: ElementRef);

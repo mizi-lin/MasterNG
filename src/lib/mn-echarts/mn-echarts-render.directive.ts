@@ -46,9 +46,8 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     private _chart: any = null;
     private currentWindowWidth: any = null;
 
-    constructor(
-        private _ref: ElementRef,
-        private _es: MnEchartsService) {
+    constructor(private _ref: ElementRef,
+                private _es: MnEchartsService) {
 
         this._result['ref'] = this._ref;
         this.result.emit(this._result);

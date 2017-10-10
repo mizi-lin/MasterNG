@@ -118,7 +118,7 @@ declare const mu: any, jQuery: any;
                 <mn-req #panel
                         [loader]="loader"
                         [loaderStyle]="loaderStyle"
-                        [req]="req"  
+                        [req]="req"
                         (result)="_data = $event.data">
 
                     <div class="mn-dataView" *ngIf="_show_dataView">
@@ -223,6 +223,8 @@ export class MnEchartsPanelComponent implements OnChanges {
     toolMap: any = {};
     hide_title: boolean = false;
 
+    def: any = {};
+
     setStatus(fnKey: string): void {
         this.statusMap[fnKey] = !this.statusMap[fnKey];
     }
@@ -265,6 +267,13 @@ export class MnEchartsPanelComponent implements OnChanges {
                 mu.empty(this.toolMap, () => {
                     if (this._config.toolbars) {
                         this.toolMap = this._getToolMap(this._config[type_changes.currentValue]);
+                        mu.run(this.toolMap['fullscreen'], (o) => {
+                            this._tools.push({
+                                name: 'fullscreen',
+                                click: this.fullscreen_click,
+                                order: o.order
+                            });
+                        });
                     }
                 });
 
@@ -280,7 +289,6 @@ export class MnEchartsPanelComponent implements OnChanges {
                     order: o.order
                 });
             });
-
         });
     }
 
@@ -375,6 +383,7 @@ export class MnEchartsPanelComponent implements OnChanges {
         this.setting = mu.clone(this.setting || {});
         this.setting.legend_show = true;
         this.setting.sort = `${legend}:${this._sort}`;
+        this.setting.zero = false;
         this.setStatus('sort_click');
     }
 

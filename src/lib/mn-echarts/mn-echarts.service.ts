@@ -158,10 +158,9 @@ export class MnEchartsService {
                 'yAxis_zero',
 
                 'dataZoom',
-
-                'tooltip',
                 'xy_exchange',
 
+                'tooltip',
                 'grid_position'
             ],
 
@@ -175,7 +174,6 @@ export class MnEchartsService {
                 '$legend',
                 'legend_show',
                 'legend_position',
-                'tooltip',
 
                 '$xAxis',
                 // 'xAxis_show_all',
@@ -189,6 +187,7 @@ export class MnEchartsService {
 
                 'xy_exchange',
 
+                'tooltip',
                 'grid_position'
 
             ]
@@ -280,13 +279,19 @@ export class MnEchartsService {
              * 对数据进行排序
              */
             mu.run(setting.sort, (info) => {
+
                 let [legend, sort] = info.split(':');
                 legend = mu.trim(legend || setting.single_name);
                 sort = mu.trim(sort || 'desc');
 
                 let sort_data = mu.clone(_series_data[legend]);
+
                 sort_data = sort_data.sort((a, b) => {
-                    return sort === 'desc' ? (b.value - a.value) : (a.value - b.value);
+                    if (setting.yAxis_value_percent) {
+                        return sort === 'desc' ? (b._rate - a._rate) : (a._rate - b._rate);
+                    } else {
+                        return sort === 'desc' ? (b.value - a.value) : (a.value - b.value);
+                    }
                 });
 
                 let series_data = mu.map(_series_data, (data, legend) => {
@@ -426,7 +431,6 @@ export class MnEchartsService {
                     }
                 }
             };
-
         };
 
         // todo
@@ -501,6 +505,7 @@ export class MnEchartsService {
             const _tt = mu.ifnvl(setting.tooltip, true);
             options.tooltip = options.tooltip || {};
             options.tooltip.show = !!_tt;
+
             if (!mu.type(_tt, 'boolean') && options.tooltip.formatter) {
                 options.tooltip.formatter = _tt;
             }
@@ -599,7 +604,7 @@ export class MnEchartsService {
             mu.run(setting.yAxis_value_percent, () => {
                 options.yAxis[0].axisLabel = options.yAxis.axisLabel || {};
                 options.yAxis[0].axisLabel.formatter = (value, index) => {
-                    return value * 100 + '%';
+                    return mu.format(value, '::2');
                 };
             }, () => {
                 options.yAxis[0].axisLabel = options.yAxis.axisLabel || {};
@@ -617,6 +622,17 @@ export class MnEchartsService {
         fn.yAxis_percent_rate = () => {
             mu.if(setting.percent_rate, (fn) => {
                 this.percent_rate(options, data, fn);
+            });
+
+            /**
+             * fixed echart bug
+             * echart 使用 setOptions 切换 Option 时
+             * 会莫名其妙的继承上次Option tooltip 中的 formatter 值
+             */
+            mu.exist(setting.percent_rate, () => {
+                if (!setting.percent_rate) {
+                    options.tooltip.formatter = void 0;
+                }
             });
         };
 
@@ -858,6 +874,21 @@ export class MnEchartsService {
         }, setting);
 
         /**
+         * 预先计算分组数值
+         */
+        mu.run(mu.groupArray(data, 'x'), (xs) => {
+            if (mu.len(xs) > 1) {
+                const totals = mu.map(xs, (o) => this.total(o, 'value'));
+                mu.each(data, (o) => {
+                    o._old_value = o.value;
+                    o._total = totals[o.x];
+                    o._rate = o._old_value / o._total;
+                    o._percent = mu.format(Math.abs(o._rate), '::2');
+                });
+            }
+        });
+
+        /**
          * 遍历执行各方法
          */
         mu.each(type_setting[type], (key, index) => {
@@ -941,16 +972,15 @@ export class MnEchartsService {
     }
 
     percent_rate(options: any, data: any, fn: any): void {
+
         if (typeof fn !== 'function') {
             fn = mu.noop();
         }
 
-        const totals = mu.map(mu.groupArray(data, 'x'), (o) => this.total(o, 'value'));
         options.series = mu.map(options.series, (o) => {
             o.data = mu.map(o.data, (d) => {
-                d.v = d.value;
-                d.value = d.value / totals[d.x];
-                d.percent = mu.format(Math.abs(d.value), '::2');
+                d.value = d._rate;
+                d.percent = d._percent;
                 d = mu.isFunction(fn) ? fn.call(null, d) : d;
                 return d;
             });

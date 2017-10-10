@@ -41,3 +41,11 @@
 * LoaderBar can set style
 * Echart can set base colors
 * Echart set config with def tools
+
+* b3: roll back  echarts 3.6.2 && echart-worldcloud 1.1.0 && zrender 3.5.2 fixed textStyle no work and hover blink
+* b4: Resolve echart using 'setOptions' to change options when 'tooltip.formatter' inherits old values
+
+# 0.2.2
+
+* Echart support sort by rate
+* Rate sort then yAxis before zero
