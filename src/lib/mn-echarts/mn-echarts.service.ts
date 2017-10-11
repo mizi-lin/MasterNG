@@ -234,30 +234,6 @@ export class MnEchartsService {
             data = this.convert(data, setting.convert);
         };
 
-        /**
-         * setting.sort
-         * 数据排序
-         *
-         * @sort {boolean | string}
-         * exp. sort = 'value:asc'
-         */
-        // fn.sort = () => {
-        //     // 排序
-        //     mu.run(setting.module !== 'single', () => {
-        //         mu.run(setting.sort, (sortInfo) => {
-        //             sortInfo = mu.type(sortInfo, 'boolean') ? Y_VALUE : sortInfo;
-        //             const sortInfo_ = sortInfo.split(':');
-        //             const key = sortInfo_[0] || Y_VALUE;
-        //             const sort = sortInfo_[1] || 'desc';
-        //             data = data.sort((a, b) => {
-        //                 return sort === 'desc' ? (b[key] - a[key]) : (a[key] - b[key]);
-        //             });
-        //         });
-        //     });
-        //
-        //     console.debug(mu.clone(data));
-        // };
-
         // -> 关键步骤
         // series 处理
         fn.$series = () => {
@@ -287,6 +263,13 @@ export class MnEchartsService {
                 let sort_data = mu.clone(_series_data[legend]);
 
                 sort_data = sort_data.sort((a, b) => {
+
+                    console.debug(111111111);
+
+                    if (setting.sort_all) {
+                        return sort === 'desc' ? (b._total - a._total) : (a._total - b._total);
+                    }
+
                     if (setting.yAxis_value_percent) {
                         return sort === 'desc' ? (b._rate - a._rate) : (a._rate - b._rate);
                     } else {
@@ -311,11 +294,17 @@ export class MnEchartsService {
                     return data;
                 });
 
-                // 修改 legend 的显示状态
-                options.legend.selected = {
-                    [legend]: true
-                };
+                /**
+                 * sort
+                 * 关联设置
+                 */
 
+                if (!setting.sort_all) {
+                    // 修改 legend 的显示状态
+                    options.legend.selected = {
+                        [legend]: true
+                    };
+                }
             });
 
             /**
@@ -459,7 +448,7 @@ export class MnEchartsService {
              * sort
              * 关联设置
              */
-            mu.run(setting.sort, () => {
+            mu.run(setting.sort && !setting.sort_all, () => {
                 const selected = mu.map(_legend, (l) => ({
                     __key__: l,
                     __val__: false
@@ -467,7 +456,6 @@ export class MnEchartsService {
 
                 options.legend.selected = mu.extend(selected, options.legend.selected);
             });
-
         };
 
         fn.legend_show = () => {
@@ -877,15 +865,13 @@ export class MnEchartsService {
          * 预先计算分组数值
          */
         mu.run(mu.groupArray(data, 'x'), (xs) => {
-            if (mu.len(xs) > 1) {
-                const totals = mu.map(xs, (o) => this.total(o, 'value'));
-                mu.each(data, (o) => {
-                    o._old_value = o.value;
-                    o._total = totals[o.x];
-                    o._rate = o._old_value / o._total;
-                    o._percent = mu.format(Math.abs(o._rate), '::2');
-                });
-            }
+            const totals = mu.map(xs, (o) => this.total(o, 'value'));
+            mu.each(data, (o) => {
+                o._old_value = o.value;
+                o._total = totals[o.x];
+                o._rate = o._old_value / o._total;
+                o._percent = mu.format(Math.abs(o._rate), '::2');
+            });
         });
 
         /**
@@ -994,7 +980,7 @@ export class MnEchartsService {
                 const format = mu.map(a, (d) => {
                     const o = d.data;
                     x = o.x;
-                    return `${o.name} : ${mu.format(o.v)} (${o.percent})`;
+                    return `${o.name} : ${mu.format(o._old_value)} (${o.percent})`;
                 });
 
                 return x + '<br />' + format.join('<br />');
@@ -1030,6 +1016,35 @@ export class MnEchartsService {
     adjustOptionsWithColors(options: any): any {
         const colors = mu.ifempty(this._colors, COLORS_POOL);
         const color_map = this._colors_map;
+        const getColor = (index, name_map) => {
+            let color = colors[index % colors.length];
+
+            // 颜色值是否使用过
+            let use = false;
+
+            // 索引值大于颜色值长度，
+            // 默认认为该颜色值列表也遍历过一次
+            // 标明颜色值已用完
+            if (index >= colors.length) {
+                // todo 修改颜色透明度
+                return color;
+            }
+
+            // 遍历颜色是否使用过
+            mu.each(color_map, (color_, name_) => {
+                // 颜色值被使用过
+                if (color_ === color && name_map[name_]) {
+                    use = true;
+                    return false;
+                }
+            });
+
+            if (use) {
+                return getColor(index + 1, name_map);
+            }
+
+            return color;
+        };
 
         /**
          * 固定Legend样式
@@ -1053,11 +1068,18 @@ export class MnEchartsService {
             // legend 的颜色控制着相对应的柱形图线形图等itemStyle的颜色
             // so, legend.data 必须存在
             mu.run(names, () => {
+                const name_map = mu.map(names, (name, index) => {
+                    return {
+                        __key__: name,
+                        __val__: index
+                    };
+                }, {});
                 options['color'] = mu.map(names, (name, index) => {
                     name = name.toLowerCase();
                     return color_map[name] || mu.run(() => {
-                        const color = colors[index % colors.length];
+                        const color = getColor(index, name_map);
                         color_map[name] = color;
+                        // console.log(`%c ${color}`, `background: ${color}; color: #f00`)
                         return color;
                     });
                 });
