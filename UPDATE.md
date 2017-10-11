@@ -49,3 +49,6 @@
 
 * Echart support sort by rate
 * Rate sort then yAxis before zero
+* b1: fixed bug -> Echart setOptions no merge
+* b2: fixed bug -> Echart default calc _rate, _precent
+* b3: fixed bug -> Echart adjust color fixed order color

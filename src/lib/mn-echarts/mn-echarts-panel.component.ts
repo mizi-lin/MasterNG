@@ -97,9 +97,20 @@ declare const mu: any, jQuery: any;
                                 </a>
                                 <ul nz-menu>
                                     <li nz-menu-item
+                                        (click)="sort_all_click($event)">
+                                        by All
+                                    </li>
+                                    <li nz-menu-divider></li>
+                                    <li nz-menu-item
                                         *ngFor="let legend of _options?.legend?.data"
                                         (click)="sort_click(legend.name, $event)">
-                                        {{legend.name}}
+                                        by {{legend.name}}
+                                    </li>
+                                    
+                                    <li nz-menu-divider></li>
+                                    <li nz-menu-item
+                                        (click)="clear_sort_click($event)">
+                                        Clear
                                     </li>
                                 </ul>
                             </nz-dropdown>
@@ -225,8 +236,8 @@ export class MnEchartsPanelComponent implements OnChanges {
 
     def: any = {};
 
-    setStatus(fnKey: string): void {
-        this.statusMap[fnKey] = !this.statusMap[fnKey];
+    setStatus(fnKey: string, bool?: boolean): void {
+        this.statusMap[fnKey] = mu.ifnvl(bool, !this.statusMap[fnKey]);
     }
 
     _config: any;
@@ -384,7 +395,24 @@ export class MnEchartsPanelComponent implements OnChanges {
         this.setting.legend_show = true;
         this.setting.sort = `${legend}:${this._sort}`;
         this.setting.zero = false;
-        this.setStatus('sort_click');
+        this.setting.sort_all = false;
+        this.setStatus('sort_click', true);
+    }
+
+    sort_all_click(): void {
+        this._sort = this._sort === 'desc' ? 'asc' : 'desc';
+        this.setting = mu.clone(this.setting || {});
+        this.setting.sort = `${mu.prop(this._options, 'legend.data.0.name')}:${this._sort}`;
+        this.setting.sort_all = true;
+        this.setting.zero = false;
+        this.setStatus('sort_click', true);
+    }
+
+    clear_sort_click($event): void {
+        this.setting = mu.clone(this.setting || {});
+        this.setting.sort = void 0;
+        this.setting.zero = void 0;
+        this.setStatus('sort_click', false);
     }
 
     fullscreen_click: any = (full: any, $event: any) => {

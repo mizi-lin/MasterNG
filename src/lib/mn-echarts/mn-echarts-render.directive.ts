@@ -106,7 +106,7 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         this._result['height'] = _height;
         this.result.emit(this._result);
         this.options = this._es.adjustOptionsWithLegend(this.options, _width, _height);
-        this._chart.setOption(this.options);
+        this._chart.setOption(this.options, true);
         this._chart.resize();
     }
 
