@@ -51,4 +51,8 @@
 * Rate sort then yAxis before zero
 * b1: fixed bug -> Echart setOptions no merge
 * b2: fixed bug -> Echart default calc _rate, _precent
-* b3: fixed bug -> Echart adjust color fixed order color
+
+# 0.2.3
+
+* Echart panel toolbar sort support by total && clear
+* Fixed Echart color calc error
