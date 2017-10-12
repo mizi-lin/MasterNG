@@ -9,8 +9,9 @@ var MnReqNoDataComponent = (function () {
 }());
 MnReqNoDataComponent.decorators = [
     { type: core_1.Component, args: [{
-                selector: 'req-nodata',
-                template: "\n        oOoooOooopps none data :( \n    "
+                selector: 'mn-req-nodata',
+                template: "\n        <div>\n            <i class=\"anticon anticon-frown-o\"></i>\n        </div>\n        <div>\n            Ooops, none data to display.\n        </div>\n    ",
+                styles: [':host {  padding: 32px;  width: 100%;  color: #999;  font-size: 14px;}:host div {  text-align: center;}:host div i {  font-size: 28px;}:host div + div {  margin-top: 16px;}']
             },] },
 ];
 /** @nocollapse */

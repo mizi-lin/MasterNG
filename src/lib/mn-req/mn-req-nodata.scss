@@ -1,0 +1,17 @@
+:host {
+    padding: 32px;
+    width: 100%;
+    color: #999;
+    font-size: 14px;
+
+    div {
+        text-align: center;
+        i {
+            font-size: 28px;
+        }
+
+        + div {
+            margin-top: 16px;
+        }
+    }
+}

@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'req-nodata',
+    selector: 'mn-req-nodata',
     template: `
-        oOoooOooopps none data :( 
-    `
+        <div>
+            <i class="anticon anticon-frown-o"></i>
+        </div>
+        <div>
+            Ooops, none data to display.
+        </div>
+    `,
+    styleUrls: ['./mn-req-nodata.scss']
 })
 export class MnReqNoDataComponent implements OnInit {
     constructor() { }
-
     ngOnInit() { }
-
 }

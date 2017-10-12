@@ -48,6 +48,7 @@ var ReqHttpComponent = (function () {
             _this.process = 100;
             res = res || {};
             mu.run(res.data, function () {
+                _this.noData = false;
                 _this.result.emit(res);
             }, function () {
                 _this.noData = true;

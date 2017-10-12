@@ -1070,8 +1070,8 @@ export class MnEchartsService {
             mu.run(names, () => {
                 const name_map = mu.map(names, (name, index) => {
                     return {
-                        __key__: name,
-                        __val__: index
+                        __key__: name.toLowerCase(),
+                        __val__: index + 1
                     };
                 }, {});
                 options['color'] = mu.map(names, (name, index) => {
