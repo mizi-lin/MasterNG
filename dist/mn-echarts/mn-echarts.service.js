@@ -917,8 +917,8 @@ var MnEchartsService = (function () {
             mu.run(names, function () {
                 var name_map = mu.map(names, function (name, index) {
                     return {
-                        __key__: name,
-                        __val__: index
+                        __key__: name.toLowerCase(),
+                        __val__: index + 1
                     };
                 }, {});
                 options['color'] = mu.map(names, function (name, index) {

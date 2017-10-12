@@ -56,3 +56,9 @@
 
 * Echart panel toolbar sort support by total && clear
 * Fixed Echart color calc error
+
+* b1: fixed bugs with mnReq noData status no change
+
+# 0.2.4
+
+* MnReqNoDataComponent adjust style

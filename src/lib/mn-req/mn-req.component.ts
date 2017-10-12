@@ -79,6 +79,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
             this.process = 100;
             res = res || {};
             mu.run(res.data, () => {
+                this.noData = false;
                 this.result.emit(res);
             }, () => {
                 this.noData = true;
