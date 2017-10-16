@@ -62,3 +62,4 @@
 # 0.2.4
 
 * MnReqNoDataComponent adjust style
+* b1: Echart download filename add timestamp

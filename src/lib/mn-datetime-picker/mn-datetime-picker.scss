@@ -1,0 +1,66 @@
+mn-calendar-view {
+    font-size: 15px;
+    margin-top: 8px;
+
+    .prev {
+        .mn-col-content {
+            color: #999;
+        }
+    }
+
+    .next {
+        .mn-col-content {
+            color: #999;
+        }
+    }
+
+    .b {
+        color: #666;
+        font-weight: 400;
+    }
+
+    .mnc-header {
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+        font-size: 14px;
+        border-bottom: 1px solid #e7ecf1;
+    }
+
+    .mnc-header,
+    .mnc-items {
+        & > mn-col {
+
+            .mn-col-content {
+                height: 32px;
+                line-height: 32px;
+                text-align: center;
+                border-radius: 3px;
+            }
+
+            &.today {
+                color: #ed6b75;
+            }
+
+            &:not(.no-selected):hover {
+                .mn-col-content {
+                    background: rgba(14, 119, 202, .3);
+                }
+            }
+
+            &.selected {
+                .mn-col-content {
+                    background: rgba(14, 119, 202, .6);
+                }
+            }
+
+            &.no-selected {
+                cursor: not-allowed;
+                .mn-col-content {
+                    color: #aaa;
+                    text-decoration: line-through;
+                }
+            }
+        }
+    }
+
+}

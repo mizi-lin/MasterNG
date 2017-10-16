@@ -10,6 +10,7 @@ import {MnEchartsModule} from './mn-echarts/mn-echarts.module';
 import {MnCommonModule} from './mn-common/mn-common.module';
 import {MnI18nModule} from './mn-i18n/mn-i18n.module';
 import {MnRuleModule} from './mn-rule/mn-rule.module';
+import {MnDatetimeModule} from './mn-datetime-picker/mn-datetime.module';
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
         MnEchartsModule,
         MnCommonModule,
         MnI18nModule,
-        MnRuleModule
+        MnRuleModule,
+        MnDatetimeModule
     ],
     exports: [
         MnLayoutModule,
@@ -41,7 +43,8 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
         MnEchartsModule,
         MnCommonModule,
         MnI18nModule,
-        MnRuleModule
+        MnRuleModule,
+        MnDatetimeModule
     ]
 })
 export class MasterNgModule {

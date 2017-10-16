@@ -19,6 +19,7 @@ import {MnReqService} from '../lib/mn-req/mn-req.service';
 import { HeatWidgetComponent } from './common/widgets/heat-widget/heat-widget.component';
 import { DemoEchart2Component } from './demo-echart2/demo-echart2.component';
 import {MnEchartsService} from '../lib/mn-echarts/mn-echarts.service';
+import { DemoDatetimeComponent } from './demo-datetime/demo-datetime.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import {MnEchartsService} from '../lib/mn-echarts/mn-echarts.service';
         DemoRuleComponent,
         DemoMcComponent,
         HeatWidgetComponent,
-        DemoEchart2Component
+        DemoEchart2Component,
+        DemoDatetimeComponent
     ],
     imports: [
         BrowserModule,
@@ -68,6 +70,11 @@ import {MnEchartsService} from '../lib/mn-echarts/mn-echarts.service';
             {
                 path: 'mc',
                 component: DemoMcComponent
+            },
+
+            {
+                path: 'datetime',
+                component: DemoDatetimeComponent
             }
 
         ], {useHash: true}),
