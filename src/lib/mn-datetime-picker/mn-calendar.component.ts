@@ -24,7 +24,7 @@ export const YEAR_MILLISECONDS = 864000;
                 <button (click)="getNextYear()" *ngIf="type !== 'prev' && _show.next_year">下一年</button>
             </mn-col>
         </mn-fill>
-        
+
         <mn-calendar-view
                 [year]="_year"
                 [month]="_month"
