@@ -1,6 +1,13 @@
 <section class="p-16">
+    <mn-panel-s class="bordered mt-16" title="Multiple Calendar">
+        <mn-calendar-multiple></mn-calendar-multiple>
+    </mn-panel-s>
 
-    <mn-panel-s class="bordered" title="Single Calendar">
+    <mn-panel-s class="bordered mt-16" title="Single Calendar">
+        <mn-calendar></mn-calendar>
+    </mn-panel-s>
+
+    <mn-panel-s class="bordered mt-16" title="Single Calendar">
         <mn-calendar-view
                 [year]="2017"
                 [month]="10"
@@ -8,18 +15,6 @@
             (result)="getView($event)">
         </mn-calendar-view>
     </mn-panel-s>
-
-
-    <mn-panel-s class="bordered mt-16" title="Single Calendar">
-        <mn-calendar></mn-calendar>
-    </mn-panel-s>
-
-
-    <mn-panel-s class="bordered mt-16" title="Multiple Calendar">
-        <mn-calendar-multiple></mn-calendar-multiple>
-    </mn-panel-s>
-
-
 
 </section>
 

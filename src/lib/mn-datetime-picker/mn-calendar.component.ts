@@ -8,22 +8,23 @@ export const YEAR_MILLISECONDS = 864000;
 @Component({
     selector: 'mn-calendar',
     template: `
-        <mn-fill [hph]="false">
-            <mn-col [span]="1">
+        <mn-fill [hph]="false" class="mnc-header">
+            <mn-col [style.width.px]="60" class="mnc-header-prev">
                 <button (click)="getPrevYear()" *ngIf="type !== 'next' && _show.prev_year">上一年</button>
                 <button
                         (click)="getPrevMonth()"
                         *ngIf="(type !== 'next') && _show.prev_month">上一月
                 </button>
             </mn-col>
-            <mn-col [span]="2">
+            <mn-col [span]="1" class="mnc-header-current">
                 {{this._view?.year}}-{{this._view?.month}}
             </mn-col>
-            <mn-col [span]="1">
+            <mn-col [style.width.px]="60" class="mnc-header-next">
                 <button (click)="getNextMonth()" *ngIf="type !== 'prev' && _show.next_month">下一月</button>
                 <button (click)="getNextYear()" *ngIf="type !== 'prev' && _show.next_year">下一年</button>
             </mn-col>
         </mn-fill>
+        
         <mn-calendar-view
                 [year]="_year"
                 [month]="_month"
@@ -89,17 +90,7 @@ export class MnCalendarComponent implements OnInit, OnChanges {
         mu.run(mu.prop(changes, 'month.currentValue'), (month) => {
             this._month = month;
         });
-
-        // mu.exist(mu.prop(changes, 'minDate.currentValue'), (minDate) => {
-        //     this.getShow();
-        // });
-        //
-        // mu.exist(mu.prop(changes, 'maxDate.currentValue'), (maxDate) => {
-        //     this.getShow();
-        // });
     }
-
-
 
     getPrevMonth() {
         this._month = this._month - 1;

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChildren} from '@angular/core';
 import {MnCalendarComponent} from './mn-calendar.component';
 import {MnCalendarViewComponent} from './mn-calendar-view.component';
 
@@ -46,6 +46,8 @@ export class MnCalendarMultipleComponent implements OnInit {
     @Input() startDate: any;
     @Input() endDate: any;
 
+    @Output() result: any = new EventEmitter<any>();
+
     @ViewChildren(MnCalendarComponent)
     set calendars(calendars_) {
         this.prev_calendar = mu.prop(calendars_, '_results.0');
@@ -61,6 +63,9 @@ export class MnCalendarMultipleComponent implements OnInit {
 
         this.prev_view.selectedDate = (date, type, mode) => this.selectedDate(date, type, mode);
         this.next_view.selectedDate = (date, type, mode) => this.selectedDate(date, type, mode);
+
+        this.prev_view.hovered = (date) => this.hovered(date);
+        this.next_view.hovered = (date) => this.hovered(date);
     }
 
     prev: any = new Date();
@@ -119,6 +124,11 @@ export class MnCalendarMultipleComponent implements OnInit {
     }
 
     selectedDate(date, type, mode) {
+
+        if (date.not_selected) {
+            return;
+        }
+
         mu.run(this.startDate, () => {
             mu.run(this.endDate, () => {
                 this.startDate = date;
@@ -146,7 +156,17 @@ export class MnCalendarMultipleComponent implements OnInit {
             }
         }
 
+        this.result.emit({
+            startDate: this.startDate,
+            endDate: this.endDate
+        });
+
         console.debug(date);
+    }
+
+    hovered(date) {
+        this.prev_view._selected_end = date;
+        this.next_view._selected_end = date;
     }
 }
 

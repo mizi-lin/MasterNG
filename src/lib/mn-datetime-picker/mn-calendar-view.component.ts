@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {MnDatetimeServices} from './mn-datetime.services';
 
 declare const mu: any;
@@ -19,7 +19,7 @@ declare const mu: any;
                         <mn-col [span]="1">六</mn-col>
                     </mn-fill>
 
-                    <mn-fill *ngFor="let week of calendar" class="mnc-items">
+                    <mn-fill *ngFor="let week of calendar" class="mnc-items" [gutter]="2">
                         <mn-col [span]="1" *ngFor="let d of week"
                                 [class.prev]="d.month < current_month"
                                 [class.next]="d.month > current_month"
@@ -29,6 +29,9 @@ declare const mu: any;
                                 [class.selected]="selected(d)"
                                 [class.start]="started(d)"
                                 [class.end]="ended(d)"
+                                [class.range]="ranged(d)"
+                                [class.range-reverse]="reverseRanged(d)"
+                                (mouseover)="hovered(d)"
                                 (click)="selectedDate(d, type, mode, $event)">
                             {{d.day === 1 ? d.month + '-' + d.day : d.day}}
                             <!--{{d.year}}-{{d.month}}-{{d.date}}-->
@@ -70,6 +73,9 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
     selected_start: any = {};
     selected_end: any = {};
 
+    // 鼠标滑过日期
+    _selected_end: any;
+
     constructor(private _mds: MnDatetimeServices) {
     }
 
@@ -85,8 +91,6 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
         mu.exist(mu.prop(changes, 'minDate.currentValue'), () => {
             this.minDate = mu.timestamp(this.minDate);
         });
-
-        console.debug('::::::::::::::::');
 
         mu.run(mu.prop(changes, 'year.currentValue') || mu.prop(changes, 'month.currentValue'), () => {
             let d = new Date(this.year, this.month, 0);
@@ -188,15 +192,26 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
 
     // 获得当前日期
     getDate(year: number, month: number, weekday: number, day: number): any {
-        return {
+        let rst = {
             day: day,
             year: year,
             month: month,
             weekday: weekday,
             is_today: this.isToday(year, month, day),
+            not_selected: false,
             range: this.timestamp(year, month, day),
             status: month < this.current_month ? 'prev' : month > this.current_month ? 'next' : 'current'
         };
+
+        if (this.minDate && !rst.not_selected) {
+            rst.not_selected = rst.range.end < this.minDate;
+        }
+
+        if (this.maxDate && !rst.not_selected) {
+            rst.not_selected = rst.range.start > this.maxDate;
+        }
+
+        return rst;
     }
 
     _getDate(date: any): any {
@@ -213,7 +228,7 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
     }
 
     selectedDate(date, type, mode) {
-        if (this.mode === 'single') {
+        if (this.mode === 'single' && !date.not_selected) {
             this.selected_start = date;
         }
 
@@ -226,6 +241,9 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
                 return d.range.start === mu.prop(this.selected_start, 'range.start');
             });
         }
+    }
+
+    hovered(d) {
     }
 
     started(d) {
@@ -241,6 +259,32 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
             return mu.run(this.selected_end, () => {
                 return d.range.start === mu.prop(this.selected_end, 'range.start');
             });
+        }
+    }
+
+    /**
+     * 判断时间区间
+     * @param d
+     */
+    ranged(d) {
+        let selected_end = this.selected_end || this._selected_end;
+        if (this.mode === 'multiple' && this.selected_start && selected_end) {
+            return d.range.start > this.selected_start.range.end && d.range.end < selected_end.range.end;
+        }
+    }
+
+    /**
+     * 反向日期显示
+     * @param d
+     * @return {boolean}
+     */
+    reverseRanged(d) {
+        if (this.selected_end) {
+            return;
+        }
+
+        if (this.mode === 'multiple' && this._selected_end && this.selected_start) {
+            return d.range.end < this.selected_start.range.start && d.range.end > this._selected_end.range.start;
         }
     }
 }
