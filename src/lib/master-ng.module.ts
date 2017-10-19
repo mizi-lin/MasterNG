@@ -2,7 +2,6 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {MnLayoutModule} from './mn-layout/mn-layout.module';
 import {MnPanelModule} from './mn-panel/mn-panel.module';
 import {MnButtonModule} from './mn-button/mn-button.module';
-import {CalendarModule} from './mn-calendar/mn-calendar.module';
 import {MnLoaderBarModule} from './mn-loader-bar/mn-loader-bar.module';
 import {MnDynamicModule} from './mn-dynamic/mn-dynamic.module';
 import {MnReqModule} from './mn-req/mn-req.module';
@@ -17,13 +16,11 @@ import {MnDatetimeModule} from './mn-datetime-picker/mn-datetime.module';
         MnLayoutModule,
         MnPanelModule,
         MnButtonModule,
-        CalendarModule,
         MnLoaderBarModule,
         MnDynamicModule.forRoot([
             MnLayoutModule,
             MnPanelModule,
-            MnButtonModule,
-            CalendarModule
+            MnButtonModule
         ]),
         MnReqModule,
         MnEchartsModule,
@@ -36,7 +33,6 @@ import {MnDatetimeModule} from './mn-datetime-picker/mn-datetime.module';
         MnLayoutModule,
         MnPanelModule,
         MnButtonModule,
-        CalendarModule,
         MnLoaderBarModule,
         MnDynamicModule,
         MnReqModule,

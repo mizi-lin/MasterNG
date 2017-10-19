@@ -53,6 +53,18 @@ mn-calendar-view {
                 }
             }
 
+            &.start {
+                .mn-col-content {
+                    background: rgba(141, 119, 202, .6);
+                }
+            }
+
+            &.end {
+                .mn-col-content {
+                    background: rgba(141, 119, 0, .6);
+                }
+            }
+
             &.no-selected {
                 cursor: not-allowed;
                 .mn-col-content {
