@@ -1,20 +1,25 @@
-<mn-fill [gutter]="16" class="p-16">
-    <mn-col [span]="1">
+<section class="p-16">
 
-        <mn-calendar
+    <mn-panel-s class="bordered" title="Single Calendar">
+        <mn-calendar-view
                 [year]="2017"
-                [month]="12"
-                [day]="23">
-        </mn-calendar>
+                [month]="10"
+                [date]="10">
+            (result)="getView($event)">
+        </mn-calendar-view>
+    </mn-panel-s>
 
-    </mn-col>
-    <mn-col [span]="1">
 
-        <mn-calendar
-                [year]="2017"
-                [month]="12"
-                [day]="23">
-        </mn-calendar>
+    <mn-panel-s class="bordered mt-16" title="Single Calendar">
+        <mn-calendar></mn-calendar>
+    </mn-panel-s>
 
-    </mn-col>
-</mn-fill>
+
+    <mn-panel-s class="bordered mt-16" title="Multiple Calendar">
+        <mn-calendar-multiple></mn-calendar-multiple>
+    </mn-panel-s>
+
+
+
+</section>
+
