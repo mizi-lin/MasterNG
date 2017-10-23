@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MnDatetimeServices} from './mn-datetime.services';
 import {MnCalendarViewComponent} from './mn-calendar-view.component';
 
@@ -10,28 +10,28 @@ export const YEAR_MILLISECONDS = 864000;
     template: `
         <mn-fill [hph]="false" class="mnc-header">
             <mn-col [style.width.px]="60" class="mnc-header-prev">
-                <button (click)="getPrevYear()" *ngIf="type !== 'next' && _show.prev_year">上一年</button>
+                <button (click)="getPrevYear()" *ngIf="viewType !== 'next' && _show.prev_year">上一年</button>
                 <button
                         (click)="getPrevMonth()"
-                        *ngIf="(type !== 'next') && _show.prev_month">上一月
+                        *ngIf="(viewType !== 'next') && _show.prev_month">上一月
                 </button>
             </mn-col>
             <mn-col [span]="1" class="mnc-header-current">
                 {{this._view?.year}}-{{this._view?.month}}
             </mn-col>
             <mn-col [style.width.px]="60" class="mnc-header-next">
-                <button (click)="getNextMonth()" *ngIf="type !== 'prev' && _show.next_month">下一月</button>
-                <button (click)="getNextYear()" *ngIf="type !== 'prev' && _show.next_year">下一年</button>
+                <button (click)="getNextMonth()" *ngIf="viewType !== 'prev' && _show.next_month">下一月</button>
+                <button (click)="getNextYear()" *ngIf="viewType !== 'prev' && _show.next_year">下一年</button>
             </mn-col>
         </mn-fill>
 
         <mn-calendar-view
                 [year]="_year"
                 [month]="_month"
-                [date]="23"
-                [minDate]="minDate"
-                [maxDate]="maxDate"
-                [type]="type"
+                [day]="23"
+                [minDate]="minDate_"
+                [maxDate]="maxDate_"
+                [viewType]="viewType"
                 [mode]="mode"
                 [startDate]="startDate"
                 [endDate]="endDate"
@@ -46,23 +46,52 @@ export class MnCalendarComponent implements OnInit, OnChanges {
     @Input() date: number = 1;
 
     // 日历类型，normal, prev, next
-    @Input() type: string = 'normal';
+    @Input() viewType: string = 'normal';
 
     // 日历模式, single, multiple
     @Input() mode: string = 'single';
 
-    @Input() minDate: string | number = mu.timestamp('2017-09-12');
-    @Input() maxDate: string | number = mu.timestamp('2017-12-09');
+    @Input()
+    set minDate(date) {
+        this.minDate_ = this._mds.mndate(date);
+    }
+
+    @Input()
+    set maxDate(date) {
+        this.maxDate_ = this._mds.mndate(date);
+    }
 
     @Input() startDate: any;
     @Input() endDate: any;
 
-    @ViewChild(MnCalendarViewComponent) _viewComponent: MnCalendarViewComponent;
+    @Output() result: any = new EventEmitter<any>();
+
+    @ViewChild(MnCalendarViewComponent)
+    set viewComponent(_vc) {
+        this._viewComponent = _vc;
+
+        _vc.selectedDate = (date) => {
+            if (this.mode === 'single' && !date.not_selected) {
+                if (date.status !== 'current') {
+                    let _md = this._view.mom(date.status === 'prev' ? -1 : 1);
+                    this._year = _md.year;
+                    this._month = _md.month;
+                    date.status = 'current';
+                }
+
+                _vc.selected_start = date;
+            }
+        };
+
+    }
+
+    _viewComponent: MnCalendarViewComponent;
 
     _year: number;
     _month: number;
 
     _current = new Date();
+
     _view: any;
 
     _show: any = {
@@ -71,6 +100,9 @@ export class MnCalendarComponent implements OnInit, OnChanges {
         next_year: true,
         next_month: true
     };
+
+    minDate_: any;
+    maxDate_: any;
 
     constructor(private _mds: MnDatetimeServices) {
         mu.run(!(this.year && this.month), () => {
@@ -93,28 +125,37 @@ export class MnCalendarComponent implements OnInit, OnChanges {
     }
 
     getPrevMonth() {
-        this._month = this._month - 1;
+        let _prev = this._view.mom(-1);
+        this._month = _prev.month;
+        this._year = _prev.year;
+        return _prev;
     }
 
     _getPrevMonth = this.getPrevMonth;
 
-    getPrevYear() {
-        this._month = this._view.month;
-        this._year = this._view.year - 1;
+    getPrevYear(): any {
+        let _prev = this._view.yoy(-1);
+        this._month = _prev.month;
+        this._year = _prev.year;
+        return _prev;
     }
 
     _getPrevYear = this.getPrevYear;
 
-    getNextMonth() {
-        this._month = this._month + 1;
-        console.debug(this._month);
+    getNextMonth(): any {
+        let _next = this._view.mom();
+        this._month = _next.month;
+        this._year = _next.year;
+        return _next;
     }
 
     _getNextMonth = this.getNextMonth;
 
     getNextYear() {
-        this._month = this._view.month;
-        this._year = this._view.year + 1;
+        let _next = this._view.yoy();
+        this._month = _next.month;
+        this._year = _next.year;
+        return _next;
     }
 
     _getNextYear = this.getNextYear;
@@ -122,32 +163,29 @@ export class MnCalendarComponent implements OnInit, OnChanges {
     getView(e) {
         this._view = e;
         this.getShow();
+        this.result.emit(e);
     }
 
     _getView = this.getView;
 
-    // 防止触发
-    // Expression has changed after it was checked.
+    // 设置按钮显示
+    // FIXED NG ERROR::: Expression has changed after it was checked.
     getShow: any = mu.debounce(() => {
         mu.run(this._show, () => {
-            mu.run(this.maxDate, (maxDate) => {
+            mu.run(this.maxDate_, (max) => {
                 // 获取下一年这月的时间戳
-                let next_year_rang = this._mds.getRangTimestamp(this._view.year + 1, this._view.month);
-                this._show.next_year = next_year_rang.start < maxDate;
-                this._show.next_month = this._view.range.end < maxDate;
+                let next_year = this._view.yoy();
+                this._show.next_year = next_year.year_range.start < max.current;
+                this._show.next_month = this._view.month_range.end < max.current;
 
             });
 
-            mu.run(this.minDate, (minDate) => {
-                let prev_year_rang = this._mds.getRangTimestamp(this._view.year - 1, this._view.month);
-                this._show.prev_year = prev_year_rang.end > minDate;
-                this._show.prev_month = (this._view.range.start > minDate);
+            mu.run(this.minDate_, (min) => {
+                let prev_year = this._view.yoy(-1);
+                this._show.prev_year = prev_year.year_range.end > min.current;
+                this._show.prev_month = this._view.month_range.start > min.current;
             });
         });
     }, 300);
-
-
-
-
 
 }

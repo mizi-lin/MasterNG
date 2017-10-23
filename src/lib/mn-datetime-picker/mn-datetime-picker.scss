@@ -43,13 +43,13 @@ mn-calendar-view {
         font-weight: 400;
     }
 
-    .range:not(.next):not(.prev) {
+    .range:not(.next):not(.prev):not(.no-selected) {
         .mn-col-content {
             background: rgb(226, 242, 254);
         }
     }
 
-    .range-reverse:not(.next):not(.prev) {
+    .range-reverse:not(.next):not(.prev):not(.no-selected) {
         .mn-col-content {
             background: rgb(254, 242, 226);
         }

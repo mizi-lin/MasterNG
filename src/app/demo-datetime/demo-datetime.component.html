@@ -1,20 +1,26 @@
 <section class="p-16">
     <mn-panel-s class="bordered mt-16" title="Multiple Calendar">
-        <mn-calendar-multiple></mn-calendar-multiple>
+        <mn-calendar-multiple
+            [startDate]="'2017-06-06'"
+            [endDate]="'2017-08-18'"
+            [minDate]="'2011-09-11'"
+            [maxDate]="'2027-11-16'"
+            (result)="result($event)"
+        ></mn-calendar-multiple>
     </mn-panel-s>
 
-    <mn-panel-s class="bordered mt-16" title="Single Calendar">
-        <mn-calendar></mn-calendar>
-    </mn-panel-s>
+    <!--<mn-panel-s class="bordered mt-16" title="Single Calendar">-->
+        <!--<mn-calendar></mn-calendar>-->
+    <!--</mn-panel-s>-->
 
-    <mn-panel-s class="bordered mt-16" title="Single Calendar">
-        <mn-calendar-view
-                [year]="2017"
-                [month]="10"
-                [date]="10">
-            (result)="getView($event)">
-        </mn-calendar-view>
-    </mn-panel-s>
+    <!--<mn-panel-s class="bordered mt-16" title="Simple Calendar">-->
+        <!--<mn-calendar-view-->
+                <!--[year]="2017"-->
+                <!--[month]="7"-->
+                <!--[day]="10">-->
+            <!--(result)="getView($event)">-->
+        <!--</mn-calendar-view>-->
+    <!--</mn-panel-s>-->
 
 </section>
 

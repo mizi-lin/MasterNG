@@ -21,19 +21,19 @@ declare const mu: any;
 
                     <mn-fill *ngFor="let week of calendar" class="mnc-items" [gutter]="2">
                         <mn-col [span]="1" *ngFor="let d of week"
-                                [class.prev]="d.month < current_month"
-                                [class.next]="d.month > current_month"
-                                [class.today]="d.is_today"
-                                [class.no-selected]="d.range.end < minDate || d.range.start > maxDate"
-                                [class.b]="d.day === 1"
+                                [class.prev]="d?.status === 'prev'"
+                                [class.next]="d?.status === 'next'"
+                                [class.today]="d?.is_today"
+                                [class.no-selected]="d?.no_selected"
+                                [class.b]="d?.day === 1"
                                 [class.selected]="selected(d)"
                                 [class.start]="started(d)"
                                 [class.end]="ended(d)"
                                 [class.range]="ranged(d)"
                                 [class.range-reverse]="reverseRanged(d)"
                                 (mouseover)="hovered(d)"
-                                (click)="selectedDate(d, type, mode, $event)">
-                            {{d.day === 1 ? d.month + '-' + d.day : d.day}}
+                                (click)="selectedDate(d, viewType, mode, $event)">
+                            {{d?.day === 1 ? d?.month + '-' + d?.day : d?.day}}
                             <!--{{d.year}}-{{d.month}}-{{d.date}}-->
                         </mn-col>
                     </mn-fill>
@@ -48,21 +48,28 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
 
     @Input() year: number;
     @Input() month: number;
-    @Input() date: number = 1;
-    @Input() type: string = 'view';
-    @Input() mode: string;
+    @Input() day: number = 1;
+    @Input() viewType: string = 'view';
+    @Input() mode: string = 'single';
 
-    @Input() maxDate: string | number | any;
-    @Input() minDate: string | number | any;
+    @Input()
+    set minDate(date) {
+        this.minDate_ = this._mds.mndate(date);
+    }
+
+    @Input()
+    set maxDate(date) {
+        this.maxDate_ = this._mds.mndate(date);
+    }
 
     @Input()
     set startDate(date) {
-        this.selected_start = mu.type(date, 'object') ? date : this._getDate(date);
+        this.selected_start = this._mds.mndate(date);
     }
 
     @Input()
     set endDate(date) {
-        this.selected_end = mu.type(date, 'object') ? date : this._getDate(date);
+        this.selected_end = this._mds.mndate(date);
     }
 
     @Output() result = new EventEmitter<any>();
@@ -76,6 +83,13 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
     // 鼠标滑过日期
     _selected_end: any;
 
+    minDate_: any;
+    maxDate_: any;
+
+    current: any;
+    prev: any;
+    next: any;
+
     constructor(private _mds: MnDatetimeServices) {
     }
 
@@ -84,156 +98,100 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges) {
 
-        mu.exist(mu.prop(changes, 'maxDate.currentValue'), () => {
-            this.maxDate = mu.timestamp(this.maxDate);
-        });
-
-        mu.exist(mu.prop(changes, 'minDate.currentValue'), () => {
-            this.minDate = mu.timestamp(this.minDate);
-        });
-
+        // year or month change
         mu.run(mu.prop(changes, 'year.currentValue') || mu.prop(changes, 'month.currentValue'), () => {
-            let d = new Date(this.year, this.month, 0);
-            let current_year = d.getFullYear();
-            let current_month = d.getMonth() + 1;
-            this.current_month = current_month;
 
-            this.result.emit({
-                year: current_year,
-                month: current_month,
-                range: this._mds.getRangTimestamp(current_year, current_month)
+            // 年月必须同时存在
+            if (!(this.year && this.month)) {
+                let d = new Date();
+                this.year = d.getFullYear();
+                this.month = d.getMonth() + 1;
+            }
+
+            // 获取当前时间信息
+            let current = this.current = this._mds.mndate(this._getDate(this.year, this.month, this.day));
+            let prev = this.prev = current.mom(-1);
+            let next = this.next = current.mom(1);
+
+            this.result.emit(current);
+
+            // 获取日历时间列表
+            const dates = mu.run(() => {
+                let prev_dates = [], current_dates = [], next_dates = [];
+
+                let i = 0;
+                while (i < current.month_range.first_day_weekday) {
+                    let _d = this.getDate(prev.year, prev.month, prev.month_range.last_day - i);
+                    prev_dates.push(_d);
+                    i++;
+                }
+                prev_dates = prev_dates.reverse();
+
+                current_dates = mu.map(current.month_range.last_day, (day) => {
+                    return this.getDate(current.year, current.month, day);
+                }, []);
+
+
+                const len = 42 - prev_dates.length - current_dates.length;
+                for (let j = 1; j <= len; j++) {
+                    let _d = this.getDate(next.year, next.month, j);
+                    next_dates.push(_d);
+                }
+
+                return [...prev_dates, ...current_dates, ...next_dates];
             });
 
-            console.debug(this.type, this.month, mu.format(d, 'yyyy-MM-dd'));
-
-            // 获得月份的最后一天
-            // 即当前月份的天数
-            let current_date = d.getDate();
-
-            // 日历中当前月份的天数
-            let current_day = current_date;
-
-            // 获得当前月份的第一天是周几
-            d.setDate(1);
-            let current_first_day = d.getDay();
-
-            // 获得上个月的最后一天
-            d.setDate(0);
-            let last_month_date = d.getDate();
-            let prev_year = d.getFullYear();
-            let prev_month = d.getMonth() + 1;
-            let first_date_ = last_month_date - current_first_day;
-
-            // 获得下个月的日期信息
-            let nd = new Date(this.year, this.month + 1, 0);
-            let next_month = nd.getMonth() + 1;
-            let next_year = nd.getFullYear();
-
-            // 勾画当前月份日历视图数据
-            let _calendar = mu.map(6, (i) => {
+            let _dates = mu.map(6, (i) => {
                 return new Array(7);
             }, []);
 
-            // prev current next
-            let status = 'prev';
-
-            // 构建日期数组
             mu.each(42, (i, ii) => {
-                let index_1 = Math.floor(ii / 7);
-                let index_2 = ii % 7;
-
-                if (!ii && !current_first_day) {
-                    status = 'current';
-                }
-
-                if (status === 'next') {
-                    let _nd = i - current_first_day - current_date;
-                    _calendar[index_1][index_2] = this.getDate(next_year, next_month, index_2, _nd);
-                }
-
-                if (status === 'current') {
-                    let _cd = i - current_first_day;
-                    _calendar[index_1][index_2] = this.getDate(current_year, current_month, index_2, _cd);
-                    if (_cd === current_date) {
-                        status = 'next';
-                    }
-                }
-
-                if (i <= current_first_day) {
-                    let _pd = i + first_date_;
-                    _calendar[index_1][index_2] = this.getDate(prev_year, prev_month, index_2, _pd);
-                    if (i === current_first_day) {
-                        status = 'current';
-                    }
-                }
-
+                let row = Math.floor(ii / 7);
+                let col = ii % 7;
+                _dates[row][col] = dates[ii];
             });
 
-            this.calendar = _calendar;
+            this.calendar = _dates;
         });
     }
 
-    isToday(year, month, date) {
-        const today = new Date();
-        return today.getFullYear() === year && (today.getMonth() + 1) === month && today.getDate() === date;
-    }
-
-    timestamp(year, month, date) {
-        let d = new Date(year, month - 1, date, 0, 0, 0, 0);
-        const start = +d;
-        d = new Date(year, month - 1, date, 23, 59, 59, 999);
-        const end = +d;
-
-        return {
-            start,
-            end
-        };
+    // 获得日期字符串
+    _getDate(year: number, month: number = 1, day: number = 1): string {
+        return `${year}-${mu.leftpad(month, 2)}-${mu.leftpad(day, 2)}`;
     }
 
     // 获得当前日期
-    getDate(year: number, month: number, weekday: number, day: number): any {
-        let rst = {
-            day: day,
-            year: year,
-            month: month,
-            weekday: weekday,
-            is_today: this.isToday(year, month, day),
-            not_selected: false,
-            range: this.timestamp(year, month, day),
-            status: month < this.current_month ? 'prev' : month > this.current_month ? 'next' : 'current'
-        };
+    getDate(year: number, month: number, day: number): any {
 
-        if (this.minDate && !rst.not_selected) {
-            rst.not_selected = rst.range.end < this.minDate;
-        }
+        const date = this._getDate(year, month, day);
+        const rst = this._mds.mndate(date);
+        rst.is_today = rst.range.start === mu.timestamp(new Date(), 'hhmmssSS');
+        rst.status = this.prev.month_range.end > rst.month_range.start
+            ? 'prev' : this.next.month_range.start < rst.month_range.end
+            ? 'next' : 'current';
 
-        if (this.maxDate && !rst.not_selected) {
-            rst.not_selected = rst.range.start > this.maxDate;
-        }
+        mu.run(this.minDate_, (min) => {
+            rst.min_date = min.current;
+            rst.min = rst.range.end < min.current;
+        });
+
+        mu.run(this.maxDate_, (max) => {
+            rst.max_date = max.current;
+            rst.max = rst.range.start > max.current;
+        });
+
+        rst.no_selected = mu.ifnvl(rst.min, false) || mu.ifnvl(rst.max, false);
 
         return rst;
-    }
-
-    _getDate(date: any): any {
-        if (date) {
-            date = mu.timestamp(date);
-            date = new Date(date);
-            const year = date.getFullYear();
-            const month = date.getMonth();
-            const weekday = date.getDay();
-            const day = date.getDate();
-            return this.getDate(year, month, weekday, day);
-        }
-
     }
 
     selectedDate(date, type, mode) {
         if (this.mode === 'single' && !date.not_selected) {
             this.selected_start = date;
+            this.result.emit(date);
         }
-
-        console.debug(date);
     }
+
 
     selected(d) {
         if (this.mode === 'single') {
@@ -247,7 +205,7 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
     }
 
     started(d) {
-        if (this.mode === 'multiple' && d.month === this.current_month) {
+        if (d.status === 'current' && this.mode === 'multiple') {
             return mu.run(this.selected_start, () => {
                 return d.range.start === mu.prop(this.selected_start, 'range.start');
             });
@@ -255,7 +213,7 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
     }
 
     ended(d) {
-        if (this.mode === 'multiple' && d.month === this.current_month) {
+        if (d.status === 'current' && this.mode === 'multiple') {
             return mu.run(this.selected_end, () => {
                 return d.range.start === mu.prop(this.selected_end, 'range.start');
             });
