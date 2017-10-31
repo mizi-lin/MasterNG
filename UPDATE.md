@@ -63,3 +63,6 @@
 
 * MnReqNoDataComponent adjust style
 * b1: Echart download filename add timestamp
+* b3: 修正echart panel下载文件中中文乱码
+* b4: 修正词云快速设置option时，nomerge失效造成词云重叠 （升级echarts以及相关架包）
+* b5: 饼图自动排序

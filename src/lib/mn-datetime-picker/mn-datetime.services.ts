@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {max} from 'rxjs/operator/max';
+import {count} from 'rxjs/operator/count';
 
 declare const mu: any;
 
@@ -7,6 +8,80 @@ declare const mu: any;
 export class MnDatetimeServices {
 
     constructor() {
+    }
+
+    getRangeDate(rule: string) {
+        let mndate = this.mndate(new Date());
+
+        let _range_map = {
+            y: 'year_range',
+            M: 'month_range',
+            d: 'range',
+            w: 'week_range',
+            q: 'quarter_range'
+        };
+
+        let _rule = (rule): any[] => {
+            let regx = /(([-+]|)\d{1,})([:]|)([yMdhmsSqw])$/i;
+            let rst = (rule || '').match(regx);
+            return [rst[1], rst[4], rst[3]];
+        };
+
+        let _getRangeDate = (diff: string | number, type: string, begin?: boolean) => {
+            diff = parseInt((diff + ''), 10);
+            let _map = {
+                y: 'yoy',
+                M: 'mom',
+                d: 'dod',
+                h: 'sos',
+                m: 'sos',
+                s: 'sos',
+                S: 'sos',
+                q: 'qoq',
+                w: 'wow',
+            };
+
+            // todo mom -> mm
+
+            return mndate[_map[type]](diff, begin);
+        };
+
+        let [_r1, _r2] = rule.split(',');
+
+        console.debug(_r1, _r2);
+
+        let _start, _end;
+
+        mu.run(mu.trim(_r1 || ''), (_r1) => {
+            let _rst = _rule(_r1) || [];
+            let [_diff, _type, _begin] = _rst;
+            _start = _getRangeDate(_diff, _type, !!_begin);
+        });
+
+        _end = mu.run(mu.trim(_r2 || ''), (_r2) => {
+            let _rst = _rule(_r2) || [];
+            let [_diff, _type, _begin] = _rst;
+
+            _end = _getRangeDate(_diff, _type, _begin);
+
+            if (_begin) {
+                _end = _start[_range_map[_type]].end;
+                // _start = _start[_range_map[_type]].start;
+            }
+        });
+
+        if (!_end) {
+            _end = mndate;
+        }
+
+        let rst = [_start, _end].sort((a, b) => {
+            return a.range.start > b.range.start ? 1 : -1;
+        });
+
+        return {
+            startDate: rst[0],
+            endDate: rst[1],
+        };
     }
 
     reStartDate(startDate, maxDate, minDate) {
@@ -36,7 +111,7 @@ export class MnDatetimeServices {
                 endDate = maxDate;
             }
 
-            if (minDate  && minDate.range.start > endDate.range.start) {
+            if (minDate && minDate.range.start > endDate.range.start) {
                 endDate = minDate;
             }
         }
@@ -44,8 +119,13 @@ export class MnDatetimeServices {
         return endDate;
     }
 
-    // 一个基于MasterNG的时间格式
-    mndate(date: string | number | any) {
+    /**
+     * 一个基于MasterNG的时间格式
+     * @param {string | number | any} date
+     * @param {string} dateType
+     * @return {any}
+     */
+    mndate(date: string | number | any, dateType: string = 'day') {
         const type = mu.type(date);
         let _date;
 
@@ -150,17 +230,79 @@ export class MnDatetimeServices {
             };
         });
 
+        // 年
+        let yoy = (count: number = 1, begin: boolean = false) => {
+            let __date = new Date(_date);
+            __date.setFullYear(year + count);
+            if (begin) {
+                __date.setMonth(0);
+                __date.setDate(1);
+                __date.setHours(0);
+                __date.setMinutes(0);
+                __date.setSeconds(0);
+                __date.setMilliseconds(0);
+            }
+            return this.mndate(__date, 'year_range');
+        };
+
         // 获得同比时间信息
-        let mom = (count: number = 1) => {
+        /**
+         *
+         * @param {number} count
+         * @param {boolean} begin
+         *        begin, 决定range值的始末值，默认为相对值，
+         *        begin -> false ::: 2017-07-18 上个月为  2017-06-18 - 2017-07-17
+         *        begin -> true  ::: 2017-07-18 上个月为  2017-06-01 - 2017-06-30
+         * @return any;
+         */
+        let mom = (count: number = 1, begin: boolean = false) => {
             let __date = new Date(_date);
             __date.setMonth(month - 1 + count);
+
+            if (begin) {
+                __date.setDate(1);
+                __date.setHours(0);
+                __date.setMinutes(0);
+                __date.setSeconds(0);
+                __date.setMilliseconds(0);
+            }
+
+            return this.mndate(__date, 'month_range');
+        };
+
+        // 季度
+        let qoq = (count: number = 1, begin: boolean = false) => {
+            count = count * 3;
+            return mom(count, begin);
+        };
+
+        // 周
+        let wow = (count: number = 1, begin: boolean = false) => {
+            let __date = new Date(_date);
+            __date.setDate(day + 7 * count);
+
+            if (begin) {
+                __date.setDate(__date.getDate() - weekday);
+                __date.setHours(0);
+                __date.setMinutes(0);
+                __date.setSeconds(0);
+                __date.setMilliseconds(0);
+            }
             return this.mndate(__date);
         };
 
-        let yoy = (count: number = 1) => {
+        // 天
+        let dod = (count: number = 1, begin: boolean = false) => {
             let __date = new Date(_date);
-            __date.setFullYear(year + count);
-            return this.mndate(__date);
+            __date.setDate(day + count);
+
+            if (begin) {
+                __date.setHours(0);
+                __date.setMinutes(0);
+                __date.setSeconds(0);
+                __date.setMilliseconds(0);
+            }
+            return this.mndate(__date, 'range');
         };
 
         return {
@@ -176,6 +318,10 @@ export class MnDatetimeServices {
             date,
             mom,
             yoy,
+            wow,
+            qoq,
+            dod,
+            dateType,
             _date: mu.format(_date, 'yyyy-MM-dd hh:mm:ss.SS')
         };
 

@@ -10,18 +10,28 @@ export const YEAR_MILLISECONDS = 864000;
     template: `
         <mn-fill [hph]="false" class="mnc-header">
             <mn-col [style.width.px]="60" class="mnc-header-prev">
-                <button (click)="getPrevYear()" *ngIf="viewType !== 'next' && _show.prev_year">上一年</button>
-                <button
-                        (click)="getPrevMonth()"
-                        *ngIf="(viewType !== 'next') && _show.prev_month">上一月
-                </button>
+                <i class="fa fa-angle-double-left"
+                   (click)="getPrevYear()"
+                   *ngIf="viewType !== 'next' && _show.prev_year">
+                </i>
+                <i class="fa fa-angle-left"
+                   (click)="getPrevMonth()"
+                   *ngIf="(viewType !== 'next') && _show.prev_month">
+                </i>
+
             </mn-col>
             <mn-col [span]="1" class="mnc-header-current">
                 {{this._view?.year}}-{{this._view?.month}}
             </mn-col>
             <mn-col [style.width.px]="60" class="mnc-header-next">
-                <button (click)="getNextMonth()" *ngIf="viewType !== 'prev' && _show.next_month">下一月</button>
-                <button (click)="getNextYear()" *ngIf="viewType !== 'prev' && _show.next_year">下一年</button>
+                <i class="fa fa-angle-right"
+                   (click)="getNextMonth()"
+                   *ngIf="viewType !== 'prev' && _show.next_month">
+                </i>
+                <i class="fa fa-angle-double-right"
+                   (click)="getNextYear()"
+                   *ngIf="viewType !== 'prev' && _show.next_year">
+                </i>
             </mn-col>
         </mn-fill>
 

@@ -44,25 +44,43 @@ export class MnCalendarMultipleComponent implements OnInit {
 
     @Input()
     set minDate(date) {
+        if (!date) {
+            return;
+        }
         this.minDate_ = this._mds.mndate(date);
     }
 
     @Input()
     set maxDate(date) {
+        if (!date) {
+            return;
+        }
         this.maxDate_ = this._mds.mndate(date);
     }
 
     @Input()
     set startDate(date) {
+        if (!date) {
+            return;
+        }
         this.startDate_ = this._mds.mndate(date);
         this.startDate_ = this._mds.reStartDate(this.startDate_, this.maxDate_, this.minDate_);
         this.prev_year = this.startDate_.year;
         this.prev_month = this.startDate_.month;
         this.prev_date = this.startDate_.day;
+
+        setTimeout(() => {
+            if (!this.endDate_) {
+                this.result.emit({startDate: this.startDate_});
+            }
+        }, 100);
     }
 
     @Input()
     set endDate(date) {
+        if (!date) {
+            return;
+        }
         this.endDate_ = this._mds.mndate(date);
         this.endDate_ = this._mds.reEndDate(this.endDate_, this.maxDate_, this.minDate_);
         this.next_year = this.endDate_.year;
@@ -76,6 +94,11 @@ export class MnCalendarMultipleComponent implements OnInit {
             this.next_month = _adjust_next.month;
             this.next_date = _adjust_next.day;
         }
+
+        this.result.emit({
+            startDate: this.startDate_,
+            endDate: this.endDate_
+        });
     }
 
     @Output() result: any = new EventEmitter<any>();

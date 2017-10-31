@@ -1,0 +1,15 @@
+mn-dropdown {
+    position: relative;
+    z-index: 1;
+
+    mn-dropdown-content {
+        position: absolute;
+        z-index: 2;
+        left: -9999px;
+        top: -9999px;
+
+        padding: 8px;
+        border: 1px solid #eee;
+
+    }
+}

@@ -5,6 +5,7 @@ import {MnLayoutModule} from '../mn-layout/mn-layout.module';
 import {MnCalendarViewComponent} from './mn-calendar-view.component';
 import {MnCalendarMultipleComponent} from './mu-calendar-multiple.component';
 import {MnDatetimeServices} from './mn-datetime.services';
+import {MuDatetimeQuickComponent} from './mu-datetime-quick.component';
 
 @NgModule({
     imports: [
@@ -15,13 +16,15 @@ import {MnDatetimeServices} from './mn-datetime.services';
     declarations: [
         MnCalendarComponent,
         MnCalendarViewComponent,
-        MnCalendarMultipleComponent
+        MnCalendarMultipleComponent,
+        MuDatetimeQuickComponent
     ],
 
     exports: [
         MnCalendarComponent,
         MnCalendarViewComponent,
-        MnCalendarMultipleComponent
+        MnCalendarMultipleComponent,
+        MuDatetimeQuickComponent
     ],
 
     providers: [

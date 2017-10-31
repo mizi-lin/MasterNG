@@ -1,18 +1,58 @@
+mn-datetime-quick {
+
+    mn-fill {
+        height: 28px;
+    }
+
+    section {
+        display: none;
+        &.active {
+            display: block;
+        }
+
+        li {
+            padding-left: 8px;
+            height: 28px;
+            line-height: 28px;
+            &:hover {
+                background: rgba(61, 168, 245, .3);
+                cursor: pointer;
+            }
+        }
+    }
+
+}
+
 mn-calendar {
     .mnc-header {
         height: 28px;
+        font-size: 15px;
 
         .mnc-header-prev {
+            padding-left: 8px;
             text-align: left;
         }
 
         .mnc-header-current {
             text-align: center;
-            font-size: 15px;
         }
 
         .mnc-header-next {
+            padding-right: 8px;
             text-align: right;
+        }
+
+        i {
+            width: 16px;
+            text-align: center;
+            color: #999;
+            font-size: 16px;
+
+            &:hover {
+                color: rgba(61, 168, 245, .8);
+            }
+
+            transition: color .2s ease-in-out;
         }
 
         + mn-calendar-view {
@@ -20,7 +60,6 @@ mn-calendar {
         }
     }
 }
-
 
 mn-calendar-view {
     display: block;

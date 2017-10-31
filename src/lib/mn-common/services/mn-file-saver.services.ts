@@ -21,7 +21,7 @@ export class MnFileSaverServices {
      * @param options
      * @author FileSaver.js
      */
-    fileSaver(contents: string[], down_name: string, type: string = 'text/plain', options: any = {}): void {
+    fileSaver(contents: string[], down_name: string, type: string = 'text/plain;charset=utf-8', options: any = {}): void {
         const file = new File(contents, down_name, mu.extend({type}, options));
         (<any>saveAs)(file);
     }

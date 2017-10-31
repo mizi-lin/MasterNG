@@ -2,6 +2,10 @@
  * https://github.com/xieziyu/angular2-echarts/blob/master/src/directive/angular-echarts.directive.ts
  */
 
+// "echarts": "3.6.2",
+// "echarts-wordcloud": "1.1.0",
+// "zrender": "3.5.2"
+
 import {
     Directive,
     ElementRef,
@@ -106,9 +110,19 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         this._result['height'] = _height;
         this.result.emit(this._result);
         this.options = this._es.adjustOptionsWithLegend(this.options, _width, _height);
-        this._chart.setOption(this.options, true);
-        this._chart.resize();
+        this._de(this._chart, this.options);
     }
+
+    _de: any = mu.debounce((_chart, options) => {
+        // 确保 wordcloud 清理的缓存
+        // 但可能会造成内存消耗过大
+        // 持续跟踪
+        if (mu.prop(options, 'series.0.type') === 'wordCloud') {
+            _chart.clear();
+        }
+        _chart.setOption(options, true);
+        _chart.resize();
+    }, 300);
 
     @HostListener('window:resize', ['$event'])
     onWindowResize(event: any): void {
@@ -127,6 +141,12 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
 
         if (changes['options']) {
             this.onOptionsChange(this.options);
+
+            setTimeout(() => {
+                this.onOptionsChange(this.options);
+                this.onOptionsChange(this.options);
+                this.onOptionsChange(this.options);
+            }, 200);
         }
 
         // -> 空的options, 不渲染echarts

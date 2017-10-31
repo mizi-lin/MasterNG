@@ -1,23 +1,39 @@
 <div class="p-16" [style.height.px]="height">
 
-    <mn-echarts-panel class="bordered" title="EchartsPanel::bar mn-panel && tools"
-                      [hph]="true"
-                      [req]="{url: './assets/store/echarts-bar-nodata.json'}"
-                      [type]="'bar'"
-                      [setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}">
-    </mn-echarts-panel>
+    <!--<mn-echarts-panel class="bordered" title="EchartsPanel::bar mn-panel && tools"-->
+                      <!--[hph]="true"-->
+                      <!--[req]="{url: './assets/store/echarts-bar-nodata.json'}"-->
+                      <!--[type]="'bar'"-->
+                      <!--[setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}">-->
+    <!--</mn-echarts-panel>-->
 
-    <mn-echarts-box class="bordered"
-                    [req]="{url: './assets/store/echarts-radar.json'}"
-                    [type]="'radar'"
-                    [show_tools]="'show'"
-                    [loader]="abc"
-                    [setting]="{legend_show: false, tooltip: true}">
-    </mn-echarts-box>
+    <!--<mn-echarts-box class="bordered"-->
+                    <!--[req]="{url: './assets/store/echarts-radar.json'}"-->
+                    <!--[type]="'radar'"-->
+                    <!--[show_tools]="'show'"-->
+                    <!--[loader]="abc"-->
+                    <!--[setting]="{legend_show: false, tooltip: true}">-->
+    <!--</mn-echarts-box>-->
 
-    <div class="mt-16 mb-16" mn-element #abc="element" [ngStyle]="{'height': '200px', 'background': '#f00'}">
+    <mn-panel-s class="mt-8 bordered" title="MnEchartsService::data conversion options" mn-element #abc="element">
+        <mn-req [req]="{url: './assets/store/pie.json'}"
+                [loader]="abc.elementRef"
+                (result)="pie_data = $event.data">
+            <mn-row>
+                <mn-col [span]="12">
+                    <mn-echarts
+                            [data]="pie_data"
+                            (result)="options = $event.options"
+                            [type]="'pie'" [setting]="{subtype: 'annular', legend_show: false, selected: 1}" [style.height.px]="300">
+                    </mn-echarts>
+                </mn-col>
+            </mn-row>
+        </mn-req>
+    </mn-panel-s>
 
-    </div>
+    <!--<div class="mt-16 mb-16" mn-element #abc="element" [ngStyle]="{'height': '200px', 'background': '#f00'}">-->
+
+    <!--</div>-->
 
 </div>
 

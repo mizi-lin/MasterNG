@@ -92,6 +92,7 @@ export class MnEchartsService {
             pie: [
                 '$module',
                 'convert',
+                'data_sort',
                 '$series',
                 'series_sort',
                 'series_subtype',
@@ -234,6 +235,13 @@ export class MnEchartsService {
             data = this.convert(data, setting.convert);
         };
 
+        // 对原始数据按照value进行排序
+        fn.data_sort = () => {
+            data = data.sort((a, b) => {
+                return a.value > b.value ? 1 : -1;
+            });
+        };
+
         // -> 关键步骤
         // series 处理
         fn.$series = () => {
@@ -263,9 +271,6 @@ export class MnEchartsService {
                 let sort_data = mu.clone(_series_data[legend]);
 
                 sort_data = sort_data.sort((a, b) => {
-
-                    console.debug(111111111);
-
                     if (setting.sort_all) {
                         return sort === 'desc' ? (b._total - a._total) : (a._total - b._total);
                     }
