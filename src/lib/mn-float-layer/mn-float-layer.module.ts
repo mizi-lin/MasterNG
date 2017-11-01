@@ -1,21 +1,27 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MnDropdownComponent, MnDropdownContentComponent} from './mn-dropdown.component';
+import {MnDropdownComponent} from './mn-dropdown.component';
+import {MnDropdownContentComponent} from './mn-dropdown-content.component';
+import {MnLayerDirective} from './mn-layer.directive';
+import {MnLayerContainerService} from './mn-layer-container.service';
 
 
 @NgModule({
     imports: [
-        CommonModule,
+        CommonModule
     ],
     declarations: [
         MnDropdownComponent,
-        MnDropdownContentComponent
+        MnDropdownContentComponent,
+        MnLayerDirective
     ],
     exports: [
         MnDropdownComponent,
-        MnDropdownContentComponent
+        MnDropdownContentComponent,
+        MnLayerDirective
     ],
     providers: [
+        MnLayerContainerService
     ]
 })
 export class MnFloatLayerModule {

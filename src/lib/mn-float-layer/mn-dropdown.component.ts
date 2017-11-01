@@ -1,15 +1,27 @@
-import {Component, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, ContentChild, ElementRef, HostListener, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
+import {MnDropdownContentComponent} from './mn-dropdown-content.component';
 
 @Component({
     selector: 'mn-dropdown',
     template: `
-        <ng-content></ng-content>
+        <div>
+            <ng-content></ng-content>
+        </div>
+
+        <ng-template
+            [mnLayerModule]="'mn-dropdown'"
+                mnLayer>
+            <ng-content select="mn-dropdown-content"></ng-content>
+        </ng-template>
+
     `,
-    styleUrls: ['./mn-dropdown.scss'],
+    // styleUrls: ['./mn-dropdown.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class MnDropdownComponent implements OnInit {
-    
+
+    @ContentChild(MnDropdownContentComponent) _content;
+
     constructor(private _ref: ElementRef) {
     }
 
@@ -17,19 +29,6 @@ export class MnDropdownComponent implements OnInit {
     }
 }
 
-@Component({
-    selector: 'mn-dropdown-content',
-    template: `
-        <ng-content></ng-content>
-    `,
-    encapsulation: ViewEncapsulation.None
-})
-export class MnDropdownContentComponent implements OnInit {
-    constructor() {
-    }
 
-    ngOnInit() {
-    }
-}
 
 

@@ -238,7 +238,11 @@ export class MnEchartsService {
         // 对原始数据按照value进行排序
         fn.data_sort = () => {
             data = data.sort((a, b) => {
-                return a.value > b.value ? 1 : -1;
+                if (setting.data_sort === 'asc') {
+                    return a.value > b.value ? 1 : -1;
+                } else {
+                    return a.value > b.value ? -1 : 1;
+                }
             });
         };
 

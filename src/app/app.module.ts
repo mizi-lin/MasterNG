@@ -20,6 +20,7 @@ import { HeatWidgetComponent } from './common/widgets/heat-widget/heat-widget.co
 import { DemoEchart2Component } from './demo-echart2/demo-echart2.component';
 import {MnEchartsService} from '../lib/mn-echarts/mn-echarts.service';
 import { DemoDatetimeComponent } from './demo-datetime/demo-datetime.component';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -35,6 +36,7 @@ import { DemoDatetimeComponent } from './demo-datetime/demo-datetime.component';
         DemoDatetimeComponent
     ],
     imports: [
+        CommonModule,
         BrowserModule,
         NgZorroAntdModule.forRoot(),
 

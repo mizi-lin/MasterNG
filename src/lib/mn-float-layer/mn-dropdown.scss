@@ -1,9 +1,12 @@
 mn-dropdown {
-    position: relative;
-    z-index: 1;
+    display: block;
+    width: 300px;
+    height: 40px;
+    background: #659be0;
 
     mn-dropdown-content {
         position: absolute;
+        display: block;
         z-index: 2;
         left: -9999px;
         top: -9999px;
