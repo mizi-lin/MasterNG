@@ -21,7 +21,7 @@ export class MnLayerContainerService implements OnDestroy {
 
     protected _createContainer(): void {
         let container = document.createElement('div');
-        container.classList.add('mn-layer-container');
+        container.classList.add('mnc-layer-container');
         document.body.appendChild(container);
         this._containerElement = container;
     }

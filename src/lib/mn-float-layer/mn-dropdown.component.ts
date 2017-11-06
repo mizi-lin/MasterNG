@@ -1,5 +1,8 @@
-import {Component, ContentChild, ElementRef, HostListener, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
-import {MnDropdownContentComponent} from './mn-dropdown-content.component';
+import {Component, ContentChild, ElementRef, HostListener, Input, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
+
+declare const mu: any;
+
+let i = 300, ii = 200;
 
 @Component({
     selector: 'mn-dropdown',
@@ -9,20 +12,75 @@ import {MnDropdownContentComponent} from './mn-dropdown-content.component';
         </div>
 
         <ng-template
-            [mnLayerModule]="'mn-dropdown'"
+                [mnLayerModule]="'dropdown'"
+                [mnLayerStatus]="status"
+                [mnLayerStyle]="styles"
+                [mnLayerHideEvt]="'click'"
                 mnLayer>
             <ng-content select="mn-dropdown-content"></ng-content>
         </ng-template>
 
     `,
-    // styleUrls: ['./mn-dropdown.scss'],
+    styleUrls: ['./mn-dropdown.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class MnDropdownComponent implements OnInit {
 
-    @ContentChild(MnDropdownContentComponent) _content;
+    @HostListener('mouseover', ['$event'])
+    _hover($event) {
+        mu.run(this._hasEvt($event.type), () => this._evt($event));
+    }
+
+    @HostListener('click', ['$event']) _click = this._hover;
+
+    @HostListener('mouseleave', ['$event'])
+    _out($event) {
+        this._evt($event);
+    }
+
+    @Input('mnShowTypes') showtypes: string = 'mouseover';
+
+    status: string = 'hide';
+
+    styles: any;
+
+    top: number;
+    left: number;
 
     constructor(private _ref: ElementRef) {
+    }
+
+    _position() {
+        const _el = this._ref.nativeElement;
+        const top = _el.offsetTop + _el.clientHeight;
+        const left = _el.offsetLeft;
+        return {
+            top,
+            left
+        };
+    }
+
+    _evt: any = mu.debounce(($event) => {
+        const type = $event.type;
+        if (type === 'mouseover' || type === 'click') {
+            this.status = 'show';
+            this.styles = {
+                left: this._position().left + 'px',
+                top: this._position().top + 'px'
+            };
+        } else if (type === 'mouseleave') {
+            this.status = 'hide';
+        }
+
+    }, 300);
+
+    _hasEvt(type) {
+        const types = this.showtypes.split(',');
+        const _rst = types.filter((_type) => {
+            return _type.trim() === type;
+        });
+
+        return !mu.isEmpty(_rst);
     }
 
     ngOnInit() {

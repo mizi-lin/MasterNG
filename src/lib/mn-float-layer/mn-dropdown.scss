@@ -5,14 +5,15 @@ mn-dropdown {
     background: #659be0;
 
     mn-dropdown-content {
-        position: absolute;
-        display: block;
-        z-index: 2;
-        left: -9999px;
-        top: -9999px;
-
         padding: 8px;
-        border: 1px solid #eee;
-
+        background: #f00;
     }
+}
+
+.mnc-layer {
+    position: absolute;
+    z-index: 2;
+    border: 1px solid #eee;
+    background: #fff;
+    min-width: 200px;
 }
