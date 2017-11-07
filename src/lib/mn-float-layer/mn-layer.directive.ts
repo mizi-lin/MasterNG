@@ -1,5 +1,6 @@
 import {
-    Directive, ElementRef, EmbeddedViewRef, HostBinding, HostListener, Input, OnInit, Renderer2, TemplateRef,
+    AfterViewInit,
+    Directive, ElementRef, EmbeddedViewRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, Renderer2, TemplateRef,
     ViewContainerRef
 } from '@angular/core';
 import {MnLayerContainerService} from './mn-layer-container.service';
@@ -19,7 +20,7 @@ export class MnLayerContext {
 }
 
 @Directive({selector: '[mnLayer]'})
-export class MnLayerDirective implements OnInit {
+export class MnLayerDirective implements OnInit, AfterViewInit {
 
     @Input('mnLayerModule') _module;
 
@@ -45,6 +46,8 @@ export class MnLayerDirective implements OnInit {
         }
     }
 
+    @Output('mnResult') result: any = new EventEmitter<any>();
+
     _clear: any;
     _showed: boolean = false;
 
@@ -69,6 +72,13 @@ export class MnLayerDirective implements OnInit {
 
     }
 
+    ngAfterViewInit() {
+        this.result.emit({
+            hide: () => this._hide(),
+            show: () => this._show
+        });
+    }
+
     private _createLayerElement() {
         let layer = document.createElement('div');
         layer.id = `mnc-layer-${nextUniqueId++}`;
@@ -83,15 +93,14 @@ export class MnLayerDirective implements OnInit {
             clearTimeout(this._clear);
         });
 
-        this._render.listen(layer, 'mouseleave', () => {
-            this._clear = setTimeout(() => {
-                this._hide();
-                this._showed = false;
-            }, 500);
-        });
+        // this._render.listen(layer, 'mouseleave', () => {
+        //     this._clear = setTimeout(() => {
+        //         this._hide();
+        //         this._showed = false;
+        //     }, 500);
+        // });
 
         // 绑定隐藏事件
-        console.debug(this._hide_evt);
         mu.run(this._hide_evt, () => {
             this._render.listen(layer, this._hide_evt, () => {
                 this._hide();

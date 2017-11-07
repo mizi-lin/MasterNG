@@ -1,4 +1,7 @@
-import {Component, ContentChild, ElementRef, HostListener, Input, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
+import {
+    Component, ContentChild, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, ViewChildren,
+    ViewEncapsulation
+} from '@angular/core';
 
 declare const mu: any;
 
@@ -15,7 +18,8 @@ let i = 300, ii = 200;
                 [mnLayerModule]="'dropdown'"
                 [mnLayerStatus]="status"
                 [mnLayerStyle]="styles"
-                [mnLayerHideEvt]="'click'"
+                [mnLayerHideEvt]="hidetype"
+                (mnResult)="_result($event)"
                 mnLayer>
             <ng-content select="mn-dropdown-content"></ng-content>
         </ng-template>
@@ -40,6 +44,10 @@ export class MnDropdownComponent implements OnInit {
 
     @Input('mnShowTypes') showtypes: string = 'mouseover';
 
+    @Input('mnHideEventType') hidetype: string;
+
+    @Output('mnResult') result: any = new EventEmitter<any>();
+
     status: string = 'hide';
 
     styles: any;
@@ -52,8 +60,10 @@ export class MnDropdownComponent implements OnInit {
 
     _position() {
         const _el = this._ref.nativeElement;
-        const top = _el.offsetTop + _el.clientHeight;
-        const left = _el.offsetLeft;
+        const rect = _el.getBoundingClientRect();
+
+        const top = rect.top + rect.height;
+        const left = rect.left;
         return {
             top,
             left
@@ -62,6 +72,7 @@ export class MnDropdownComponent implements OnInit {
 
     _evt: any = mu.debounce(($event) => {
         const type = $event.type;
+
         if (type === 'mouseover' || type === 'click') {
             this.status = 'show';
             this.styles = {
@@ -81,6 +92,10 @@ export class MnDropdownComponent implements OnInit {
         });
 
         return !mu.isEmpty(_rst);
+    }
+
+    _result($event) {
+        this.result.emit($event);
     }
 
     ngOnInit() {

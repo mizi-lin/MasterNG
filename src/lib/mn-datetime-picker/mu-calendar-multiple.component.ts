@@ -42,7 +42,7 @@ declare const mu: any;
 })
 export class MnCalendarMultipleComponent implements OnInit {
 
-    @Input()
+    @Input('mnMinDate')
     set minDate(date) {
         if (!date) {
             return;
@@ -50,7 +50,7 @@ export class MnCalendarMultipleComponent implements OnInit {
         this.minDate_ = this._mds.mndate(date);
     }
 
-    @Input()
+    @Input('mnMaxDate')
     set maxDate(date) {
         if (!date) {
             return;
@@ -58,7 +58,7 @@ export class MnCalendarMultipleComponent implements OnInit {
         this.maxDate_ = this._mds.mndate(date);
     }
 
-    @Input()
+    @Input('mnStartDate')
     set startDate(date) {
         if (!date) {
             return;
@@ -76,7 +76,7 @@ export class MnCalendarMultipleComponent implements OnInit {
         }, 100);
     }
 
-    @Input()
+    @Input('mnEndDate')
     set endDate(date) {
         if (!date) {
             return;
@@ -101,7 +101,7 @@ export class MnCalendarMultipleComponent implements OnInit {
         });
     }
 
-    @Output() result: any = new EventEmitter<any>();
+    @Output('mnResult') result: any = new EventEmitter<any>();
 
     @ViewChildren(MnCalendarComponent)
     set calendars(calendars_) {

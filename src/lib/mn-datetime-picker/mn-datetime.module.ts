@@ -6,25 +6,32 @@ import {MnCalendarViewComponent} from './mn-calendar-view.component';
 import {MnCalendarMultipleComponent} from './mu-calendar-multiple.component';
 import {MnDatetimeServices} from './mn-datetime.services';
 import {MuDatetimeQuickComponent} from './mu-datetime-quick.component';
+import {MnFloatLayerModule} from '../mn-float-layer/mn-float-layer.module';
+import {MnDatetimePickerComponent} from './mn-datetime-picker.component';
+import {MnButtonModule} from '../mn-button/mn-button.module';
 
 @NgModule({
     imports: [
         CommonModule,
-        MnLayoutModule
+        MnLayoutModule,
+        MnFloatLayerModule,
+        MnButtonModule
     ],
 
     declarations: [
         MnCalendarComponent,
         MnCalendarViewComponent,
         MnCalendarMultipleComponent,
-        MuDatetimeQuickComponent
+        MuDatetimeQuickComponent,
+        MnDatetimePickerComponent
     ],
 
     exports: [
         MnCalendarComponent,
         MnCalendarViewComponent,
         MnCalendarMultipleComponent,
-        MuDatetimeQuickComponent
+        MuDatetimeQuickComponent,
+        MnDatetimePickerComponent
     ],
 
     providers: [

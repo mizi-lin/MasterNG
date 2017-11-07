@@ -46,16 +46,23 @@ export class MnDatetimeServices {
             return mndate[_map[type]](diff, begin);
         };
 
+        console.debug(rule);
+
+        // if (mu.isNotExist(rule)) {
+        //     return;
+        // }
+
         let [_r1, _r2] = rule.split(',');
-
-        console.debug(_r1, _r2);
-
         let _start, _end;
+        let _endType;
 
         mu.run(mu.trim(_r1 || ''), (_r1) => {
             let _rst = _rule(_r1) || [];
             let [_diff, _type, _begin] = _rst;
-            _start = _getRangeDate(_diff, _type, !!_begin);
+            _endType = !!_begin;
+            _start = _getRangeDate(_diff, _type, _endType);
+
+            console.debug(_start);
         });
 
         _end = mu.run(mu.trim(_r2 || ''), (_r2) => {
@@ -71,7 +78,15 @@ export class MnDatetimeServices {
         });
 
         if (!_end) {
-            _end = mndate;
+            if (_endType) {
+                //todo 计算获得结束时间
+
+
+
+            } else {
+                _end = mndate;
+            }
+
         }
 
         let rst = [_start, _end].sort((a, b) => {
@@ -128,6 +143,10 @@ export class MnDatetimeServices {
     mndate(date: string | number | any, dateType: string = 'day') {
         const type = mu.type(date);
         let _date;
+
+        let _parmas = [2017, 0, 1, 0, 0, 0, 0];
+
+
 
         switch (type) {
             case 'object':

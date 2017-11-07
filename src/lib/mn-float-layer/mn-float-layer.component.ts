@@ -6,7 +6,7 @@ import {Component, OnInit} from '@angular/core';
         <div></div>
     `
 })
-export class MnFloatLayoutComponent implements OnInit {
+export class MnFloatLayerComponent implements OnInit {
     constructor() {
     }
 

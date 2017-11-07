@@ -19,6 +19,9 @@ import {MnDatetimeServices} from './mn-datetime.services';
         <div class="mt-16">
             <section [class.active]="status === 'relatively'">
                 <ol>
+                    <li (click)="getDate({
+                        name: '本月', value: '1:M'
+                    })">本月</li>
                     <li *ngFor="let rl of _relatively" (click)="getDate(rl)">
                         {{rl.name}}
                     </li>
@@ -55,11 +58,12 @@ export class MuDatetimeQuickComponent implements OnInit {
 
     @Input()
     set mnQuick(o) {
+        o = o || {};
         this._relatively = o.relatively;
         this._absolute = o._absolute;
     }
 
-    @Output() result: any = new EventEmitter<any>();
+    @Output('mnResult') result: any = new EventEmitter<any>();
 
     constructor(
         private _mds: MnDatetimeServices
