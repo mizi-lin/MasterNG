@@ -20,18 +20,28 @@ export class MnDate {
     quarters: any;
     years: any;
 
-    protected b_: number[] = [1970, 0, 1, 0, 0, 0, 0];
-    protected bs_: any = {
-        '0': 'getFullYear',
-        '1': 'getMonth',
-        '2': 'getDate',
-        '3': 'getHours',
-        '4': 'getMinutes',
-        '5': 'getSeconds',
-        '6': 'getMilliseconds'
-    };
+    b_: any;
+    bs_: any;
+
+
 
     constructor(dateValue?: any, formatter?: string) {
+
+        if (!mu.or(mu.type(dateValue), 'date', 'string', 'number')) {
+            return dateValue;
+        }
+
+        this.b_ = [1970, 0, 1, 0, 0, 0, 0];
+        this.bs_ ={
+            '0': 'getFullYear',
+            '1': 'getMonth',
+            '2': 'getDate',
+            '3': 'getHours',
+            '4': 'getMinutes',
+            '5': 'getSeconds',
+            '6': 'getMilliseconds'
+        };
+
         this._date = this.toDate(dateValue, formatter);
         this._d = this.format(this._date);
         this._ts = +this._date;
@@ -40,24 +50,6 @@ export class MnDate {
         this.years = this.getYears(this._date);
         this.weeks = this.getWeeks(this._date);
         this.quarters = this.getQuarters(this._date);
-
-        console.debug(this.getWeeks(this._date, 2, true));
-        console.debug(this.getWeeks(this._date, 1, true));
-        console.debug(this.getWeeks(this._date, 0, true));
-        console.debug(this.getWeeks(this._date, -1, true));
-        console.debug(this.getWeeks(this._date, -2, true));
-        console.log('-----------==========--------------------');
-        console.debug(this.getWeeks(this._date, 2, false));
-        console.debug(this.getWeeks(this._date, 1, false));
-        console.debug(this.getWeeks(this._date, 0, false));
-        console.debug(this.getWeeks(this._date, -1, false));
-        console.debug(this.getWeeks(this._date, -2, false));
-        // console.log('-----------==========--------------------');
-        // console.debug(this.getYears(this._date, 2));
-        // console.debug(this.getYears(this._date, 1));
-        // console.debug(this.getYears(this._date, 0));
-        // console.debug(this.getYears(this._date, -1));
-        // console.debug(this.getYears(this._date, -2));
     }
 
     /**
@@ -102,7 +94,7 @@ export class MnDate {
      *
      * {start, end, weekday, year, month, quarter}
      */
-    getDays(_dt: any, count: number = 0, relative: boolean = false): any {
+    getDays(_dt: any = this._date, count: number = 0, relative: boolean = false): any {
         let _date = this.toDate(_dt);
         let _begin = relative ? this.cloneDate(_date) : this.getBeginDate(_date, 0, 1, 2);
 
@@ -144,7 +136,7 @@ export class MnDate {
      *
      * {start, end, year, quarter, month, startWeekday, endWeekday, days}
      */
-    getMonths(_dt: any, count: number = 0, relative: boolean = false): any {
+    getMonths(_dt: any = this._date, count: number = 0, relative: boolean = false): any {
         let _date = this.toDate(_dt);
         let _begin = relative ? this.cloneDate(_date) : this.getBeginDate(_date, 0, 1);
         let _start, _end;
@@ -183,8 +175,16 @@ export class MnDate {
             quarter,
             startWeekday,
             endWeekday,
-            days
+            days,
+
+            mom: (count: number = 0, relative: boolean = false) => {
+                return this.getMonths(this.toDate(start), count, relative);
+            }
         };
+    }
+
+    mom(count: number = 0, relative: boolean = false) {
+        return this.getMonths(this._date, count, relative);
     }
 
     /**
@@ -196,7 +196,7 @@ export class MnDate {
      *
      * {start, end, year, startWeekday, endWeekday, days}
      */
-    getYears(_dt: any, count: number = 0, relative: boolean = false): any {
+    getYears(_dt: any = this._date, count: number = 0, relative: boolean = false): any {
         let _date = this.toDate(_dt);
         let _begin = relative ? this.cloneDate(_date) : this.getBeginDate(_date, 0);
         let _end;
@@ -235,6 +235,10 @@ export class MnDate {
         };
     }
 
+    yoy(count: number = 0, relative: boolean = false) {
+        return this.getYears(this._date, count, relative);
+    }
+
     /**
      * 获取日期所在周的信息 (start 周日, end 周六)
      * @param _dt
@@ -244,7 +248,7 @@ export class MnDate {
      *
      * {start, end}
      */
-    getWeeks(_dt: any, count: number = 0, relative: boolean = false): any {
+    getWeeks(_dt: any = this._date, count: number = 0, relative: boolean = false): any {
         let _date = this.toDate(_dt);
 
         let _begin = relative ? this.cloneDate(_date) : this.getBeginDate(_date, 0, 1, 2);
@@ -254,7 +258,7 @@ export class MnDate {
             if (count) {
                 count = (count > 0 ? count - 1 : count ) * 7 - 1;
             } else {
-                count = - (_begin.getDay() + 1);
+                count = -(_begin.getDay() + 1);
                 _end = this.cloneDate(_begin);
             }
         } else {
@@ -262,7 +266,6 @@ export class MnDate {
         }
 
         _begin.setDate(_begin.getDate() + count + 1);
-
         start = +_begin;
 
         if (!_end) {
@@ -284,38 +287,45 @@ export class MnDate {
      * 获取当前日期所在季度信息
      * @param _dt
      * @param count
+     * @param relative
      * @return {any}
      */
-    getQuarters(_dt: any, count: number = 0): any {
+    getQuarters(_dt: any = this._date, count: number = 0, relative: boolean = false): any {
         let _date = this.toDate(_dt);
-
-        let _begin = this.cloneDate(_date);
+        let _begin = (relative && count !== 0) ? this.cloneDate(_date) : this.getBeginDate(_date, 0, 1);
+        let end, _end, start, _start;
+        let _relative_current = relative && count === 0;
 
         mu.run(count, () => {
-            _begin.setMonth(_begin.getMonth() + (count * 3));
-        }, () => {
-            _begin = this.getBeginDate(_date, 0, 1);
+            count = relative ? (count > 0 ? count - 1 : count ) : count;
         });
 
-        let month = _begin.getMonth() + 1;
-        const quarter = this.getQuarter(month);
-        const startMonth = (quarter - 1) * 3;
-        const endMonth = startMonth + 2;
+        _begin.setMonth(_begin.getMonth() + (count * 3) + 1);
 
-        let _start = _begin;
-        _start.setMonth(startMonth - 1);
-        const start = +_start;
-        let _end = _begin;
-        _end.setMonth(endMonth);
-        let end = +_end - 1;
+        let month = _begin.getMonth() + 1;
+        let quarter = this.getQuarter(month);
+        let startMonth = (quarter - 1) * 3;
+
+        _start = this.cloneDate(_begin);
+        _start.setMonth(startMonth);
+        start = +_start;
+
+        if (!_relative_current) {
+            _end = this.cloneDate(_start);
+            _end.setMonth(startMonth + 3);
+        } else {
+            _end = this.cloneDate(_date);
+        }
+
+        end = +_end - 1;
 
         return {
             start,
             _start: this.format(start),
             end,
             _end: this.format(end),
-            startMonth,
-            endMonth,
+            startMonth: _start.getMonth() + 1,
+            endMonth: _end.getMonth() + 1,
             quarter
         };
     }
@@ -327,15 +337,24 @@ export class MnDate {
      * @return {any}
      */
     getBeginDate(date: any, ...types: number[]): any {
+
+        if (!date) {
+            console.error('getBeginDate');
+            return;
+        }
+
+        let _date = mu.type(date, 'object') ? mu.clone(date)._date : date;
+
+
         let _b = mu.clone(this.b_);
         mu.each(types, (index) => {
-            _b[index] = date[this.bs_[index]]();
+            _b[index] = _date[this.bs_[index]]();
         });
 
         return this.newDate(..._b);
     }
 
-    cloneDate(date: any) {
+    cloneDate(date: any = this._date) {
         return this.getBeginDate(date, 0, 1, 2, 3, 4, 5, 6);
     }
 
@@ -362,7 +381,7 @@ export class MnDate {
      * @param month
      * @return {number}
      */
-    getQuarter(month: number | any) {
+    getQuarter(month: number | any = this._date) {
         month = mu.type(month, 'date') ? month.getMonth() + 1 : month;
         return Math.ceil(month / 3);
     }

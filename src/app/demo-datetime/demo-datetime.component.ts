@@ -20,9 +20,13 @@ export class DemoDatetimeComponent implements OnInit {
     result(e) {
         console.debug(
             e,
-            mu.format(new Date(e.startDate.range.start), 'yyyy-MM-dd'),
-            e.endDate && mu.format(new Date(e.endDate.range.start), 'yyyy-MM-dd')
+            mu.format(new Date(e.startDate.days.start), 'yyyy-MM-dd'),
+            e.endDate && mu.format(new Date(e.endDate.days.start), 'yyyy-MM-dd')
         );
+    }
+
+    getView(e) {
+        console.debug(e);
     }
 
     quicks: any = {

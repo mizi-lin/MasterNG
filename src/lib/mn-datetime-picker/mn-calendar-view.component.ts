@@ -1,5 +1,6 @@
 import {Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {MnDatetimeServices} from './mn-datetime.services';
+import {MnDate} from './mn-date.class';
 
 declare const mu: any;
 
@@ -33,7 +34,7 @@ declare const mu: any;
                                 [class.range-reverse]="reverseRanged(d)"
                                 (mouseover)="hovered(d)"
                                 (click)="selectedDate(d, viewType, mode, $event)">
-                            {{d?.day === 1 ? d?.month + '-' + d?.day : d?.day}}
+                            {{d?.days?.date === 1 ? d?.days.month + '-' + d?.days.date : d?.days.date}}
                             <!--{{d.year}}-{{d.month}}-{{d.date}}-->
                         </mn-col>
                     </mn-fill>
@@ -46,33 +47,33 @@ declare const mu: any;
 })
 export class MnCalendarViewComponent implements OnInit, OnChanges {
 
-    @Input() year: number;
-    @Input() month: number;
-    @Input() day: number = 1;
-    @Input() viewType: string = 'view';
-    @Input() mode: string = 'single';
+    @Input('mnYear') year: number;
+    @Input('mnMonth') month: number;
+    @Input('mnDate') day: number = 1;
+    @Input('mnViewType') viewType: string = 'view';
+    @Input('mnMode') mode: string = 'single';
 
-    @Input()
+    @Input('mnMinDate')
     set minDate(date) {
-        this.minDate_ = this._mds.mndate(date);
+        this.minDate_ = new MnDate(date);
     }
 
-    @Input()
+    @Input('mnMaxDate')
     set maxDate(date) {
-        this.maxDate_ = this._mds.mndate(date);
+        this.maxDate_ = new MnDate(date);
     }
 
-    @Input()
+    @Input('mnStartDate')
     set startDate(date) {
-        this.selected_start = this._mds.mndate(date);
+        this.selected_start = new MnDate(date);
     }
 
-    @Input()
+    @Input('mnEndDate')
     set endDate(date) {
-        this.selected_end = this._mds.mndate(date);
+        this.selected_end = new MnDate(date);
     }
 
-    @Output() result = new EventEmitter<any>();
+    @Output('mnResult') result = new EventEmitter<any>();
 
     calendar: any[];
     current_month: number;
@@ -87,8 +88,8 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
     maxDate_: any;
 
     current: any;
-    prev: any;
-    next: any;
+    prev_month: any;
+    next_month: any;
 
     constructor(private _mds: MnDatetimeServices) {
     }
@@ -109,9 +110,10 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
             }
 
             // 获取当前时间信息
-            let current = this.current = this._mds.mndate(this._getDate(this.year, this.month, this.day));
-            let prev = this.prev = current.mom(-1);
-            let next = this.next = current.mom(1);
+            let current = this.current = new MnDate(this._getDate(this.year, this.month, this.day));
+
+            let prev = this.prev_month = current.mom(-1);
+            let next = this.next_month = current.mom(1);
 
             this.result.emit(current);
 
@@ -120,20 +122,20 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
                 let prev_dates = [], current_dates = [], next_dates = [];
 
                 let i = 0;
-                while (i < current.month_range.first_day_weekday) {
-                    let _d = this.getDate(prev.year, prev.month, prev.month_range.last_day - i);
+                while (i < current.months.startWeekday) {
+                    let _d = this.getDate(prev.year, prev.month, prev.days - i);
                     prev_dates.push(_d);
                     i++;
                 }
                 prev_dates = prev_dates.reverse();
 
-                current_dates = mu.map(current.month_range.last_day, (day) => {
-                    return this.getDate(current.year, current.month, day);
+                current_dates = mu.map(current.months.days, (day) => {
+                    return this.getDate(current.days.year, current.days.month, day);
                 }, []);
-
 
                 const len = 42 - prev_dates.length - current_dates.length;
                 for (let j = 1; j <= len; j++) {
+
                     let _d = this.getDate(next.year, next.month, j);
                     next_dates.push(_d);
                 }
@@ -164,20 +166,22 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
     getDate(year: number, month: number, day: number): any {
 
         const date = this._getDate(year, month, day);
-        const rst = this._mds.mndate(date);
-        rst.is_today = rst.range.start === mu.timestamp(new Date(), 'hhmmssSS');
-        rst.status = this.prev.month_range.end > rst.month_range.start
-            ? 'prev' : this.next.month_range.start < rst.month_range.end
-            ? 'next' : 'current';
+        const rst: any = new MnDate(date);
+
+        rst.is_today = rst.days.start === mu.timestamp(new Date(), 'hhmmssSS');
+
+        rst.status = this.prev_month.end > rst.months.start
+            ? 'prev' : this.next_month.start < rst.months.end
+                ? 'next' : 'current';
 
         mu.run(this.minDate_, (min) => {
-            rst.min_date = min.current;
-            rst.min = rst.range.end < min.current;
+            rst.min_date = min._ts;
+            rst.min = rst.days.end < min._ts;
         });
 
         mu.run(this.maxDate_, (max) => {
-            rst.max_date = max.current;
-            rst.max = rst.range.start > max.current;
+            rst.max_date = max._ts;
+            rst.max = rst.days.start > max._ts;
         });
 
         rst.no_selected = mu.ifnvl(rst.min, false) || mu.ifnvl(rst.max, false);
@@ -192,22 +196,22 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
         }
     }
 
-
     selected(d) {
         if (this.mode === 'single') {
             return mu.run(this.selected_start, () => {
-                return d.range.start === mu.prop(this.selected_start, 'range.start');
+                return d.days.start === mu.prop(this.selected_start, 'days.start');
             });
         }
     }
 
     hovered(d) {
+        return d;
     }
 
     started(d) {
         if (d.status === 'current' && this.mode === 'multiple') {
             return mu.run(this.selected_start, () => {
-                return d.range.start === mu.prop(this.selected_start, 'range.start');
+                return d.days.start === mu.prop(this.selected_start, 'days.start');
             });
         }
     }
@@ -215,7 +219,7 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
     ended(d) {
         if (d.status === 'current' && this.mode === 'multiple') {
             return mu.run(this.selected_end, () => {
-                return d.range.start === mu.prop(this.selected_end, 'range.start');
+                return d.days.start === mu.prop(this.selected_end, 'days.start');
             });
         }
     }
@@ -225,9 +229,9 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
      * @param d
      */
     ranged(d) {
-        let selected_end = this.selected_end || this._selected_end;
+        let selected_end = mu.ifempty(this.selected_end, this._selected_end);
         if (this.mode === 'multiple' && this.selected_start && selected_end) {
-            return d.range.start > this.selected_start.range.end && d.range.end < selected_end.range.end;
+            return d.days.start > this.selected_start.days.end && d.days.end < selected_end.days.end;
         }
     }
 
@@ -237,12 +241,11 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
      * @return {boolean}
      */
     reverseRanged(d) {
-        if (this.selected_end) {
+        if (mu.empty(this.selected_end)) {
             return;
         }
-
         if (this.mode === 'multiple' && this._selected_end && this.selected_start) {
-            return d.range.end < this.selected_start.range.start && d.range.end > this._selected_end.range.start;
+            return d.days.end < this.selected_start.days.start && d.days.end > this._selected_end.days.start;
         }
     }
 }

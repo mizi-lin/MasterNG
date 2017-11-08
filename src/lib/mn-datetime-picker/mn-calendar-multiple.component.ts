@@ -2,6 +2,7 @@ import {AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Out
 import {MnCalendarComponent} from './mn-calendar.component';
 import {MnCalendarViewComponent} from './mn-calendar-view.component';
 import {MnDatetimeServices} from './mn-datetime.services';
+import {MnDate} from './mn-date.class';
 
 declare const mu: any;
 
@@ -11,30 +12,30 @@ declare const mu: any;
         <mn-fill [gutter]="16">
             <mn-col [span]="1">
                 <mn-calendar
-                        [year]="prev_year"
-                        [month]="prev_month"
-                        [date]="prev_date"
-                        [viewType]="'prev'"
-                        [mode]="'multiple'"
-                        [minDate]="minDate_"
-                        [maxDate]="maxDate_"
-                        [startDate]="startDate_"
-                        [endDate]="endDate_"
-                        (result)="prev_result_($event)">
+                        [mnYear]="prev_year"
+                        [mnMonth]="prev_month"
+                        [mnDate]="prev_date"
+                        [mnViewType]="'prev'"
+                        [mnMode]="'multiple'"
+                        [mnMinDate]="minDate_"
+                        [mnMaxDate]="maxDate_"
+                        [mnStartDate]="startDate_"
+                        [mnEndDate]="endDate_"
+                        (mnResult)="prev_result_($event)">
                 </mn-calendar>
             </mn-col>
             <mn-col [span]="1">
                 <mn-calendar
-                        [year]="next_year"
-                        [month]="next_month"
-                        [date]="next_date"
-                        [minDate]="minDate_"
-                        [maxDate]="maxDate_"
-                        [viewType]="'next'"
-                        [mode]="'multiple'"
-                        [startDate]="startDate_"
-                        [endDate]="endDate_"
-                        (result)="next_result_($event)">
+                        [mnYear]="next_year"
+                        [mnMonth]="next_month"
+                        [mnDate]="next_date"
+                        [mnMinDate]="minDate_"
+                        [mnMaxDate]="maxDate_"
+                        [mnViewType]="'next'"
+                        [mnMode]="'multiple'"
+                        [mnStartDate]="startDate_"
+                        [mnEndDate]="endDate_"
+                        (mnResult)="next_result_($event)">
                 </mn-calendar>
             </mn-col>
         </mn-fill>
@@ -47,7 +48,7 @@ export class MnCalendarMultipleComponent implements OnInit {
         if (!date) {
             return;
         }
-        this.minDate_ = this._mds.mndate(date);
+        this.minDate_ = new MnDate(date);
     }
 
     @Input('mnMaxDate')
@@ -55,7 +56,7 @@ export class MnCalendarMultipleComponent implements OnInit {
         if (!date) {
             return;
         }
-        this.maxDate_ = this._mds.mndate(date);
+        this.maxDate_ = new MnDate(date);
     }
 
     @Input('mnStartDate')
@@ -63,11 +64,11 @@ export class MnCalendarMultipleComponent implements OnInit {
         if (!date) {
             return;
         }
-        this.startDate_ = this._mds.mndate(date);
+        this.startDate_ = new MnDate(date);
         this.startDate_ = this._mds.reStartDate(this.startDate_, this.maxDate_, this.minDate_);
-        this.prev_year = this.startDate_.year;
-        this.prev_month = this.startDate_.month;
-        this.prev_date = this.startDate_.day;
+        this.prev_year = this.startDate_.days.year;
+        this.prev_month = this.startDate_.days.month;
+        this.prev_date = this.startDate_.days.date;
 
         setTimeout(() => {
             if (!this.endDate_) {
@@ -81,18 +82,18 @@ export class MnCalendarMultipleComponent implements OnInit {
         if (!date) {
             return;
         }
-        this.endDate_ = this._mds.mndate(date);
+        this.endDate_ = new MnDate(date);
         this.endDate_ = this._mds.reEndDate(this.endDate_, this.maxDate_, this.minDate_);
-        this.next_year = this.endDate_.year;
-        this.next_month = this.endDate_.month;
-        this.next_date = this.endDate_.day;
+        this.next_year = this.endDate_.days.year;
+        this.next_month = this.endDate_.days.month;
+        this.next_date = this.endDate_.days.date;
 
         // 若两个月份指向同一个月份
         if (this.next_year === this.prev_year && this.next_month === this.prev_month) {
-            let _adjust_next = this.startDate_.mom();
+            let _adjust_next = this.startDate_.mom(1);
             this.next_year = _adjust_next.year;
             this.next_month = _adjust_next.month;
-            this.next_date = _adjust_next.day;
+            this.next_date = this.startDate_.days.date;
         }
 
         this.result.emit({
@@ -153,14 +154,14 @@ export class MnCalendarMultipleComponent implements OnInit {
         mu.empty(this.prev_year, () => {
             this.prev_year = this.prev.getFullYear();
             this.prev_month = this.prev.getMonth() + 1;
-            this.prev_date = this.prev.getFullYear();
+            this.prev_date = this.prev.getDate();
         });
 
         mu.empty(this.next_year, () => {
             this.next.setMonth(this.prev_month);
             this.next_year = this.next.getFullYear();
             this.next_month = this.next.getMonth() + 1;
-            this.next_date = this.next.getFullYear();
+            this.next_date = this.next.getDate();
         });
     }
 
@@ -171,16 +172,14 @@ export class MnCalendarMultipleComponent implements OnInit {
         let rst = this.prev_calendar._getPrevYear();
         this.prev_year = rst.year;
         this.prev_month = rst.month;
-        let mom = rst.mom();
-        this.next_year = mom.year;
-        this.next_month = mom.month;
+        this.next_year = this.next_year + 1;
     }
 
     getPrevMonth(): void {
         let rst = this.prev_calendar._getPrevMonth();
         this.prev_year = rst.year;
         this.prev_month = rst.month;
-        let mom = rst.mom();
+        let mom = rst.mom(1);
         this.next_year = mom.year;
         this.next_month = mom.month;
     }
@@ -189,9 +188,7 @@ export class MnCalendarMultipleComponent implements OnInit {
         let rst = this.next_calendar._getNextYear();
         this.next_year = rst.year;
         this.next_month = rst.month;
-        let mom = rst.mom(-1);
-        this.prev_year = mom.year;
-        this.prev_month = mom.month;
+        this.prev_year = this.next_year - 1;
     }
 
     getNextMonth() {
@@ -216,7 +213,6 @@ export class MnCalendarMultipleComponent implements OnInit {
         /**
          * 切换选择日期视图
          */
-        this.switchView();
 
         if (date.not_selected) {
             return;
@@ -227,7 +223,7 @@ export class MnCalendarMultipleComponent implements OnInit {
                 this.startDate_ = date;
                 this.endDate_ = void 0;
             }, () => {
-                if (date.range.start < this.startDate_.range.end) {
+                if (date.days.start < this.startDate_.days.end) {
                     this.endDate_ = this.startDate_;
                     this.startDate_ = date;
                 } else {
@@ -248,6 +244,8 @@ export class MnCalendarMultipleComponent implements OnInit {
             }
         }
 
+        this.switchView();
+
         this.result.emit({
             startDate: this.startDate_,
             endDate: this.endDate_
@@ -260,11 +258,16 @@ export class MnCalendarMultipleComponent implements OnInit {
     }
 
     switchView() {
-        if (this.next_calendar._view.range.start - this.prev_calendar._view.range.end > 10000) {
-            let _next = this.prev_calendar._view.mom();
-            this.next_year = _next.year;
-            this.next_month = _next.month;
-            this.next_date = _next.day;
+        if (this.next_calendar._view.months.start - this.prev_calendar._view.months.end > 10000) {
+            if (this.startDate_ && this.startDate_.days.start > this.next_calendar._view.months.start) {
+                this.getNextMonth();
+            } else {
+                let _next = this.prev_calendar._view.mom(1);
+                this.next_year = _next.year;
+                this.next_month = _next.month;
+                this.next_date = _next.day;
+            }
+
         }
     }
 }
