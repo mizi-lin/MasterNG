@@ -213,8 +213,7 @@ export class MnCalendarMultipleComponent implements OnInit {
         /**
          * 切换选择日期视图
          */
-
-        if (date.not_selected) {
+        if (date.no_selected) {
             return;
         }
 

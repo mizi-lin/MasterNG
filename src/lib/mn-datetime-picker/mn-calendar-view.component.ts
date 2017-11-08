@@ -190,7 +190,7 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
     }
 
     selectedDate(date, type, mode) {
-        if (this.mode === 'single' && !date.not_selected) {
+        if (this.mode === 'single' && !date.no_selected) {
             this.selected_start = date;
             this.result.emit(date);
         }
@@ -230,8 +230,15 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
      */
     ranged(d) {
         let selected_end = mu.ifempty(this.selected_end, this._selected_end);
-        if (this.mode === 'multiple' && this.selected_start && selected_end) {
+        if (this.mode === 'multiple' && mu.isNotEmpty(this.selected_start) && mu.isNotEmpty(selected_end)) {
             return d.days.start > this.selected_start.days.end && d.days.end < selected_end.days.end;
+            // try {
+            //     return d.days.start > this.selected_start.days.end && d.days.end < selected_end.days.end;
+            // } catch (e) {
+            //     console.log(this.selected_start);
+            //     console.log(d);
+            //     console.log(this.selected_end, this._selected_end);
+            // }
         }
     }
 
@@ -241,10 +248,7 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
      * @return {boolean}
      */
     reverseRanged(d) {
-        if (mu.empty(this.selected_end)) {
-            return;
-        }
-        if (this.mode === 'multiple' && this._selected_end && this.selected_start) {
+        if (this.mode === 'multiple' && mu.isNotEmpty(this._selected_end) && mu.isNotEmpty(this.selected_start)) {
             return d.days.end < this.selected_start.days.start && d.days.end > this._selected_end.days.start;
         }
     }

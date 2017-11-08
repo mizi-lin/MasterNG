@@ -29,7 +29,7 @@ import {MnDate} from './mn-date.class';
                         
                         <mn-fill class="mt-8">
                             <mn-col [span]="1" class="pt-2 mnc-mark">
-                                {{_startDate?.date}} - {{_endDate?.date}}
+                                {{_startDate?._date | mu: 'format' : formatter }} - {{_endDate?._date | mu: 'format' : formatter }}
                             </mn-col>
                             <mn-col [style.width.px]="120" class="mnc-tr">
                                 <button mn-btn class="primary" (click)="_confirmDate()">确认</button>
@@ -58,6 +58,8 @@ export class MnDatetimePickerComponent implements OnInit {
     set startDate(date) {
         this._selected.startDate = date;
         this._startDate = date;
+
+        console.debug(date);
     }
 
     @Input('mnEndDate')
@@ -83,7 +85,7 @@ export class MnDatetimePickerComponent implements OnInit {
     @Input('mnQuicks') quicks: boolean | any;
     @Input('mnResult') result: any = new EventEmitter<any>();
     @Input('mnSelected') selected: any = new EventEmitter<any>();
-    @Input('mnFormatter') format: string = 'yyyy-MM-dd';
+    @Input('mnFormatter') formatter: string = 'yyyy-MM-dd';
 
     _startDate: any;
     _endDate: any;

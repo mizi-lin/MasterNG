@@ -4,11 +4,13 @@ import {MnDropdownComponent} from './mn-dropdown.component';
 import {MnDropdownContentComponent} from './mn-dropdown-content.component';
 import {MnLayerDirective} from './mn-layer.directive';
 import {MnLayerContainerService} from './mn-layer-container.service';
+import {MnCommonModule} from '../mn-common/mn-common.module';
 
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        MnCommonModule
     ],
     declarations: [
         MnDropdownComponent,

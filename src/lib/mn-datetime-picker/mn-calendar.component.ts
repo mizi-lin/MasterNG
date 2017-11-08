@@ -82,7 +82,7 @@ export class MnCalendarComponent implements OnInit, OnChanges {
         this._viewComponent = _vc;
 
         _vc.selectedDate = (date) => {
-            if (this.mode === 'single' && !date.not_selected) {
+            if (this.mode === 'single' && !date.no_selected) {
                 if (date.status !== 'current') {
                     let _md = this._view.mom(date.status === 'prev' ? -1 : 1);
                     this._year = _md.year;
