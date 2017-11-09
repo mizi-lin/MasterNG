@@ -4,6 +4,38 @@ mn-calendar {
     display: block;
 }
 
+mn-datetimepicker {
+    display: inline-block;
+    height: 32px;
+
+    mn-dropdown {
+        border: 1px solid #dedede;
+        border-radius: 2px;
+        height: 100%;
+
+        > div {
+            height: 100%;
+        }
+
+        mn-input {
+            border: 1px solid transparent;
+            height: 100%;
+            width: auto;
+
+            span.mnc-next {
+                color: #ccc;
+                margin-right: -3px;
+                line-height: 28px;
+            }
+
+            input {
+                display: inline-block;
+                width: 100%;
+            }
+        }
+    }
+}
+
 mn-datetime-quick {
 
     mn-fill {

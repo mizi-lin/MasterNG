@@ -1,15 +1,29 @@
-import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit} from '@angular/core';
 import {MnDate} from './mn-date.class';
 
 @Component({
     selector: 'mn-datetimepicker',
     template: `
         <mn-dropdown (mnResult)="_dropDownResult = $event">
-            <div>
-                <input type="text" [value]="_selected?.startDate?.date" />
-                <input type="text" [value]="_selected?.endDate?.date" />
-            </div>
+            <mn-fill>
+                <mn-input
+                        class="mnc-col"
+                        [style.minWidth.px]="95"
+                        [mnValue]="_selected['startDate']['_date'] | mu: 'format' : formatter">
+                    <span class="mnc-next">-</span>
+                </mn-input>
+                <mn-input
+                        class="mnc-col"
+                        [style.minWidth.px]="100"
+                        [mnValue]="_selected?.endDate?._date | mu: 'format' : formatter">
+                    <i class="fa fa-calendar mnc-next"></i>
+                </mn-input>
+            </mn-fill>
             
+
+            <!--<input type="text" [value]="(_selected?.startDate?._date | mu: 'format' : formatter) || ''" />-->
+            <!--<input type="text" [value]="(_selected?.endDate?._date | mu: 'format' : formatter) || ''" />-->
+
             <mn-dropdown-content class="p-8 mnc-block">
                 <mn-fill [style.width.px]="720">
                     <mn-col [style.width.px]="120">
@@ -22,11 +36,11 @@ import {MnDate} from './mn-date.class';
                         <mn-calendar-multiple
                                 [mnStartDate]="_startDate"
                                 [mnEndDate]="_endDate"
-                                [mnMinDate]="'2015-06-11'"
-                                [mnMaxDate]="'2027-11-16'"
+                                [mnMinDate]="_minDate"
+                                [mnMaxDate]="_maxDate"
                                 (mnResult)="_mcmResult($event)"
                         ></mn-calendar-multiple>
-                        
+
                         <mn-fill class="mt-8">
                             <mn-col [span]="1" class="pt-2 mnc-mark">
                                 {{_startDate?._date | mu: 'format' : formatter }} - {{_endDate?._date | mu: 'format' : formatter }}
@@ -56,16 +70,12 @@ export class MnDatetimePickerComponent implements OnInit {
      */
     @Input('mnStartDate')
     set startDate(date) {
-        this._selected.startDate = date;
-        this._startDate = date;
-
-        console.debug(date);
+        this._startDate = new MnDate(date);
     }
 
     @Input('mnEndDate')
     set endDate(date) {
-        this._selected.endDate = date;
-        this._endDate = date;
+        this._endDate = new MnDate(date);
     }
 
     @Input('mnMinDate')
@@ -73,7 +83,7 @@ export class MnDatetimePickerComponent implements OnInit {
         this._minDate = date;
     }
 
-    @Input('minMaxDate')
+    @Input('mnMaxDate')
     set maxDate(date) {
         this._maxDate = date;
     }
@@ -91,7 +101,12 @@ export class MnDatetimePickerComponent implements OnInit {
     _endDate: any;
     _maxDate: any;
     _minDate: any;
-    _selected: any;
+    _selected: any = {
+        startDate: {},
+        endDate: {}
+    };
+
+    _hasChange: boolean = false;
 
     _quickResult(rst) {
         this._startDate = rst.startDate;
@@ -100,10 +115,7 @@ export class MnDatetimePickerComponent implements OnInit {
 
     _dropDownResult: any;
 
-    abc: any = new MnDate('2017-07-18 13:19:56');
-
     constructor() {
-        console.debug(this.abc);
     }
 
     ngOnInit() {
@@ -112,6 +124,20 @@ export class MnDatetimePickerComponent implements OnInit {
     _mcmResult($event: any) {
         this._startDate = $event.startDate;
         this._endDate = $event.endDate;
+
+        if (!this._hasChange) {
+            // Hack fixed angular error
+            // ERROR Error:
+            //      ExpressionChangedAfterItHasBeenCheckedError:
+            //      Expression has changed after it was checked
+            // public ngDoCheck(): void { this.cdr.detectChanges(); }
+            setTimeout(() => {
+                this._selected.startDate = this._startDate;
+                this._selected.endDate = this._endDate;
+            }, 0);
+            this._hasChange = true;
+        }
+
         this.result.emit($event);
     }
 
@@ -121,7 +147,6 @@ export class MnDatetimePickerComponent implements OnInit {
             startDate: this._startDate,
             endDate: this._endDate
         };
-
         this.selected.emit(this._selected);
         this._dropDownResult.hide();
     }

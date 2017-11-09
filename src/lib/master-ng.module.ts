@@ -11,6 +11,7 @@ import {MnI18nModule} from './mn-i18n/mn-i18n.module';
 import {MnRuleModule} from './mn-rule/mn-rule.module';
 import {MnDatetimeModule} from './mn-datetime-picker/mn-datetime.module';
 import {MnFloatLayerModule} from './mn-float-layer/mn-float-layer.module';
+import {MnFormModule} from './mnForm/mn-form.module';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import {MnFloatLayerModule} from './mn-float-layer/mn-float-layer.module';
         MnI18nModule,
         MnRuleModule,
         MnDatetimeModule,
-        MnFloatLayerModule
+        MnFloatLayerModule,
+        MnFormModule
     ],
     exports: [
         MnLayoutModule,
@@ -43,7 +45,8 @@ import {MnFloatLayerModule} from './mn-float-layer/mn-float-layer.module';
         MnI18nModule,
         MnRuleModule,
         MnDatetimeModule,
-        MnFloatLayerModule
+        MnFloatLayerModule,
+        MnFormModule
     ]
 })
 export class MasterNgModule {

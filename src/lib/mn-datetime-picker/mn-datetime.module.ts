@@ -10,6 +10,7 @@ import {MnFloatLayerModule} from '../mn-float-layer/mn-float-layer.module';
 import {MnDatetimePickerComponent} from './mn-datetime-picker.component';
 import {MnButtonModule} from '../mn-button/mn-button.module';
 import {MnCommonModule} from '../mn-common/mn-common.module';
+import {MnFormModule} from '../mnForm/mn-form.module';
 
 @NgModule({
     imports: [
@@ -17,7 +18,8 @@ import {MnCommonModule} from '../mn-common/mn-common.module';
         MnCommonModule,
         MnLayoutModule,
         MnFloatLayerModule,
-        MnButtonModule
+        MnButtonModule,
+        MnFormModule
     ],
 
     declarations: [

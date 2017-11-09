@@ -1,4 +1,7 @@
-import {AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChildren} from '@angular/core';
+import {
+    AfterViewInit, Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges,
+    ViewChildren
+} from '@angular/core';
 import {MnCalendarComponent} from './mn-calendar.component';
 import {MnCalendarViewComponent} from './mn-calendar-view.component';
 import {MnDatetimeServices} from './mn-datetime.services';
@@ -64,10 +67,24 @@ export class MnCalendarMultipleComponent implements OnInit {
         if (!date) {
             return;
         }
+
         this.startDate_ = new MnDate(date);
         this.startDate_ = this._mds.reStartDate(this.startDate_, this.maxDate_, this.minDate_);
-        this.prev_year = this.startDate_.days.year;
-        this.prev_month = this.startDate_.days.month;
+
+        if (!this._hasChanges) {
+            this.prev_year = this.startDate_.days.year;
+            this.prev_month = this.startDate_.days.month;
+            this._hasChanges = true;
+        }
+
+        // 若两个月份指向同一个月份
+        if (this.next_year === this.prev_year && this.next_month === this.prev_month) {
+            let _adjust_next = this.startDate_.mom(1);
+            this.next_year = _adjust_next.year;
+            this.next_month = _adjust_next.month;
+            this.next_date = this.startDate_.days.date;
+        }
+
         this.prev_date = this.startDate_.days.date;
 
         setTimeout(() => {
@@ -150,6 +167,8 @@ export class MnCalendarMultipleComponent implements OnInit {
     prev_result: any;
     next_result: any;
 
+    _hasChanges: boolean = false;
+
     constructor(private _mds: MnDatetimeServices) {
         mu.empty(this.prev_year, () => {
             this.prev_year = this.prev.getFullYear();
@@ -196,6 +215,7 @@ export class MnCalendarMultipleComponent implements OnInit {
         this.next_year = rst.year;
         this.next_month = rst.month;
         let mom = rst.mom(-1);
+
         this.prev_year = mom.year;
         this.prev_month = mom.month;
     }

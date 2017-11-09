@@ -1,0 +1,27 @@
+mn-input {
+    display: inline-block;
+    height: 32px;
+    border: 1px solid #dedede;
+    border-radius: 2px;
+
+    input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 2px 4px;
+        margin: 0;
+        border: none;
+        outline: none;
+        vertical-align: middle;
+    }
+
+    .mnc-next,
+    .mnc-prev {
+        display: inline-block;
+        padding: 0 8px;
+        vertical-align: middle;
+        font-size: 14px;
+        line-height: 30px;
+    }
+
+}

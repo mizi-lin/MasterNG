@@ -1,8 +1,6 @@
 mn-dropdown {
-    display: block;
-    width: 300px;
-    height: 40px;
-    background: #659be0;
+    display: inline-block;
+    height: 32px;
 
     mn-dropdown-content {
         padding: 8px;
@@ -17,4 +15,12 @@ mn-dropdown {
     background: #fff;
     min-width: 200px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+
+    &.mnc-hide {
+        visibility: hidden;
+    }
+
+    &.mnc-show {
+        visibility: visible;
+    }
 }
