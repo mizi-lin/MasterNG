@@ -1,22 +1,22 @@
 <section class="p-16">
     <!--<mn-panel-s class="bordered mt-16" title="Multiple Calendar">-->
-        <!--<mn-fill>-->
-            <!--<mn-col [style.width.px]="120">-->
-                <!--<mn-datetime-quick-->
-                        <!--[mnQuick]="quicks"-->
-                        <!--(mnResult)="a = $event"-->
-                <!--&gt;</mn-datetime-quick>-->
-            <!--</mn-col>-->
-            <!--<mn-col [span]="1">-->
-                <!--<mn-calendar-multiple-->
-                        <!--[mnStartDate]="a?.startDate"-->
-                        <!--[mnEndDate]="a?.endDate"-->
-                        <!--[mnMinDate]="'2015-06-11'"-->
-                        <!--[mnMaxDate]="'2027-11-16'"-->
-                        <!--(mnResult)="result($event)"-->
-                <!--&gt;</mn-calendar-multiple>-->
-            <!--</mn-col>-->
-        <!--</mn-fill>-->
+    <!--<mn-fill>-->
+    <!--<mn-col [style.width.px]="120">-->
+    <!--<mn-datetime-quick-->
+    <!--[mnQuick]="quicks"-->
+    <!--(mnResult)="a = $event"-->
+    <!--&gt;</mn-datetime-quick>-->
+    <!--</mn-col>-->
+    <!--<mn-col [span]="1">-->
+    <!--<mn-calendar-multiple-->
+    <!--[mnStartDate]="a?.startDate"-->
+    <!--[mnEndDate]="a?.endDate"-->
+    <!--[mnMinDate]="'2015-06-11'"-->
+    <!--[mnMaxDate]="'2027-11-16'"-->
+    <!--(mnResult)="result($event)"-->
+    <!--&gt;</mn-calendar-multiple>-->
+    <!--</mn-col>-->
+    <!--</mn-fill>-->
     <!--</mn-panel-s>-->
 
     <mn-panel-s class="bordered mt-16" title="Datetime Picker">
@@ -26,43 +26,50 @@
                 [mnMinDate]="'2015-06-11'"
                 [mnMaxDate]="'2027-11-16'"
                 (mnResult)="result($event)"
-            ></mn-datetimepicker>
+        ></mn-datetimepicker>
     </mn-panel-s>
 
-
-
+    <mn-panel-s class="bordered mt-16" title="Year Picker">
+        <mn-yearpicker
+            [mnStartDate]="'1916-03-03'"
+            [mnEndDate]="'2016-08-21'"
+            [mnMinDate]="'1615-06-11'"
+            [mnMaxDate]="'2027-11-16'"
+        ></mn-yearpicker>
+            <!--[mnDate]="'2017-11-16'"-->
+    </mn-panel-s>
 
     <!--<div *mnLayer>江山如此多娇</div>-->
     <!--<ng-template mnLayer>-->
-        <!--<div>-->
-            <!--<mn-panel-s [title]="'ABCD::abc'">-->
+    <!--<div>-->
+    <!--<mn-panel-s [title]="'ABCD::abc'">-->
 
-            <!--引无数英雄竞折腰-->
-            <!--</mn-panel-s>-->
-        <!--</div>-->
+    <!--引无数英雄竞折腰-->
+    <!--</mn-panel-s>-->
+    <!--</div>-->
     <!--</ng-template>-->
 
     <!--<mn-panel-s class="bordered mt-16" title="Multiple Calendar">-->
-        <!--<mn-calendar-multiple-->
-                <!--[mnStartDate]="'2016-06-11'"-->
-                <!--[mnEndDate]="'2017-03-12'"-->
-                <!--[mnMinDate]="'2016-06-22'"-->
-                <!--[mnMaxDate]="'2027-01-16'"-->
-                <!--(mnResult)="result($event)"-->
-        <!--&gt;</mn-calendar-multiple>-->
+    <!--<mn-calendar-multiple-->
+    <!--[mnStartDate]="'2016-06-11'"-->
+    <!--[mnEndDate]="'2017-03-12'"-->
+    <!--[mnMinDate]="'2016-06-22'"-->
+    <!--[mnMaxDate]="'2027-01-16'"-->
+    <!--(mnResult)="result($event)"-->
+    <!--&gt;</mn-calendar-multiple>-->
     <!--</mn-panel-s>-->
 
     <!--<mn-panel-s class="bordered mt-16" title="Single Calendar">-->
-        <!--<mn-calendar></mn-calendar>-->
+    <!--<mn-calendar></mn-calendar>-->
     <!--</mn-panel-s>-->
 
     <!--<mn-panel-s class="bordered mt-16" title="Calendar View">-->
-        <!--<mn-calendar-view-->
-                <!--[mnYear]="2017"-->
-                <!--[mnMonth]="7"-->
-                <!--[mnDate]="10">-->
-                <!--(mnResult)="getView($event)">-->
-        <!--</mn-calendar-view>-->
+    <!--<mn-calendar-view-->
+    <!--[mnYear]="2017"-->
+    <!--[mnMonth]="7"-->
+    <!--[mnDate]="10">-->
+    <!--(mnResult)="getView($event)">-->
+    <!--</mn-calendar-view>-->
     <!--</mn-panel-s>-->
 </section>
 

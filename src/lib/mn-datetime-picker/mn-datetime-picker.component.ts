@@ -19,10 +19,6 @@ import {MnDate} from './mn-date.class';
                     <i class="fa fa-calendar mnc-next"></i>
                 </mn-input>
             </mn-fill>
-            
-
-            <!--<input type="text" [value]="(_selected?.startDate?._date | mu: 'format' : formatter) || ''" />-->
-            <!--<input type="text" [value]="(_selected?.endDate?._date | mu: 'format' : formatter) || ''" />-->
 
             <mn-dropdown-content class="p-8 mnc-block">
                 <mn-fill [style.width.px]="720">
@@ -43,7 +39,9 @@ import {MnDate} from './mn-date.class';
 
                         <mn-fill class="mt-8">
                             <mn-col [span]="1" class="pt-2 mnc-mark">
-                                {{_startDate?._date | mu: 'format' : formatter }} - {{_endDate?._date | mu: 'format' : formatter }}
+                                {{_startDate?._date | mu: 'format' : formatter }}
+                                <ng-container *ngIf="_startDate"> - </ng-container> 
+                                {{_endDate?._date | mu: 'format' : formatter }}
                             </mn-col>
                             <mn-col [style.width.px]="120" class="mnc-tr">
                                 <button mn-btn class="primary" (click)="_confirmDate()">确认</button>

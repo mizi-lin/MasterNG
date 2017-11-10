@@ -1,7 +1,32 @@
 mn-calendar-multiple,
 mn-datetime-quick,
-mn-calendar {
+mn-calendar,
+mn-yearpicker {
     display: block;
+}
+
+mn-yearpicker {
+    section {
+        padding-bottom: 8px;
+
+        & + section {
+            padding-top: 8px;
+            margin-top: 8px;
+            border-top: 1px solid #dedede;
+        }
+
+        mn-fill {
+            mn-col {
+                text-align: center;
+                line-height: 28px;
+            }
+
+            + mn-fill {
+                margin-top: 8px;
+            }
+        }
+
+    }
 }
 
 mn-datetimepicker {

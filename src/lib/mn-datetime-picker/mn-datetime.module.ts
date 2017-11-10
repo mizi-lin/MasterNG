@@ -11,6 +11,7 @@ import {MnDatetimePickerComponent} from './mn-datetime-picker.component';
 import {MnButtonModule} from '../mn-button/mn-button.module';
 import {MnCommonModule} from '../mn-common/mn-common.module';
 import {MnFormModule} from '../mnForm/mn-form.module';
+import {MnYearsComponent} from './mn-years.component';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import {MnFormModule} from '../mnForm/mn-form.module';
         MnCalendarViewComponent,
         MnCalendarMultipleComponent,
         MuDatetimeQuickComponent,
-        MnDatetimePickerComponent
+        MnDatetimePickerComponent,
+        MnYearsComponent
     ],
 
     exports: [
@@ -35,7 +37,8 @@ import {MnFormModule} from '../mnForm/mn-form.module';
         MnCalendarViewComponent,
         MnCalendarMultipleComponent,
         MuDatetimeQuickComponent,
-        MnDatetimePickerComponent
+        MnDatetimePickerComponent,
+        MnYearsComponent
     ],
 
     providers: [
