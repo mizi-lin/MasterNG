@@ -9,7 +9,9 @@ declare const mu: any;
 @Component({
     selector: 'tool-expand',
     template: `
-        <i class="fa fa-expand" aria-hidden="true"></i>
+        <nz-tooltip [nzTitle]="'full-screen mode'">
+            <i class="icon iconfont icon-fangda" nz-tooltip></i>
+        </nz-tooltip>                    
     `,
     styles: [
         `

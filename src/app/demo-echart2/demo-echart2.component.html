@@ -15,21 +15,31 @@
                     <!--[setting]="{legend_show: false, tooltip: true}">-->
     <!--</mn-echarts-box>-->
 
-    <mn-panel-s class="mt-8 bordered" title="MnEchartsService::data conversion options" mn-element #abc="element">
-        <mn-req [req]="{url: './assets/store/pie.json'}"
-                [loader]="abc.elementRef"
-                (result)="pie_data = $event.data">
-            <mn-row>
-                <mn-col [span]="12">
-                    <mn-echarts
-                            [data]="pie_data"
-                            (result)="options = $event.options"
-                            [type]="'pie'" [setting]="{subtype: 'annular', legend_show: false, selected: 1}" [style.height.px]="300">
-                    </mn-echarts>
-                </mn-col>
-            </mn-row>
-        </mn-req>
-    </mn-panel-s>
+    <!--<mn-panel-s class="mt-8 bordered" title="MnEchartsService::data conversion options" mn-element #abc="element">-->
+        <!--<mn-req [req]="{url: './assets/store/pie.json'}"-->
+                <!--[loader]="abc.elementRef"-->
+                <!--(result)="pie_data = $event.data">-->
+            <!--<mn-row>-->
+                <!--<mn-col [span]="12">-->
+                    <!--<mn-echarts-->
+                            <!--[data]="pie_data"-->
+                            <!--(result)="options = $event.options"-->
+                            <!--[type]="'pie'" [setting]="{subtype: 'annular', legend_show: false, selected: 1}" [style.height.px]="300">-->
+                    <!--</mn-echarts>-->
+                <!--</mn-col>-->
+            <!--</mn-row>-->
+        <!--</mn-req>-->
+    <!--</mn-panel-s>-->
+
+    <mn-echarts-panel class="bordered" title="EchartsPanel::bar mn-panel && tools"
+                      [req]="{url: './assets/store/echarts-bar.json'}"
+                      [type]="'bar'"
+                      [show_tools]="'show'"
+                      [tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"
+                      [setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}"
+                      [hph]="'auto'"
+                      height="300px">
+    </mn-echarts-panel>
 
     <!--<div class="mt-16 mb-16" mn-element #abc="element" [ngStyle]="{'height': '200px', 'background': '#f00'}">-->
 

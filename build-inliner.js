@@ -55,6 +55,7 @@ function processStyleUrls(content, options, targetDir) {
                         compress: options.compress
                     }
                 ).then((output) => {
+                    output.css = output.css.replace(/(\\\e)|(\\\E)/gi, '\\\\\\e');
                     console.log('analysis success -> :::::::'.green, url);
                     return output.css;
                 }, (e) => {

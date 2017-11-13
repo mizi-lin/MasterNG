@@ -67,3 +67,10 @@
 * b4: 修正词云快速设置option时，nomerge失效造成词云重叠 （升级echarts以及相关架包）
 * b5: 饼图自动排序
 * b6: 饼图自动排序, 可以设置排序顺序
+
+# 0.2.5
+
+* Panel Toolbar add tooltip
+* b1: 修正mnReq空数据没有状态返回
+* b1: 修正colorMap, color key不区分大小写
+* b2,3,4: 修正fonts样式\e第三方js不能正确解析

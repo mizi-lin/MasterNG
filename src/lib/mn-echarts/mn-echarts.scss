@@ -1,46 +1,45 @@
-:host {
+mn-echarts-panel,
+mn-echarts-box {
     display: block;
     width: 100%;
 
-    &::ng-deep {
-        mn-panel-body {
-            padding: 0;
-        }
+    mn-panel-body {
+        padding: 0;
+    }
 
-        mn-req {
-            padding: 16px;
-        }
+    mn-req {
+        padding: 16px;
+    }
 
-        .mn-dataView {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            background: #fff;
-            z-index: 9;
-            padding: 16px;
-            overflow: auto;
-        }
+    .mn-dataView {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        z-index: 9;
+        padding: 16px;
+        overflow: auto;
+    }
 
-        nz-dropdown a {
-            color: inherit;
-        }
+    nz-dropdown a {
+        color: inherit;
+    }
 
-        mn-panel-toolbar {
-            &.toggle {
-                display: none;
-            }
+    mn-panel-toolbar {
+        &.toggle {
+            display: none;
         }
+    }
 
-        &:hover mn-panel-toolbar.toggle {
-            display: block;
-        }
+    &:hover mn-panel-toolbar.toggle {
+        display: block;
     }
 }
 
-:host(mn-echarts-box) {
-    ::ng-deep mn-panel-header {
+mn-echarts-box {
+    mn-panel-header {
         position: absolute;
         width: 100%;
         visibility: visible;
@@ -53,7 +52,7 @@
         }
     }
 
-    ::ng-deep mn-panel-body {
+    mn-panel-body {
         height: 100%;
     }
 }

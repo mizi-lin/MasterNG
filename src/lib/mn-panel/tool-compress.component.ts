@@ -10,7 +10,9 @@ declare const mu: any;
 @Component({
     selector: 'tool-compress',
     template: `
-        <i class="fa fa-compress" aria-hidden="true"></i>
+        <nz-tooltip [nzTitle]="'window mode'">
+            <i class="icon iconfont icon-suoxiao" nz-tooltip></i>
+        </nz-tooltip>
     `,
     styles: [
             `

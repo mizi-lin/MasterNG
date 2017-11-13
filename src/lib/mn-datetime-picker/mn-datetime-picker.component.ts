@@ -12,14 +12,14 @@ declare const mu: any;
                         class="mnc-col"
                         [style.minWidth.px]="95"
                         [mnReadonly]="true"
-                        [mnValue]="_selected['startDate']['_date'] | mu: 'format' : _viewsMap[_view]">
+                        [mnValue]="_selected?.start">
                     <span class="mnc-next">-</span>
                 </mn-input>
                 <mn-input
                         class="mnc-col"
                         [style.minWidth.px]="105"
                         [mnReadonly]="true"
-                        [mnValue]="_selected['endDate']['_date'] | mu: 'format' : _viewsMap[_view]">
+                        [mnValue]="_selected?.end">
                     <i class="fa fa-calendar mnc-next"></i>
                 </mn-input>
             </mn-fill>
@@ -159,10 +159,7 @@ export class MnDatetimePickerComponent implements OnInit {
     _endDate: any;
     _maxDate: any;
     _minDate: any;
-    _selected: any = {
-        startDate: {},
-        endDate: {}
-    };
+    _selected: any = {};
 
     _viewed: any = {
         startDate: {},
@@ -230,8 +227,12 @@ export class MnDatetimePickerComponent implements OnInit {
             //      Expression has changed after it was checked
             // public ngDoCheck(): void { this.cdr.detectChanges(); }
             setTimeout(() => {
-                this._selected.startDate = this._startDate;
-                this._selected.endDate = this._endDate;
+                this._selected = {
+                    startDate: this._startDate,
+                    endDate: this._endDate,
+                    start: this._format(this._startDate),
+                    end: this._format(this._endDate)
+                };
             }, 0);
             this._hasChange = true;
         }
@@ -241,11 +242,23 @@ export class MnDatetimePickerComponent implements OnInit {
 
     // 确认事件
     _confirmDate() {
+        this._startDate = this._viewed.startDate;
+        this._endDate = this._viewed.endDate;
+
         this._selected = {
             startDate: this._startDate,
-            endDate: this._endDate
+            endDate: this._endDate,
+            start: this._format(this._startDate),
+            end: this._format(this._endDate)
         };
         this.selected.emit(this._selected);
         this._dropDownResult.hide();
+    }
+
+    _format(date: any): string {
+        if (!date) {
+            return '';
+        }
+        return mu.format(date._date, this._viewsMap[this._view]);
     }
 }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import * as mu from 'mzmu';
 import {Http, Response} from '@angular/http';
 import {MnI18nConfig} from './mn-i18n-config';
+declare const mu: any;
 
 @Injectable()
 export class MnI18nServices {
