@@ -2,22 +2,26 @@ mn-calendar-multiple,
 mn-datetime-quick,
 mn-calendar,
 mn-yearspicker,
-mn-monthspicker {
+mn-monthspicker,
+mn-quarterspicker {
     display: block;
 }
 
+mn-quarterspicker,
 mn-monthspicker {
     mn-fill {
         mn-col {
             .mn-col-content {
                 padding: 8px;
 
+                .mnc-quarterspicker-name,
                 .mnc-monthspicker-month {
                     text-align: right;
                     font-size: 15px;
                     line-height: 1.5;
                 }
 
+                .mnc-quarterspicker-year,
                 .mnc-monthspicker-year {
                     text-align: right;
                     font-size: 13px;
@@ -30,7 +34,8 @@ mn-monthspicker {
 }
 
 mn-yearspicker,
-mn-monthspicker {
+mn-monthspicker,
+mn-quarterspicker {
 
     padding: 8px;
     border: 1px solid #dedede;

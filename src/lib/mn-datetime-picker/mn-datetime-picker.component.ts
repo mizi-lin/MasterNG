@@ -63,6 +63,16 @@ declare const mu: any;
                             ></mn-monthspicker>
                         </ng-container>
 
+                        <ng-container *ngIf="_view === 'quarter'">
+                            <mn-quarterspicker
+                                    [mnStartDate]="_startDate"
+                                    [mnEndDate]="_endDate"
+                                    [mnMinDate]="_minDate"
+                                    [mnMaxDate]="_maxDate"
+                                    (mnResult)="_mcmResult($event)"
+                            ></mn-quarterspicker>
+                        </ng-container>
+
                         <mn-fill class="mt-8">
                             <mn-col [span]="1" class="pt-2 mnc-mark">
                                 {{_viewed.startDate?._date | mu: 'format' : formatter }}

@@ -293,6 +293,12 @@ export class MnDate {
         let _begin = (relative && count !== 0) ? this.cloneDate(_date) : this.getBeginDate(_date, 0, 1);
         let end, _end, start, _start;
         let _relative_current = relative && count === 0;
+        let _nameMap = {
+            1: 'JFM',
+            2: 'AMJ',
+            3: 'JAS',
+            4: 'OND'
+        };
 
         mu.run(count, () => {
             count = relative ? (count > 0 ? count - 1 : count ) : count;
@@ -300,6 +306,8 @@ export class MnDate {
 
         _begin.setMonth(_begin.getMonth() + (count * 3) + 1);
 
+
+        let year = _begin.getFullYear();
         let month = _begin.getMonth() + 1;
         let quarter = this.getQuarter(month);
         let startMonth = (quarter - 1) * 3;
@@ -323,8 +331,10 @@ export class MnDate {
             end,
             _end: this.format(end),
             startMonth: _start.getMonth() + 1,
-            endMonth: _end.getMonth() + 1,
-            quarter
+            endMonth: _end.getMonth(),
+            quarter,
+            year,
+            name: _nameMap[quarter]
         };
     }
 
