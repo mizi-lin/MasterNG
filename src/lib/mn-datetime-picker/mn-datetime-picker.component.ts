@@ -12,14 +12,14 @@ declare const mu: any;
                         class="mnc-col"
                         [style.minWidth.px]="95"
                         [mnReadonly]="true"
-                        [mnValue]="_selected['startDate']['_date'] | mu: 'format' : formatter">
+                        [mnValue]="_selected['startDate']['_date'] | mu: 'format' : _viewsMap[_view]">
                     <span class="mnc-next">-</span>
                 </mn-input>
                 <mn-input
                         class="mnc-col"
                         [style.minWidth.px]="105"
                         [mnReadonly]="true"
-                        [mnValue]="_selected['endDate']['_date'] | mu: 'format' : formatter">
+                        [mnValue]="_selected['endDate']['_date'] | mu: 'format' : _viewsMap[_view]">
                     <i class="fa fa-calendar mnc-next"></i>
                 </mn-input>
             </mn-fill>
@@ -27,10 +27,10 @@ declare const mu: any;
             <mn-dropdown-content class="p-8 mnc-block">
                 <mn-fill [style.width.px]="760">
                     <mn-col [style.width.px]="120">
-                        <mn-datetime-quick
-                                [mnQuick]="quicks"
-                                (mnResult)="_quickResult($event)"
-                        ></mn-datetime-quick>
+                        <mn-datetimeranges
+                                [mnViews]="_views"
+                                (mnResult)="_rangeResult($event)"
+                        ></mn-datetimeranges>
                     </mn-col>
                     <mn-col [span]="1">
                         <ng-container *ngIf="_view === 'calendar'">
@@ -75,9 +75,9 @@ declare const mu: any;
 
                         <mn-fill class="mt-8">
                             <mn-col [span]="1" class="pt-2 mnc-mark">
-                                {{_viewed.startDate?._date | mu: 'format' : formatter }}
-                                <ng-container *ngIf="_startDate">-</ng-container>
-                                {{_viewed.endDate?._date | mu: 'format' : formatter }}
+                                {{_viewed.startDate?._date | mu: 'format' : _viewsMap[_view] }}
+                                <ng-container *ngIf="_viewed.startDate">-</ng-container>
+                                {{_viewed.endDate?._date | mu: 'format' : _viewsMap[_view] }}
                             </mn-col>
                             <mn-col [style.width.px]="120" class="mnc-tr">
                                 <button mn-btn class="primary" (click)="_confirmDate()">确认</button>
@@ -122,9 +122,29 @@ export class MnDatetimePickerComponent implements OnInit {
         this._maxDate = new MnDate(date);
     }
 
-    @Input('mnView')
-    set view(value) {
-        this._view = value;
+    // 设置视图
+    @Input('mnViews')
+    views(items) {
+        if (!items) {
+            return;
+        }
+
+        this._views = mu.map(items, (item, index) => {
+            if (mu.type(item, 'string')) {
+                let [view, formatter] = item.split('-:>');
+                formatter = formatter || 'yyyy-MM-dd';
+                item = {
+                    view,
+                    formatter
+                };
+            }
+
+            if (!index) {
+                this._view = item.view;
+            }
+
+            return item;
+        });
     }
 
     /**
@@ -134,7 +154,6 @@ export class MnDatetimePickerComponent implements OnInit {
     @Input('mnQuicks') quicks: boolean | any;
     @Input('mnResult') result: any = new EventEmitter<any>();
     @Input('mnSelected') selected: any = new EventEmitter<any>();
-    @Input('mnFormatter') formatter: string = 'yyyy-MM-dd';
 
     _startDate: any;
     _endDate: any;
@@ -154,17 +173,27 @@ export class MnDatetimePickerComponent implements OnInit {
 
     // 默认视图
     _view: string = 'calendar';
-
-    _quickResult(rst) {
-
-        if (rst.startDate) {
-            this._startDate = rst.startDate;
+    _views: any[] = [
+        {
+            view: 'calendar',
+            formatter: 'yyyy-MM-dd'
+        }, {
+            view: 'month',
+            formatter: 'yyyy-MM-dd'
+        }, {
+            view: 'quarter',
+            formatter: 'yyyy-MM-dd'
+        }, {
+            view: 'year',
+            formatter: 'yyyy-MM-dd'
         }
 
-        if (rst.ednDate) {
-            this._endDate = rst.endDate;
-        }
+    ];
+    _viewsMap: any;
 
+    _rangeResult(rst) {
+        this._startDate = rst.startDate || this._viewed.startDate || this._selected.startDate;
+        this._endDate = rst.endDate || this._viewed.endDate || this._selected.endDate;
         mu.run(rst.view, (view) => this._view = view);
     }
 
@@ -174,6 +203,12 @@ export class MnDatetimePickerComponent implements OnInit {
     }
 
     ngOnInit() {
+        this._viewsMap = mu.map(this._views, (o) => {
+            return {
+                __key__: o.view,
+                __val__: o.formatter
+            };
+        }, {});
     }
 
     _mcmResult($event: any) {

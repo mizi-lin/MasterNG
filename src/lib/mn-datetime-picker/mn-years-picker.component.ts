@@ -45,6 +45,7 @@ export class MnYearsPickerComponent implements OnInit {
 
     @Input('mnStartDate')
     set _startDate(value) {
+        console.debug('::::start', value);
         if (value) {
             let startDate = new MnDate(value);
             this.startDate = this._mds.reStartDate(startDate, this.maxDate, this.minDate);
@@ -53,7 +54,7 @@ export class MnYearsPickerComponent implements OnInit {
 
     @Input('mnEndDate')
     set _endDate(value) {
-        console.debug('::::::enddate', value);
+        console.debug('::::::end', value);
 
         if (!value) {
             return;

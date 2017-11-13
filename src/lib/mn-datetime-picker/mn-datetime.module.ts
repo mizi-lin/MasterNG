@@ -5,7 +5,7 @@ import {MnLayoutModule} from '../mn-layout/mn-layout.module';
 import {MnCalendarViewComponent} from './mn-calendar-view.component';
 import {MnCalendarMultipleComponent} from './mn-calendar-multiple.component';
 import {MnDatetimeServices} from './mn-datetime.services';
-import {MuDatetimeQuickComponent} from './mn-datetime-quick.component';
+import {MuDatetimeRangesComponent} from './mn-datetime-ranges.component';
 import {MnFloatLayerModule} from '../mn-float-layer/mn-float-layer.module';
 import {MnDatetimePickerComponent} from './mn-datetime-picker.component';
 import {MnButtonModule} from '../mn-button/mn-button.module';
@@ -29,7 +29,7 @@ import {MnQuartersPickerComponent} from './mn-quarters-picker.component';
         MnCalendarComponent,
         MnCalendarViewComponent,
         MnCalendarMultipleComponent,
-        MuDatetimeQuickComponent,
+        MuDatetimeRangesComponent,
         MnDatetimePickerComponent,
         MnYearsPickerComponent,
         MnMonthsPickerComponent,
@@ -40,7 +40,7 @@ import {MnQuartersPickerComponent} from './mn-quarters-picker.component';
         MnCalendarComponent,
         MnCalendarViewComponent,
         MnCalendarMultipleComponent,
-        MuDatetimeQuickComponent,
+        MuDatetimeRangesComponent,
         MnDatetimePickerComponent,
         MnYearsPickerComponent,
         MnMonthsPickerComponent,
