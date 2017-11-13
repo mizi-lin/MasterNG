@@ -30,10 +30,10 @@ import {MnDatetimeServices} from './mn-datetime.services';
 
             <section [class.active]="status === 'absolute'">
                 <ol>
-                    <li>按年</li>
-                    <li>按季度</li>
-                    <li>按月</li>
-                    <li>按周</li>
+                    <li (click)="selectView('year')">按年</li>
+                    <li (click)="selectView('quarter')">按季度</li>
+                    <li (click)="selectView('month')">按月</li>
+                    <li (click)="selectView('week')">按周</li>
                     <li *ngFor="let ab of _absolute">
                         {{ab.name}}
                     </li>
@@ -41,7 +41,7 @@ import {MnDatetimeServices} from './mn-datetime.services';
             </section>
         </div>
 
-        <button mn-btn class="primary full">自定义日期</button>
+        <button mn-btn class="primary full" (click)="selectView('calendar')">自定义日期</button>
     `
 })
 export class MuDatetimeQuickComponent implements OnInit {
@@ -76,5 +76,11 @@ export class MuDatetimeQuickComponent implements OnInit {
     getDate(rule) {
         let range = this._mds.getRangeDate(rule.value);
         this.result.emit(range);
+    }
+
+    selectView(_view: string) {
+        this.result.emit({
+            view: _view
+        });
     }
 }

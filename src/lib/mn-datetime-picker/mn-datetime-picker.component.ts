@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit} from '@angular/core';
 import {MnDate} from './mn-date.class';
 
+declare const mu: any;
+
 @Component({
     selector: 'mn-datetimepicker',
     template: `
@@ -9,19 +11,21 @@ import {MnDate} from './mn-date.class';
                 <mn-input
                         class="mnc-col"
                         [style.minWidth.px]="95"
+                        [mnReadonly]="true"
                         [mnValue]="_selected['startDate']['_date'] | mu: 'format' : formatter">
                     <span class="mnc-next">-</span>
                 </mn-input>
                 <mn-input
                         class="mnc-col"
-                        [style.minWidth.px]="100"
-                        [mnValue]="_selected?.endDate?._date | mu: 'format' : formatter">
+                        [style.minWidth.px]="105"
+                        [mnReadonly]="true"
+                        [mnValue]="_selected['endDate']['_date'] | mu: 'format' : formatter">
                     <i class="fa fa-calendar mnc-next"></i>
                 </mn-input>
             </mn-fill>
 
             <mn-dropdown-content class="p-8 mnc-block">
-                <mn-fill [style.width.px]="720">
+                <mn-fill [style.width.px]="760">
                     <mn-col [style.width.px]="120">
                         <mn-datetime-quick
                                 [mnQuick]="quicks"
@@ -29,19 +33,41 @@ import {MnDate} from './mn-date.class';
                         ></mn-datetime-quick>
                     </mn-col>
                     <mn-col [span]="1">
-                        <mn-calendar-multiple
-                                [mnStartDate]="_startDate"
-                                [mnEndDate]="_endDate"
-                                [mnMinDate]="_minDate"
-                                [mnMaxDate]="_maxDate"
-                                (mnResult)="_mcmResult($event)"
-                        ></mn-calendar-multiple>
+                        <ng-container *ngIf="_view === 'calendar'">
+                            <mn-calendar-multiple
+                                    [mnStartDate]="_startDate"
+                                    [mnEndDate]="_endDate"
+                                    [mnMinDate]="_minDate"
+                                    [mnMaxDate]="_maxDate"
+                                    (mnResult)="_mcmResult($event)"
+                            ></mn-calendar-multiple>
+                        </ng-container>
+
+                        <ng-container *ngIf="_view === 'year'">
+                            <mn-yearspicker
+                                    [mnStartDate]="_startDate"
+                                    [mnEndDate]="_endDate"
+                                    [mnMinDate]="_minDate"
+                                    [mnMaxDate]="_maxDate"
+                                    (mnResult)="_mcmResult($event)"
+                            ></mn-yearspicker>
+                        </ng-container>
+
+                        <ng-container *ngIf="_view === 'month'">
+                            <mn-monthspicker
+                                    [mnStartDate]="_startDate"
+                                    [mnEndDate]="_endDate"
+                                    [mnMinDate]="_minDate"
+                                    [mnMaxDate]="_maxDate"
+                                    (mnResult)="_mcmResult($event)"
+                            ></mn-monthspicker>
+                        </ng-container>
 
                         <mn-fill class="mt-8">
                             <mn-col [span]="1" class="pt-2 mnc-mark">
-                                {{_startDate?._date | mu: 'format' : formatter }}
-                                <ng-container *ngIf="_startDate"> - </ng-container> 
-                                {{_endDate?._date | mu: 'format' : formatter }}
+                                {{_viewed.startDate?._date | mu: 'format' : formatter }}
+                                <ng-container *ngIf="_startDate">-</ng-container>
+                                {{_viewed.endDate?._date | mu: 'format' : formatter }}
                             </mn-col>
                             <mn-col [style.width.px]="120" class="mnc-tr">
                                 <button mn-btn class="primary" (click)="_confirmDate()">确认</button>
@@ -78,12 +104,17 @@ export class MnDatetimePickerComponent implements OnInit {
 
     @Input('mnMinDate')
     set minDate(date) {
-        this._minDate = date;
+        this._minDate = new MnDate(date);
     }
 
     @Input('mnMaxDate')
     set maxDate(date) {
-        this._maxDate = date;
+        this._maxDate = new MnDate(date);
+    }
+
+    @Input('mnView')
+    set view(value) {
+        this._view = value;
     }
 
     /**
@@ -104,11 +135,27 @@ export class MnDatetimePickerComponent implements OnInit {
         endDate: {}
     };
 
+    _viewed: any = {
+        startDate: {},
+        endDate: {}
+    };
+
     _hasChange: boolean = false;
 
+    // 默认视图
+    _view: string = 'calendar';
+
     _quickResult(rst) {
-        this._startDate = rst.startDate;
-        this._endDate = rst.endDate;
+
+        if (rst.startDate) {
+            this._startDate = rst.startDate;
+        }
+
+        if (rst.ednDate) {
+            this._endDate = rst.endDate;
+        }
+
+        mu.run(rst.view, (view) => this._view = view);
     }
 
     _dropDownResult: any;
@@ -120,9 +167,17 @@ export class MnDatetimePickerComponent implements OnInit {
     }
 
     _mcmResult($event: any) {
-        this._startDate = $event.startDate;
-        this._endDate = $event.endDate;
 
+        if ($event.startDate) {
+            this._viewed.startDate = $event.startDate.clone();
+        }
+
+        if ($event.endDate) {
+            this._viewed.endDate = $event.endDate.clone();
+        }
+
+        // this._startDate = $event.startDate;
+        // this._endDate = $event.endDate;
         if (!this._hasChange) {
             // Hack fixed angular error
             // ERROR Error:

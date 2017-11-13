@@ -23,8 +23,6 @@ export class MnDate {
     b_: any;
     bs_: any;
 
-
-
     constructor(dateValue?: any, formatter?: string) {
 
         if (!mu.or(mu.type(dateValue), 'date', 'string', 'number')) {
@@ -32,7 +30,7 @@ export class MnDate {
         }
 
         this.b_ = [1970, 0, 1, 0, 0, 0, 0];
-        this.bs_ ={
+        this.bs_ = {
             '0': 'getFullYear',
             '1': 'getMonth',
             '2': 'getDate',
@@ -345,7 +343,6 @@ export class MnDate {
 
         let _date = mu.type(date, 'object') ? mu.clone(date)._date : date;
 
-
         let _b = mu.clone(this.b_);
         mu.each(types, (index) => {
             _b[index] = _date[this.bs_[index]]();
@@ -354,8 +351,15 @@ export class MnDate {
         return this.newDate(..._b);
     }
 
-    cloneDate(date: any = this._date) {
-        return this.getBeginDate(date, 0, 1, 2, 3, 4, 5, 6);
+    cloneDate(date: any) {
+        if (!date) {
+            console.debug(this, this.getBeginDate(date || this, 0, 1, 2, 3, 4, 5, 6));
+        }
+        return this.getBeginDate(date || this, 0, 1, 2, 3, 4, 5, 6);
+    }
+
+    clone() {
+        return mu.clone(this);
     }
 
     /**
