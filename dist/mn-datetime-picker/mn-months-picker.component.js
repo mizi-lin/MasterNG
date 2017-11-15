@@ -62,7 +62,6 @@ var MnMonthsPickerComponent = (function () {
             var date = new mn_date_class_1.MnDate(value);
             this.startDate = new mn_date_class_1.MnDate(date.months.start);
             this.endDate = new mn_date_class_1.MnDate(date.months.end);
-            this.result.emit(this.backStartEnd(this.startDate, this.endDate, true));
         },
         enumerable: true,
         configurable: true
@@ -83,6 +82,7 @@ var MnMonthsPickerComponent = (function () {
             var maxDate = this.endDate.yoy(1);
             this.maxDate = new mn_date_class_1.MnDate(maxDate.start);
         }
+        this.result.emit(this.backStartEnd(this.startDate, this.endDate, true));
         var _start_years = this.minDate.months.year;
         var _end_years = this.maxDate.months.year;
         for (var i = _start_years; i <= _end_years; i++) {

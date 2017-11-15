@@ -14,25 +14,22 @@ export class DemoDatetimeComponent implements OnInit {
     }
 
     ngOnInit() {
-
-        let a = new MnDate('2017-04-01');
-
-        console.log(a.quarters);
-
+        // let a = new MnDate('2017-04-01');
+        // console.log(a.quarters);
     }
 
     a: any = {};
 
     result(e) {
-        console.debug(
-            e,
-            mu.format(new Date(e.startDate.days.start), 'yyyy-MM-dd'),
-            e.endDate && mu.format(new Date(e.endDate.days.start), 'yyyy-MM-dd')
-        );
+        console.debug(':::::result', e);
     }
 
     getView(e) {
         console.debug(e);
+    }
+
+    _result(e) {
+        console.debug(':::::selected', e);
     }
 
     quicks: any = {

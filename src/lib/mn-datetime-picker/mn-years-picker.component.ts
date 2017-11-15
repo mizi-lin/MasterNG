@@ -75,8 +75,6 @@ export class MnYearsPickerComponent implements OnInit {
         let date = new MnDate(value);
         this.startDate = new MnDate(date.years.start);
         this.endDate = new MnDate(date.years.end);
-
-        this.result.emit(this.backStartEnd(this.startDate, this.endDate, true));
     }
 
     @Output('mnResult') result: any = new EventEmitter<any>();
@@ -93,8 +91,6 @@ export class MnYearsPickerComponent implements OnInit {
             this.endDate = new MnDate(this.current.years.end);
         }
 
-        console.debug(this.startDate, this.endDate);
-
         // 设置minDate, maxDate默认值
         if (mu.isNotExist(this.minDate)) {
             let _y = (this.startDate.years.year % 10 + 21);
@@ -108,6 +104,8 @@ export class MnYearsPickerComponent implements OnInit {
             let maxDate = this.endDate.yoy(_y);
             this.maxDate = new MnDate(maxDate.start);
         }
+
+        this.result.emit(this.backStartEnd(this.startDate, this.endDate, true));
 
         let _start_century = Math.floor(this.minDate.years.year / 100);
         let _end_century = Math.floor(this.maxDate.years.year / 100);

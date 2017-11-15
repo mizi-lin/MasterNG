@@ -76,6 +76,6 @@
 * b2,3,4: 修正fonts样式\e第三方js不能正确解析
 * b5 i18nService add byText
 
-* 0.2.6
+* 0.2.6 / 0.2.7
 
 * 发布 datetimepicker

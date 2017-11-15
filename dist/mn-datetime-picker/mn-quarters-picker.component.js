@@ -62,7 +62,6 @@ var MnQuartersPickerComponent = (function () {
             var date = new mn_date_class_1.MnDate(value);
             this.startDate = new mn_date_class_1.MnDate(date.months.start);
             this.endDate = new mn_date_class_1.MnDate(date.months.end);
-            this.result.emit(this.backStartEnd(this.startDate, this.endDate, true));
         },
         enumerable: true,
         configurable: true
@@ -83,6 +82,7 @@ var MnQuartersPickerComponent = (function () {
             var maxDate = this.endDate.yoy(2);
             this.maxDate = new mn_date_class_1.MnDate(maxDate.start);
         }
+        this.result.emit(this.backStartEnd(this.startDate, this.endDate, true));
         var _start_years = this.minDate.quarters.year;
         var _end_years = this.maxDate.quarters.year;
         for (var i = _start_years; i <= _end_years; i++) {

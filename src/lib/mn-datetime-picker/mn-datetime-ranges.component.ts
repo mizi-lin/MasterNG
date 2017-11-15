@@ -30,16 +30,18 @@ declare const mu: any;
 
             <section [class.active]="_type === 'view'">
                 <ol>
-                    <li [class.selected]="_view === 'year'" (click)="selectView('year')">By Year</li>
-                    <li [class.selected]="_view === 'quarter'" (click)="selectView('quarter')">By Quarter</li>
-                    <li [class.selected]="_view === 'month'" (click)="selectView('month')">By Month</li>
+                    <li *ngFor="let _v of _views" 
+                        [class.selected]="_view === _v.view"
+                        (click)="selectView(_v.view)">
+                        By {{_v.view}}
+                    </li>
                 </ol>
             </section>
         </div>
 
-        <button mn-btn class="default mn-btn-full mt-8"
-                [class.primary]="_view === 'calendar'"
-                (click)="selectView('calendar')">Custom Date</button>
+        <!--<button mn-btn class="default mn-btn-full mt-8"-->
+                <!--[class.primary]="_view === 'calendar'"-->
+                <!--(click)="selectView('calendar')">Custom Date</button>-->
     `
 })
 export class MuDatetimeRangesComponent implements OnInit {
@@ -74,6 +76,7 @@ export class MuDatetimeRangesComponent implements OnInit {
             }
         });
 
+        mu.run(this._views, () => this._view = this._views[0].view);
     }
 
     getDate(rule) {

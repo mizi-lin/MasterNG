@@ -62,7 +62,6 @@ var MnYearsPickerComponent = (function () {
             var date = new mn_date_class_1.MnDate(value);
             this.startDate = new mn_date_class_1.MnDate(date.years.start);
             this.endDate = new mn_date_class_1.MnDate(date.years.end);
-            this.result.emit(this.backStartEnd(this.startDate, this.endDate, true));
         },
         enumerable: true,
         configurable: true
@@ -73,7 +72,6 @@ var MnYearsPickerComponent = (function () {
             this.startDate = new mn_date_class_1.MnDate(this.current.years.start);
             this.endDate = new mn_date_class_1.MnDate(this.current.years.end);
         }
-        console.debug(this.startDate, this.endDate);
         // 设置minDate, maxDate默认值
         if (mu.isNotExist(this.minDate)) {
             var _y = (this.startDate.years.year % 10 + 21);
@@ -86,6 +84,7 @@ var MnYearsPickerComponent = (function () {
             var maxDate = this.endDate.yoy(_y);
             this.maxDate = new mn_date_class_1.MnDate(maxDate.start);
         }
+        this.result.emit(this.backStartEnd(this.startDate, this.endDate, true));
         var _start_century = Math.floor(this.minDate.years.year / 100);
         var _end_century = Math.floor(this.maxDate.years.year / 100);
         for (var i = _start_century; i <= _end_century; i++) {

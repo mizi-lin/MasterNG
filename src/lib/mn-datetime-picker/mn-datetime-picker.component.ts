@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {MnDate} from './mn-date.class';
 
 declare const mu: any;
@@ -80,14 +80,19 @@ declare const mu: any;
                                 {{_viewed.endDate?._date | mu: 'format' : _viewsMap[_view] }}
                             </mn-col>
                             <mn-col [style.width.px]="120" class="mnc-tr">
-                                <button mn-btn class="primary" (click)="_confirmDate()">确认</button>
+                                <button mn-btn class="primary"
+                                        [disabled]="!_viewed.endDate"
+                                        (click)="_confirmDate()">确认
+                                </button>
                             </mn-col>
                         </mn-fill>
                     </mn-col>
                 </mn-fill>
             </mn-dropdown-content>
         </mn-dropdown>
-    `
+    `,
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./mn-datetime-picker.scss']
 })
 export class MnDatetimePickerComponent implements OnInit {
 
@@ -124,7 +129,8 @@ export class MnDatetimePickerComponent implements OnInit {
 
     // 设置视图
     @Input('mnViews')
-    views(items) {
+    set views(items) {
+
         if (!items) {
             return;
         }
@@ -152,8 +158,8 @@ export class MnDatetimePickerComponent implements OnInit {
      * any: exist true, 快速选择区配置 {relatively, absolute}
      */
     @Input('mnQuicks') quicks: boolean | any;
-    @Input('mnResult') result: any = new EventEmitter<any>();
-    @Input('mnSelected') selected: any = new EventEmitter<any>();
+    @Output('mnResult') result: any = new EventEmitter<any>();
+    @Output('mnSelected') selected: any = new EventEmitter<any>();
 
     _startDate: any;
     _endDate: any;
@@ -215,6 +221,8 @@ export class MnDatetimePickerComponent implements OnInit {
 
         mu.run($event.endDate, () => {
             this._viewed.endDate = $event.endDate.clone();
+        }, () => {
+            this._viewed.endDate = void 0;
         });
 
         // this._startDate = $event.startDate;
@@ -227,18 +235,16 @@ export class MnDatetimePickerComponent implements OnInit {
             // public ngDoCheck(): void { this.cdr.detectChanges(); }
             setTimeout(() => {
                 mu.run(this._startDate, () => {
-                    this._selected = {
+                    this._selected = this._rst({
                         startDate: this._startDate,
-                        endDate: this._endDate,
-                        start: this._format(this._startDate),
-                        end: this._format(this._endDate)
-                    };
+                        endDate: this._endDate
+                    });
+
+                    this.result.emit(this._selected);
                 });
             }, 0);
             this._hasChange = true;
         }
-
-        this.result.emit($event);
     }
 
     // 确认事件
@@ -246,13 +252,14 @@ export class MnDatetimePickerComponent implements OnInit {
         this._startDate = this._viewed.startDate;
         this._endDate = this._viewed.endDate;
 
-        this._selected = {
+        this._selected = this._rst({
             startDate: this._startDate,
-            endDate: this._endDate,
-            start: this._format(this._startDate),
-            end: this._format(this._endDate)
-        };
+            endDate: this._endDate
+        });
+
         this.selected.emit(this._selected);
+        this.result.emit(this._selected);
+
         this._dropDownResult.hide();
     }
 
@@ -261,5 +268,11 @@ export class MnDatetimePickerComponent implements OnInit {
             return '';
         }
         return mu.format(date._date, this._viewsMap[this._view]);
+    }
+
+    _rst(rst: any): any {
+        rst.start = this._format(this._startDate);
+        rst.end = this._format(this._endDate);
+        return rst;
     }
 }

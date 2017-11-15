@@ -72,8 +72,6 @@ export class MnQuartersPickerComponent implements OnInit {
         let date = new MnDate(value);
         this.startDate = new MnDate(date.months.start);
         this.endDate = new MnDate(date.months.end);
-
-        this.result.emit(this.backStartEnd(this.startDate, this.endDate, true));
     }
 
     @Output('mnResult') result: any = new EventEmitter<any>();
@@ -101,6 +99,8 @@ export class MnQuartersPickerComponent implements OnInit {
             let maxDate = this.endDate.yoy(2);
             this.maxDate = new MnDate(maxDate.start);
         }
+
+        this.result.emit(this.backStartEnd(this.startDate, this.endDate, true));
 
         let _start_years = this.minDate.quarters.year;
         let _end_years = this.maxDate.quarters.year;

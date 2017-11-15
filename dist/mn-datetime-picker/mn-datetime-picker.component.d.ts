@@ -14,7 +14,7 @@ export declare class MnDatetimePickerComponent implements OnInit {
     endDate: any;
     minDate: any;
     maxDate: any;
-    views(items: any): void;
+    views: any;
     /**
      * boolean: def true, 是否打开快速选择区
      * any: exist true, 快速选择区配置 {relatively, absolute}
@@ -39,4 +39,5 @@ export declare class MnDatetimePickerComponent implements OnInit {
     _mcmResult($event: any): void;
     _confirmDate(): void;
     _format(date: any): string;
+    _rst(rst: any): any;
 }
