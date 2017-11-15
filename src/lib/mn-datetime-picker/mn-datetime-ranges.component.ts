@@ -6,7 +6,7 @@ declare const mu: any;
 @Component({
     selector: 'mn-datetimeranges',
     template: `
-        <mn-fill [hph]="false">
+        <mn-fill [hph]="false" class="mnc-header">
             <mn-col *ngIf="_ranges.length"
                     [class.active]="_type === 'range'"
                     [span]="1"
@@ -19,7 +19,7 @@ declare const mu: any;
             </mn-col>
         </mn-fill>
 
-        <div class="mt-16">
+        <div class="mt-8">
             <section [class.active]="_type === 'range'">
                 <ol>
                     <li *ngFor="let rl of _ranges" (click)="getDate(rl)">
@@ -30,14 +30,16 @@ declare const mu: any;
 
             <section [class.active]="_type === 'view'">
                 <ol>
-                    <li (click)="selectView('year')">By Year</li>
-                    <li (click)="selectView('quarter')">By Quarter</li>
-                    <li (click)="selectView('month')">By Month</li>
+                    <li [class.selected]="_view === 'year'" (click)="selectView('year')">By Year</li>
+                    <li [class.selected]="_view === 'quarter'" (click)="selectView('quarter')">By Quarter</li>
+                    <li [class.selected]="_view === 'month'" (click)="selectView('month')">By Month</li>
                 </ol>
             </section>
         </div>
 
-        <button mn-btn class="default full mt-8" (click)="selectView('calendar')">Custom Date</button>
+        <button mn-btn class="default mn-btn-full mt-8"
+                [class.primary]="_view === 'calendar'"
+                (click)="selectView('calendar')">Custom Date</button>
     `
 })
 export class MuDatetimeRangesComponent implements OnInit {
@@ -56,6 +58,8 @@ export class MuDatetimeRangesComponent implements OnInit {
 
     @Output('mnResult') result: any = new EventEmitter<any>();
     @Output('mnSelected') selected: any = new EventEmitter<any>();
+
+    _view: string = 'calendar';
 
     constructor(private _mds: MnDatetimeServices) {
     }
@@ -82,6 +86,7 @@ export class MuDatetimeRangesComponent implements OnInit {
         let rst = {
             view: _view
         };
+        this._view = _view;
         this.result.emit(rst);
         this.selected.emit(rst);
     }

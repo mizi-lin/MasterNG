@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {MnI18nConfig} from './mn-i18n-config';
+
 declare const mu: any;
 
 @Injectable()
@@ -50,13 +51,11 @@ export class MnI18nServices {
         } else {
             const path = `${this.config.prefix}/${this.config.lang}${this.config.suffix}`;
 
-            this.locale_promise = this._http.get(path)
-            .map((res: Response) => {
+            this.locale_promise = this._http.get(path).map((res: Response) => {
                 // 多重处理, 防止用户拦截器先行使用 map 处理过数据
                 const body = (res.json && mu.isFunction(res.json)) ? res.json() : res;
                 return body || {};
-            })
-            .toPromise();
+            }).toPromise();
 
             this.locale_promise.then((res: any) => {
                 this.store[this.config.lang] = this.locale = res;
@@ -125,6 +124,17 @@ export class MnI18nServices {
         text = mu.format(text, ..._params);
 
         return text;
+    }
+
+    /**
+     * 根据当前本地值，获取国际化结果
+     * @param {string} key
+     * @param params
+     */
+    byText(key: string, ...params: any[]) {
+        const lang = mu.storage(this.config.storageKey) || this.config.lang;
+        const locale = this.store[lang];
+        return this.translateText(locale, key, params);
     }
 
 }

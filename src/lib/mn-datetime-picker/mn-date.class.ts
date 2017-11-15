@@ -290,9 +290,6 @@ export class MnDate {
      */
     getQuarters(_dt: any = this._date, count: number = 0, relative: boolean = false): any {
         let _date = this.toDate(_dt);
-        let _begin = (relative && count !== 0) ? this.cloneDate(_date) : this.getBeginDate(_date, 0, 1);
-        let end, _end, start, _start;
-        let _relative_current = relative && count === 0;
         let _nameMap = {
             1: 'JFM',
             2: 'AMJ',
@@ -300,30 +297,33 @@ export class MnDate {
             4: 'OND'
         };
 
-        mu.run(count, () => {
-            count = relative ? (count > 0 ? count - 1 : count ) : count;
+        count = relative ? count : (count + 1);
+
+        // let _begin = (relative && count !== 0) ? this.cloneDate(_date) : this.getBeginDate(_date, 0, 1);
+        let _begin = mu.run(relative, () => {
+            return this.cloneDate(_date);
+        }, () => {
+            return this.getBeginDate(_date, 0, 1);
         });
-
-        _begin.setMonth(_begin.getMonth() + (count * 3) + 1);
-
 
         let year = _begin.getFullYear();
         let month = _begin.getMonth() + 1;
         let quarter = this.getQuarter(month);
-        let startMonth = (quarter - 1) * 3;
 
-        _start = this.cloneDate(_begin);
-        _start.setMonth(startMonth);
-        start = +_start;
+        let _start = mu.run(relative, () => _begin, () => {
+            let diff = month % 3 || 3;
+            _begin.setMonth(month - diff);
+            return _begin;
+        });
 
-        if (!_relative_current) {
-            _end = this.cloneDate(_start);
-            _end.setMonth(startMonth + 3);
-        } else {
-            _end = this.cloneDate(_date);
-        }
+        let _end = this.cloneDate(_start);
+        _end.setMonth(_end.getMonth() + (count * 3));
 
-        end = +_end - 1;
+        _start = this.cloneDate(_end);
+        _start.setMonth(_start.getMonth() - 3);
+
+        let start = +_start;
+        let end = +_end - 1;
 
         return {
             start,
@@ -331,7 +331,7 @@ export class MnDate {
             end,
             _end: this.format(end),
             startMonth: _start.getMonth() + 1,
-            endMonth: _end.getMonth(),
+            endMonth: _end.getMonth() || 12,
             quarter,
             year,
             name: _nameMap[quarter]

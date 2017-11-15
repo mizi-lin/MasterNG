@@ -85,7 +85,7 @@ export class MnQuartersPickerComponent implements OnInit {
 
     ngOnInit() {
         // 设置startDate, endDate 默认值
-        if (!(this.endDate && this.startDate)) {
+        if (!(mu.isNotEmpty(this.endDate) && mu.isNotEmpty(this.startDate))) {
             this.startDate = new MnDate(this.current.quarters.start);
             this.endDate = new MnDate(this.current.quarters.end);
         }
@@ -111,8 +111,6 @@ export class MnQuartersPickerComponent implements OnInit {
                 quarters: this.getQuartersByYear(i)
             });
         }
-
-        console.debug(this.calendar, this.minDate, this.maxDate);
     }
 
     calendar: any[] = [];
@@ -180,7 +178,7 @@ export class MnQuartersPickerComponent implements OnInit {
 
     ended(date) {
         return mu.run(this.endDate, () => {
-            return date.show && date.quarters.start === mu.prop(this.endDate, 'quarters.start');
+            return date.show && date.quarters.end === mu.prop(this.endDate, 'quarters.end');
         });
     }
 
@@ -216,7 +214,7 @@ export class MnQuartersPickerComponent implements OnInit {
 
         let endDate = mu.run(_endDate, (_end) => {
             let end = _end.clone();
-            return new MnDate(end.months.end);
+            return new MnDate(end.quarters.end);
         });
 
         return {

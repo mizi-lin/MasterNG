@@ -77,7 +77,7 @@ export class MnDropdownComponent implements OnInit {
             this.status = 'show';
             this.styles = {
                 left: this._position().left + 'px',
-                top: this._position().top + 'px'
+                top: (this._position().top + 1) + 'px'
             };
         } else if (type === 'mouseleave') {
             this.status = 'hide';

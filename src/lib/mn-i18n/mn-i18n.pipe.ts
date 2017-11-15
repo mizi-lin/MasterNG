@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {MnI18nServices} from './mn-i18n.services';
-import * as mu from 'mzmu';
+declare const mu: any;
 
 @Pipe({
     name: 'i18n',
@@ -10,30 +10,30 @@ export class MnI18nPipe implements PipeTransform {
     locale: any;
     lang: string;
 
-    constructor(private $$I18nServices: MnI18nServices) {
-        this.locale = this.$$I18nServices.locale;
-        this.lang = this.$$I18nServices.config.lang;
+    constructor(private _mis: MnI18nServices) {
+        this.locale = this._mis.locale;
+        this.lang = this._mis.config.lang;
     }
 
     transform(value: any, ...args: any[]): any {
-        if ((<any>mu).isNotExist(value)) {
+        if (mu.isNotExist(value)) {
             return value;
         }
 
-        const lang = this.$$I18nServices.config.lang;
+        const lang = this._mis.config.lang;
 
         if (mu.isEmpty(this.locale)) {
-            this.locale = this.$$I18nServices.locale;
+            this.locale = this._mis.locale;
         }
 
         if (lang !== this.lang) {
-            const locale = this.$$I18nServices.store[lang];
+            const locale = this._mis.store[lang];
             if (!mu.isEmpty(locale)) {
                 this.lang = lang;
                 this.locale = locale;
             }
         }
 
-        return this.$$I18nServices.translateText(this.locale, value, args);
+        return this._mis.translateText(this.locale, value, args);
     }
 }

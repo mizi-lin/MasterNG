@@ -64,7 +64,7 @@ export class MnCalendarMultipleComponent implements OnInit {
 
     @Input('mnStartDate')
     set startDate(date) {
-        if (!date) {
+        if (mu.isEmpty(date)) {
             return;
         }
 
@@ -96,7 +96,7 @@ export class MnCalendarMultipleComponent implements OnInit {
 
     @Input('mnEndDate')
     set endDate(date) {
-        if (!date) {
+        if (mu.isEmpty(date)) {
             return;
         }
         this.endDate_ = new MnDate(date);

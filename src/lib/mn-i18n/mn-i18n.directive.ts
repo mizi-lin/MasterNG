@@ -10,15 +10,15 @@ export class MnI18nDirective implements AfterViewInit, OnChanges, DoCheck {
     lang: string;
     key: string;
 
-    constructor(private elm: ElementRef,
-                private $$I18nServices: MnI18nServices) {
-        this.lang = this.$$I18nServices.config.lang;
+    constructor(private _elm: ElementRef,
+                private _mis: MnI18nServices) {
+        this.lang = this._mis.config.lang;
     }
 
     ngAfterViewInit() {
-        const key = this.key = this.key || this.elm.nativeElement.innerText.trim();
-        this.$$I18nServices.getText((text) => {
-            this.elm.nativeElement.innerText = text;
+        const key = this.key = this.key || this._elm.nativeElement.innerText.trim();
+        this._mis.getText((text) => {
+            this._elm.nativeElement.innerText = text;
         }, key, ...this.i18n);
     }
 
@@ -27,7 +27,7 @@ export class MnI18nDirective implements AfterViewInit, OnChanges, DoCheck {
     }
 
     ngDoCheck() {
-        mu.run(this.$$I18nServices.config.lang, (lang) => {
+        mu.run(this._mis.config.lang, (lang) => {
             if (lang !== this.lang) {
                 this.lang = lang;
                 this.ngAfterViewInit();

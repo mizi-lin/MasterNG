@@ -92,6 +92,7 @@ export class MnEchartsService {
             pie: [
                 '$module',
                 'convert',
+                'percent_rate_calc',
                 'data_sort',
                 '$series',
                 'series_sort',
@@ -109,6 +110,7 @@ export class MnEchartsService {
                 '$module',
                 'data_cut',
                 'convert',
+                'percent_rate_calc',
                 '$series',
                 'series_sort',
                 'series_transparent',
@@ -126,6 +128,7 @@ export class MnEchartsService {
             radar: [
                 '$module',
                 'convert',
+                'percent_rate_calc',
                 'series_sort',
                 '$series',
 
@@ -141,6 +144,7 @@ export class MnEchartsService {
             line: [
                 '$module',
                 'convert',
+                'percent_rate_calc',
                 'series_sort',
                 '$series',
                 'series_subtype',
@@ -168,6 +172,7 @@ export class MnEchartsService {
             bar: [
                 '$module',
                 'convert',
+                'percent_rate_calc',
                 'series_sort',
                 '$series',
                 'series_subtype',
@@ -233,6 +238,24 @@ export class MnEchartsService {
          */
         fn.convert = () => {
             data = this.convert(data, setting.convert);
+        };
+
+        /**
+         * 按组数值计算百分比，总数等
+         */
+        fn.percent_rate_calc = () => {
+            /**
+             * 预先计算分组数值
+             */
+            mu.run(mu.groupArray(data, 'x'), (xs) => {
+                const totals = mu.map(xs, (o) => this.total(o, 'value'));
+                mu.each(data, (o) => {
+                    o._old_value = o.value;
+                    o._total = totals[o.x];
+                    o._rate = o._old_value / o._total;
+                    o._percent = mu.format(Math.abs(o._rate), '::2');
+                });
+            });
         };
 
         // 对原始数据按照value进行排序
@@ -870,18 +893,7 @@ export class MnEchartsService {
 
         }, setting);
 
-        /**
-         * 预先计算分组数值
-         */
-        mu.run(mu.groupArray(data, 'x'), (xs) => {
-            const totals = mu.map(xs, (o) => this.total(o, 'value'));
-            mu.each(data, (o) => {
-                o._old_value = o.value;
-                o._total = totals[o.x];
-                o._rate = o._old_value / o._total;
-                o._percent = mu.format(Math.abs(o._rate), '::2');
-            });
-        });
+
 
         /**
          * 遍历执行各方法

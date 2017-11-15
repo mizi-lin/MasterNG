@@ -209,14 +209,13 @@ export class MnDatetimePickerComponent implements OnInit {
     }
 
     _mcmResult($event: any) {
-
-        if ($event.startDate) {
+        mu.run($event.startDate, () => {
             this._viewed.startDate = $event.startDate.clone();
-        }
+        });
 
-        if ($event.endDate) {
+        mu.run($event.endDate, () => {
             this._viewed.endDate = $event.endDate.clone();
-        }
+        });
 
         // this._startDate = $event.startDate;
         // this._endDate = $event.endDate;
@@ -227,12 +226,14 @@ export class MnDatetimePickerComponent implements OnInit {
             //      Expression has changed after it was checked
             // public ngDoCheck(): void { this.cdr.detectChanges(); }
             setTimeout(() => {
-                this._selected = {
-                    startDate: this._startDate,
-                    endDate: this._endDate,
-                    start: this._format(this._startDate),
-                    end: this._format(this._endDate)
-                };
+                mu.run(this._startDate, () => {
+                    this._selected = {
+                        startDate: this._startDate,
+                        endDate: this._endDate,
+                        start: this._format(this._startDate),
+                        end: this._format(this._endDate)
+                    };
+                });
             }, 0);
             this._hasChange = true;
         }

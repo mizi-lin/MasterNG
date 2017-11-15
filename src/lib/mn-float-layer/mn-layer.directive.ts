@@ -93,12 +93,13 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
             clearTimeout(this._clear);
         });
 
-        // this._render.listen(layer, 'mouseleave', () => {
-        //     this._clear = setTimeout(() => {
-        //         this._hide();
-        //         this._showed = false;
-        //     }, 500);
-        // });
+        // 移出下拉框，隐藏下拉框
+        this._render.listen(layer, 'mouseleave', () => {
+            this._clear = setTimeout(() => {
+                this._hide();
+                this._showed = false;
+            }, 500);
+        });
 
         // 绑定隐藏事件
         mu.run(this._hide_evt, () => {

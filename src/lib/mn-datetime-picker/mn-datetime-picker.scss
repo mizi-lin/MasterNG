@@ -38,7 +38,7 @@ mn-monthspicker,
 mn-quarterspicker {
 
     padding: 8px;
-    border: 1px solid #dedede;
+    border: 1px solid #d9d9d9;
     min-height: 300px;
     max-height: 300px;
     overflow-y: auto;
@@ -49,7 +49,7 @@ mn-quarterspicker {
         & + section {
             padding-top: 8px;
             margin-top: 8px;
-            border-top: 1px solid #dedede;
+            border-top: 1px solid #d9d9d9;
         }
     }
 
@@ -110,10 +110,10 @@ mn-quarterspicker {
 
 mn-datetimepicker {
     display: inline-block;
-    height: 32px;
+    height: 28px;
 
     mn-dropdown {
-        border: 1px solid #dedede;
+        border: 1px solid #d9d9d9;
         border-radius: 2px;
         height: 100%;
 
@@ -125,11 +125,17 @@ mn-datetimepicker {
             border: 1px solid transparent;
             height: 100%;
             width: auto;
+            cursor: pointer;
 
             span.mnc-next {
                 color: #ccc;
                 margin-right: -3px;
-                line-height: 28px;
+                line-height: 23px;
+            }
+
+            i.mnc-next {
+                color: #666;
+                line-height: 25px;
             }
 
             input {
@@ -141,9 +147,16 @@ mn-datetimepicker {
 }
 
 mn-datetimeranges {
-
+    padding-right: 8px;
     mn-fill {
-        height: 28px;
+        &.mnc-header {
+            .mn-col-content {
+                padding-left: 8px;
+                height: 28px;
+                line-height: 28px;
+                border-bottom: 1px solid #d9d9d9;
+            }
+        }
     }
 
     section {
@@ -156,11 +169,20 @@ mn-datetimeranges {
             padding-left: 8px;
             height: 28px;
             line-height: 28px;
+            border-radius: 2px;
+
             &:hover {
                 background: rgba(61, 168, 245, .3);
                 cursor: pointer;
             }
+
+            &.selected {
+                background: #108ee9;
+                border-color: #0e77ca;
+                color: #fff;
+            }
         }
+
     }
 
 }

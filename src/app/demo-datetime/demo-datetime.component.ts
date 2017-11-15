@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {MnDate} from '../../lib/mn-datetime-picker/mn-date.class';
 
 declare const mu: any;
 
@@ -13,6 +14,11 @@ export class DemoDatetimeComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        let a = new MnDate('2017-04-01');
+
+        console.log(a.quarters);
+
     }
 
     a: any = {};

@@ -74,3 +74,8 @@
 * b1: 修正mnReq空数据没有状态返回
 * b1: 修正colorMap, color key不区分大小写
 * b2,3,4: 修正fonts样式\e第三方js不能正确解析
+* b5 i18nService add byText
+
+* 0.2.6
+
+* 发布 datetimepicker

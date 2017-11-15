@@ -45,7 +45,6 @@ export class MnYearsPickerComponent implements OnInit {
 
     @Input('mnStartDate')
     set _startDate(value) {
-        console.debug('::::start', value);
         if (value) {
             let startDate = new MnDate(value);
             this.startDate = this._mds.reStartDate(startDate, this.maxDate, this.minDate);
@@ -54,8 +53,6 @@ export class MnYearsPickerComponent implements OnInit {
 
     @Input('mnEndDate')
     set _endDate(value) {
-        console.debug('::::::end', value);
-
         if (!value) {
             return;
         }
@@ -91,10 +88,12 @@ export class MnYearsPickerComponent implements OnInit {
 
     ngOnInit() {
         // 设置startDate, endDate 默认值
-        if (!(this.endDate && this.startDate)) {
+        if (!(mu.isNotEmpty(this.endDate) && mu.isNotEmpty(this.startDate))) {
             this.startDate = new MnDate(this.current.years.start);
             this.endDate = new MnDate(this.current.years.end);
         }
+
+        console.debug(this.startDate, this.endDate);
 
         // 设置minDate, maxDate默认值
         if (mu.isNotExist(this.minDate)) {
@@ -221,14 +220,10 @@ export class MnYearsPickerComponent implements OnInit {
     }
 
     backStartEnd(_startDate: any, _endDate: any, first: boolean) {
-        let startDate = _startDate.years.start;
-        // _endDate = _endDate || _startDate;
-        // let endDate = _endDate.years.end;
-
-        let endDate = _endDate ? new MnDate(_endDate.years.end) : void 0;
-
+        let startDate = mu.isNotEmpty(_startDate) ? new MnDate(_startDate.years.start) : void 0;
+        let endDate = mu.isNotEmpty(_endDate) ? new MnDate(_endDate.years.end) : void 0;
         return {
-            startDate: new MnDate(startDate),
+            startDate,
             endDate,
             first: first,
         };

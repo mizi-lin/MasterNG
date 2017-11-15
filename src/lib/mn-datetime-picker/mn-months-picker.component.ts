@@ -81,20 +81,11 @@ export class MnMonthsPickerComponent implements OnInit {
     current: any = new MnDate(new Date());
 
     constructor(private _mds: MnDatetimeServices) {
-
-        // let a = '56,99,66,57,55,55,75,57,71,107,69,59,31,67,76,36,78'.split(',');
-        //
-        // let b = 0;
-        //
-        // mu.each(a, c => b = b + parseInt(c));
-        //
-        // console.debug(b);
-
     }
 
     ngOnInit() {
         // 设置startDate, endDate 默认值
-        if (!(this.endDate && this.startDate)) {
+        if (!(mu.isNotEmpty(this.endDate) && mu.isNotEmpty(this.startDate))) {
             this.startDate = new MnDate(this.current.months.start);
             this.endDate = new MnDate(this.current.months.end);
         }
@@ -120,8 +111,6 @@ export class MnMonthsPickerComponent implements OnInit {
                 months: this.getMonthsByYear(i)
             });
         }
-
-        console.debug(this.calendar, this.minDate, this.maxDate);
     }
 
     calendar: any[] = [];
