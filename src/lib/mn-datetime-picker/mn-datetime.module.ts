@@ -14,6 +14,7 @@ import {MnFormModule} from '../mn-form/mn-form.module';
 import {MnYearsPickerComponent} from './mn-years-picker.component';
 import {MnMonthsPickerComponent} from './mn-months-picker.component';
 import {MnQuartersPickerComponent} from './mn-quarters-picker.component';
+import {MnDateSingleComponent} from './mn-date-single.component';
 
 @NgModule({
     imports: [
@@ -33,7 +34,8 @@ import {MnQuartersPickerComponent} from './mn-quarters-picker.component';
         MnDatetimePickerComponent,
         MnYearsPickerComponent,
         MnMonthsPickerComponent,
-        MnQuartersPickerComponent
+        MnQuartersPickerComponent,
+        MnDateSingleComponent
     ],
 
     exports: [
@@ -44,7 +46,8 @@ import {MnQuartersPickerComponent} from './mn-quarters-picker.component';
         MnDatetimePickerComponent,
         MnYearsPickerComponent,
         MnMonthsPickerComponent,
-        MnQuartersPickerComponent
+        MnQuartersPickerComponent,
+        MnDateSingleComponent
     ],
 
     providers: [

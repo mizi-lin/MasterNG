@@ -25,7 +25,7 @@ declare const mu: any;
             </mn-fill>
 
             <mn-dropdown-content class="p-8 mnc-block">
-                <mn-fill [style.width.px]="760">
+                <mn-fill [style.width.px]="660">
                     <mn-col [style.width.px]="120">
                         <mn-datetimeranges
                                 [mnViews]="_views"

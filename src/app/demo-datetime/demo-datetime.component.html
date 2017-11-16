@@ -21,13 +21,15 @@
 
     <mn-panel-s class="bordered mt-16" title="Datetime Picker">
         <mn-datetimepicker
-                [mnStartDate]="'1996-03-03'"
-                [mnEndDate]="'2016-08-21'"
-                [mnMinDate]="'1995-06-11'"
-                [mnMaxDate]="'2018-11-16'"
+                [mnStartDate]=""
+                [mnEndDate]=""
                 (mnResult)="result($event)"
                 (mnSelected)="_result($event)"
         ></mn-datetimepicker>
+
+        <!--[mnEndDate]="'2016-08-21'"-->
+        <!--[mnMinDate]="'1995-06-11'"-->
+        <!--[mnMaxDate]="'2018-11-16'"-->
 
                 <!--[mnViews]="['month-:>yyyy-MM', 'quarter-:>yyyy-MM']"-->
 
@@ -42,10 +44,14 @@
         <!--[mnMinDate]="'1615-06-11'"-->
         <!--[mnMaxDate]="'2027-11-16'"-->
         <!--[mnDate]="'2017-11-16'"-->
-
-        <!--<mn-monthspicker></mn-monthspicker>-->
-
         <!--<mn-quarterspicker></mn-quarterspicker>-->
+
+        <mn-datesingle [MnDate]="'2017-06-08'" [MnView]="'years'"></mn-datesingle>
+        <mn-datesingle [MnDate]="'2017-06-08'" [MnView]="'quarters'"></mn-datesingle>
+        <mn-datesingle [MnDate]="'2017-06-08'" [MnView]="'months'"></mn-datesingle>
+        <mn-datesingle [MnDate]="'2017-06-08'" [MnView]="'days'"></mn-datesingle>
+
+
     </mn-panel-s>
 
     <!--<div *mnLayer>江山如此多娇</div>-->

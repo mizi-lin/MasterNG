@@ -121,7 +121,8 @@ export class MnDate {
             month,
             quarter,
             weekday,
-            date
+            date,
+            value: date
         };
     }
 
@@ -174,6 +175,8 @@ export class MnDate {
             startWeekday,
             endWeekday,
             days,
+
+            value: month,
 
             mom: (count: number = 0, relative: boolean = false) => {
                 return this.getMonths(this.toDate(start), count, relative);
@@ -229,7 +232,9 @@ export class MnDate {
             year,
             startWeekday,
             endWeekday,
-            days
+            days,
+
+            value: year,
         };
     }
 
@@ -278,6 +283,9 @@ export class MnDate {
             _start: this.format(start),
             end,
             _end: this.format(end)
+
+            // value: weekcount,
+
         };
     }
 
@@ -334,7 +342,9 @@ export class MnDate {
             endMonth: _end.getMonth() || 12,
             quarter,
             year,
-            name: _nameMap[quarter]
+            name: _nameMap[quarter],
+
+            value: quarter
         };
     }
 

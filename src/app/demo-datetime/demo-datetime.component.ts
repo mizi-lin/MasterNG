@@ -9,13 +9,13 @@ declare const mu: any;
     styleUrls: ['./demo-datetime.component.scss']
 })
 export class DemoDatetimeComponent implements OnInit {
-
     constructor() {
     }
 
     ngOnInit() {
-        // let a = new MnDate('2017-04-01');
         // console.log(a.quarters);
+
+        // console.log( new MnDate( + new Date() ) );
     }
 
     a: any = {};

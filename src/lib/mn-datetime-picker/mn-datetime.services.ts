@@ -346,4 +346,54 @@ export class MnDatetimeServices {
     //     };
     //
     // }
+
+    /**
+     * 获得当前时间的视图数据
+     * @param _date
+     * @param {string} view
+     */
+    getCalendar(_date: any, view: string) {
+        let _views;
+        switch (view) {
+            case 'days':
+                return this.getCalendarWithDays(_date);
+            case 'weeks':
+                return this.getCalendarWithWeeks(_date);
+            case 'months':
+                return this.getCalendarWithMonths(_date);
+            case 'quarters':
+                return this.getCalendarWithQuarters(_date);
+            case 'years':
+                return this.getCalendarWithYears(_date);
+        }
+    }
+
+    private getCalendarWithDays(_date: any) {
+        _date = new MnDate(_date);
+
+
+
+        let _cds = mu.map(6, (i) => {
+            return new Array(7);
+        }, []);
+
+
+
+    }
+
+    private getCalendarWithWeeks(_date: any) {
+
+    }
+
+    private getCalendarWithMonths(_date: any) {
+
+    }
+
+    private getCalendarWithQuarters(_date: any) {
+
+    }
+
+    private getCalendarWithYears(_date: any) {
+
+    }
 }
