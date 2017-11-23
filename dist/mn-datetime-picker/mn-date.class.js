@@ -95,7 +95,8 @@ var MnDate = (function () {
             month: month,
             quarter: quarter,
             weekday: weekday,
-            date: date
+            date: date,
+            value: date
         };
     };
     /**
@@ -147,6 +148,7 @@ var MnDate = (function () {
             startWeekday: startWeekday,
             endWeekday: endWeekday,
             days: days,
+            value: month,
             mom: function (count, relative) {
                 if (count === void 0) { count = 0; }
                 if (relative === void 0) { relative = false; }
@@ -202,7 +204,8 @@ var MnDate = (function () {
             year: year,
             startWeekday: startWeekday,
             endWeekday: endWeekday,
-            days: days
+            days: days,
+            value: year,
         };
     };
     MnDate.prototype.yoy = function (count, relative) {
@@ -250,6 +253,7 @@ var MnDate = (function () {
             _start: this.format(start),
             end: end,
             _end: this.format(end)
+            // value: weekcount,
         };
     };
     /**
@@ -301,7 +305,8 @@ var MnDate = (function () {
             endMonth: _end.getMonth() || 12,
             quarter: quarter,
             year: year,
-            name: _nameMap[quarter]
+            name: _nameMap[quarter],
+            value: quarter
         };
     };
     /**

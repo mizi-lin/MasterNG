@@ -6,6 +6,7 @@ var AuthRuleContext = (function () {
     function AuthRuleContext() {
         this.$implicit = null;
         this.rule = null;
+        this._rules = {};
     }
     return AuthRuleContext;
 }());
@@ -76,6 +77,7 @@ var MnRuleDirective = (function () {
             }
             // console.debug('ooOOoooOOoo', condition, bool);
             this.result.emit(condition_ || conditions);
+            this._context._rules = condition_ || conditions;
             this._context.$implicit = this._context.rule = bool;
             this._updateView();
         },

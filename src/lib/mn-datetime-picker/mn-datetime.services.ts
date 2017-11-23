@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {max} from 'rxjs/operator/max';
 import {count} from 'rxjs/operator/count';
 import {MnDate} from './mn-date.class';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 declare const mu: any;
 
@@ -10,6 +11,14 @@ export class MnDatetimeServices {
 
     constructor() {
     }
+
+    date$ = new BehaviorSubject<any>({});
+
+    setDate(value) {
+        this.date$.next(value);
+    }
+
+
 
     getRangeDate(rule: string) {
         let mndate = new MnDate(new Date());
@@ -370,15 +379,9 @@ export class MnDatetimeServices {
 
     private getCalendarWithDays(_date: any) {
         _date = new MnDate(_date);
-
-
-
         let _cds = mu.map(6, (i) => {
             return new Array(7);
         }, []);
-
-
-
     }
 
     private getCalendarWithWeeks(_date: any) {

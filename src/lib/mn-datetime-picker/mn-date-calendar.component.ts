@@ -25,7 +25,6 @@ export class MnDateCalendarComponent implements OnInit {
     @Input('MnView')
     set view_(view) {
         this._view = view;
-
         this._calendar = this._mds.getCalendar(this._date, view);
     }
 
@@ -59,7 +58,7 @@ export class MnDateCalendarComponent implements OnInit {
 
 
     // 日历视图
-    _calendar: any[] = [];
+    _calendar: any = [];
 
     constructor(private _mds: MnDatetimeServices) {
     }

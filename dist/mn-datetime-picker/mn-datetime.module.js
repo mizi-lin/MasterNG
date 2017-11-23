@@ -16,6 +16,7 @@ var mn_form_module_1 = require("../mn-form/mn-form.module");
 var mn_years_picker_component_1 = require("./mn-years-picker.component");
 var mn_months_picker_component_1 = require("./mn-months-picker.component");
 var mn_quarters_picker_component_1 = require("./mn-quarters-picker.component");
+var mn_date_single_component_1 = require("./mn-date-single.component");
 var MnDatetimeModule = (function () {
     function MnDatetimeModule() {
     }
@@ -46,7 +47,8 @@ MnDatetimeModule.decorators = [
                     mn_datetime_picker_component_1.MnDatetimePickerComponent,
                     mn_years_picker_component_1.MnYearsPickerComponent,
                     mn_months_picker_component_1.MnMonthsPickerComponent,
-                    mn_quarters_picker_component_1.MnQuartersPickerComponent
+                    mn_quarters_picker_component_1.MnQuartersPickerComponent,
+                    mn_date_single_component_1.MnDateSingleComponent
                 ],
                 exports: [
                     mn_calendar_component_1.MnCalendarComponent,
@@ -56,7 +58,8 @@ MnDatetimeModule.decorators = [
                     mn_datetime_picker_component_1.MnDatetimePickerComponent,
                     mn_years_picker_component_1.MnYearsPickerComponent,
                     mn_months_picker_component_1.MnMonthsPickerComponent,
-                    mn_quarters_picker_component_1.MnQuartersPickerComponent
+                    mn_quarters_picker_component_1.MnQuartersPickerComponent,
+                    mn_date_single_component_1.MnDateSingleComponent
                 ],
                 providers: [
                     mn_datetime_services_1.MnDatetimeServices

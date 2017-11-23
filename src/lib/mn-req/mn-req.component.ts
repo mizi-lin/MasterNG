@@ -14,9 +14,13 @@ declare const mu: any;
                            [loaderStyle]="loaderStyle"
                            [progress]="process"></mn-loader-bar>
         </ng-template>
-
-        <mn-dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
-        <ng-content *ngIf="!noData"></ng-content>
+        <ng-container *ngIf="showNoData">
+            <mn-dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
+        </ng-container>
+        <ng-container *ngIf="showNoData ? !noData : true">
+            <ng-content></ng-content>
+        </ng-container>
+        
     `,
     styles: [
             `:host {
@@ -36,6 +40,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     @Input() loader: ElementRef;
     @Input() loading: boolean = true;
     @Input() loaderStyle: any;
+    @Input() showNoData: boolean = true;
 
     @Output() result: any = new EventEmitter<any>();
 
@@ -93,7 +98,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
 
     }
 
-    debounce_req_http: any = mu.debounce((req: any) => {
+    debounceReqHttp: any = mu.debounce((req: any) => {
         mu.run(req, () => {
             this.req_http(req);
         });
@@ -122,17 +127,17 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
                 params: this.params
             };
             this.params = null;
-            this.debounce_req_http(this.req);
+            this.debounceReqHttp(this.req);
         });
 
         mu.run(changes['payload'] && this.req, () => {
             this.req.payload = this.payload;
             this.payload = null;
-            this.debounce_req_http(this.req);
+            this.debounceReqHttp(this.req);
         });
 
         mu.run(changes['req'], () => {
-            this.debounce_req_http(this.req);
+            this.debounceReqHttp(this.req);
         });
 
     }

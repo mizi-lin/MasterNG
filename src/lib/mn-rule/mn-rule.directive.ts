@@ -8,6 +8,7 @@ declare const mu: any, window: any;
 export class AuthRuleContext {
     public $implicit: any = null;
     public rule: any = null;
+    public _rules: any = {};
 }
 
 @Directive({selector: '[rule]'})
@@ -84,6 +85,7 @@ export class MnRuleDirective implements OnChanges {
         // console.debug('ooOOoooOOoo', condition, bool);
 
         this.result.emit(condition_ || conditions);
+        this._context._rules = condition_ || conditions;
         this._context.$implicit = this._context.rule = bool;
         this._updateView();
     }

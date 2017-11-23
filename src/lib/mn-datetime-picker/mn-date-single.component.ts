@@ -1,5 +1,6 @@
 import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {MnDate} from './mn-date.class';
+import {MnDatetimeServices} from './mn-datetime.services';
 
 @Component({
     selector: 'mn-datesingle',
@@ -22,48 +23,23 @@ export class MnDateSingleComponent implements OnInit {
 
     @Input('MnView') _view: string = 'days';
 
-    _maxDate: any;
-
-    @Input('MnMaxDate')
-    set maxDate_(date) {
-
-    }
-
-    _minDate: any;
-
-    @Input('MnMinDate')
-    set minDate_(date) {
-
-    }
-
-    _startDate: any;
-
-    @Input('MnStartDate')
-    set startDate_(date) {
-
-    }
-
-    _endDate: any;
-
-    @Input('MnEndDate')
-    set endDate_(date) {
-
-    }
-
-    _hovedDate: any;
-    @Input('MnHoverDate')
-    set hoverDate_(date) {
-
-    }
-
     @HostBinding('class.start')
     get classStart_() {
-        return true;
+
+        if (this._startDate) {
+            return true;
+        }
+
+        return false;
     }
 
     @HostBinding('class.end')
     get classEnd_() {
-        return true;
+        if (this._endDate) {
+            return true;
+        }
+
+        return false;
     }
 
     @HostBinding('class.range')
@@ -76,9 +52,31 @@ export class MnDateSingleComponent implements OnInit {
         return true;
     }
 
-    constructor() {
+    _hoverDate: any;
+    _startDate: any;
+    _endDate: any;
+    _maxDate: any;
+    _minDate: any;
+
+    constructor(private _mds: MnDatetimeServices) {
+        _mds.date$.subscribe((rst: any = {}) => {
+            this._hoverDate = rst._hoverDate;
+            this._startDate = rst._startDate;
+            this._endDate = rst._endDate;
+            this._maxDate = rst._maxDate;
+            this._minDate = rst._minDate;
+
+            console.log(this._startDate);
+        });
     }
 
     ngOnInit() {
+
+        setTimeout(() => {
+            this._mds.setDate({
+                _startDate: '2017-09-08'
+            });
+        }, 5000);
+
     }
 }

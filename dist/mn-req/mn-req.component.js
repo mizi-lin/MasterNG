@@ -10,6 +10,7 @@ var ReqHttpComponent = (function () {
         this._http = _http;
         this._rs = _rs;
         this.loading = true;
+        this.showNoData = true;
         this.result = new core_1.EventEmitter();
         this.noData = false;
         this.noDataComponent = mn_req_nodata_component_1.MnReqNoDataComponent;
@@ -101,7 +102,7 @@ var ReqHttpComponent = (function () {
 ReqHttpComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'mn-req',
-                template: "\n        <ng-template [ngIf]=\"loading\">\n            <mn-loader-bar [loader]=\"loader\"\n                           [loaderStyle]=\"loaderStyle\"\n                           [progress]=\"process\"></mn-loader-bar>\n        </ng-template>\n\n        <mn-dynamic-component *ngIf=\"noData\" [component]=\"noDataComponent\" [inputs]=\"context\"></mn-dynamic-component>\n        <ng-content *ngIf=\"!noData\"></ng-content>\n    ",
+                template: "\n        <ng-template [ngIf]=\"loading\">\n            <mn-loader-bar [loader]=\"loader\"\n                           [loaderStyle]=\"loaderStyle\"\n                           [progress]=\"process\"></mn-loader-bar>\n        </ng-template>\n        <ng-container *ngIf=\"showNoData\">\n            <mn-dynamic-component *ngIf=\"noData\" [component]=\"noDataComponent\" [inputs]=\"context\"></mn-dynamic-component>\n        </ng-container>\n        <ng-container *ngIf=\"showNoData ? !noData : true\">\n            <ng-content></ng-content>\n        </ng-container>\n        \n    ",
                 styles: [
                     ":host {\n            display: block;\n            width: 100%;\n            height: 100%;\n        }"
                 ]
@@ -121,6 +122,7 @@ ReqHttpComponent.propDecorators = {
     'loader': [{ type: core_1.Input },],
     'loading': [{ type: core_1.Input },],
     'loaderStyle': [{ type: core_1.Input },],
+    'showNoData': [{ type: core_1.Input },],
     'result': [{ type: core_1.Output },],
 };
 exports.ReqHttpComponent = ReqHttpComponent;

@@ -14,7 +14,6 @@ import {MnI18nServices} from '../lib/mn-i18n/mn-i18n.services';
 import {MnRuleServices} from '../lib/mn-rule/mn-rule.services';
 import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {MasterNgModule} from '../lib/master-ng.module';
-import {DemoMcComponent} from './demo-mc/demo-mc.component';
 import {MnReqService} from '../lib/mn-req/mn-req.service';
 import { HeatWidgetComponent } from './common/widgets/heat-widget/heat-widget.component';
 import { DemoEchart2Component } from './demo-echart2/demo-echart2.component';
@@ -30,7 +29,6 @@ import {CommonModule} from '@angular/common';
         DemoEchartsComponent,
         DemoI18nComponent,
         DemoRuleComponent,
-        DemoMcComponent,
         HeatWidgetComponent,
         DemoEchart2Component,
         DemoDatetimeComponent
@@ -67,11 +65,6 @@ import {CommonModule} from '@angular/common';
             {
                 path: 'rule',
                 component: DemoRuleComponent
-            },
-
-            {
-                path: 'mc',
-                component: DemoMcComponent
             },
 
             {

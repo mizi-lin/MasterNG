@@ -3,6 +3,7 @@ import { MnRuleServices } from './mn-rule.services';
 export declare class AuthRuleContext {
     $implicit: any;
     rule: any;
+    _rules: any;
 }
 export declare class MnRuleDirective implements OnChanges {
     private _ruleServ;

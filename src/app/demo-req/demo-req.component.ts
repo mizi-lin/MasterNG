@@ -16,7 +16,7 @@ export class DemoReqComponent implements OnInit {
     demo_data: any;
 
     user_req: any = {
-        url: './assets/store/user.json'
+        url: './assets/store/user1.json'
     };
 
     resource_params: any = {

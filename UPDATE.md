@@ -79,3 +79,4 @@
 * 0.2.6 / 0.2.7
 
 * 发布 datetimepicker
+* b4: rule 支持 使用 let call result info
