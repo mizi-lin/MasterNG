@@ -107,6 +107,8 @@ export function createComponentFactory(compiler: Compiler, template: string, ext
     // };
     // const decoratedCmp = Component(compMetadata)(cmpClass);
 
+    console.debug('::::::::::::', extraModules);
+
     @Component({
         selector: 'decorated-cmp',
         template: template
@@ -132,8 +134,7 @@ export function createComponentFactory(compiler: Compiler, template: string, ext
     class DynamicHtmlModule {
     }
 
-    return compiler.compileModuleAndAllComponentsAsync(DynamicHtmlModule)
-    .then((moduleWithComponentFactory: ModuleWithComponentFactories<any>) => {
+    return compiler.compileModuleAndAllComponentsAsync(DynamicHtmlModule).then((moduleWithComponentFactory: ModuleWithComponentFactories<any>) => {
         return moduleWithComponentFactory.componentFactories.find(x => x.componentType === _DecoratedCmp);
     });
 }
@@ -149,6 +150,9 @@ export class MnDynamicTemplateDirective implements OnDestroy, OnChanges {
     constructor(private _vcRef: ViewContainerRef,
                 private _compiler: Compiler,
                 private _extraModules: ExtraModules) {
+
+        console.debug('oooooOooOoooOOooOoooo', _extraModules);
+
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -161,8 +165,7 @@ export class MnDynamicTemplateDirective implements OnDestroy, OnChanges {
                 this._cmpRef.destroy();
             }
 
-            createComponentFactory(this._compiler, template, this._extraModules)
-            .then(factory => {
+            createComponentFactory(this._compiler, template, this._extraModules).then(factory => {
                 const injector = ReflectiveInjector.fromResolvedProviders([], this._vcRef.parentInjector);
                 this._cmpRef = this._vcRef.createComponent(factory, 0, injector, []);
                 this.instance = this._cmpRef.instance;

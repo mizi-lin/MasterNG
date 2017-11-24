@@ -4,6 +4,7 @@ import {TrustUrlPipe} from './pipe/mn-trust-url.pipe';
 import {MuPipe} from './pipe/mn-mu.pipe';
 import {MnFileSaverServices} from './services/mn-file-saver.services';
 import {MnElementRefDirective} from './directive/mn-element-ref.directive';
+import {MnCommonServices} from './services/mn-common.services';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {MnElementRefDirective} from './directive/mn-element-ref.directive';
         MnElementRefDirective
     ],
     providers: [
+        MnCommonServices,
         MnFileSaverServices
     ]
 })

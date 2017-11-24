@@ -2,7 +2,7 @@ import {Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter
 import {Http} from '@angular/http';
 import {MnReqNoDataComponent} from './mn-req-nodata.component';
 import {Subscriber} from 'rxjs/Subscriber';
-import {MnReqService} from './mn-req.service';
+import {MnReqServices} from './mn-req.service';
 
 declare const mu: any;
 
@@ -47,12 +47,13 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     _observable: Subscriber<any>;
 
     noData: boolean = false;
-    noDataComponent: any = MnReqNoDataComponent;
+
+    @Input() noDataComponent: any = MnReqNoDataComponent;
 
     process: number = 0;
 
     constructor(private _http: Http,
-                private _rs: MnReqService) {
+                private _rs: MnReqServices) {
     }
 
     req_http(req: any): void {

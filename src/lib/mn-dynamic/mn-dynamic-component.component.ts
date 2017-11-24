@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 import * as mu from 'mzmu';
-import {MnDynamicService} from './mn-dynamic-component.service';
+import {MnDynamicServices} from './mn-dynamic-component.service';
 
 declare const mu: any;
 
@@ -44,7 +44,6 @@ export class MnDynamicComponentComponent implements OnChanges, OnDestroy {
 
     @Input() inputs: any;
     @Input() outputs: any;
-    @Input() name: string;
     @Input() component: any;
 
     @Output() outevt: any = new EventEmitter<any>();
@@ -55,7 +54,7 @@ export class MnDynamicComponentComponent implements OnChanges, OnDestroy {
 
     constructor(// private _vcRef: ViewContainerRef,
         private _cfr: ComponentFactoryResolver,
-        private _serv: MnDynamicService) {
+        private _serv: MnDynamicServices) {
 
     }
 
@@ -102,13 +101,14 @@ export class MnDynamicComponentComponent implements OnChanges, OnDestroy {
 
     ngOnChanges(changes: SimpleChanges) {
 
-        mu.exist(changes['name'], () => {
-            this.dynamicComponent = this._serv.getComponent(this.name);
-            this.create(this.dynamicComponent, this.inputs, this.outputs);
-        });
-
         mu.exist(changes['component'], () => {
-            this.dynamicComponent = this.component;
+
+            if (typeof this.component === 'string') {
+                this.dynamicComponent = this._serv.getComponent(this.component);
+            } else {
+                this.dynamicComponent = this.component;
+            }
+
             this.create(this.dynamicComponent, this.inputs, this.outputs);
         });
 

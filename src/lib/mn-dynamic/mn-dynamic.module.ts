@@ -1,7 +1,7 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MnDynamicTemplateDirective, ExtraModules} from './mn-dynamic-template.directive';
-import {MnDynamicService} from './mn-dynamic-component.service';
+import {MnDynamicServices} from './mn-dynamic-component.service';
 import {MnDynamicComponentComponent, MnUnknownDynamicComponent} from './mn-dynamic-component.component';
 
 /**
@@ -33,7 +33,7 @@ import {MnDynamicComponentComponent, MnUnknownDynamicComponent} from './mn-dynam
     ],
 
     providers: [
-        MnDynamicService
+        MnDynamicServices
     ]
 })
 export class MnDynamicModule {

@@ -4,7 +4,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 declare const mu: any;
 
 @Injectable()
-export class MnReqService {
+export class MnReqServices {
     progress$ = new BehaviorSubject<any>({});
     progress_: number;
 

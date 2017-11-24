@@ -12,6 +12,7 @@ import {MnRuleModule} from './mn-rule/mn-rule.module';
 import {MnDatetimeModule} from './mn-datetime-picker/mn-datetime.module';
 import {MnFloatLayerModule} from './mn-float-layer/mn-float-layer.module';
 import {MnFormModule} from './mn-form/mn-form.module';
+import {ExtraModules} from './mn-dynamic/mn-dynamic-template.directive';
 
 @NgModule({
     imports: [
@@ -50,9 +51,15 @@ import {MnFormModule} from './mn-form/mn-form.module';
     ]
 })
 export class MasterNgModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(modules: any[] = []): ModuleWithProviders {
         return {
-            ngModule: MasterNgModule
+            ngModule: MasterNgModule,
+            providers: [
+                {
+                    provide: ExtraModules,
+                    useValue: {items: modules}
+                }
+            ]
         };
     }
 }

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ResourcePool} from './resource-pool';
 import {Http, ResponseContentType} from '@angular/http';
 import {MnFileSaverServices} from '../../lib/mn-common/services/mn-file-saver.services';
+import {DemoNodataComponent} from '../demo-nodata/demo-nodata.component';
 
 declare const mu: any;
 
@@ -11,6 +12,7 @@ declare const mu: any;
     styleUrls: ['./demo-req.component.scss']
 })
 export class DemoReqComponent implements OnInit {
+
 
     user_data: any;
     demo_data: any;
@@ -34,7 +36,7 @@ export class DemoReqComponent implements OnInit {
 
     resource_reload: any = () => {
         this.resource_params = mu.clone(this.resource_params);
-    }
+    };
 
     download($event) {
         this._http.get('./assets/file/MasterNg.csv').subscribe((res) => {

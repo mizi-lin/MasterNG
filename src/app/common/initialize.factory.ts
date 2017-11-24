@@ -1,18 +1,31 @@
 import {InitializeService} from './initialize.service';
 import {MnI18nServices} from '../../lib/mn-i18n/mn-i18n.services';
 import {MnRuleServices} from '../../lib/mn-rule/mn-rule.services';
-import {MnReqService} from '../../lib/mn-req/mn-req.service';
+import {MnReqServices} from '../../lib/mn-req/mn-req.service';
 import {ResourcePool} from '../demo-req/resource-pool';
 import {Observable} from 'rxjs/Observable';
 import {MnEchartsService} from '../../lib/mn-echarts/mn-echarts.service';
+import {MnCommonServices} from '../../lib/mn-common/services/mn-common.services';
+import {DemoNodataComponent} from '../demo-nodata/demo-nodata.component';
 
 export function InitializeFactory(_initServ: InitializeService,
                                   _i18nServ: MnI18nServices,
                                   _ruleServ: MnRuleServices,
-                                  _reqServ: MnReqService,
+                                  _reqServ: MnReqServices,
                                   _rp: ResourcePool,
-                                  _ecServ: MnEchartsService) {
+                                  _ecServ: MnEchartsService,
+                                  _mcs: MnCommonServices) {
     return () => {
+
+        // console.debug(
+        //     _initServ,
+        //     _i18nServ,
+        //     _ruleServ,
+        //     _reqServ,
+        //     _rp,
+        //     _ecServ,
+        //     _mcs
+        // );
 
         /**
          * 系统初始化，获得相关信息
@@ -70,5 +83,8 @@ export function InitializeFactory(_initServ: InitializeService,
             toolbars: true,
             show_tools: 'toggle'
         });
+
+        _mcs._dynamicService.setComponentMap(DemoNodataComponent);
+
     };
 }

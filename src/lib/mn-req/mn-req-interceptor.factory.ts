@@ -10,7 +10,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/finally';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
-import {MnReqService} from './mn-req.service';
+import {MnReqServices} from './mn-req.service';
 
 declare let mu: any, console: any;
 
@@ -39,7 +39,7 @@ export class MnReqInterceptorFactory extends Http {
     constructor(_backend: ConnectionBackend,
                 _defaultOptions: RequestOptions,
                 _injector: Injector,
-                private _reqServ: MnReqService) {
+                private _reqServ: MnReqServices) {
         // super(backend, defaultOptions, injector);
         super(_backend, _defaultOptions);
 

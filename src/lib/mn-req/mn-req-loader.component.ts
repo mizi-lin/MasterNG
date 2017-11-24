@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MnReqService} from './mn-req.service';
+import {MnReqServices} from './mn-req.service';
 
 @Component({
     selector: 'mn-req-loader',
@@ -11,7 +11,7 @@ export class MnReqLoaderComponent implements OnInit {
 
     progress: number;
 
-    constructor(private _reqServ: MnReqService) {
+    constructor(private _reqServ: MnReqServices) {
         _reqServ.progress$.subscribe((v) => {
             this.progress = v;
         });

@@ -2,7 +2,11 @@
 
     <mn-panel-s class="bordered" title="Use Http"
         [tools]="[reload]">
-        <mn-req [req]="user_req" [showNoData]="true"  (result)="user_data = $event.data">
+        <mn-req
+                [noDataComponent]="'DemoNodataComponent'"
+                [req]="user_req"
+                [showNoData]="true"
+                (result)="user_data = $event.data">
             {{user_data | json}}
         </mn-req>
     </mn-panel-s>

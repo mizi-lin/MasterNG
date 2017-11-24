@@ -8,7 +8,7 @@ import {MnReqNoDataComponent} from './mn-req-nodata.component';
 
 import {MnLoaderBarModule} from '../mn-loader-bar/mn-loader-bar.module';
 import {MnReqLoaderComponent} from './mn-req-loader.component';
-import {MnReqService} from './mn-req.service';
+import {MnReqServices} from './mn-req.service';
 import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
 import {MnFileDownloadDirective} from './mn-file-download.directive';
 
@@ -49,7 +49,7 @@ import {MnFileDownloadDirective} from './mn-file-download.directive';
         MnReqNoDataComponent
     ],
     providers: [
-        MnReqService,
+        MnReqServices,
 
         {
             provide: Http,
@@ -58,7 +58,7 @@ import {MnFileDownloadDirective} from './mn-file-download.directive';
                 XHRBackend,
                 RequestOptions,
                 Injector,
-                MnReqService
+                MnReqServices
             ]
         },
 
