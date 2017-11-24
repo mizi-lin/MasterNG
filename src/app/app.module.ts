@@ -82,10 +82,6 @@ import {MnCommonServices} from '../lib/mn-common/services/mn-common.services';
         DemoNodataComponent
     ],
 
-    exports: [
-        DemoNodataComponent
-    ],
-
     entryComponents: [
         DemoNodataComponent
     ],
