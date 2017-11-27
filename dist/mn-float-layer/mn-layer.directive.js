@@ -77,12 +77,12 @@ var MnLayerDirective = (function () {
             }, 500);
         });
         // 绑定隐藏事件
-        // mu.run(this._hide_evt, () => {
-        //     this._render.listen(layer, this._hide_evt, () => {
-        //         this._hide();
-        //         this._showed = false;
-        //     });
-        // });
+        mu.run(this._hide_evt, function () {
+            _this._render.listen(layer, _this._hide_evt, function () {
+                _this._hide();
+                _this._showed = false;
+            });
+        });
     };
     // 显示下拉框
     MnLayerDirective.prototype._show = function () {

@@ -12,10 +12,12 @@ export declare class MnDropdownComponent implements OnInit {
     top: number;
     left: number;
     constructor(_ref: ElementRef);
-    _position(): {
-        top: any;
-        left: any;
-    };
+    /**
+     * 获得下拉菜单的位置
+     * @return {any}
+     * @private
+     */
+    _position(): any;
     _evt: any;
     _hasEvt(type: any): boolean;
     _result($event: any): void;

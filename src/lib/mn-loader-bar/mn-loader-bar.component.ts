@@ -26,6 +26,11 @@ export class MnLoaderBarComponent implements OnChanges {
     @Input() where: number;
     @Input() loaderStyle: any = {};
 
+    @Input('mnZIndex')
+    set zIndex(value) {
+        mu.exist(value, () => this._render.setStyle(this._ref.nativeElement, 'zIndex', value));
+    }
+
     @Output() done: any = new EventEmitter<any>();
 
     _width = 0;

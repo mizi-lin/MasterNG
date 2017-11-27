@@ -31,6 +31,11 @@ var MnDropdownComponent = (function () {
     MnDropdownComponent.prototype._out = function ($event) {
         this._evt($event);
     };
+    /**
+     * 获得下拉菜单的位置
+     * @return {any}
+     * @private
+     */
     MnDropdownComponent.prototype._position = function () {
         var _el = this._ref.nativeElement;
         var rect = _el.getBoundingClientRect();
@@ -59,7 +64,7 @@ MnDropdownComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'mn-dropdown',
                 template: "\n        <div>\n            <ng-content></ng-content>\n        </div>\n\n        <ng-template\n                [mnLayerModule]=\"'dropdown'\"\n                [mnLayerStatus]=\"status\"\n                [mnLayerStyle]=\"styles\"\n                [mnLayerHideEvt]=\"hidetype\"\n                (mnResult)=\"_result($event)\"\n                mnLayer>\n            <ng-content select=\"mn-dropdown-content\"></ng-content>\n        </ng-template>\n\n    ",
-                styles: ['mn-dropdown {  display: inline-block;  height: 32px;}mn-dropdown mn-dropdown-content {  padding: 8px;  background: #f00;}.mnc-layer {  position: absolute;  z-index: 2;  border: 1px solid #eee;  background: #fff;  min-width: 200px;  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);}.mnc-layer.mnc-hide {  visibility: hidden;}.mnc-layer.mnc-show {  visibility: visible;}'],
+                styles: ['mn-dropdown {  display: inline-block;  height: 32px;}mn-dropdown mn-dropdown-content {  padding: 8px;  background: #f00;}.mnc-layer-container {  position: fixed;  top: 0;  left: 0;  right: 0;  bottom: 0;  z-index: 1000;  pointer-events: none;}.mnc-layer {  position: absolute;  z-index: 2;  border: 1px solid #eee;  background: #fff;  min-width: 200px;  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);  pointer-events: auto;}.mnc-layer.mnc-hide {  visibility: hidden;}.mnc-layer.mnc-show {  visibility: visible;}'],
                 encapsulation: core_1.ViewEncapsulation.None
             },] },
 ];

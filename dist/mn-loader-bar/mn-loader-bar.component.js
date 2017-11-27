@@ -41,6 +41,14 @@ var MnLoaderBarComponent = (function () {
             }
         }, 1);
     }
+    Object.defineProperty(MnLoaderBarComponent.prototype, "zIndex", {
+        set: function (value) {
+            var _this = this;
+            mu.exist(value, function () { return _this._render.setStyle(_this._ref.nativeElement, 'zIndex', value); });
+        },
+        enumerable: true,
+        configurable: true
+    });
     MnLoaderBarComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
         if (!this._lbs.config.loader) {
@@ -94,7 +102,7 @@ var MnLoaderBarComponent = (function () {
 MnLoaderBarComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'mn-loader-bar',
-                styles: [':host {  display: block;  width: 100%;  z-index: 9999;  line-height: 0;  top: 0;  left: 0;  font-size: 0;}:host > .bar {  transition: height .3s;  background: #108ee9;}'],
+                styles: [':host {  display: block;  width: 100%;  z-index: 9;  line-height: 0;  top: 0;  left: 0;  font-size: 0;}:host > .bar {  transition: height .3s;  background: #108ee9;}'],
                 template: "\n        <div [style.width.%]=\"width\"\n             [style.height.px]=\"height\"\n             [ngStyle]=\"loaderStyle\"\n             class=\"bar\">\n        </div>\n    "
             },] },
 ];
@@ -112,6 +120,7 @@ MnLoaderBarComponent.propDecorators = {
     'progress': [{ type: core_1.Input },],
     'where': [{ type: core_1.Input },],
     'loaderStyle': [{ type: core_1.Input },],
+    'zIndex': [{ type: core_1.Input, args: ['mnZIndex',] },],
     'done': [{ type: core_1.Output },],
 };
 exports.MnLoaderBarComponent = MnLoaderBarComponent;

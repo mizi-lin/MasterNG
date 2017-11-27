@@ -58,7 +58,12 @@ export class MnDropdownComponent implements OnInit {
     constructor(private _ref: ElementRef) {
     }
 
-    _position() {
+    /**
+     * 获得下拉菜单的位置
+     * @return {any}
+     * @private
+     */
+    _position(): any {
         const _el = this._ref.nativeElement;
         const rect = _el.getBoundingClientRect();
 
@@ -72,7 +77,6 @@ export class MnDropdownComponent implements OnInit {
 
     _evt: any = mu.debounce(($event) => {
         const type = $event.type;
-
         if (type === 'mouseover' || type === 'click') {
             this.status = 'show';
             this.styles = {
@@ -82,7 +86,6 @@ export class MnDropdownComponent implements OnInit {
         } else if (type === 'mouseleave') {
             this.status = 'hide';
         }
-
     }, 300);
 
     _hasEvt(type) {

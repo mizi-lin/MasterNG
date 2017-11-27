@@ -11,6 +11,7 @@ export declare class MnLoaderBarComponent implements OnChanges {
     progress: number;
     where: number;
     loaderStyle: any;
+    zIndex: any;
     done: any;
     _width: number;
     _height: number;
