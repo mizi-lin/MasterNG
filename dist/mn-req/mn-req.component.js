@@ -12,16 +12,16 @@ var ReqHttpComponent = (function () {
         this.loading = true;
         this.showNoData = true;
         this.result = new core_1.EventEmitter();
-        this.noData = false;
-        this.noDataComponent = mn_req_nodata_component_1.MnReqNoDataComponent;
+        this.isNoData = false;
+        this.noDataComponent = this._rs._noDataComponent || mn_req_nodata_component_1.MnReqNoDataComponent;
         this.process = 0;
         this.debounceReqHttp = mu.debounce(function (req) {
             mu.run(req, function () {
-                _this.req_http(req);
+                _this.reqHttp(req);
             });
         }, 300);
     }
-    ReqHttpComponent.prototype.req_http = function (req) {
+    ReqHttpComponent.prototype.reqHttp = function (req) {
         var _this = this;
         var args = [];
         var method = req.method || (req.payload ? 'post' : 'get');
@@ -49,9 +49,9 @@ var ReqHttpComponent = (function () {
             _this.process = 100;
             res = res || {};
             mu.run(res.data, function () {
-                _this.noData = false;
+                _this.isNoData = false;
             }, function () {
-                _this.noData = true;
+                _this.isNoData = true;
             });
             _this.result.emit(res);
         }, function () {
@@ -59,18 +59,6 @@ var ReqHttpComponent = (function () {
         }, function () {
             _this.process = 100;
         });
-    };
-    ReqHttpComponent.prototype.processStep = function () {
-        var _this = this;
-        var tid = setTimeout(function () {
-            if (_this.process < mu.randomInt(75, 85)) {
-                _this.process = _this.process * 1.05;
-                _this.processStep();
-            }
-            else {
-                clearTimeout(tid);
-            }
-        }, mu.randomInt(300, 1200));
     };
     ReqHttpComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
@@ -97,12 +85,24 @@ var ReqHttpComponent = (function () {
     ReqHttpComponent.prototype.ngOnDestroy = function () {
         this._observable && this._observable.unsubscribe();
     };
+    ReqHttpComponent.prototype.processStep = function () {
+        var _this = this;
+        var tid = setTimeout(function () {
+            if (_this.process < mu.randomInt(75, 85)) {
+                _this.process = _this.process * 1.05;
+                _this.processStep();
+            }
+            else {
+                clearTimeout(tid);
+            }
+        }, mu.randomInt(300, 1200));
+    };
     return ReqHttpComponent;
 }());
 ReqHttpComponent.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'mn-req',
-                template: "\n        <ng-template [ngIf]=\"loading\">\n            <mn-loader-bar [loader]=\"loader\"\n                           [loaderStyle]=\"loaderStyle\"\n                           [progress]=\"process\"></mn-loader-bar>\n        </ng-template>\n        <ng-container *ngIf=\"showNoData\">\n            <mn-dynamic-component *ngIf=\"noData\" [component]=\"noDataComponent\" [inputs]=\"context\"></mn-dynamic-component>\n        </ng-container>\n        <ng-container *ngIf=\"showNoData ? !noData : true\">\n            <ng-content></ng-content>\n        </ng-container>\n        \n    ",
+                template: "\n        <ng-template [ngIf]=\"loading\">\n            <mn-loader-bar [loader]=\"loader\"\n                           [loaderStyle]=\"loaderStyle\"\n                           [progress]=\"process\"></mn-loader-bar>\n        </ng-template>\n        <ng-container *ngIf=\"showNoData\">\n            <mn-dynamic-component *ngIf=\"isNoData\" [component]=\"noDataComponent\" [inputs]=\"context\"></mn-dynamic-component>\n        </ng-container>\n        <ng-container *ngIf=\"showNoData ? !isNoData : true\">\n            <ng-content></ng-content>\n        </ng-container>\n\n    ",
                 styles: [
                     ":host {\n            display: block;\n            width: 100%;\n            height: 100%;\n        }"
                 ]

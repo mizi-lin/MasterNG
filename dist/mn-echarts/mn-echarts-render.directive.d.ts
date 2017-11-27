@@ -3,7 +3,7 @@
  */
 import { ElementRef, OnChanges, OnDestroy, SimpleChange, EventEmitter, AfterViewInit } from '@angular/core';
 import 'echarts-wordcloud/dist/echarts-wordcloud.min';
-import { MnEchartsService } from './mn-echarts.service';
+import { MnEchartsServices } from './mn-echarts.service';
 export declare class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterViewInit {
     private _ref;
     private _es;
@@ -22,7 +22,7 @@ export declare class MnEchartsRenderDirective implements OnChanges, OnDestroy, A
     private _result;
     private _chart;
     private currentWindowWidth;
-    constructor(_ref: ElementRef, _es: MnEchartsService);
+    constructor(_ref: ElementRef, _es: MnEchartsServices);
     ngAfterViewInit(): void;
     private getWidth(elm);
     private getHeight(elm);

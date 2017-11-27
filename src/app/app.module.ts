@@ -17,7 +17,7 @@ import {MasterNgModule} from '../lib/master-ng.module';
 import {MnReqServices} from '../lib/mn-req/mn-req.service';
 import {HeatWidgetComponent} from './common/widgets/heat-widget/heat-widget.component';
 import {DemoEchart2Component} from './demo-echart2/demo-echart2.component';
-import {MnEchartsService} from '../lib/mn-echarts/mn-echarts.service';
+import {MnEchartsServices} from '../lib/mn-echarts/mn-echarts.service';
 import {DemoDatetimeComponent} from './demo-datetime/demo-datetime.component';
 import {CommonModule} from '@angular/common';
 import {DemoNodataComponent} from './demo-nodata/demo-nodata.component';
@@ -96,11 +96,7 @@ import {MnCommonServices} from '../lib/mn-common/services/mn-common.services';
             useFactory: InitializeFactory,
             deps: [
                 InitializeService,
-                MnI18nServices,
-                MnRuleServices,
-                MnReqServices,
                 ResourcePool,
-                MnEchartsService,
                 MnCommonServices
             ],
             multi: true

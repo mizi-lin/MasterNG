@@ -3,7 +3,6 @@
     <mn-panel-s class="bordered" title="Use Http"
         [tools]="[reload]">
         <mn-req
-                [noDataComponent]="'DemoNodataComponent'"
                 [req]="user_req"
                 [showNoData]="true"
                 (result)="user_data = $event.data">

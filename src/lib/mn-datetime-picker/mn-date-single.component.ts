@@ -68,7 +68,7 @@ export class MnDateSingleComponent implements OnInit {
     @HostBinding('class.max')
     get classMax_() {
         return mu.run(this._rst._maxDate, (_maxDate) => {
-            this._hoverDate = this.mndate(_maxDate);
+            this._maxDate = this.mndate(_maxDate);
             return this.compared(this._date, this._maxDate) === 1;
         });
     }

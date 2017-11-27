@@ -2,7 +2,7 @@ import {
     Component, ElementRef, EventEmitter, HostBinding, Input, OnChanges, Output, SimpleChanges, ViewChild,
     ViewChildren, ViewEncapsulation
 } from '@angular/core';
-import {MnEchartsService} from './mn-echarts.service';
+import {MnEchartsServices} from './mn-echarts.service';
 import '../assets/jquery.resize.js';
 import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services';
 
@@ -269,7 +269,7 @@ export class MnEchartsPanelComponent implements OnChanges {
 
     _config: any;
 
-    constructor(private _es: MnEchartsService,
+    constructor(private _es: MnEchartsServices,
                 private _mnFileSaverServ: MnFileSaverServices,
                 private _ref: ElementRef) {
         if (this._ref.nativeElement.nodeName === 'ECHARTS-BOX') {

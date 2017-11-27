@@ -5,7 +5,7 @@ import {COLORS_POOL} from './color-pool';
 declare const mu: any;
 
 @Injectable()
-export class MnEchartsService {
+export class MnEchartsServices {
     constructor() {
     }
 

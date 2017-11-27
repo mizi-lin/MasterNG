@@ -73,7 +73,7 @@ MnEchartsComponent.decorators = [
 ];
 /** @nocollapse */
 MnEchartsComponent.ctorParameters = function () { return [
-    { type: mn_echarts_service_1.MnEchartsService, },
+    { type: mn_echarts_service_1.MnEchartsServices, },
 ]; };
 MnEchartsComponent.propDecorators = {
     'data': [{ type: core_1.Input },],

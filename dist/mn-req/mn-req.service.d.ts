@@ -17,5 +17,10 @@ export declare class MnReqServices {
     getResources(fn?: any): any;
     reqCatch: any;
     reqError: any;
+    /**
+     * 设置nodata component
+     */
+    _noDataComponent: any;
+    setNoDataComponent(component: any): void;
     constructor();
 }

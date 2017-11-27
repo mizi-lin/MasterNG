@@ -227,7 +227,7 @@ MnEchartsPanelComponent.decorators = [
 ];
 /** @nocollapse */
 MnEchartsPanelComponent.ctorParameters = function () { return [
-    { type: mn_echarts_service_1.MnEchartsService, },
+    { type: mn_echarts_service_1.MnEchartsServices, },
     { type: mn_file_saver_services_1.MnFileSaverServices, },
     { type: core_1.ElementRef, },
 ]; };

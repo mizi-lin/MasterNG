@@ -29,6 +29,9 @@ var MnReqServices = (function () {
     MnReqServices.prototype.getResources = function (fn) {
         return fn ? fn(this._resources) : this._resources;
     };
+    MnReqServices.prototype.setNoDataComponent = function (component) {
+        this._noDataComponent = component;
+    };
     return MnReqServices;
 }());
 MnReqServices.decorators = [

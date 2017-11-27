@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var echarts_default_options_1 = require("./echarts.default.options");
 var color_pool_1 = require("./color-pool");
-var MnEchartsService = (function () {
-    function MnEchartsService() {
+var MnEchartsServices = (function () {
+    function MnEchartsServices() {
         this._colors_map = {};
         this._config = {
             // toolbar: boolean | string
@@ -19,19 +19,19 @@ var MnEchartsService = (function () {
         };
     }
     // 外部配置匹配颜色
-    MnEchartsService.prototype.setColorsMap = function (colors_map) {
+    MnEchartsServices.prototype.setColorsMap = function (colors_map) {
         if (colors_map === void 0) { colors_map = {}; }
         this._colors_map = colors_map;
     };
-    MnEchartsService.prototype.setColors = function (colors) {
+    MnEchartsServices.prototype.setColors = function (colors) {
         if (colors === void 0) { colors = []; }
         this._colors = colors;
     };
-    MnEchartsService.prototype.setConfig = function (config) {
+    MnEchartsServices.prototype.setConfig = function (config) {
         if (config === void 0) { config = {}; }
         this._config = mu.extend(this._config, config);
     };
-    MnEchartsService.prototype.getConfig = function () {
+    MnEchartsServices.prototype.getConfig = function () {
         return this._config;
     };
     /**
@@ -40,7 +40,7 @@ var MnEchartsService = (function () {
      * @param key
      * @return {any}
      */
-    MnEchartsService.prototype.pick = function (arr, key) {
+    MnEchartsServices.prototype.pick = function (arr, key) {
         return mu.map(arr, function (o) {
             return mu.prop(o, key);
         });
@@ -51,7 +51,7 @@ var MnEchartsService = (function () {
      * @param key
      * @return {number}
      */
-    MnEchartsService.prototype.total = function (arr, key) {
+    MnEchartsServices.prototype.total = function (arr, key) {
         var items = this.pick(arr, key);
         var total = 0;
         mu.each(items, function (o) {
@@ -59,7 +59,7 @@ var MnEchartsService = (function () {
         });
         return total;
     };
-    MnEchartsService.prototype.getEchartResult = function (type, data, setting, $charts, $mycharts) {
+    MnEchartsServices.prototype.getEchartResult = function (type, data, setting, $charts, $mycharts) {
         var _this = this;
         if (setting === void 0) { setting = {}; }
         var NAME = 'name';
@@ -820,7 +820,7 @@ var MnEchartsService = (function () {
      * @param convert
      * @return {any[]}
      */
-    MnEchartsService.prototype.convert = function (data, convert) {
+    MnEchartsServices.prototype.convert = function (data, convert) {
         if (!convert) {
             return data;
         }
@@ -839,7 +839,7 @@ var MnEchartsService = (function () {
             return o;
         });
     };
-    MnEchartsService.prototype.percent_rate = function (options, data, fn) {
+    MnEchartsServices.prototype.percent_rate = function (options, data, fn) {
         if (typeof fn !== 'function') {
             fn = mu.noop();
         }
@@ -870,14 +870,14 @@ var MnEchartsService = (function () {
      * @param {any[]} arr
      * @return {any[]}
      */
-    MnEchartsService.prototype.transpose = function (arr) {
+    MnEchartsServices.prototype.transpose = function (arr) {
         return mu.map(arr[0], function (v, i) {
             return mu.map(arr, function (items) {
                 return items[i];
             });
         });
     };
-    MnEchartsService.prototype.morphArray = function (o, def, def2) {
+    MnEchartsServices.prototype.morphArray = function (o, def, def2) {
         if (mu.type(o) !== 'array') {
             return [def, o || def2];
         }
@@ -887,7 +887,7 @@ var MnEchartsService = (function () {
      * 调整 echart 颜色 以及 legend 的样式
      * @param options
      */
-    MnEchartsService.prototype.adjustOptionsWithColors = function (options) {
+    MnEchartsServices.prototype.adjustOptionsWithColors = function (options) {
         var colors = mu.ifempty(this._colors, color_pool_1.COLORS_POOL);
         var color_map = this._colors_map;
         var getColor = function (index, name_map) {
@@ -958,7 +958,7 @@ var MnEchartsService = (function () {
      * 调整legend显示/隐藏图表主体位置
      * 调整legend的个数对图表主体位置的影响
      */
-    MnEchartsService.prototype.adjustOptionsWithLegend = function (options, _width, _height) {
+    MnEchartsServices.prototype.adjustOptionsWithLegend = function (options, _width, _height) {
         var type = mu.prop(options, 'series.0.type');
         var old_radius, old_center;
         // 获取原值
@@ -1026,12 +1026,12 @@ var MnEchartsService = (function () {
         });
         return options;
     };
-    return MnEchartsService;
+    return MnEchartsServices;
 }());
-MnEchartsService.decorators = [
+MnEchartsServices.decorators = [
     { type: core_1.Injectable },
 ];
 /** @nocollapse */
-MnEchartsService.ctorParameters = function () { return []; };
-exports.MnEchartsService = MnEchartsService;
+MnEchartsServices.ctorParameters = function () { return []; };
+exports.MnEchartsServices = MnEchartsServices;
 //# sourceMappingURL=mn-echarts.service.js.map

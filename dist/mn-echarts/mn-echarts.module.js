@@ -47,7 +47,7 @@ MnEchartsModule.decorators = [
                     mn_echarts_panel_component_1.MnEchartsPanelComponent
                 ],
                 providers: [
-                    mn_echarts_service_1.MnEchartsService
+                    mn_echarts_service_1.MnEchartsServices
                 ]
             },] },
 ];

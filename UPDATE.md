@@ -80,3 +80,8 @@
 
 * 发布 datetimepicker
 * b4: rule 支持 使用 let call result info
+
+* 0.2.8
+
+* 整合内部各services对外统一出口 MnCommonService
+* MnReq 支持配置noDataComponent

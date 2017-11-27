@@ -1,46 +1,41 @@
 import {InitializeService} from './initialize.service';
-import {MnI18nServices} from '../../lib/mn-i18n/mn-i18n.services';
-import {MnRuleServices} from '../../lib/mn-rule/mn-rule.services';
-import {MnReqServices} from '../../lib/mn-req/mn-req.service';
 import {ResourcePool} from '../demo-req/resource-pool';
 import {Observable} from 'rxjs/Observable';
-import {MnEchartsService} from '../../lib/mn-echarts/mn-echarts.service';
 import {MnCommonServices} from '../../lib/mn-common/services/mn-common.services';
 import {DemoNodataComponent} from '../demo-nodata/demo-nodata.component';
 
 export function InitializeFactory(_initServ: InitializeService,
-                                  _i18nServ: MnI18nServices,
-                                  _ruleServ: MnRuleServices,
-                                  _reqServ: MnReqServices,
                                   _rp: ResourcePool,
-                                  _ecServ: MnEchartsService,
                                   _mcs: MnCommonServices) {
     return () => {
-
-        // console.debug(
-        //     _initServ,
-        //     _i18nServ,
-        //     _ruleServ,
-        //     _reqServ,
-        //     _rp,
-        //     _ecServ,
-        //     _mcs
-        // );
 
         /**
          * 系统初始化，获得相关信息
          */
         _initServ.initApp();
 
+        // ************************************
+        // _i18nService
+        // 国际化配置
+
         /**
-         * 国际化
+         * _i18nService.setConfig
+         * 国际化相关信息配置
          */
-        _i18nServ.setConfig({
+        _mcs._i18nService.setConfig({
             lang: 'en',
             prefix: 'assets/i18n'
         });
 
-        _reqServ.setHeaders([
+        // ************************************
+        // _reqService
+        // 异步请求以及RESTFul设置
+
+        /**
+         * _reqService.setHeaders
+         * Ajax请求头设置
+         */
+        _mcs._reqService.setHeaders([
             {
                 method: 'append',
                 key: 'X-TOKEN',
@@ -58,32 +53,71 @@ export function InitializeFactory(_initServ: InitializeService,
             }
         ]);
 
-        _reqServ.setResources(_rp);
-
-        _reqServ.reqCatch = ((error, caught, url) => {
+        /**
+         *  _mcs._reqService.reqCatch
+         *  Ajax 返回状态非200/201状态错误处理
+         */
+        _mcs._reqService.reqCatch = ((error, caught, url) => {
             if (error.status === 404) {
                 return Observable.empty();
             }
         });
 
-        _reqServ.reqError = ((error, url) => {
+        /**
+         *  _mcs._reqService.reqError
+         *  Ajax 状态错误处理
+         */
+        _mcs._reqService.reqError = ((error, url) => {
         });
 
         /**
-         * 规则匹配
+         * _reqService.setResource
+         * RESTFul资源设置
          */
-        _ruleServ.setRules({
+        _mcs._reqService.setResources(_rp);
+
+        /**
+         * _reqService.setNoDataComponent
+         * No Data Component 样式配置
+         */
+        _mcs._reqService.setNoDataComponent(DemoNodataComponent);
+
+        // ************************************
+        // _ruleService
+        // 规则（Auth）配置
+
+        /**
+         * _ruleService.setRules
+         * 设置系统规则(权限处理)
+         */
+        _mcs._ruleService.setRules({
             'aaa.bbb.ccc': true,
             'aaa.bbb.ddd': false,
             'aaa.bbb.eee': false,
             'aaa.bbb.fff': true
         });
 
-        _ecServ.setConfig({
+        // ************************************
+        // _echartsService
+        // Echart配置
+
+        /**
+         * _echartsService.setConfig
+         * Echart 部分功能配置
+         */
+        _mcs._echartsService.setConfig({
             toolbars: true,
             show_tools: 'toggle'
         });
 
+        // ************************************
+        // _dynamicService
+        // 动态加载Component配置
+
+        /**
+         * _dynamicService.setComponentMap
+         * 添加动态加载Component资源
+         */
         _mcs._dynamicService.setComponentMap(DemoNodataComponent);
 
     };

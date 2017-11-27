@@ -20,7 +20,7 @@ import {
 
 import * as echarts from 'echarts';
 import 'echarts-wordcloud/dist/echarts-wordcloud.min';
-import {MnEchartsService} from './mn-echarts.service';
+import {MnEchartsServices} from './mn-echarts.service';
 
 declare const mu: any, jQuery: any;
 
@@ -51,7 +51,7 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     private currentWindowWidth: any = null;
 
     constructor(private _ref: ElementRef,
-                private _es: MnEchartsService) {
+                private _es: MnEchartsServices) {
 
         this._result['ref'] = this._ref;
         this.result.emit(this._result);

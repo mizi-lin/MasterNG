@@ -15,12 +15,12 @@ declare const mu: any;
                            [progress]="process"></mn-loader-bar>
         </ng-template>
         <ng-container *ngIf="showNoData">
-            <mn-dynamic-component *ngIf="noData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
+            <mn-dynamic-component *ngIf="isNoData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
         </ng-container>
-        <ng-container *ngIf="showNoData ? !noData : true">
+        <ng-container *ngIf="showNoData ? !isNoData : true">
             <ng-content></ng-content>
         </ng-container>
-        
+
     `,
     styles: [
             `:host {
@@ -46,9 +46,9 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
 
     _observable: Subscriber<any>;
 
-    noData: boolean = false;
+    isNoData: boolean = false;
 
-    @Input() noDataComponent: any = MnReqNoDataComponent;
+    @Input() noDataComponent: any = this._rs._noDataComponent || MnReqNoDataComponent;
 
     process: number = 0;
 
@@ -56,7 +56,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
                 private _rs: MnReqServices) {
     }
 
-    req_http(req: any): void {
+    reqHttp(req: any): void {
         let args: any[] = [];
         const method = req.method || (req.payload ? 'post' : 'get');
 
@@ -85,9 +85,9 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
             this.process = 100;
             res = res || {};
             mu.run(res.data, () => {
-                this.noData = false;
+                this.isNoData = false;
             }, () => {
-                this.noData = true;
+                this.isNoData = true;
             });
 
             this.result.emit(res);
@@ -97,23 +97,6 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
             this.process = 100;
         });
 
-    }
-
-    debounceReqHttp: any = mu.debounce((req: any) => {
-        mu.run(req, () => {
-            this.req_http(req);
-        });
-    }, 300);
-
-    processStep(): any {
-        const tid = setTimeout(() => {
-            if (this.process < mu.randomInt(75, 85)) {
-                this.process = this.process * 1.05;
-                this.processStep();
-            } else {
-                clearTimeout(tid);
-            }
-        }, mu.randomInt(300, 1200));
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -146,5 +129,24 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     ngOnDestroy(): void {
         this._observable && this._observable.unsubscribe();
     }
+
+    debounceReqHttp: any = mu.debounce((req: any) => {
+        mu.run(req, () => {
+            this.reqHttp(req);
+        });
+    }, 300);
+
+    processStep(): any {
+        const tid = setTimeout(() => {
+            if (this.process < mu.randomInt(75, 85)) {
+                this.process = this.process * 1.05;
+                this.processStep();
+            } else {
+                clearTimeout(tid);
+            }
+        }, mu.randomInt(300, 1200));
+    }
+
+
 
 }

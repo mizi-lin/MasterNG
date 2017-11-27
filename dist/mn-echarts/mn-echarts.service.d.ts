@@ -1,4 +1,4 @@
-export declare class MnEchartsService {
+export declare class MnEchartsServices {
     constructor();
     _colors_map: any;
     setColorsMap(colors_map?: any): void;

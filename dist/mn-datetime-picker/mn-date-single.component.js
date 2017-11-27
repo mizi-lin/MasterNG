@@ -82,7 +82,7 @@ var MnDateSingleComponent = (function () {
         get: function () {
             var _this = this;
             return mu.run(this._rst._maxDate, function (_maxDate) {
-                _this._hoverDate = _this.mndate(_maxDate);
+                _this._maxDate = _this.mndate(_maxDate);
                 return _this.compared(_this._date, _this._maxDate) === 1;
             });
         },

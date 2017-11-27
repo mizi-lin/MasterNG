@@ -16,13 +16,13 @@ export declare class ReqHttpComponent implements OnChanges, OnDestroy {
     showNoData: boolean;
     result: any;
     _observable: Subscriber<any>;
-    noData: boolean;
+    isNoData: boolean;
     noDataComponent: any;
     process: number;
     constructor(_http: Http, _rs: MnReqServices);
-    req_http(req: any): void;
-    debounceReqHttp: any;
-    processStep(): any;
+    reqHttp(req: any): void;
     ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;
+    debounceReqHttp: any;
+    processStep(): any;
 }

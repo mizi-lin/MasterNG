@@ -46,6 +46,14 @@ export class MnReqServices {
     reqCatch: any;
     reqError: any;
 
+    /**
+     * 设置nodata component
+     */
+    _noDataComponent: any;
+    setNoDataComponent(component) {
+        this._noDataComponent = component;
+    }
+
     constructor() {
     }
 }

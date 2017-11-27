@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import * as mu from 'mzmu';
-import {MnEchartsService} from './mn-echarts.service';
+import {MnEchartsServices} from './mn-echarts.service';
 
 declare const mu: any;
 
@@ -59,7 +59,7 @@ export class MnEchartsComponent implements OnInit, OnChanges {
     _result: any = {};
 
 
-    constructor(private _es: MnEchartsService) {
+    constructor(private _es: MnEchartsServices) {
     }
 
     ngOnInit() {

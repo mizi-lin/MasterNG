@@ -234,7 +234,7 @@ MnEchartsRenderDirective.decorators = [
 /** @nocollapse */
 MnEchartsRenderDirective.ctorParameters = function () { return [
     { type: core_1.ElementRef, },
-    { type: mn_echarts_service_1.MnEchartsService, },
+    { type: mn_echarts_service_1.MnEchartsServices, },
 ]; };
 MnEchartsRenderDirective.propDecorators = {
     'options': [{ type: core_1.Input },],

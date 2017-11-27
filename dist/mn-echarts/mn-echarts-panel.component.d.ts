@@ -1,5 +1,5 @@
 import { ElementRef, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { MnEchartsService } from './mn-echarts.service';
+import { MnEchartsServices } from './mn-echarts.service';
 import '../assets/jquery.resize.js';
 import { MnFileSaverServices } from '../mn-common/services/mn-file-saver.services';
 export declare class MnEchartsPanelComponent implements OnChanges {
@@ -51,7 +51,7 @@ export declare class MnEchartsPanelComponent implements OnChanges {
     def: any;
     setStatus(fnKey: string, bool?: boolean): void;
     _config: any;
-    constructor(_es: MnEchartsService, _mnFileSaverServ: MnFileSaverServices, _ref: ElementRef);
+    constructor(_es: MnEchartsServices, _mnFileSaverServ: MnFileSaverServices, _ref: ElementRef);
     ngOnChanges(changes: SimpleChanges): void;
     _result(rst: any): void;
     _getToolMap(maps?: any): any;
