@@ -23,14 +23,14 @@ export class MnDateSingleComponent implements OnInit {
 
     _date: any;
 
-    @Input('MnDate')
+    @Input('mnDate')
     set date_(date) {
         if (date) {
             this._date = new MnDate(date);
         }
     }
 
-    @Input('MnView') _view: string = 'days';
+    @Input('mnView') _view: string = 'days';
 
     @HostBinding('class.start')
     get classStart_() {

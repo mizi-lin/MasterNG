@@ -39,7 +39,8 @@ $danger_border_color: #ea5460;
     box-sizing: border-box;
 }
 
-.bordered {
+.bordered,
+.bordered-content > .mnc-content {
     border: 1px solid $light_border_color;
 
     &.light {
@@ -50,6 +51,8 @@ $danger_border_color: #ea5460;
         border: 1px solid $primary_border_color;
     }
 }
+
+
 
 .light-bg {
     background: $light_background_color;

@@ -55,8 +55,8 @@
                               height="300px">
             </mn-echarts-panel>
         </mn-col>
-        <mn-col [span]="12">
-            <mn-echarts-box class="bordered"
+        <mn-col [span]="12" class="bordered-content mnc-overflow-auto">
+            <mn-echarts-box style="width: 1200px;"
                             [req]="{url: './assets/store/pie.json'}"
                             [type]="'pie'"
                             [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"

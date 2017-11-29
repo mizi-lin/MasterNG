@@ -1,13 +1,14 @@
 import {
     Component, OnInit, Input, AfterViewInit, ElementRef,
-    Renderer2, OnChanges, SimpleChanges, HostListener, HostBinding
+    Renderer2, OnChanges, SimpleChanges, HostListener, HostBinding, ViewEncapsulation
 } from '@angular/core';
 // import {ColComponent} from './col.component';
 declare const mu: any;
 
 @Component({
-    selector: 'mn-row, [mn-row], mn-fill, [mn-fill]',
+    selector: 'mn-row, mn-fill',
     template: '<ng-content></ng-content>',
+    encapsulation: ViewEncapsulation.None,
     styleUrls: ['./layout.scss']
 })
 export class MnRowComponent implements OnChanges {
@@ -17,7 +18,9 @@ export class MnRowComponent implements OnChanges {
     // 让控件支持高度100%
     // height percent hundred
     @Input() hph: boolean | string = true;
-    @HostBinding('style.height') get getHph() {
+
+    @HostBinding('style.height')
+    get getHph() {
         return this.hph === true ? '100%' : this.hph === false ? 'auto' : this.hph;
     }
 

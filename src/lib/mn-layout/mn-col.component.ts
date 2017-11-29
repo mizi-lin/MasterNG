@@ -1,8 +1,6 @@
 import {
-    Component, OnInit, Input, ElementRef, Renderer2, OnChanges, SimpleChanges, Optional, Host, HostBinding,
-    forwardRef, Inject
+    Component, OnInit, Input, ElementRef, Renderer2, OnChanges, SimpleChanges, Optional, Host, HostBinding, ViewEncapsulation
 } from '@angular/core';
-import * as mu from 'mzmu';
 import {MnRowComponent} from './mn-row.component';
 
 declare const mu: any;
@@ -10,14 +8,11 @@ declare const mu: any;
 @Component({
     selector: 'mn-col',
     template: `
-        <div class="mn-col-content">
+        <section class="mn-col-content mnc-content">
             <ng-content></ng-content>
-        </div>
+        </section>
     `,
-    styles: [`:host /deep/ .mn-col-content { 
-        width: 100%;
-        height: 100%;
-    }`]
+    encapsulation: ViewEncapsulation.None
 })
 export class MnColComponent implements OnInit, OnChanges {
 
@@ -38,10 +33,6 @@ export class MnColComponent implements OnInit, OnChanges {
     constructor(@Optional() @Host() private _rowCmp: MnRowComponent,
                 private _ref: ElementRef,
                 private _renderer: Renderer2) {
-
-        // setTimeout(() => {
-        //     console.debug(this._rowCmp);
-        // }, 10);
     }
 
     ngOnInit(): void {
