@@ -45,7 +45,7 @@ export class MnTooltipComponent implements OnInit {
 
     _status: string = 'hide';
 
-    constructor(private _ref: ElementRef) {
+    constructor(public _ref: ElementRef) {
     }
 
     _evt: any = mu.debounce(($event) => {

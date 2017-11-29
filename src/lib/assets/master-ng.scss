@@ -141,7 +141,6 @@ mn-panel-simple {
             display: block;
             padding-left: $w2;
             font-size: 18px;
-            flex: 1;
 
             small {
                 margin-left: $w;
@@ -149,6 +148,13 @@ mn-panel-simple {
         }
 
         mn-panel-toolbar {
+            position: absolute;
+            top: 0;
+            right: 0;
+            text-align: right;
+            background: rgba(255, 255, 255, .3);
+
+
             padding-right: $w2;
 
             mn-col {

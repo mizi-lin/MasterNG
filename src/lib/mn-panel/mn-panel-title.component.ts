@@ -1,9 +1,9 @@
 import {
-    Component, OnInit, Input, ContentChildren, AfterViewInit, ElementRef,
-    Renderer2, OnChanges, SimpleChanges, forwardRef, Inject, HostListener
+    Component, OnInit, ElementRef,
+    Renderer2, forwardRef, Inject, HostListener
 } from '@angular/core';
-import * as mu from 'mzmu';
 import {MnPanelComponent} from './mn-panel.component';
+
 declare const mu: any;
 
 @Component({
@@ -12,13 +12,14 @@ declare const mu: any;
         <ng-content></ng-content>
     `,
     styles: [
-        `
+            `
         `
     ]
 })
 export class MnPanelTitleComponent implements OnInit {
 
-    @HostListener('click', ['$event']) onClick(event: any) {
+    @HostListener('click', ['$event'])
+    onClick(event: any) {
         if (this._panel.collapse) {
             this._panel.toggle_collapse();
         }
@@ -32,5 +33,4 @@ export class MnPanelTitleComponent implements OnInit {
     ngOnInit(): void {
 
     }
-
 }

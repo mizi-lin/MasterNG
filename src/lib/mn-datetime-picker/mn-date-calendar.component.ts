@@ -14,7 +14,7 @@ export class MnDateCalendarComponent implements OnInit {
 
     _date: any;
 
-    @Input('MnDate')
+    @Input('mnDate')
     set date_(date) {
         if (date) {
             this._date = new MnDate(date);
@@ -22,7 +22,7 @@ export class MnDateCalendarComponent implements OnInit {
     }
 
     _view: string = 'days';
-    @Input('MnView')
+    @Input('mnView')
     set view_(view) {
         this._view = view;
         this._calendar = this._mds.getCalendar(this._date, view);
@@ -30,28 +30,28 @@ export class MnDateCalendarComponent implements OnInit {
 
     _maxDate: any;
 
-    @Input('MnMaxDate')
+    @Input('mnMaxDate')
     set maxDate_(date) {
 
     }
 
     _minDate: any;
 
-    @Input('MnMinDate')
+    @Input('mnMinDate')
     set minDate_(date) {
 
     }
 
     _startDate: any;
 
-    @Input('MnStartDate')
+    @Input('mnStartDate')
     set startDate_(date) {
 
     }
 
     _endDate: any;
 
-    @Input('MnEndDate')
+    @Input('mnEndDate')
     set endDate_(date) {
 
     }

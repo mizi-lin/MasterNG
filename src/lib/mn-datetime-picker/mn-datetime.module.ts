@@ -15,6 +15,7 @@ import {MnYearsPickerComponent} from './mn-years-picker.component';
 import {MnMonthsPickerComponent} from './mn-months-picker.component';
 import {MnQuartersPickerComponent} from './mn-quarters-picker.component';
 import {MnDateSingleComponent} from './mn-date-single.component';
+import {MnDateDrawComponent} from './mn-date-draw.component';
 
 @NgModule({
     imports: [
@@ -35,7 +36,9 @@ import {MnDateSingleComponent} from './mn-date-single.component';
         MnYearsPickerComponent,
         MnMonthsPickerComponent,
         MnQuartersPickerComponent,
-        MnDateSingleComponent
+        // --
+        MnDateSingleComponent,
+        MnDateDrawComponent
     ],
 
     exports: [
@@ -47,7 +50,8 @@ import {MnDateSingleComponent} from './mn-date-single.component';
         MnYearsPickerComponent,
         MnMonthsPickerComponent,
         MnQuartersPickerComponent,
-        MnDateSingleComponent
+        MnDateSingleComponent,
+        MnDateDrawComponent
     ],
 
     providers: [

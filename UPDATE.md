@@ -94,4 +94,6 @@
 * 0.2.9
 * 添加 mnTooltip
 * 移除 ng-zorro
+* b1: 修改 panel 的 toolbar 与 title 的布局关系
+
 

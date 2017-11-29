@@ -53,7 +53,7 @@ export class MnDropdownComponent implements OnInit {
     top: number;
     left: number;
 
-    constructor(private _ref: ElementRef) {
+    constructor(public _ref: ElementRef) {
     }
 
     _evt: any = mu.debounce(($event) => {

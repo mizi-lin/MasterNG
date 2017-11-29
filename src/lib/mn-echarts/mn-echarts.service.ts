@@ -525,6 +525,7 @@ export class MnEchartsServices {
             const _tt = mu.ifnvl(setting.tooltip, true);
             options.tooltip = options.tooltip || {};
             options.tooltip.show = !!_tt;
+            options.tooltip.confine = true;
 
             if (!mu.type(_tt, 'boolean') && options.tooltip.formatter) {
                 options.tooltip.formatter = _tt;
