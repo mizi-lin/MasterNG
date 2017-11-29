@@ -9,7 +9,6 @@ import {MnEchartsPanelComponent} from './mn-echarts-panel.component';
 import {MnEchartsServices} from './mn-echarts.service';
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {MnFloatLayerModule} from '../mn-float-layer/mn-float-layer.module';
 
 @NgModule({
@@ -21,7 +20,6 @@ import {MnFloatLayerModule} from '../mn-float-layer/mn-float-layer.module';
         MnLayoutModule.forRoot(),
         MnFloatLayerModule.forRoot(),
 
-        NgZorroAntdModule,
         BrowserAnimationsModule
     ],
     declarations: [

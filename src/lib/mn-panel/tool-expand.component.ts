@@ -4,23 +4,23 @@ import {
 } from '@angular/core';
 import * as mu from 'mzmu';
 import {MnPanelComponent} from './mn-panel.component';
+
 declare const mu: any;
 
 @Component({
     selector: 'tool-expand',
     template: `
-        <nz-tooltip [nzTitle]="'full-screen mode'">
-            <i class="icon iconfont icon-fangda" nz-tooltip></i>
-        </nz-tooltip>                    
+        <i class="icon iconfont icon-fangda" mnTooltip="full-screen mode"></i>
     `,
     styles: [
-        `
-            
+            `
+
         `
     ]
 })
 export class ToolExpandComponent implements OnInit {
-    @HostListener('click') onClick(event: any) {
+    @HostListener('click')
+    onClick(event: any) {
         mu.run(this._panel, (o) => {
             o._renderer.addClass(o._ref.nativeElement, 'full-screen');
             this.fsClick.emit(true);

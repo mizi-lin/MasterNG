@@ -1,6 +1,6 @@
 {
   "name": "masterng",
-  "version": "0.2.8-b4",
+  "version": "0.2.9",
   "license": "MIT",
   "scripts": {
     "clean": "rimraf dist",
@@ -42,7 +42,6 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "mzmu": "^1.8.14",
-    "ng-zorro-antd": "0.5.1",
     "normalize.css": "^7.0.0",
     "numbro": "^1.11.0",
     "pikaday": "^1.6.1",

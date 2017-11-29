@@ -146,7 +146,6 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
 
         // const _el = this._viewRef.nativeElement;
 
-
     }
 
     // 隐藏下拉框
@@ -179,15 +178,15 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
                 let position: any = {};
                 position.left0 = {left: this.adjustLeft(_sRect.left - _tRect.width, _tRect)};
                 position.right0 = {left: this.adjustLeft(_sRect.right, _tRect)};
-                position.top0 = {top: _sRect.top - _tRect.height - 5};
-                position.bottom0 = {top: _sRect.bottom};
+                position.top0 = {top: this.adjustTop(_sRect.top - _tRect.height - 5 - 8, _tRect)};
+                position.bottom0 = {top: this.adjustTop(_sRect.bottom, _tRect)};
                 position.left1 = {left: this.adjustLeft(_sRect.left, _tRect)};
                 position.right1 = {left: this.adjustLeft(_sRect.right - _tRect.width, _tRect)};
-                position.top1 = {top: _sRect.top};
-                position.bottom1 = {top: _sRect.bottom + _tRect.height};
+                position.top1 = {top: this.adjustTop(_sRect.top, _tRect)};
+                position.bottom1 = {top: this.adjustTop(_sRect.bottom + _tRect.height, _tRect)};
                 position.center1 = {left: this.adjustLeft(_sRect.left + (_sRect.width / 2) - (_tRect.width / 2), _tRect)};
                 position.center0 = position.center1;
-                position.middle1 = {top: _sRect.top + (_sRect.height / 2) - (_tRect.height / 2)};
+                position.middle1 = {top: this.adjustTop(_sRect.top + (_sRect.height / 2) - (_tRect.height / 2), _tRect)};
                 position.middle0 = position.middle1;
 
                 let _map = {};
@@ -215,13 +214,26 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
         let _window_width = window.innerWidth;
         let _width = _tRect.width;
 
-
         if (left < _adjust) {
             return _adjust;
         } else if ((left + _width) > _window_width) {
             return _window_width - _width - _adjust;
         } else {
             return left;
+        }
+    }
+
+    adjustTop(top, _tRect) {
+        let _adjust = 16;
+        let _window_height = window.innerHeight;
+        let _height = _tRect.height;
+
+        if (top < _adjust) {
+            return _adjust;
+        } else if ((top + _height) > _window_height) {
+            return _window_height - _height - _adjust;
+        } else {
+            return top;
         }
     }
 }

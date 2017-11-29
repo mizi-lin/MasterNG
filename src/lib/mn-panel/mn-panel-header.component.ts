@@ -19,10 +19,6 @@ declare const mu: any;
                 align-items: stretch;
                 box-sizing: border-box;
             }
-
-            :host /deep/ mn-col {
-                overflow-y: hidden;
-            }
         `
     ]
 })

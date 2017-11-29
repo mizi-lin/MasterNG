@@ -21,11 +21,7 @@ declare const mu: any, jQuery: any;
                     <ng-template [ngIf]="toolMap['download']">
                         <mn-col (click)="download_click($event)"
                                 [order]="toolMap['download'].order">
-
-                            <nz-tooltip [nzTitle]="'download'">
-                                <i class="icon iconfont icon-xiazai" nz-tooltip></i>
-                            </nz-tooltip>
-
+                            <i class="icon iconfont icon-xiazai" mnTooltip="download"></i>
                         </mn-col>
                     </ng-template>
 
@@ -33,9 +29,7 @@ declare const mu: any, jQuery: any;
                         <mn-col (click)="dataView_click($event)"
                                 [order]="toolMap['data_view'].order"
                                 [class.active]="statusMap.dataView_click">
-                            <nz-tooltip [nzTitle]="'table'">
-                                <i class="icon iconfont icon-table" nz-tooltip></i>
-                            </nz-tooltip>
+                            <i class="icon iconfont icon-table" mnTooltip="table"></i>
                         </mn-col>
                     </ng-template>
 
@@ -44,10 +38,7 @@ declare const mu: any, jQuery: any;
                                 (click)="line_click($event)"
                                 [order]="toolMap['line'].order"
                                 [class.active]="statusMap.line_click">
-                            <nz-tooltip [nzTitle]="'line chart'">
-                                <i class="fa fa-line-chart" nz-tooltip></i>
-                            </nz-tooltip>
-
+                            <i class="fa fa-line-chart" mnTooltip="line chart"></i>
                         </mn-col>
                     </ng-template>
 
@@ -56,10 +47,7 @@ declare const mu: any, jQuery: any;
                                 (click)="bar_click($event)"
                                 [order]="toolMap['bar'].order"
                                 [class.active]="statusMap.bar_click">
-                            <nz-tooltip [nzTitle]="'bar chart'">
-                                <i class="icon iconfont icon-bar" nz-tooltip></i>
-                            </nz-tooltip>
-
+                            <i class="icon iconfont icon-bar" mnTooltip="bar chart"></i>
                         </mn-col>
                     </ng-template>
 
@@ -68,9 +56,7 @@ declare const mu: any, jQuery: any;
                                 (click)="exchange_click($event)"
                                 [order]="toolMap['exchange'].order"
                                 [class.active]="statusMap.exchange_click">
-                            <nz-tooltip [nzTitle]="'rotate'">
-                                <i class="icon iconfont icon-rotate" nz-tooltip></i>
-                            </nz-tooltip>
+                            <i class="icon iconfont icon-rotate" mnTooltip="rotate"></i>
                         </mn-col>
                     </ng-template>
 
@@ -79,9 +65,7 @@ declare const mu: any, jQuery: any;
                                 (click)="precent_rate_click($event)"
                                 [order]="toolMap['rate'].order"
                                 [class.active]="statusMap.precent_rate_click">
-                            <nz-tooltip [nzTitle]="'percentage'">
-                                <i class="icon iconfont icon-percent" nz-tooltip></i>
-                            </nz-tooltip>
+                            <i class="icon iconfont icon-percent" mnTooltip="percentage"></i>
                         </mn-col>
                     </ng-template>
 
@@ -90,9 +74,7 @@ declare const mu: any, jQuery: any;
                                 (click)="label_show_all_click($event)"
                                 [order]="toolMap['label_all'].order"
                                 [class.active]="statusMap.label_show_all_click">
-                            <nz-tooltip [nzTitle]="'show all'">
-                                <i class="icon iconfont icon-liebiaodanchu" nz-tooltip></i>
-                            </nz-tooltip>
+                            <i class="icon iconfont icon-liebiaodanchu" mnTooltip="show all"></i>
                         </mn-col>
                     </ng-template>
 
@@ -100,9 +82,7 @@ declare const mu: any, jQuery: any;
                         <mn-col (click)="legend_show_click($event)"
                                 [order]="toolMap['legend'].order"
                                 [class.active]="statusMap.legend_show_click">
-                            <nz-tooltip [nzTitle]="'show/hide legends'">
-                                <i class="icon iconfont icon-yincang" nz-tooltip></i>
-                            </nz-tooltip>
+                            <i class="icon iconfont icon-yincang" mnTooltip="show/hide legends"></i>
                         </mn-col>
                     </ng-template>
 
@@ -113,9 +93,7 @@ declare const mu: any, jQuery: any;
                             <!-- <todo 暂时先使用 nz-zorro> -->
 
                             <mn-dropdown (mnResult)="_dropDownResult = $event">
-                                <nz-tooltip [nzTitle]="'order'">
-                                    <i class="icon iconfont icon-sort-copy" nz-tooltip></i>
-                                </nz-tooltip>
+                                <i class="icon iconfont icon-sort-copy" mnTooltip="icon-sort-copy"></i>
                                 <mn-dropdown-content>
                                     <ol class="mnc-list">
                                         <li (click)="sortAllClick($event)">
@@ -139,11 +117,7 @@ declare const mu: any, jQuery: any;
                     <ng-template [ngIf]="toolMap['reload']">
                         <mn-col (click)="reload_click($event)"
                                 [order]="toolMap['reload'].order">
-
-                            <nz-tooltip [nzTitle]="'refresh'">
-                                <i class="icon iconfont icon-shuaxin" nz-tooltip></i>
-                            </nz-tooltip>
-
+                            <i class="icon iconfont icon-shuaxin" mnTooltip="refresh"></i>
                         </mn-col>
                     </ng-template>
                 </mn-panel-toolbar>
@@ -363,7 +337,7 @@ export class MnEchartsPanelComponent implements OnChanges {
     download_click($event) {
         const content = this._mnFileSaverServ.csvData(this._dataView);
         console.debug(content);
-        this._mnFileSaverServ.fileSaver([content], this.filename + ('_' + + new Date()) + '.csv');
+        this._mnFileSaverServ.fileSaver([content], this.filename + ('_' + +new Date()) + '.csv');
     }
 
     dataView_click($event) {
@@ -457,5 +431,5 @@ export class MnEchartsPanelComponent implements OnChanges {
         mu.run(this.toolMap['fullscreen'].click, fn => fn(full, $event));
 
         this.setStatus('fullScreenClick');
-    }
+    };
 }

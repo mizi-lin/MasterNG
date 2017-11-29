@@ -17,13 +17,11 @@ import {DemoDatetimeComponent} from './demo-datetime/demo-datetime.component';
 import {CommonModule} from '@angular/common';
 import {DemoNodataComponent} from './demo-nodata/demo-nodata.component';
 import {MnCommonServices} from '../lib/mn-common/services/mn-common.services';
-import {NgZorroAntdModule} from 'ng-zorro-antd';
 
 @NgModule({
     imports: [
         CommonModule,
         BrowserModule,
-        NgZorroAntdModule.forRoot(),
 
         RouterModule.forRoot([
             {
