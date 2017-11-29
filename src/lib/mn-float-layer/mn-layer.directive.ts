@@ -24,21 +24,37 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
 
     @Input('mnLayerModule') _module;
 
-    // set mnLayerModule(module) {
-    //     if (module) {
-    //         // this._layer.classList.add(module + '-panel');
-    //     }
-    // }
+    _position: any;
 
-    @Input('mnLayerStyle') _styles;
+    @Input('mnLayerPosition')
+    set position_(p: string) {
+        p = p || 'top center';
+        p = p.toLowerCase().replace(/\s{2,}/, '');
+        p = p === 'left' ? 'left middle'
+            : p === 'top' ? 'top center'
+                : p === 'right' ? 'right middle'
+                    : p === 'bottom' ? 'bottom center'
+                        : p;
 
+        mu.run(p.split(' '), (ps) => {
+            if (ps.length < 2) {
+                console.error('position error');
+                return;
+            }
+            this._position = mu.map(ps, (pos, index) => {
+                return pos + index.toString();
+            });
+        });
+
+    }
+
+    @Input('mnLayerSourceRef') _sRef;
     @Input('mnLayerHideEvt') _hide_evt;
 
     @Input()
     set mnLayerStatus(status) {
         if (status === 'show') {
             this._show();
-            this._setStyle(this._styles);
         } else if (status === 'hide' && !this._showed) {
             this._clear = setTimeout(() => {
                 this._hide();
@@ -50,26 +66,18 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
 
     _clear: any;
     _showed: boolean = false;
-
-    _setStyle(styles) {
-        mu.map(styles, (val, key) => {
-            this._render.setStyle(this._layer, key, val);
-        });
-    }
-
     _layer: HTMLElement;
 
     private _context: MnLayerContext = new MnLayerContext();
     private _viewRef: EmbeddedViewRef<MnLayerContext>;
 
     constructor(private _render: Renderer2,
-                private _mlcs: MnLayerContainerService,
+                private _ms: MnLayerContainerService,
                 private _vcRef: ViewContainerRef,
                 private _tempRef: TemplateRef<MnLayerContext>) {
     }
 
     ngOnInit() {
-
     }
 
     ngAfterViewInit() {
@@ -79,12 +87,12 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
         });
     }
 
-    private _createLayerElement() {
+    _createLayerElement() {
         let layer = document.createElement('div');
         layer.id = `mnc-layer-${nextUniqueId++}`;
         layer.classList.add('mnc-layer');
-        mu.run(this._module, module => layer.classList.add(`mnc-${module}-layer`));
-        this._mlcs.getContainer().appendChild(layer);
+        layer.classList.add(this._module);
+        this._ms.getContainer().appendChild(layer);
         this._layer = layer;
 
         // 绑定事件
@@ -111,8 +119,7 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
     }
 
     // 显示下拉框
-    private _show(): void {
-
+    _show(): void {
         if (this._clear) {
             clearTimeout(this._clear);
         }
@@ -125,16 +132,26 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
             this._viewRef = this._vcRef.createEmbeddedView(this._tempRef, this._context);
         }
 
-        this._render.addClass(this._layer, 'mnc-show');
-        this._render.removeClass(this._layer, 'mnc-hide');
+        this._render.addClass(this._layer, 'mnc-hide');
+
         mu.each(this._viewRef.rootNodes, (_node) => {
             this._layer.appendChild(_node);
         });
+
+        // 设置浮动层位置
+        this._adjustPosition(this._layer, () => {
+            this._render.addClass(this._layer, 'mnc-show');
+            this._render.removeClass(this._layer, 'mnc-hide');
+        });
+
+        // const _el = this._viewRef.nativeElement;
+
+
     }
 
     // 隐藏下拉框
     // 移除下拉内容
-    private _hide(): void {
+    _hide(): void {
         this._vcRef.clear();
         this._viewRef = null;
         this._showed = false;
@@ -143,7 +160,69 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
             this._render.addClass(this._layer, 'mnc-hide');
             this._render.removeClass(this._layer, 'mnc-show');
         }
+    }
 
+    /**
+     * 设置浮动层显示位置
+     * @private
+     */
+    _adjustPosition(layer: any, fn?: any) {
+        setTimeout(() => {
+            mu.run(this._position, () => {
+                const _layerBody = layer.firstElementChild;
+                const _sRect = this._sRef.nativeElement.getBoundingClientRect();
+                const _tRect = _layerBody.getBoundingClientRect();
+
+                // console.log('::::::sRect', _sRect);
+                // console.log('::::::_tRect', _tRect);
+
+                let position: any = {};
+                position.left0 = {left: this.adjustLeft(_sRect.left - _tRect.width, _tRect)};
+                position.right0 = {left: this.adjustLeft(_sRect.right, _tRect)};
+                position.top0 = {top: _sRect.top - _tRect.height - 5};
+                position.bottom0 = {top: _sRect.bottom};
+                position.left1 = {left: this.adjustLeft(_sRect.left, _tRect)};
+                position.right1 = {left: this.adjustLeft(_sRect.right - _tRect.width, _tRect)};
+                position.top1 = {top: _sRect.top};
+                position.bottom1 = {top: _sRect.bottom + _tRect.height};
+                position.center1 = {left: this.adjustLeft(_sRect.left + (_sRect.width / 2) - (_tRect.width / 2), _tRect)};
+                position.center0 = position.center1;
+                position.middle1 = {top: _sRect.top + (_sRect.height / 2) - (_tRect.height / 2)};
+                position.middle0 = position.middle1;
+
+                let _map = {};
+
+                mu.each(this._position, (key, index) => {
+                    _map = mu.extend(_map, position[key]);
+                    this._render.addClass(_layerBody, 'mnc-' + key);
+                });
+
+                // 确认相对位置
+                mu.run(_map, () => {
+                    mu.each(_map, (value, key) => {
+                        this._render.setStyle(this._layer, key, value + 'px');
+                    });
+                });
+
+                // call back
+                fn && fn();
+            });
+        }, 100);
+    }
+
+    adjustLeft(left, _tRect) {
+        let _adjust = 16;
+        let _window_width = window.innerWidth;
+        let _width = _tRect.width;
+
+
+        if (left < _adjust) {
+            return _adjust;
+        } else if ((left + _width) > _window_width) {
+            return _window_width - _width - _adjust;
+        } else {
+            return left;
+        }
     }
 }
 

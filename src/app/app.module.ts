@@ -10,19 +10,14 @@ import {ResourcePool} from './demo-req/resource-pool';
 import {InitializeService} from './common/initialize.service';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {InitializeFactory} from './common/initialize.factory';
-import {MnI18nServices} from '../lib/mn-i18n/mn-i18n.services';
-import {MnRuleServices} from '../lib/mn-rule/mn-rule.services';
-import {NgZorroAntdModule} from 'ng-zorro-antd';
 import {MasterNgModule} from '../lib/master-ng.module';
-import {MnReqServices} from '../lib/mn-req/mn-req.service';
 import {HeatWidgetComponent} from './common/widgets/heat-widget/heat-widget.component';
 import {DemoEchart2Component} from './demo-echart2/demo-echart2.component';
-import {MnEchartsServices} from '../lib/mn-echarts/mn-echarts.service';
 import {DemoDatetimeComponent} from './demo-datetime/demo-datetime.component';
 import {CommonModule} from '@angular/common';
 import {DemoNodataComponent} from './demo-nodata/demo-nodata.component';
-import {MnDynamicModule} from '../lib/mn-dynamic/mn-dynamic.module';
 import {MnCommonServices} from '../lib/mn-common/services/mn-common.services';
+import {NgZorroAntdModule} from 'ng-zorro-antd';
 
 @NgModule({
     imports: [

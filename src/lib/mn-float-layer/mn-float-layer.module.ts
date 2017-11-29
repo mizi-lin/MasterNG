@@ -6,6 +6,7 @@ import {MnLayerDirective} from './mn-layer.directive';
 import {MnLayerContainerService} from './mn-layer-container.service';
 import {MnCommonModule} from '../mn-common/mn-common.module';
 import {MnFormModule} from '../mn-form/mn-form.module';
+import {MnTooltipComponent} from './mn-tooltip.component';
 
 
 @NgModule({
@@ -17,11 +18,13 @@ import {MnFormModule} from '../mn-form/mn-form.module';
     declarations: [
         MnDropdownComponent,
         MnDropdownContentComponent,
+        MnTooltipComponent,
         MnLayerDirective
     ],
     exports: [
         MnDropdownComponent,
         MnDropdownContentComponent,
+        MnTooltipComponent,
         MnLayerDirective
     ],
     providers: [

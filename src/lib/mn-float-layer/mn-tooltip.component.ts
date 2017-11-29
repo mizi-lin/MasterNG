@@ -5,53 +5,45 @@ import {
 declare const mu: any;
 
 @Component({
-    selector: 'mn-dropdown',
+    selector: '[mnTooltip]',
     template: `
-        <div>
-            <ng-content></ng-content>
-        </div>
-
+        <ng-content></ng-content>
         <ng-template
-                [mnLayerModule]="'dropdown'"
-                [mnLayerStatus]="status"
-                [mnLayerHideEvt]="hidetype"
-                [mnLayerPosition]="'bottom left'"
+                [mnLayerModule]="'mnc-tooltip'"
+                [mnLayerPosition]="_position"
+                [mnLayerStatus]="_status"
+                [mnLayerHideEvt]="_hideType"
                 [mnLayerSourceRef]="_ref"
                 (mnResult)="_result($event)"
                 mnLayer>
-            <ng-content select="mn-dropdown-content"></ng-content>
+            <div [innerHTML]="_tooltip"></div>
         </ng-template>
-
     `,
-    styleUrls: ['./mn-dropdown.scss'],
+    // styleUrls: ['./mn-dropdown.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class MnDropdownComponent implements OnInit {
+export class MnTooltipComponent implements OnInit {
 
     @HostListener('mouseover', ['$event'])
-    _hover($event) {
+    hover_($event) {
         mu.run(this._hasEvt($event.type), () => this._evt($event));
     }
 
-    @HostListener('click', ['$event']) _click = this._hover;
+    @HostListener('click', ['$event']) _click = this.hover_;
 
     @HostListener('mouseleave', ['$event'])
-    _out($event) {
+    out_($event) {
         this._evt($event);
     }
 
-    @Input('mnShowTypes') showtypes: string = 'mouseover';
-
-    @Input('mnHideEventType') hidetype: string;
+    @Input('mnTooltip') _tooltip: string;
+    @Input('mnShowTypes') _showTypes: string = 'mouseover';
+    @Input('mnHideEventType') _hideType: string;
+    @Input('mnPosition') _position: string = 'top center';
 
     @Output('mnResult') result: any = new EventEmitter<any>();
 
-    status: string = 'hide';
-
-    styles: any;
-
-    top: number;
-    left: number;
+    _status: string = 'hide';
 
     constructor(private _ref: ElementRef) {
     }
@@ -59,14 +51,14 @@ export class MnDropdownComponent implements OnInit {
     _evt: any = mu.debounce(($event) => {
         const type = $event.type;
         if (type === 'mouseover' || type === 'click') {
-            this.status = 'show';
+            this._status = 'show';
         } else if (type === 'mouseleave') {
-            this.status = 'hide';
+            this._status = 'hide';
         }
     }, 300);
 
     _hasEvt(type) {
-        const types = this.showtypes.split(',');
+        const types = this._showTypes.split(',');
         const _rst = types.filter((_type) => {
             return _type.trim() === type;
         });
@@ -79,6 +71,7 @@ export class MnDropdownComponent implements OnInit {
     }
 
     ngOnInit() {
+
     }
 }
 

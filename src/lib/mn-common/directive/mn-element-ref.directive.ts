@@ -1,4 +1,4 @@
-import {Directive, Input, ElementRef, EventEmitter, Output, OnInit} from '@angular/core';
+import {Directive, ElementRef, EventEmitter, Output} from '@angular/core';
 
 /**
  *  模板引用变量 ( #var )
@@ -17,7 +17,7 @@ import {Directive, Input, ElementRef, EventEmitter, Output, OnInit} from '@angul
  */
 
 @Directive({
-    selector: '[mn-element]',
+    selector: '[mn-element], [mnElement]',
     exportAs: 'element'
 })
 export class MnElementRefDirective {

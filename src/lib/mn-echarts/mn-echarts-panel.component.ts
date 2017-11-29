@@ -25,7 +25,7 @@ declare const mu: any, jQuery: any;
                             <nz-tooltip [nzTitle]="'download'">
                                 <i class="icon iconfont icon-xiazai" nz-tooltip></i>
                             </nz-tooltip>
-                            
+
                         </mn-col>
                     </ng-template>
 
@@ -47,7 +47,7 @@ declare const mu: any, jQuery: any;
                             <nz-tooltip [nzTitle]="'line chart'">
                                 <i class="fa fa-line-chart" nz-tooltip></i>
                             </nz-tooltip>
-                            
+
                         </mn-col>
                     </ng-template>
 
@@ -59,7 +59,7 @@ declare const mu: any, jQuery: any;
                             <nz-tooltip [nzTitle]="'bar chart'">
                                 <i class="icon iconfont icon-bar" nz-tooltip></i>
                             </nz-tooltip>
-                            
+
                         </mn-col>
                     </ng-template>
 
@@ -108,35 +108,31 @@ declare const mu: any, jQuery: any;
 
                     <ng-template [ngIf]="toolMap['sort']">
                         <mn-col [order]="toolMap['sort'].order"
-                                [class.active]="statusMap.sort_click">
+                                [class.active]="statusMap.sortClick">
 
                             <!-- <todo 暂时先使用 nz-zorro> -->
 
-                            <nz-dropdown>
-                                <a class="ant-dropdown-link" nz-dropdown>
-                                    <nz-tooltip [nzTitle]="'order'">
-                                        <i class="icon iconfont icon-sort-copy" nz-tooltip></i>
-                                    </nz-tooltip>
-                                </a>
-                                <ul nz-menu>
-                                    <li nz-menu-item
-                                        (click)="sort_all_click($event)">
-                                        by All
-                                    </li>
-                                    <li nz-menu-divider></li>
-                                    <li nz-menu-item
-                                        *ngFor="let legend of _options?.legend?.data"
-                                        (click)="sort_click(legend.name, $event)">
-                                        by {{legend.name}}
-                                    </li>
-                                    
-                                    <li nz-menu-divider></li>
-                                    <li nz-menu-item
-                                        (click)="clear_sort_click($event)">
-                                        Clear
-                                    </li>
-                                </ul>
-                            </nz-dropdown>
+                            <mn-dropdown (mnResult)="_dropDownResult = $event">
+                                <nz-tooltip [nzTitle]="'order'">
+                                    <i class="icon iconfont icon-sort-copy" nz-tooltip></i>
+                                </nz-tooltip>
+                                <mn-dropdown-content>
+                                    <ol class="mnc-list">
+                                        <li (click)="sortAllClick($event)">
+                                            By All
+                                        </li>
+                                        <li class="mnc-divider"></li>
+                                        <li *ngFor="let legend of _options?.legend?.data"
+                                            (click)="sortClick(legend.name, $event)">
+                                            By {{legend.name}}
+                                        </li>
+                                        <li class="mnc-divider"></li>
+                                        <li (click)="clearSortClick($event)">
+                                            Clear
+                                        </li>
+                                    </ol>
+                                </mn-dropdown-content>
+                            </mn-dropdown>
                         </mn-col>
                     </ng-template>
 
@@ -147,7 +143,7 @@ declare const mu: any, jQuery: any;
                             <nz-tooltip [nzTitle]="'refresh'">
                                 <i class="icon iconfont icon-shuaxin" nz-tooltip></i>
                             </nz-tooltip>
-                            
+
                         </mn-col>
                     </ng-template>
                 </mn-panel-toolbar>
@@ -263,6 +259,8 @@ export class MnEchartsPanelComponent implements OnChanges {
 
     def: any = {};
 
+    _dropDownResult: any;
+
     setStatus(fnKey: string, bool?: boolean): void {
         this.statusMap[fnKey] = mu.ifnvl(bool, !this.statusMap[fnKey]);
     }
@@ -308,7 +306,7 @@ export class MnEchartsPanelComponent implements OnChanges {
                         mu.run(this.toolMap['fullscreen'], (o) => {
                             this._tools.push({
                                 name: 'fullscreen',
-                                click: this.fullscreen_click,
+                                click: this.fullScreenClick,
                                 order: o.order
                             });
                         });
@@ -323,7 +321,7 @@ export class MnEchartsPanelComponent implements OnChanges {
             mu.run(this.toolMap['fullscreen'], (o) => {
                 this._tools.push({
                     name: 'fullscreen',
-                    click: this.fullscreen_click,
+                    click: this.fullScreenClick,
                     order: o.order
                 });
             });
@@ -417,33 +415,36 @@ export class MnEchartsPanelComponent implements OnChanges {
         this.setStatus('reload_click');
     }
 
-    sort_click(legend): void {
+    sortClick(legend): void {
         this._sort = this._sort === 'desc' ? 'asc' : 'desc';
         this.setting = mu.clone(this.setting || {});
         this.setting.legend_show = true;
         this.setting.sort = `${legend}:${this._sort}`;
         this.setting.zero = false;
         this.setting.sort_all = false;
-        this.setStatus('sort_click', true);
+        this.setStatus('sortClick', true);
+        this._dropDownResult.hide();
     }
 
-    sort_all_click(): void {
+    sortAllClick(): void {
         this._sort = this._sort === 'desc' ? 'asc' : 'desc';
         this.setting = mu.clone(this.setting || {});
         this.setting.sort = `${mu.prop(this._options, 'legend.data.0.name')}:${this._sort}`;
         this.setting.sort_all = true;
         this.setting.zero = false;
-        this.setStatus('sort_click', true);
+        this.setStatus('sortClick', true);
+        this._dropDownResult.hide();
     }
 
-    clear_sort_click($event): void {
+    clearSortClick($event): void {
         this.setting = mu.clone(this.setting || {});
         this.setting.sort = void 0;
         this.setting.zero = void 0;
-        this.setStatus('sort_click', false);
+        this.setStatus('sortClick', false);
+        this._dropDownResult.hide();
     }
 
-    fullscreen_click: any = (full: any, $event: any) => {
+    fullScreenClick: any = (full: any, $event: any) => {
         const $el = jQuery(this._panel.nativeElement);
         $el.mnResize(() => {
             this._chart.resize({
@@ -455,6 +456,6 @@ export class MnEchartsPanelComponent implements OnChanges {
         // 自定义方法
         mu.run(this.toolMap['fullscreen'].click, fn => fn(full, $event));
 
-        this.setStatus('fullscreen_click');
-    };
+        this.setStatus('fullScreenClick');
+    }
 }

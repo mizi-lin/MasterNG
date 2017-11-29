@@ -57,6 +57,7 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         this.result.emit(this._result);
 
         const $el = jQuery(this._ref.nativeElement.parentElement);
+
         $el.mnResize(() => {
             mu.run(this._chart, () => {
                 this._chart.resize({
@@ -98,13 +99,19 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
 
     private updateChart(): void {
         let _width = 0, _height = 0;
-        mu.run(this.getWidth(this._ref.nativeElement), (width) => {
-            _width = width;
-            this._ref.nativeElement.style.width = width + 'px';
+
+        /**
+         * 在部分的浏览器或标签中不能正确的识别小数
+         * 或多或少会四舍五入又或进一，造成最终计算宽度的时候
+         * 超过 100%
+         */
+        mu.run(this.getWidth(this._ref.nativeElement), (w) => {
+            _width = Math.floor(w);
+            this._ref.nativeElement.style.width = _width + 'px';
         });
-        mu.run(this.getHeight(this._ref.nativeElement), (height) => {
-            _height = height;
-            this._ref.nativeElement.style.height = height + 'px';
+        mu.run(this.getHeight(this._ref.nativeElement), (h) => {
+            _height = Math.floor(h);
+            this._ref.nativeElement.style.height = _height + 'px';
         });
         this._result['width'] = _width;
         this._result['height'] = _height;

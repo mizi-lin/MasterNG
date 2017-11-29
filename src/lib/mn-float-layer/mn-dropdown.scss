@@ -1,11 +1,6 @@
 mn-dropdown {
     display: inline-block;
     height: 32px;
-
-    mn-dropdown-content {
-        padding: 8px;
-        background: #f00;
-    }
 }
 
 .mnc-layer-container {
@@ -23,15 +18,42 @@ mn-dropdown {
     z-index: 2;
     border: 1px solid #eee;
     background: #fff;
-    min-width: 200px;
+    min-width: 80px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
     pointer-events: auto;
 
     &.mnc-hide {
         visibility: hidden;
+        pointer-events: none;
     }
 
     &.mnc-show {
         visibility: visible;
+        pointer-events: auto;
+    }
+}
+
+.mnc-tooltip {
+    > div {
+        position: relative;
+        padding: 8px;
+        background-color: gray;
+        border-radius: 3px;
+        color: #fff;
+
+        &::after {
+            content: '';
+            position: absolute;
+            border: 5px solid transparent;
+            border-top-color: gray;
+            top: 100%;
+            left: calc(50% - 5px);
+        }
+    }
+
+    .mnc-top0 {
+        &.mnc-left1::after {
+            left: 15%;
+        }
     }
 }

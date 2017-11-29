@@ -9,7 +9,6 @@ declare const mu: any;
     template: `
         <div [style.width.%]="width"
              [style.height.px]="height"
-             [ngStyle]="loaderStyle"
              class="bar">
         </div>
     `
@@ -24,7 +23,15 @@ export class MnLoaderBarComponent implements OnChanges {
     @Input() target: string | ElementRef;
     @Input() progress: number;
     @Input() where: number;
-    @Input() loaderStyle: any = {};
+
+    @Input()
+    set loaderStyle(styles) {
+        mu.run(styles, () => {
+            mu.map(styles, (v, k) => {
+                this._render.setStyle(this._ref.nativeElement, k, v);
+            });
+        });
+    }
 
     @Input('mnZIndex')
     set zIndex(value) {

@@ -24,7 +24,7 @@
         </mn-req>
     </mn-panel-s>
 
-    <mn-panel-s class="mt-8 bordered" title="MnEchartsServices::data conversion options" mn-element #abc="element">
+    <mn-panel-s class="mt-8 bordered" title="MnEchartsServices::data conversion options" mnElement #abc="element">
         <mn-req [req]="{url: './assets/store/pie.json'}"
                 [loader]="abc.elementRef"
                 (result)="pieConversion($event.data); pie_data = $event.data">
@@ -50,6 +50,7 @@
                               [req]="{url: './assets/store/echarts-bar.json'}"
                               [type]="'bar'"
                               [tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"
+                              [show_tools]="'show'"
                               [setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}"
                               height="300px">
             </mn-echarts-panel>
@@ -61,7 +62,7 @@
                             [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"
                             [setting]="{legend_position: 'center top'}"
                             (result)="a = $event.options"
-                            [show_tools]="'toggle'">
+                            [show_tools]="'show'">
             </mn-echarts-box>
         </mn-col>
     </mn-fill>

@@ -87,4 +87,8 @@
 * MnReq 支持配置noDataComponent
 
 * b1: 调整 drop-down 样式，避免出现滚动条; 修改loader zIndex，避免遮住dropDown
+* b2: 调整 drop-down 样式，使其适应屏幕宽度
+* b3: 1. 调整 echart width 计算值，宽度为某个小数的时候，浏览器会四舍五入计算到一位小数，这样就造成最终计算mn-col的宽度的时候，大于mn-fill的宽度值
+* b4: 2. fixed loaderStyles 不能正常工作
+
 
