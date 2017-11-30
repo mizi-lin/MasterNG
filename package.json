@@ -1,6 +1,6 @@
 {
     "name": "masterng",
-    "version": "0.2.12",
+    "version": "0.2.12-b3",
     "license": "MIT",
     "scripts": {
         "clean": "rimraf dist",
