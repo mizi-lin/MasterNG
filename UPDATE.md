@@ -96,4 +96,8 @@
 * 移除 ng-zorro
 * b1: 修改 panel 的 toolbar 与 title 的布局关系
 
+0.2.10
+* 修正 mn-col 会被content部分撑破宽度，并重写其关联css样式
+
+
 
