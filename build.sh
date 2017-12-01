@@ -17,3 +17,4 @@ cp -R package.json README.md ./publish
 
 echo 'ooooooooOoO clean temp'
 rm -rf ./__pre_publish
+
