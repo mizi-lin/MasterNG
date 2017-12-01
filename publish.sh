@@ -3,7 +3,7 @@
 _ov=`npm view masterng version`
 
 echo '::: 升级版本号'
-    _uv=`node -pe '(JSON.parse(process.env.npm_config_argv).remain || 0).toString()'`
+    _uv=`node -pe '(JSON.parse(process.env.npm_config_argv).remain[0] || 0).toString()'`
     cd ./publish
         if [ $_uv == "0" ]; then
             _uv=`npm version patch`
