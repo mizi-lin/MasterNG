@@ -15,4 +15,4 @@ git add .
 
 git commit -am "$commit"
 
-$?
+echo $?
