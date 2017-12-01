@@ -12,27 +12,27 @@ var MnLayoutModule = (function () {
             ngModule: MnLayoutModule
         };
     };
+    MnLayoutModule.decorators = [
+        { type: core_1.NgModule, args: [{
+                    imports: [
+                        common_1.CommonModule
+                    ],
+                    declarations: [
+                        mn_row_component_1.MnRowComponent,
+                        mn_col_component_1.MnColComponent
+                    ],
+                    exports: [
+                        mn_row_component_1.MnRowComponent,
+                        mn_col_component_1.MnColComponent
+                    ],
+                    providers: [
+                        mn_row_component_1.MnRowComponent
+                    ]
+                },] },
+    ];
+    /** @nocollapse */
+    MnLayoutModule.ctorParameters = function () { return []; };
     return MnLayoutModule;
 }());
-MnLayoutModule.decorators = [
-    { type: core_1.NgModule, args: [{
-                imports: [
-                    common_1.CommonModule
-                ],
-                declarations: [
-                    mn_row_component_1.MnRowComponent,
-                    mn_col_component_1.MnColComponent
-                ],
-                exports: [
-                    mn_row_component_1.MnRowComponent,
-                    mn_col_component_1.MnColComponent
-                ],
-                providers: [
-                    mn_row_component_1.MnRowComponent
-                ]
-            },] },
-];
-/** @nocollapse */
-MnLayoutModule.ctorParameters = function () { return []; };
 exports.MnLayoutModule = MnLayoutModule;
 //# sourceMappingURL=mn-layout.module.js.map

@@ -4,6 +4,7 @@
         "outDir": "./dist",
         "sourceMap": true,
         "declaration": true,
+        "importHelpers": true,
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -21,7 +22,9 @@
     ],
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,
-        "strictMetadataEmit": true
+        "strictMetadataEmit": true,
+        "flatModuleId": "masterng",
+        "flatModuleOutFile": "index.js"
     },
     "files": [
         "./prebuild/index.ts"

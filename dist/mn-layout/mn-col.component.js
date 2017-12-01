@@ -36,26 +36,26 @@ var MnColComponent = (function () {
             _this._renderer.setStyle(_this._ref.nativeElement, 'order', _this.order);
         });
     };
+    MnColComponent.decorators = [
+        { type: core_1.Component, args: [{
+                    selector: 'mn-col',
+                    template: "\n        <section class=\"mn-col-content mnc-content\">\n            <ng-content></ng-content>\n        </section>\n    ",
+                    encapsulation: core_1.ViewEncapsulation.None
+                },] },
+    ];
+    /** @nocollapse */
+    MnColComponent.ctorParameters = function () { return [
+        { type: mn_row_component_1.MnRowComponent, decorators: [{ type: core_1.Optional }, { type: core_1.Host },] },
+        { type: core_1.ElementRef, },
+        { type: core_1.Renderer2, },
+    ]; };
+    MnColComponent.propDecorators = {
+        "span": [{ type: core_1.Input },],
+        "order": [{ type: core_1.Input },],
+        "paddingLeft": [{ type: core_1.HostBinding, args: ['style.padding-left.px',] },],
+        "paddingRight": [{ type: core_1.HostBinding, args: ['style.padding-right.px',] },],
+    };
     return MnColComponent;
 }());
-MnColComponent.decorators = [
-    { type: core_1.Component, args: [{
-                selector: 'mn-col',
-                template: "\n        <section class=\"mn-col-content mnc-content\">\n            <ng-content></ng-content>\n        </section>\n    ",
-                encapsulation: core_1.ViewEncapsulation.None
-            },] },
-];
-/** @nocollapse */
-MnColComponent.ctorParameters = function () { return [
-    { type: mn_row_component_1.MnRowComponent, decorators: [{ type: core_1.Optional }, { type: core_1.Host },] },
-    { type: core_1.ElementRef, },
-    { type: core_1.Renderer2, },
-]; };
-MnColComponent.propDecorators = {
-    'span': [{ type: core_1.Input },],
-    'order': [{ type: core_1.Input },],
-    'paddingLeft': [{ type: core_1.HostBinding, args: ['style.padding-left.px',] },],
-    'paddingRight': [{ type: core_1.HostBinding, args: ['style.padding-right.px',] },],
-};
 exports.MnColComponent = MnColComponent;
 //# sourceMappingURL=mn-col.component.js.map
