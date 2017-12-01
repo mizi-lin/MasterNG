@@ -16,5 +16,6 @@ git add .
 git commit -am "$commit"
 
 if [ $? -eq 1 ]; then
-    echo 'error'
+    echo 'has been commit'
+    exit
 fi
