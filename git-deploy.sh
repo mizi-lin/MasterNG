@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo $npm_package_repository_type
+echo $process.env
 
 git add .
 
