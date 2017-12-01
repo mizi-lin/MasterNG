@@ -8,4 +8,4 @@ echo $commit
 
 git add .
 
-git commit -am '$commit'
+git commit -am "$commit"
