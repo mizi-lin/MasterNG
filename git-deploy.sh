@@ -4,18 +4,13 @@ echo $npm_config_argv
 
 ss=`node -pe 'JSON.parse(process.env.npm_config_argv).original'`
 
-commit=`node -pe 'JSON.parse(process.env.npm_config_argv).original[3]'`
+commit=`node -pe 'JSON.parse(process.env.npm_config_argv).original[3] || "deploy new publish"'`
 
 version=`node -pe 'JSON.parse(process.env.npm_config_argv).original[4]'`
 
 echo $ss $commit $version
 
 git add .
-
-if [ "$commit" -eq "undefined" ]; then
-    commit='deploy new publish'
-fi
-
 
 git commit -am "$commit"
 
