@@ -8,7 +8,8 @@ const colors = require('colors');
 module.exports = function(content, options, targetDir) {
     options = options || {};
     options.base = options.base || './';
-    return processStyleUrls(content, options, targetDir).then((r) => processTemplateUrl(r, options, targetDir));
+    return processStyleUrls(content, options, targetDir)
+        .then((r) => processTemplateUrl(r, options, targetDir));
 };
 
 function processStyleUrls(content, options, targetDir) {
@@ -27,9 +28,7 @@ function processStyleUrls(content, options, targetDir) {
         urls = urls.replace(/'/g, '"');
         urls = JSON.parse(urls);
 
-
         return Promise.all(urls.map(function(url) {
-
             let file = fs.readFileSync(getAbsoluteUrl(url, options, targetDir), 'utf-8');
             let fileNamePartsRe = /^[\./]*([^]*)\.(css|less|scss)$/g;
             let fileNamePartsMatches = url.match(fileNamePartsRe);
@@ -49,19 +48,20 @@ function processStyleUrls(content, options, targetDir) {
 
             if(extension === 'less' || extension === 'scss') {
 
-                promise = less.render(file,{
+                promise = less.render(file, {
                         paths: [options.base ? options.base : '.'],
                         filename: targetDir ? path.join(targetDir, fileName) : fileName,
                         compress: options.compress
                     }
-                ).then((output) => {
-                    output.css = output.css.replace(/(\\\e)|(\\\E)/gi, '\\\\\\e');
-                    console.log('analysis success -> :::::::'.green, url);
-                    return output.css;
-                }, (e) => {
-                    console.log('analysis error -> :::::::'.red, url, '\n', e);
-                    throw e;
-                });
+                )
+                    .then((output) => {
+                        output.css = output.css.replace(/(\\\e)|(\\\E)/gi, '\\\\\\e');
+                        console.log('analysis success -> :::::::'.green, url);
+                        return output.css;
+                    }, (e) => {
+                        console.log('analysis error -> :::::::'.red, url, '\n', e);
+                        throw e;
+                    });
 
             } else {
                 promise = Promise.resolve(file);
@@ -72,7 +72,9 @@ function processStyleUrls(content, options, targetDir) {
                 // escape quote chars
                 processed = processed.replace(new RegExp('\'', 'g'), '\\\'');
                 return processed;
-            }).catch(() => {});
+            })
+                .catch(() => {
+                });
         }))
             .then((files) => {
                 closure = closure.replace(style, 'styles: [\'' + files.join('') + '\']');
@@ -110,14 +112,14 @@ function processTemplateUrl(content, options, targetDir) {
             quote = '\'';
         }
 
-        let file = fs.readFileSync(getAbsoluteUrl(url, options, targetDir),'utf-8');
+        let file = fs.readFileSync(getAbsoluteUrl(url, options, targetDir), 'utf-8');
 
         file = file.replace(/\n|\t/g, ' ');
 
         // escape quote chars
         file = file.replace(new RegExp(quote, 'g'), '\\' + quote);
-
         closure = closure.replace(template, 'template: ' + quote + file + quote);
+        console.log('analysis success -> :::::::'.green, url);
     });
 
     return Promise.resolve(closure);

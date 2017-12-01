@@ -25,29 +25,18 @@ const inline = (dir) => {
     });
 };
 
-console.log('*******\n prebuild cleaning...');
+console.log('oOoooOOoooO 删除可能存在的temp');
+rimraf.sync('__pre_publish', fs);
 
-rimraf.sync('prebuild', fs, (err) => {
+console.log('ooOoooOOooO 删除可能存在的publish');
+rimraf.sync('publish', fs);
+
+console.log('oooOooOOooO 复制lib为__pre_publish, 作为编译文件的主体');
+
+ncp('src/lib', '__pre_publish', (err) => {
     if(err) {
         return console.error(err);
     }
-
-    console.log(':::::::\n done cleaning!');
-});
-
-console.log('*******\n cloning src 2 prebuild..');
-ncp('src/lib', 'prebuild', (err) => {
-    if(err) {
-        return console.error(err);
-    }
-
-    console.log(':::::::\n done cloning src!');
-
-    //
-    console.log('*******\n inlining(replace style and template)...');
-    inline(path.resolve('./prebuild/'));
-    console.log(':::::::\n done inlining!');
-
-    //
-    console.log('*******\n ready for ngc!');
+    console.log('ooooOoOOooO 编译sass文件以及html, 替换Component中的urls');
+    inline(path.resolve('./__pre_publish/'));
 });

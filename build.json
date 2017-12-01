@@ -1,7 +1,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "outDir": "./dist",
+        "outDir": "./publish",
         "sourceMap": true,
         "declaration": true,
         "importHelpers": true,
@@ -27,6 +27,6 @@
         "flatModuleOutFile": "index.js"
     },
     "files": [
-        "./prebuild/index.ts"
+        "./__pre_publish/index.ts"
     ]
 }
