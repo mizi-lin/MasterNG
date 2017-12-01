@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-echo $process
+echo $npm_config_argv
+
+a=`node -pe 'JSON.parse(process.env.npm_config_argv).original[3]'`
+
+echo $a
 
 git add .
 
-git commit -am 'pre deploy'
-
-git pull
-
-git push
+git commit -am '$a'
