@@ -3,14 +3,14 @@
 _ov=`npm view masterng version`
 
 echo '::: 升级版本号'
-    _uv=`node -pe 'JSON.parse(process.env.npm_config_argv).original[3] || "0"'`
-    if [ $_uv -eq "0" ]; then
-        cd ./publish
-        _uv=`npm version patch`
-        cd ..
-    else
-        npm version _uv
-    fi
+    _uv=`node -pe '(JSON.parse(process.env.npm_config_argv).original[3] || 0).toString()'`
+    cd ./publish
+        if [ $_uv == "0" ]; then
+            _uv=`npm version patch`
+        else
+            npm version $_uv
+        fi
+    cd ..
 
 echo ':::::: 推送到NPM'
     npm publish publish
@@ -29,3 +29,4 @@ if [ $? -eq 0 ]; then
     git tag $_uv
     git push --tags
 fi
+
