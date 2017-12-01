@@ -15,4 +15,5 @@ git add .
 
 git commit -am "$commit"
 
-echo $?
+if [ $? eq 1 ]; then
+    echo 'error'
