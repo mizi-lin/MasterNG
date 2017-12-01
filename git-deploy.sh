@@ -2,20 +2,14 @@
 
 echo $npm_config_argv
 
-ss=$npm_package_version
-
-_commit=`node -pe 'JSON.parse(process.env.npm_config_argv).original[3] || "deploy new publish"'`
-
-_version=`node -pe 'JSON.parse(process.env.npm_config_argv).original[4] || 0'`
-
-echo $ss $_commit $_version
+_commit=`node -pe 'JSON.parse(process.env.npm_config_argv).original[3] || "fixed changes"'`
 
 git add .
 
 git commit -am "$_commit"
 
 if [ $? -eq 1 ]; then
-    echo 'has been commit'
+    echo 'has been commit && exit'
 fi
 
 
