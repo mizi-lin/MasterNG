@@ -19,3 +19,5 @@ if [ $? -eq 1 ]; then
 fi
 
 npm config set version:'0.9.2'
+
+echo $npm_package_version
