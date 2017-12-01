@@ -2,10 +2,10 @@
 
 echo $npm_config_argv
 
-_commit=`node -pe 'JSON.parse(process.env.npm_config_argv).original[3]'`
+commit=`node -pe 'JSON.parse(process.env.npm_config_argv).original[3]'`
 
-echo $_commit
+echo $commit
 
 git add .
 
-git commit -am '$_commit'
+git commit -am '$commit'
