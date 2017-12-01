@@ -18,6 +18,6 @@ if [ $? -eq 1 ]; then
     echo 'has been commit && exit'
 fi
 
-npm version set masterng:'0.9.2'
+npm config set masterng:verison '0.9.2'
 
 echo $npm_package_version
