@@ -15,9 +15,9 @@ git add .
 git commit -am "$_commit"
 
 if [ $? -eq 1 ]; then
-    echo 'has been commit && exit'
+    echo 'has been commit'
 fi
 
-npm config set masterng:version '0.9.2'
 
-echo $npm_package_version
+
+
