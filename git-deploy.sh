@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo $process.env
+echo $process
 
 git add .
 
