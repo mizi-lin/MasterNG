@@ -3,7 +3,9 @@
 _ov=`npm view masterng version`
 
 echo '::: 升级版本号'
+    cd ./publish
     npm version patch
+    cd ..
 
 echo ':::::: 推送到NPM'
     npm publish publish
