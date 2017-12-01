@@ -2,11 +2,13 @@
 
 echo $npm_config_argv
 
+ss=`node -pe 'JSON.parse(process.env.npm_config_argv).original'`
+
 commit=`node -pe 'JSON.parse(process.env.npm_config_argv).original[3]'`
 
 version=`node -pe 'JSON.parse(process.env.npm_config_argv).original[4]'`
 
-echo $commit $version
+echo $ss
 
 git add .
 
