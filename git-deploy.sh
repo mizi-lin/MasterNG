@@ -12,10 +12,13 @@ echo $ss $commit $version
 
 git add .
 
+if [ $commit -eq '' ]; then
+    commit='deploy new publish'
+fi
+
 
 git commit -am "$commit"
 
 if [ $? -eq 1 ]; then
-    echo 'has been commit'
-    exit
+    echo 'has been commit && exit'
 fi
