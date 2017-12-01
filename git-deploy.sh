@@ -12,4 +12,7 @@ echo $ss $commit $version
 
 git add .
 
+
 git commit -am "$commit"
+
+$?
