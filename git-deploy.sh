@@ -18,3 +18,4 @@ if [ $? -eq 1 ]; then
     echo 'has been commit && exit'
 fi
 
+npm config set version:'0.9.2'
