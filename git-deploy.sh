@@ -17,3 +17,4 @@ git commit -am "$commit"
 
 if [ $? eq 1 ]; then
     echo 'error'
+fi
