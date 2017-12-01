@@ -12,7 +12,7 @@ echo $ss $commit $version
 
 git add .
 
-if [ $commit -eq 'undefined' ]; then
+if [ $commit -eq "undefined" ]; then
     commit='deploy new publish'
 fi
 
