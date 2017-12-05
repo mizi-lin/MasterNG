@@ -22,9 +22,7 @@
     ],
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,
-        "strictMetadataEmit": true,
-        "flatModuleId": "masterng",
-        "flatModuleOutFile": "index.js"
+        "strictMetadataEmit": true
     },
     "files": [
         "./__pre_publish/index.ts"

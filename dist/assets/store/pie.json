@@ -1,0 +1,76 @@
+{
+    "data": [
+        {
+            "brand": "CPB SNC",
+            "campaign": "#奢宠护肤#",
+            "name": "#奢宠护肤#_CPB SNC",
+            "totalEngagement": 23,
+            "totalVolume": 343,
+            "value": 343
+        },
+        {
+            "brand": "EsteeLauder SNC",
+            "campaign": "#不浮不燥水粉底#",
+            "name": "#不浮不燥水粉底#",
+            "totalEngagement": 1144934,
+            "totalVolume": 6821,
+            "value": 6821
+        },
+        {
+            "brand": "EsteeLauder SNC",
+            "campaign": "#小棕瓶浓缩安瓶胶囊#",
+            "name": "#小棕瓶浓缩安瓶胶囊#_EsteeLauder SNC",
+            "totalEngagement": 21063,
+            "totalVolume": 234,
+            "value": 234
+        },
+        {
+            "brand": "EsteeLauder SNC",
+            "campaign": "#感谢你和我一样的坚持#",
+            "name": "#感谢你和我一样的坚持#_EsteeLauder SNC",
+            "totalEngagement": 9994,
+            "totalVolume": 1031,
+            "value": 1031
+        },
+        {
+            "brand": "EsteeLauder SNC",
+            "campaign": "#我们都爱小棕瓶#",
+            "name": "#我们都爱小棕瓶#_EsteeLauder SNC",
+            "totalEngagement": 176105,
+            "totalVolume": 12569,
+            "value": 12569
+        },
+        {
+            "brand": "EsteeLauder SNC",
+            "campaign": "#明星小棕瓶#",
+            "name": "#明星小棕瓶#_EsteeLauder SNC",
+            "totalEngagement": 55816,
+            "totalVolume": 1700,
+            "value": 1700
+        },
+        {
+            "brand": "EsteeLauder SNC",
+            "campaign": "#粉红丝带25周年#",
+            "name": "#粉红丝带25周年#_EsteeLauder SNC",
+            "totalEngagement": 10029,
+            "totalVolume": 1027,
+            "value": 1027
+        },
+        {
+            "brand": "EsteeLauder SNC",
+            "campaign": "#肌底微精华#",
+            "name": "#肌底微精华#_EsteeLauder SNC",
+            "totalEngagement": 6399,
+            "totalVolume": 209,
+            "value": 209
+        },
+        {
+            "brand": "EsteeLauder SNC",
+            "campaign": "#脱粉算我输#",
+            "name": "#脱粉算我输#",
+            "totalEngagement": 3622,
+            "totalVolume": 357,
+            "value": 357
+        }
+    ]
+}
