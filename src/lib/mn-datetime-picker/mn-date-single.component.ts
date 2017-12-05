@@ -10,24 +10,41 @@ declare const mu: any;
  *
  */
 
-
 @Component({
     selector: 'mn-datesingle',
     template: `
         <div class="content">
-            {{_date[_view].value}}
+            {{_date[_view]?.value}}
         </div>
     `
 })
 export class MnDateSingleComponent implements OnInit {
 
-    _date: any;
+    _date: any = {};
+
+    dmap: any = {
+        y: 'setFullYear',
+        m: 'setMonth',
+        d: 'setDate'
+    };
 
     @Input('mnDate')
     set date_(date) {
         if (date) {
             this._date = new MnDate(date);
         }
+    }
+
+    @Input('mnDs')
+    set ds_(ds) {
+        mu.run(ds, () => {
+            let date = new Date(1970, 0, 1, 0, 0, 0, 0);
+            ds.m && (ds.m = ds.m - 1);
+            mu.each(ds, (v, f) => {
+                date[this.dmap[f]](v);
+            });
+            this._date = new MnDate(date);
+        });
     }
 
     @Input('mnView') _view: string = 'days';
