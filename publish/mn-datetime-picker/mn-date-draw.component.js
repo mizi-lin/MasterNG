@@ -8,6 +8,7 @@ var MnDateDrawComponent = (function () {
     function MnDateDrawComponent() {
     }
     MnDateDrawComponent.prototype.ngOnInit = function () {
+        this._frames = this.buildFrame(this._view);
     };
     /**
      * 根据不同的视图，创建时间集合架子
@@ -54,10 +55,13 @@ var MnDateDrawComponent = (function () {
                 }, []);
         }
     };
+    MnDateDrawComponent.prototype.fillFrame = function (frame) {
+        return [];
+    };
     MnDateDrawComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'mn-datedraw',
-                    template: ""
+                    template: "\n        <section>\n            <mn-fill [gutter]=\"2\" *ngFor=\"let rows of _frames\">\n                <mn-col [span]=\"1\" *ngFor=\"let col of rows\">\n                    1\n                </mn-col>\n            </mn-fill>\n        </section>\n    "
                 },] },
     ];
     /** @nocollapse */

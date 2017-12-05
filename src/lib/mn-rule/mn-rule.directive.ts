@@ -103,6 +103,11 @@ export class MnRuleDirective implements OnChanges {
         mu.empty(this.rules, () => {
             this._rules = this._ruleServ.rules_ || {};
         });
+
+        this._ruleServ.rules$.subscribe((rules) => {
+            this._rules = rules || {};
+            this.rule = this._conditions;
+        });
     }
 
     ngOnChanges(changes: SimpleChanges): void {

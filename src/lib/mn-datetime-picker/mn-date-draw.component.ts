@@ -9,7 +9,15 @@ declare const mu: any;
 
 @Component({
     selector: 'mn-datedraw',
-    template: ``
+    template: `
+        <section>
+            <mn-fill [gutter]="2" *ngFor="let rows of _frames">
+                <mn-col [span]="1" *ngFor="let col of rows">
+                    1
+                </mn-col>
+            </mn-fill>
+        </section>
+    `
 })
 export class MnDateDrawComponent implements OnInit {
 
@@ -21,16 +29,19 @@ export class MnDateDrawComponent implements OnInit {
 
     @Input('mnView') _view: string;
 
+    _frames: any;
+
     constructor() {
     }
 
     ngOnInit() {
+        this._frames = this.buildFrame(this._view);
     }
 
     /**
      * 根据不同的视图，创建时间集合架子
      */
-    buildFrame(view) {
+    buildFrame(view): void {
 
         switch (view) {
 
@@ -73,6 +84,11 @@ export class MnDateDrawComponent implements OnInit {
                     return new Array(7);
                 }, []);
         }
+    }
+
+
+    fillFrame(frame): any {
+        return [];
     }
 
 }

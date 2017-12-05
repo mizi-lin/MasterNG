@@ -31,6 +31,10 @@ var MnRuleDirective = (function () {
         mu.empty(this.rules, function () {
             _this._rules = _this._ruleServ.rules_ || {};
         });
+        this._ruleServ.rules$.subscribe(function (rules) {
+            _this._rules = rules || {};
+            _this.rule = _this._conditions;
+        });
     }
     Object.defineProperty(MnRuleDirective.prototype, "rule", {
         set: function (conditions) {
