@@ -13,11 +13,11 @@ declare const mu: any;
     template: `
         <mn-fill>
             <mn-col [span]="1">
-                <mn-datedraw [mnYear]="2017" [mnMonth]="12" [mnDay]="17" [mnView]="'years'"></mn-datedraw>
+                <mn-datedraw [mnYear]="2017" [mnMonth]="12" [mnDay]="17" [mnView]="'days'"></mn-datedraw>
             </mn-col>
             
             <mn-col [span]="1">
-                <mn-datedraw [mnYear]="2067" [mnMonth]="12" [mnDay]="17" [mnView]="'years'"></mn-datedraw>
+                <mn-datedraw [mnYear]="2067" [mnMonth]="12" [mnDay]="17" [mnView]="'days'"></mn-datedraw>
             </mn-col>
         </mn-fill>
     `

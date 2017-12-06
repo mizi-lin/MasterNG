@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {MnDate} from './mn-date.class';
 
@@ -11,22 +11,33 @@ declare const mu: any;
 @Component({
     selector: 'mn-datedraw',
     template: `
-        <section>
-            <mn-fill [gutter]="2" *ngFor="let rows of _frames">
-                <mn-col [span]="1" *ngFor="let col of rows">
-                    <mn-datesingle [mnDs]="col" [mnView]="_view"></mn-datesingle>
-                </mn-col>
-            </mn-fill>
-        </section>
+        <mn-fill [gutter]="2" *ngFor="let rows of _frames">
+            <mn-col [span]="1" *ngFor="let dt of rows">
+                <mn-datesingle
+                        [mnMaxDate]="_maxDate"
+                        [mnMinDate]="_minDate"
+                        [mnStartDate]="_startDate"
+                        [mnEndDate]="_endDate"
+                        [mnHoverDate]="_hoverDate"
+                        [mnDate]="dt?.mndate"
+                        [mnStatus]="dt?.status"
+                        [mnView]="_view"
+                        (click)="getStartEndDate(dt?.mndate)"
+                        (mouseover)="_hoverDate = dt?.mndate"></mn-datesingle>
+            </mn-col>
+        </mn-fill>
     `
 })
-export class MnDateDrawComponent implements OnInit {
+export class MnDateDrawComponent implements OnInit, OnDestroy {
 
     $date: any = {};
     date$: any = new BehaviorSubject<any>({});
 
-    @Input() _maxDate: any;
-    @Input() _minDate: any;
+    @Output('mnResult') _result = new EventEmitter<any>();
+    @Input('mnMaxDate') _maxDate: any;
+    @Input('mnMinDate') _minDate: any;
+    @Input('mnStartDate') _startDate: any;
+    @Input('mnEndDate') _endDate: any;
 
     @Input('mnYear')
     set year_(y) {
@@ -54,6 +65,7 @@ export class MnDateDrawComponent implements OnInit {
     @Input('mnView') _view: string;
 
     _frames: any;
+    _hoverDate: any;
 
     dmap: any = {
         y: 'setFullYear',
@@ -69,6 +81,10 @@ export class MnDateDrawComponent implements OnInit {
 
     ngOnInit() {
         this._frames = this.buildFrame();
+    }
+
+    ngOnDestroy() {
+        this.date$.unsubscribe();
     }
 
     newdate() {
@@ -96,8 +112,8 @@ export class MnDateDrawComponent implements OnInit {
             // 5 年视图
             // row 5 col 4
             case 'years':
-                return mu.map(10, (i) => {
-                    return new Array(5);
+                return mu.map(4, (i) => {
+                    return new Array(3);
                 }, []);
 
 
@@ -141,6 +157,8 @@ export class MnDateDrawComponent implements OnInit {
 
         let mndate = new MnDate(date);
 
+        this._result.emit(mndate);
+
         let _pools = [];
 
         switch (this._view) {
@@ -150,11 +168,13 @@ export class MnDateDrawComponent implements OnInit {
             // row 5 col 4
             case 'years':
                 let year = mndate.months.year;
-                let startYear = Math.floor(year / 50) * 50;
-                mu.each(50, (i) => {
+                let startYear = Math.floor(year / 10) * 10 - 1;
+
+                mu.each(12, (ii, i) => {
                     _pools.push({
+                        st: i === 0 ? 'prev' : i === 11 ? 'next' : 'current',
                         d: 1,
-                        m: 0,
+                        m: 1,
                         y: startYear + i
                     });
                 });
@@ -167,6 +187,7 @@ export class MnDateDrawComponent implements OnInit {
             case 'quarters':
                 mu.each(4, (i) => {
                     _pools.push({
+                        st: 'current',
                         d: 1,
                         m: (i - 1) * 3 + 1,
                         y: mndate.months.year
@@ -181,6 +202,7 @@ export class MnDateDrawComponent implements OnInit {
             case 'months':
                 mu.each(12, (i) => {
                     _pools.push({
+                        st: 'current',
                         d: 1,
                         m: i,
                         y: mndate.months.year
@@ -199,7 +221,6 @@ export class MnDateDrawComponent implements OnInit {
 
             // 日视图
             case 'days':
-
                 let ct = mndate['months'];
                 let pre = mndate.mom(-1);
                 let next = mndate.mom(1);
@@ -207,6 +228,7 @@ export class MnDateDrawComponent implements OnInit {
                 // pre month
                 mu.each(pre.endWeekday, (i, ii) => {
                     _pools.unshift({
+                        st: 'prev',
                         d: pre.days - ii,
                         m: pre.month,
                         y: pre.year
@@ -216,6 +238,7 @@ export class MnDateDrawComponent implements OnInit {
                 // current month
                 mu.each(ct.days, (i) => {
                     _pools.push({
+                        st: 'current',
                         d: i,
                         m: ct.month,
                         y: ct.year
@@ -224,6 +247,7 @@ export class MnDateDrawComponent implements OnInit {
 
                 mu.each(42 - _pools.length, (i) => {
                     _pools.push({
+                        st: 'next',
                         d: i,
                         m: next.month,
                         y: next.year
@@ -234,17 +258,41 @@ export class MnDateDrawComponent implements OnInit {
         }
     }
 
+    /**
+     * 填充时间
+     * @param pools
+     */
     fill(pools) {
         let _cols = this._frames[0].length;
-
         mu.each(pools, (dt, ii) => {
             let row = Math.floor(ii / _cols);
             let col = ii % _cols;
-            this._frames[row][col] = dt;
+            this._frames[row][col] = {
+                status: dt.st,
+                mndate: new MnDate(`${dt.y}/${dt.m}/${dt.d}`)
+            };
         });
-
-        console.log(this._frames);
     }
 
+    /**
+     * 选择开始和结束时间
+     * @param dt
+     */
+    getStartEndDate(dt) {
+        if (this._endDate) {
+            this._startDate = dt;
+            this._endDate = void 0;
+        } else if (this._startDate) {
+            // startDate must lg endDate
+            if (this._startDate._d > dt._d) {
+                this._endDate = this._startDate;
+                this._startDate = dt;
+            } else {
+                this._endDate = dt;
+            }
+        } else {
+            this._startDate = dt;
+        }
+    }
 }
 

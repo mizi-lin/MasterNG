@@ -336,7 +336,7 @@ export class MnEchartsPanelComponent implements OnChanges {
 
     download_click($event) {
         const content = this._mnFileSaverServ.csvData(this._dataView);
-        console.debug(content);
+        // console.debug(content);
         this._mnFileSaverServ.fileSaver([content], this.filename + ('_' + +new Date()) + '.csv');
     }
 

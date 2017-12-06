@@ -1,0 +1,48 @@
+.start {
+    background: #0e77ca;
+}
+
+.end {
+    background: #ed6b75;
+}
+
+.range {
+    background: #fff000;
+}
+
+.hover {
+    background: rgba(255, 240, 0, .5);
+}
+
+.re-hover {
+    background: rgba(14, 119, 202, .3);
+}
+
+.max {
+    color: #aaa;
+    text-decoration: line-through;
+}
+
+.min {
+    color: #f00;
+    text-decoration: line-through;
+}
+
+.current {
+    cursor: pointer;
+    &:hover {
+        background: rgba(237, 107, 117, .8);
+    }
+}
+
+.next, .prev {
+    color: #ccc;
+}
+
+mn-datesingle,
+mn-datecalendar,
+mn-datedraw,
+mn-datemultiple {
+    display: block;
+}
+

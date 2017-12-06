@@ -57,9 +57,19 @@
 
 
         <!--<mn-datedraw [mnYear]="2017" [mnMonth]="12" [mnDay]="17" [mnView]="'years'"></mn-datedraw>-->
+        <!--<mn-datedraw [mnYear]="2017" [mnMonth]="12" [mnDay]="17" [mnView]="'quarters'"></mn-datedraw>-->
+        <!--<mn-datedraw [mnYear]="2017" [mnMonth]="12" [mnDay]="17" [mnView]="'months'"></mn-datedraw>-->
 
-        <mn-datemultiple></mn-datemultiple>
 
+        <mn-datecalendar
+                [mnMinDate]="'2017-11-03'"
+                [mnMaxDate]="'2018-01-29'"
+                [mnStartDate]="'2017-12-13'"
+                [mnEndDate]="'2017-12-26'"
+                [mnYear]="2017"
+                [mnMonth]="12"
+                [mnDay]="17"
+                [mnView]="'days'"></mn-datecalendar>
     </mn-panel-s>
 
     <!--<div *mnLayer>江山如此多娇</div>-->
