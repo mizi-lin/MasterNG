@@ -38,7 +38,7 @@
 
     </mn-panel-s>
 
-    <mn-panel-s class="bordered mt-16" title="Year Picker">
+    <mn-panel-s class="bordered mt-16" [title]="'Year Picker'">
         <!--<mn-yearspicker-->
                 <!--[mnStartDate]="'616-03-03'"-->
                 <!--[mnEndDate]="'2016-08-21'"-->
@@ -61,15 +61,22 @@
         <!--<mn-datedraw [mnYear]="2017" [mnMonth]="12" [mnDay]="17" [mnView]="'months'"></mn-datedraw>-->
 
 
-        <mn-datecalendar
+        <!--<mn-datecalendar-->
+                <!--[mnMinDate]="'2017-11-03'"-->
+                <!--[mnMaxDate]="'2018-01-29'"-->
+                <!--[mnStartDate]="'2017-12-13'"-->
+                <!--[mnEndDate]="'2017-12-26'"-->
+                <!--[mnYear]="2017"-->
+                <!--[mnMonth]="12"-->
+                <!--[mnDay]="17"-->
+                <!--[mnView]="'days'"></mn-datecalendar>-->
+
+        <mn-datemultiple
                 [mnMinDate]="'2017-11-03'"
                 [mnMaxDate]="'2018-01-29'"
                 [mnStartDate]="'2017-12-13'"
-                [mnEndDate]="'2017-12-26'"
-                [mnYear]="2017"
-                [mnMonth]="12"
-                [mnDay]="17"
-                [mnView]="'days'"></mn-datecalendar>
+                [mnEndDate]="'2018-01-11'"
+                [mnView]="'days'"></mn-datemultiple>
     </mn-panel-s>
 
     <!--<div *mnLayer>江山如此多娇</div>-->

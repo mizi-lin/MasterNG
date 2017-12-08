@@ -13,77 +13,85 @@ declare const mu: any;
     template: `
         <mn-fill>
             <mn-col [span]="1">
-                <mn-datedraw [mnYear]="2017" [mnMonth]="12" [mnDay]="17" [mnView]="'days'"></mn-datedraw>
+                <mn-datecalendar
+                        [mnMinDate]="_minDate"
+                        [mnMaxDate]="_maxDate"
+                        [mnStartDate]="_startDate"
+                        [mnEndDate]="_endDate"
+                        [mnHoverDate]="_hoverDate"
+                        [mnYear]="2017"
+                        [mnMonth]="12"
+                        [mnDay]="17"
+                        [mnView]="'days'"
+                        (mnStartEnd)="getStartEnd($event)"
+                        (mnHover)="_hoverDate = $event"></mn-datecalendar>
             </mn-col>
             
             <mn-col [span]="1">
-                <mn-datedraw [mnYear]="2067" [mnMonth]="12" [mnDay]="17" [mnView]="'days'"></mn-datedraw>
+                <mn-datecalendar
+                        [mnMinDate]="_minDate"
+                        [mnMaxDate]="_maxDate"
+                        [mnStartDate]="_startDate"
+                        [mnEndDate]="_endDate"
+                        [mnHoverDate]="_hoverDate"
+                        [mnYear]="2018"
+                        [mnMonth]="1"
+                        [mnDay]="17"
+                        [mnView]="'days'"
+                        (mnStartEnd)="getStartEnd($event)"
+                        (mnHover)="_hoverDate = $event"></mn-datecalendar>
             </mn-col>
+            
         </mn-fill>
     `
 })
 export class MnDateMultipleComponent implements OnInit {
 
-    $date: any = {};
-    date$: any = new BehaviorSubject<any>({});
-    step: any = 1;
+    _hoverDate: any;
 
-    @Input() _maxDate: any;
-    @Input() _minDate: any;
+    _maxDate: any;
 
-    @Input('mnYear')
-    set year_(y) {
-        this.$date.y = y;
-        this.date$.next(this.$date);
+    @Input('mnMaxDate')
+    set maxDate_(dt) {
+        this._maxDate = new MnDate(dt);
     }
 
-    @Input('mnMonth')
-    set month_(m) {
-        this.$date.m = m - 1;
-        this.date$.next(this.$date);
+    _minDate: any;
+
+    @Input('mnMinDate')
+    set minDate_(dt) {
+        this._minDate = new MnDate(dt);
     }
 
-    @Input('mnDay')
-    set day_(d) {
-        this.$date.d = d;
-        this.date$.next(this.$date);
+    _startDate: any;
+
+    @Input('mnStartDate')
+    set startDate_(dt) {
+        this._startDate = new MnDate(dt);
     }
 
-    @Input('mnDate')
-    set date_(dt) {
+    _endDate: any;
 
+    @Input('mnEndDate')
+    set endDate_(dt) {
+        this._endDate = new MnDate(dt);
     }
 
-    @Input('mnView') _view: string;
-
-    _frames: any;
-
-    dmap: any = {
-        y: 'setFullYear',
-        m: 'setMonth',
-        d: 'setDate'
-    };
+    @Input('mnView') _view: string = 'days';
 
     constructor() {
-        this.date$.subscribe((d) => {
-            this.bounce(d);
-        });
+
     }
 
     ngOnInit() {
     }
 
-    newdate() {
-        return new Date(1970, 0, 1, 0, 0, 0, 0);
+    getStartEnd(ds) {
+        this._startDate = ds.startDate;
+        this._endDate = ds.endDate;
     }
 
-    bounce: any = mu.debounce((ds: any) => {
-        let date = this.newdate();
-        mu.each(ds, (v, f) => {
-            date[this.dmap[f]](v);
-        });
 
-    }, 300);
 
 }
 

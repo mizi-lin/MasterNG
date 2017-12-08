@@ -30,7 +30,7 @@
 
 .current {
     cursor: pointer;
-    &:hover {
+    &:not(.max):not(.min):hover {
         background: rgba(237, 107, 117, .8);
     }
 }

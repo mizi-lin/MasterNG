@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {MnDate} from './mn-date.class';
+import {MnDatetimeServices} from './mn-datetime.services';
 
 declare const mu: any;
 
@@ -23,7 +24,7 @@ declare const mu: any;
                         [mnStatus]="dt?.status"
                         [mnView]="_view"
                         (click)="getStartEndDate(dt?.mndate)"
-                        (mouseover)="_hoverDate = dt?.mndate"></mn-datesingle>
+                        (mouseover)="getHover(dt)"></mn-datesingle>
             </mn-col>
         </mn-fill>
     `
@@ -34,9 +35,37 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
     date$: any = new BehaviorSubject<any>({});
 
     @Output('mnResult') _result = new EventEmitter<any>();
-    @Input('mnMaxDate') _maxDate: any;
-    @Input('mnMinDate') _minDate: any;
-    @Input('mnStartDate') _startDate: any;
+    @Output('mnStartEnd') _startEnd = new EventEmitter<any>();
+    @Output('mnHover') _hover = new EventEmitter<any>();
+
+    _maxDate: any;
+
+    @Input('mnMaxDate')
+    set maxDate_(dt) {
+        this._maxDate = new MnDate(dt);
+    }
+
+    _minDate: any;
+
+    @Input('mnMinDate')
+    set minDate_(dt) {
+        this._minDate = new MnDate(dt);
+    }
+
+    _hoverDate: any;
+
+    @Input('mnHoverDate')
+    set hoverDate_(dt) {
+        this._hoverDate = new MnDate(dt);
+    }
+
+    _startDate: any;
+
+    @Input('mnStartDate')
+    set startDate_(dt) {
+        this._startDate = this.reStartDate(dt);
+    }
+
     @Input('mnEndDate') _endDate: any;
 
     @Input('mnYear')
@@ -65,7 +94,8 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
     @Input('mnView') _view: string;
 
     _frames: any;
-    _hoverDate: any;
+    _max: boolean;
+    _min: boolean;
 
     dmap: any = {
         y: 'setFullYear',
@@ -73,7 +103,7 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
         d: 'setDate'
     };
 
-    constructor() {
+    constructor(private _mds: MnDatetimeServices) {
         this.date$.subscribe((d) => {
             this.bounce(d);
         });
@@ -279,6 +309,14 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
      * @param dt
      */
     getStartEndDate(dt) {
+        if (this._max || this._min) {
+            return;
+        }
+
+        if (this._mds.range(this._view, dt, this._minDate, this._maxDate) !== 2) {
+            return;
+        }
+
         if (this._endDate) {
             this._startDate = dt;
             this._endDate = void 0;
@@ -293,6 +331,35 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
         } else {
             this._startDate = dt;
         }
+
+        this._startEnd.emit({
+            startDate: this._startDate,
+            endDate: this._endDate
+        });
+
+    }
+
+    getHover(dt) {
+        if (mu.isEmpty(dt)) {
+            this._hoverDate = void 0;
+        } else if (mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._endDate)) {
+            this._hoverDate = void 0;
+        } else {
+            this._hoverDate = dt.mndate;
+        }
+
+        this._hover.emit(this._hoverDate);
+    }
+
+    reStartDate(dt) {
+        if (this._minDate) {
+            return dt;
+        }
+        return dt;
+    }
+
+    reEndDate(dt) {
+        return dt;
     }
 }
 

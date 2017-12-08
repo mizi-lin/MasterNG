@@ -1,4 +1,4 @@
-import {Component, HostBinding, HostListener, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, OnInit, Output} from '@angular/core';
 import {MnDate} from './mn-date.class';
 import {MnDatetimeServices} from './mn-datetime.services';
 
@@ -79,11 +79,33 @@ export class MnDateSingleComponent implements OnInit {
         this._status = st;
     }
 
+    _max: boolean = false;
+
+    @HostBinding('class.max')
+    get classMax_() {
+        return mu.run(this._maxDate, (_maxDate) => {
+            this._maxDate = this.mndate(_maxDate);
+            this._max = this._mds.compared(this._view, this._date, this._maxDate) === 1;
+            return this._max;
+        });
+    }
+
+    _min: boolean = false;
+
+    @HostBinding('class.min')
+    get classMin_() {
+        return mu.run(this._minDate, (_minDate) => {
+            this._minDate = this.mndate(_minDate);
+            this._min = this._mds.compared(this._view, this._date, this._minDate) === -1;
+            return this._min;
+        });
+    }
+
     @HostBinding('class.start')
     get classStart_() {
         return mu.run(this._startDate, (_startDate) => {
             this._startDate = this.mndate(_startDate);
-            return this._current && this.compared(this._date, this._startDate) === 0;
+            return !this._max && !this._min && this._current && this._mds.compared(this._view, this._date, this._startDate) === 0;
         });
     }
 
@@ -91,45 +113,39 @@ export class MnDateSingleComponent implements OnInit {
     get classEnd_() {
         return mu.run(this._endDate, (_endDate) => {
             this._endDate = this.mndate(_endDate);
-            return this._current && this.compared(this._date, this._endDate) === 0;
+            return !this._max && !this._min && this._current && this._mds.compared(this._view, this._date, this._endDate) === 0;
         });
     }
 
     @HostBinding('class.range')
     get classStartEndRange_() {
         if (this._current && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._endDate)) {
-            return this._current && this.range(this._date, this._startDate, this._endDate) === 2;
+            return !this._max
+                && !this._min
+                && this._current && this._mds.range(this._view, this._date, this._startDate, this._endDate) === 2;
         }
     }
 
     @HostBinding('class.hover')
     get classHover_() {
         if (this._current && mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
-            return this.range(this._date, this._startDate, this._hoverDate) === 2;
+            return !this._max
+                && !this._min
+                && this._current && this._mds.range(this._view, this._date, this._startDate, this._hoverDate) === 2;
+        } else {
+            return false;
         }
     }
 
     @HostBinding('class.re-hover')
     get classReHover_() {
         if (this._current && mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
-            return this.range(this._date, this._hoverDate, this._startDate) === 2;
+            return !this._max
+                && !this._min
+                && this._current && this._mds.range(this._view, this._date, this._hoverDate, this._startDate) === 2;
+        } else {
+            return false;
         }
-    }
-
-    @HostBinding('class.max')
-    get classMax_() {
-        return mu.run(this._maxDate, (_maxDate) => {
-            this._maxDate = this.mndate(_maxDate);
-            return this.compared(this._date, this._maxDate) === 1;
-        });
-    }
-
-    @HostBinding('class.min')
-    get classMin_() {
-        return mu.run(this._minDate, (_minDate) => {
-            this._minDate = this.mndate(_minDate);
-            return this.compared(this._date, this._minDate) === -1;
-        });
     }
 
     @HostBinding('class.prev')
@@ -151,56 +167,6 @@ export class MnDateSingleComponent implements OnInit {
     }
 
     ngOnInit() {
-    }
-
-    /**
-     * 根据当前视图比较两个时间
-     * @param src
-     * @param target
-     *
-     * @return 1 大于; 0: 等于; -1: 小于; 2 范围内; -2 有交集
-     */
-    compared(src, target): number {
-        if (mu.isEmpty(src) || mu.isEmpty(target)) {
-            return;
-        }
-        let _src = src[this._view];
-        let _target = target[this._view];
-        if (_src.start > _target.end) {
-            return 1;
-        } else if (_src.end < _target.start) {
-            return -1;
-        } else if (_src.start === _target.start && _src.end === _target.end) {
-            return 0;
-        } else if (_src.start < _target.start && _target.end < _src.end) {
-            return 2;
-        } else {
-            return -2;
-        }
-    }
-
-    /**
-     * 判断当前时间是否在时间范围之内
-     * @param src
-     * @param min
-     * @param max
-     * @return {number} 2 范围内，0 不在范围内
-     */
-    range(src, min, max): number {
-        if (mu.isEmpty(src)) {
-            return;
-        }
-
-        let _src = src[this._view];
-        let _min = min[this._view];
-        let _max = max[this._view];
-
-        if (_min.end < _src.start && _src.end < _max.start) {
-            return 2;
-        } else {
-            return 0;
-        }
-
     }
 
     mndate(date): any {

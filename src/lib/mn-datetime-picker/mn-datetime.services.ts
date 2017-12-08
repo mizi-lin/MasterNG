@@ -18,8 +18,6 @@ export class MnDatetimeServices {
         this.date$.next(value);
     }
 
-
-
     getRangeDate(rule: string) {
         let mndate = new MnDate(new Date());
 
@@ -56,8 +54,6 @@ export class MnDatetimeServices {
             return mndate[_map[type]](diff, begin);
         };
 
-        console.debug(rule);
-
         // if (mu.isNotExist(rule)) {
         //     return;
         // }
@@ -89,9 +85,7 @@ export class MnDatetimeServices {
 
         if (!_end) {
             if (_endType) {
-                //todo 计算获得结束时间
-
-
+                // todo 计算获得结束时间
 
             } else {
                 _end = mndate;
@@ -399,4 +393,73 @@ export class MnDatetimeServices {
     private getCalendarWithYears(_date: any) {
 
     }
+
+    /**
+     * v2
+     */
+    /**
+     * 根据当前视图比较两个时间
+     * @param view
+     * @param src
+     * @param target
+     *
+     * @return 1 大于; 0: 等于; -1: 小于; 2 范围内; -2 有交集
+     */
+    compared(view, src, target): number {
+        if (mu.isEmpty(src) || mu.isEmpty(target)) {
+            return;
+        }
+
+        src = new MnDate(src);
+        target = new MnDate(target);
+
+        let _src = src[view];
+        let _target = target[view];
+        if (_src.start > _target.end) {
+            return 1;
+        } else if (_src.end < _target.start) {
+            return -1;
+        } else if (_src.start === _target.start && _src.end === _target.end) {
+            return 0;
+        } else if (_src.start < _target.start && _target.end < _src.end) {
+            return 2;
+        } else {
+            return -2;
+        }
+    }
+
+    /**
+     * 判断当前时间是否在时间范围之内
+     * @param view
+     * @param src
+     * @param min
+     * @param max
+     * @return {number} 2 范围内，0 小于最小值， 1 大于最大值
+     */
+    range(view, src, min, max): number {
+        if (mu.isEmpty(src)) {
+            return;
+        }
+
+        if (mu.isEmpty(min)) {
+            min = new MnDate('1/1/1');
+        }
+
+        if (mu.isEmpty(max)) {
+            min = new MnDate('9999/1/1');
+        }
+
+        let _src = src[view];
+        let _min = min[view];
+        let _max = max[view];
+
+        if (_min.end < _src.start && _src.end < _max.start) {
+            return 2;
+        } else if (_min.end > _src.star) {
+            return 0;
+        } else if (_src.end > _max.start) {
+            return 1;
+        }
+    }
+
 }
