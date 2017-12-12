@@ -86,6 +86,9 @@ var MnEchartsServices = (function () {
         });
         return total;
     };
+    MnEchartsServices.prototype.division = function (src, target) {
+        return !target ? 0 : (src / target);
+    };
     MnEchartsServices.prototype.getEchartResult = function (type, data, setting, $charts, $mycharts) {
         var _this = this;
         if (setting === void 0) { setting = {}; }
@@ -238,7 +241,7 @@ var MnEchartsServices = (function () {
                 mu.each(data, function (o) {
                     o._old_value = o.value;
                     o._total = totals[o.x];
-                    o._rate = o._old_value / o._total;
+                    o._rate = _this.division(o._old_value, o._total);
                     o._percent = mu.format(Math.abs(o._rate), '::2');
                 });
             });
@@ -408,7 +411,7 @@ var MnEchartsServices = (function () {
                     color: function (o) {
                         var color;
                         var colorArr = color_pool_1.COLORS_POOL, colorArr_len = colorArr.length;
-                        var rate = (len - sortMap[o.data.value] - 1) / len;
+                        var rate = _this.division((len - sortMap[o.data.value] - 1), len);
                         var index = mu.randomInt(0, colorArr_len - 1);
                         rate = rate < 0.1 ? 0.1 : rate;
                         color = colorArr[index];
@@ -1026,6 +1029,7 @@ var MnEchartsServices = (function () {
          * 调整legend的个数对图表主体位置的影响
          */
     function (options, _width, _height) {
+        var _this = this;
         var type = mu.prop(options, 'series.0.type');
         var old_radius, old_center;
         // 获取原值
@@ -1049,7 +1053,7 @@ var MnEchartsServices = (function () {
             var size = (legend.length * 9) + legend.join(',').length;
             // 默认一个字符宽度大概为7px
             // 计算legend有多少行
-            var h = Math.ceil((size * 7) / _width);
+            var h = Math.ceil(_this.division((size * 7), _width));
             // 默认legend的间距大概为2.5行
             // 默认每行行高16px(font size 12px)
             var height = 16 * (h + 2.5);

@@ -1,8 +1,8 @@
 import { OnChanges, SimpleChanges, OnDestroy, ElementRef } from '@angular/core';
-import { Http } from '@angular/http';
 import { Subscriber } from 'rxjs/Subscriber';
 import { MnReqServices } from './mn-req.service';
-export declare class ReqHttpComponent implements OnChanges, OnDestroy {
+import { HttpClient } from '@angular/common/http';
+export declare class MnReqHttpComponent implements OnChanges, OnDestroy {
     private _http;
     private _rs;
     req: any;
@@ -14,12 +14,13 @@ export declare class ReqHttpComponent implements OnChanges, OnDestroy {
     loading: boolean;
     loaderStyle: any;
     showNoData: boolean;
+    delay: number;
     result: any;
     _observable: Subscriber<any>;
     isNoData: boolean;
     noDataComponent: any;
     process: number;
-    constructor(_http: Http, _rs: MnReqServices);
+    constructor(_http: HttpClient, _rs: MnReqServices);
     reqHttp(req: any): void;
     ngOnChanges(changes: SimpleChanges): void;
     ngOnDestroy(): void;

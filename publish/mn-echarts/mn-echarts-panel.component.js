@@ -148,7 +148,7 @@ var MnEchartsPanelComponent = (function () {
     };
     MnEchartsPanelComponent.prototype.download_click = function ($event) {
         var content = this._mnFileSaverServ.csvData(this._dataView);
-        console.debug(content);
+        // console.debug(content);
         this._mnFileSaverServ.fileSaver([content], this.filename + ('_' + +new Date()) + '.csv');
     };
     MnEchartsPanelComponent.prototype.dataView_click = function ($event) {

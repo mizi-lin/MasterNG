@@ -1,13 +1,13 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy, ElementRef, Host} from '@angular/core';
-import {Http} from '@angular/http';
+import {Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy, ElementRef} from '@angular/core';
 import {MnReqNoDataComponent} from './mn-req-nodata.component';
 import {Subscriber} from 'rxjs/Subscriber';
 import {MnReqServices} from './mn-req.service';
+import {HttpClient} from '@angular/common/http';
 
 declare const mu: any;
 
 @Component({
-    selector: 'mn-req',
+    selector: 'mn-req, mn-http',
     template: `
         <ng-template [ngIf]="loading">
             <mn-loader-bar [loader]="loader"
@@ -30,7 +30,7 @@ declare const mu: any;
         }`
     ]
 })
-export class ReqHttpComponent implements OnChanges, OnDestroy {
+export class MnReqHttpComponent implements OnChanges, OnDestroy {
 
     @Input() req: any;
     @Input() params: any;
@@ -41,6 +41,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
     @Input() loading: boolean = true;
     @Input() loaderStyle: any;
     @Input() showNoData: boolean = true;
+    @Input() delay: number = 500;
 
     @Output() result: any = new EventEmitter<any>();
 
@@ -52,7 +53,7 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
 
     process: number = 0;
 
-    constructor(private _http: Http,
+    constructor(private _http: HttpClient,
                 private _rs: MnReqServices) {
     }
 
@@ -132,9 +133,10 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
 
     debounceReqHttp: any = mu.debounce((req: any) => {
         mu.run(req, () => {
+            this.ngOnDestroy();
             this.reqHttp(req);
         });
-    }, 300);
+    }, this.delay);
 
     processStep(): any {
         const tid = setTimeout(() => {
@@ -146,7 +148,5 @@ export class ReqHttpComponent implements OnChanges, OnDestroy {
             }
         }, mu.randomInt(300, 1200));
     }
-
-
 
 }

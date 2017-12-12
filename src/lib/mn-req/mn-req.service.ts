@@ -43,13 +43,19 @@ export class MnReqServices {
         return fn ? fn(this._resources) : this._resources;
     }
 
-    reqCatch: any;
-    reqError: any;
+    reqCatch(error, caught, url): any {
+        return void 0;
+    }
+
+    reqError(error, caught, url): any {
+        return void 0;
+    }
 
     /**
      * 设置nodata component
      */
     _noDataComponent: any;
+
     setNoDataComponent(component) {
         this._noDataComponent = component;
     }

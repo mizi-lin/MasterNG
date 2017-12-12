@@ -29,6 +29,12 @@ var MnReqServices = (function () {
     MnReqServices.prototype.getResources = function (fn) {
         return fn ? fn(this._resources) : this._resources;
     };
+    MnReqServices.prototype.reqCatch = function (error, caught, url) {
+        return void 0;
+    };
+    MnReqServices.prototype.reqError = function (error, caught, url) {
+        return void 0;
+    };
     MnReqServices.prototype.setNoDataComponent = function (component) {
         this._noDataComponent = component;
     };

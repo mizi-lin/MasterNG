@@ -18,6 +18,8 @@ var mn_months_picker_component_1 = require("./mn-months-picker.component");
 var mn_quarters_picker_component_1 = require("./mn-quarters-picker.component");
 var mn_date_single_component_1 = require("./mn-date-single.component");
 var mn_date_draw_component_1 = require("./mn-date-draw.component");
+var mn_date_multiple_component_1 = require("./mn-date-multiple.component");
+var mn_date_calendar_component_1 = require("./mn-date-calendar.component");
 var MnDatetimeModule = (function () {
     function MnDatetimeModule() {
     }
@@ -49,7 +51,9 @@ var MnDatetimeModule = (function () {
                         mn_quarters_picker_component_1.MnQuartersPickerComponent,
                         // --
                         mn_date_single_component_1.MnDateSingleComponent,
-                        mn_date_draw_component_1.MnDateDrawComponent
+                        mn_date_draw_component_1.MnDateDrawComponent,
+                        mn_date_calendar_component_1.MnDateCalendarComponent,
+                        mn_date_multiple_component_1.MnDateMultipleComponent
                     ],
                     exports: [
                         mn_calendar_component_1.MnCalendarComponent,
@@ -61,7 +65,9 @@ var MnDatetimeModule = (function () {
                         mn_months_picker_component_1.MnMonthsPickerComponent,
                         mn_quarters_picker_component_1.MnQuartersPickerComponent,
                         mn_date_single_component_1.MnDateSingleComponent,
-                        mn_date_draw_component_1.MnDateDrawComponent
+                        mn_date_draw_component_1.MnDateDrawComponent,
+                        mn_date_calendar_component_1.MnDateCalendarComponent,
+                        mn_date_multiple_component_1.MnDateMultipleComponent
                     ],
                     providers: [
                         mn_datetime_services_1.MnDatetimeServices

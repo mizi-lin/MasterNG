@@ -3,6 +3,7 @@ import {ResourcePool} from './resource-pool';
 import {Http, ResponseContentType} from '@angular/http';
 import {MnFileSaverServices} from '../../lib/mn-common/services/mn-file-saver.services';
 import {DemoNodataComponent} from '../demo-nodata/demo-nodata.component';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 
 declare const mu: any;
 
@@ -12,7 +13,6 @@ declare const mu: any;
     styleUrls: ['./demo-req.component.scss']
 })
 export class DemoReqComponent implements OnInit {
-
 
     user_data: any;
     demo_data: any;
@@ -53,13 +53,16 @@ export class DemoReqComponent implements OnInit {
 
     zipDownload($event) {
         this._http.get('./assets/file/download.zip', {
-            responseType: ResponseContentType.Blob
+            responseType: 'blob'
         }).subscribe((res: any) => {
             this._mnFileServ.blobSaver([res], 'masterNg.zip');
         });
     }
 
-    constructor(public _rp: ResourcePool, private _http: Http, private _mnFileServ: MnFileSaverServices) {
+    constructor(public _rp: ResourcePool, private _http: HttpClient, private _mnFileServ: MnFileSaverServices) {
+        this._http.get('./assets/store/user.json').subscribe((a) => {
+            console.log('ooOoOOoOOoo', a);
+        });
     }
 
     ngOnInit() {

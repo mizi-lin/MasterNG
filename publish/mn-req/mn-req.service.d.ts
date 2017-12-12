@@ -15,8 +15,8 @@ export declare class MnReqServices {
     _resources: any;
     setResources(resources: any): void;
     getResources(fn?: any): any;
-    reqCatch: any;
-    reqError: any;
+    reqCatch(error: any, caught: any, url: any): any;
+    reqError(error: any, caught: any, url: any): any;
     /**
      * 设置nodata component
      */

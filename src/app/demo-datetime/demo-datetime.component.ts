@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MnDate} from '../../lib/mn-datetime-picker/mn-date.class';
+import {HttpClient} from '@angular/common/http';
 
 declare const mu: any;
 
@@ -9,13 +10,12 @@ declare const mu: any;
     styleUrls: ['./demo-datetime.component.scss']
 })
 export class DemoDatetimeComponent implements OnInit {
-    constructor() {
+    constructor(private _http: HttpClient) {
     }
 
     ngOnInit() {
-        // console.log(a.quarters);
 
-        // console.log( new MnDate( + new Date() ) );
+
     }
 
     a: any = {};

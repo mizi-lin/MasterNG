@@ -9,28 +9,35 @@ export declare class MnDateSingleComponent implements OnInit {
     private _mds;
     _date: any;
     date_: any;
+    _maxDate: any;
+    maxDate_: any;
+    _minDate: any;
+    minDate_: any;
+    _startDate: any;
+    startDate_: any;
+    _endDate: any;
+    endDate_: any;
+    _hoverDate: any;
+    hoverDate_: any;
     _view: string;
+    _current: boolean;
+    _prev: boolean;
+    _next: boolean;
+    _status: string;
+    status_: any;
+    _max: boolean;
+    readonly classMax_: any;
+    _min: boolean;
+    readonly classMin_: any;
     readonly classStart_: any;
     readonly classEnd_: any;
-    readonly classRange_: any;
-    readonly classReverseRange_: any;
-    readonly classMax_: any;
-    readonly classMin_: any;
-    _hoverDate: any;
-    _startDate: any;
-    _endDate: any;
-    _maxDate: any;
-    _minDate: any;
-    _rst: any;
+    readonly classStartEndRange_: boolean;
+    readonly classHover_: boolean;
+    readonly classReHover_: boolean;
+    readonly classPrev_: boolean;
+    readonly classCurrent_: boolean;
+    readonly classNext_: boolean;
     constructor(_mds: MnDatetimeServices);
     ngOnInit(): void;
-    /**
-     * 根据当前视图比较两个时间
-     * @param src
-     * @param target
-     *
-     * @return 1 大于; 0: 等于; -1: 小于; 2 范围内; -2 有交集
-     */
-    compared(src: any, target: any): number;
     mndate(date: any): any;
 }

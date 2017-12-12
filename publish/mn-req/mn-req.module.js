@@ -2,9 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
-var http_1 = require("@angular/http");
 var mn_req_component_1 = require("./mn-req.component");
-var mn_req_interceptor_factory_1 = require("./mn-req-interceptor.factory");
 var mn_resource_1 = require("./mn-resource");
 var mn_req_nodata_component_1 = require("./mn-req-nodata.component");
 var mn_loader_bar_module_1 = require("../mn-loader-bar/mn-loader-bar.module");
@@ -12,6 +10,8 @@ var mn_req_loader_component_1 = require("./mn-req-loader.component");
 var mn_req_service_1 = require("./mn-req.service");
 var mn_dynamic_module_1 = require("../mn-dynamic/mn-dynamic.module");
 var mn_file_download_directive_1 = require("./mn-file-download.directive");
+var http_1 = require("@angular/common/http");
+var mn_req_interceptor_factory_1 = require("./mn-req-interceptor.factory");
 /**
  * ReqModule
  * 使ajax请求与返回分开
@@ -36,18 +36,18 @@ var MnReqModule = (function () {
         { type: core_1.NgModule, args: [{
                     imports: [
                         common_1.CommonModule,
-                        http_1.HttpModule,
+                        http_1.HttpClientModule,
                         mn_dynamic_module_1.MnDynamicModule.forRoot(),
                         mn_loader_bar_module_1.MnLoaderBarModule.forRoot()
                     ],
                     declarations: [
-                        mn_req_component_1.ReqHttpComponent,
+                        mn_req_component_1.MnReqHttpComponent,
                         mn_req_nodata_component_1.MnReqNoDataComponent,
                         mn_req_loader_component_1.MnReqLoaderComponent,
                         mn_file_download_directive_1.MnFileDownloadDirective
                     ],
                     exports: [
-                        mn_req_component_1.ReqHttpComponent,
+                        mn_req_component_1.MnReqHttpComponent,
                         mn_req_nodata_component_1.MnReqNoDataComponent,
                         mn_req_loader_component_1.MnReqLoaderComponent,
                         mn_file_download_directive_1.MnFileDownloadDirective
@@ -58,14 +58,9 @@ var MnReqModule = (function () {
                     providers: [
                         mn_req_service_1.MnReqServices,
                         {
-                            provide: http_1.Http,
+                            provide: http_1.HTTP_INTERCEPTORS,
                             useClass: mn_req_interceptor_factory_1.MnReqInterceptorFactory,
-                            deps: [
-                                http_1.XHRBackend,
-                                http_1.RequestOptions,
-                                core_1.Injector,
-                                mn_req_service_1.MnReqServices
-                            ]
+                            multi: true
                         },
                         mn_resource_1.MnResource
                     ]

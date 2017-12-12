@@ -1,6 +1,7 @@
 import {Http, URLSearchParams} from '@angular/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
+import {HttpClient} from '@angular/common/http';
 
 declare let mu: any, console: any;
 
@@ -14,7 +15,7 @@ declare let mu: any, console: any;
 @Injectable()
 export class MnResource {
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
     }
 
     /**

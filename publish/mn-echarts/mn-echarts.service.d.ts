@@ -21,6 +21,7 @@ export declare class MnEchartsServices {
      * @return {number}
      */
     total(arr: any[], key: string): any;
+    division(src: any, target: any): number;
     getEchartResult(type: string, data: any, setting?: any, $charts?: any, $mycharts?: any): any;
     /**
      * 数据根据规则转换

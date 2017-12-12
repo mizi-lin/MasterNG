@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var http_1 = require("@angular/http");
 var core_1 = require("@angular/core");
+var http_2 = require("@angular/common/http");
 /**
  * the some angular1 resource
  * 类似 angular 1 的 resource 服务
@@ -155,7 +156,7 @@ var MnResource = (function () {
     ];
     /** @nocollapse */
     MnResource.ctorParameters = function () { return [
-        { type: http_1.Http, },
+        { type: http_2.HttpClient, },
     ]; };
     return MnResource;
 }());

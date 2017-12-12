@@ -69,6 +69,10 @@ export class MnEchartsServices {
         return total;
     }
 
+    division(src, target) {
+        return !target ? 0 : (src / target);
+    }
+
     getEchartResult(type: string, data: any, setting: any = {}, $charts?: any, $mycharts?: any): any {
         const NAME = 'name';
         const X_VALUE = 'x';
@@ -252,7 +256,7 @@ export class MnEchartsServices {
                 mu.each(data, (o) => {
                     o._old_value = o.value;
                     o._total = totals[o.x];
-                    o._rate = o._old_value / o._total;
+                    o._rate = this.division(o._old_value, o._total);
                     o._percent = mu.format(Math.abs(o._rate), '::2');
                 });
             });
@@ -443,7 +447,7 @@ export class MnEchartsServices {
                     color: (o: any) => {
                         let color: string;
                         const colorArr = COLORS_POOL, colorArr_len = colorArr.length;
-                        let rate = (len - sortMap[o.data.value] - 1) / len;
+                        let rate = this.division((len - sortMap[o.data.value] - 1), len);
                         const index = mu.randomInt(0, colorArr_len - 1);
                         rate = rate < 0.1 ? 0.1 : rate;
                         color = colorArr[index];
@@ -894,8 +898,6 @@ export class MnEchartsServices {
 
         }, setting);
 
-
-
         /**
          * 遍历执行各方法
          */
@@ -1141,7 +1143,7 @@ export class MnEchartsServices {
             const size = (legend.length * 9) + legend.join(',').length;
             // 默认一个字符宽度大概为7px
             // 计算legend有多少行
-            const h = Math.ceil((size * 7) / _width);
+            const h = Math.ceil(this.division((size * 7) , _width));
             // 默认legend的间距大概为2.5行
             // 默认每行行高16px(font size 12px)
             const height = 16 * (h + 2.5);

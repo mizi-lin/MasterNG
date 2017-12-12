@@ -1,5 +1,5 @@
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
 /**
  * the some angular1 resource
  * 类似 angular 1 的 resource 服务
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
  */
 export declare class MnResource {
     private http;
-    constructor(http: Http);
+    constructor(http: HttpClient);
     /**
      * URL to REST_URL
      * @param url

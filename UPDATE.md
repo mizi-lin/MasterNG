@@ -99,5 +99,15 @@
 0.2.10
 * 修正 mn-col 会被content部分撑破宽度，并重写其关联css样式
 
+0.3.2
+
+* update angular 5
+
+0.3.3
+
+* instead http to httpClient
+* rewrite ReqInterceptor
+* mn-req change req add unsubscribe
+
 
 

@@ -10,19 +10,11 @@ var mn_datetime_services_1 = require("./mn-datetime.services");
  */
 var MnDateSingleComponent = (function () {
     function MnDateSingleComponent(_mds) {
-        var _this = this;
         this._mds = _mds;
+        this._date = {};
         this._view = 'days';
-        this._rst = {};
-        _mds.date$.subscribe(function (rst) {
-            if (rst === void 0) { rst = {}; }
-            _this._rst = rst;
-            // this._hoverDate = rst._hoverDate;
-            // this._startDate = rst._startDate;
-            // this._endDate = rst._endDate;
-            // this._maxDate = rst._maxDate;
-            // this._minDate = rst._minDate;
-        });
+        this._max = false;
+        this._min = false;
     }
     Object.defineProperty(MnDateSingleComponent.prototype, "date_", {
         set: function (date) {
@@ -33,47 +25,47 @@ var MnDateSingleComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(MnDateSingleComponent.prototype, "classStart_", {
-        get: function () {
-            var _this = this;
-            return mu.run(this._rst._startDate, function (_startDate) {
-                _this._startDate = _this.mndate(_startDate);
-                _this._endDate = void 0;
-                return _this.compared(_this._date, _this._startDate) === 0;
-            });
+    Object.defineProperty(MnDateSingleComponent.prototype, "maxDate_", {
+        set: function (dt) {
+            this._maxDate = new mn_date_class_1.MnDate(dt);
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(MnDateSingleComponent.prototype, "classEnd_", {
-        get: function () {
-            var _this = this;
-            return mu.run(this._rst._endDate, function (_endDate) {
-                _this._endDate = _this.mndate(_endDate);
-                return _this.compared(_this._date, _this._endDate) === 0;
-            });
+    Object.defineProperty(MnDateSingleComponent.prototype, "minDate_", {
+        set: function (dt) {
+            this._minDate = new mn_date_class_1.MnDate(dt);
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(MnDateSingleComponent.prototype, "classRange_", {
-        get: function () {
-            var _this = this;
-            return mu.run(this._rst._hoverDate, function (_hoverDate) {
-                _this._hoverDate = _this.mndate(_hoverDate);
-                return _this.compared(_this._date, _this._hoverDate) === 1;
-            });
+    Object.defineProperty(MnDateSingleComponent.prototype, "startDate_", {
+        set: function (dt) {
+            this._startDate = new mn_date_class_1.MnDate(dt);
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(MnDateSingleComponent.prototype, "classReverseRange_", {
-        get: function () {
-            var _this = this;
-            return mu.run(this._rst._hoverDate, function (_hoverDate) {
-                _this._hoverDate = _this.mndate(_hoverDate);
-                return _this.compared(_this._date, _this._hoverDate) === -1;
-            });
+    Object.defineProperty(MnDateSingleComponent.prototype, "endDate_", {
+        set: function (dt) {
+            this._endDate = new mn_date_class_1.MnDate(dt);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MnDateSingleComponent.prototype, "hoverDate_", {
+        set: function (dt) {
+            this._hoverDate = new mn_date_class_1.MnDate(dt);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MnDateSingleComponent.prototype, "status_", {
+        set: function (st) {
+            this._current = st === 'current';
+            this._next = st === 'next';
+            this._prev = st === 'prev';
+            this._status = st;
         },
         enumerable: true,
         configurable: true
@@ -81,9 +73,10 @@ var MnDateSingleComponent = (function () {
     Object.defineProperty(MnDateSingleComponent.prototype, "classMax_", {
         get: function () {
             var _this = this;
-            return mu.run(this._rst._maxDate, function (_maxDate) {
+            return mu.run(this._maxDate, function (_maxDate) {
                 _this._maxDate = _this.mndate(_maxDate);
-                return _this.compared(_this._date, _this._maxDate) === 1;
+                _this._max = _this._mds.compared(_this._view, _this._date, _this._maxDate) === 1;
+                return _this._max;
             });
         },
         enumerable: true,
@@ -92,61 +85,98 @@ var MnDateSingleComponent = (function () {
     Object.defineProperty(MnDateSingleComponent.prototype, "classMin_", {
         get: function () {
             var _this = this;
-            return mu.run(this._rst._hoverDate, function (_minDate) {
+            return mu.run(this._minDate, function (_minDate) {
                 _this._minDate = _this.mndate(_minDate);
-                return _this.compared(_this._date, _this._minDate) === -1;
+                _this._min = _this._mds.compared(_this._view, _this._date, _this._minDate) === -1;
+                return _this._min;
             });
         },
         enumerable: true,
         configurable: true
     });
-    MnDateSingleComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        setTimeout(function () {
-            _this._mds.setDate({
-                _startDate: '2017-09-08'
+    Object.defineProperty(MnDateSingleComponent.prototype, "classStart_", {
+        get: function () {
+            var _this = this;
+            return mu.run(this._startDate, function (_startDate) {
+                _this._startDate = _this.mndate(_startDate);
+                return !_this._max && !_this._min && _this._current && _this._mds.compared(_this._view, _this._date, _this._startDate) === 0;
             });
-        }, 10000);
-    };
-    /**
-     * 根据当前视图比较两个时间
-     * @param src
-     * @param target
-     *
-     * @return 1 大于; 0: 等于; -1: 小于; 2 范围内; -2 有交集
-     */
-    /**
-         * 根据当前视图比较两个时间
-         * @param src
-         * @param target
-         *
-         * @return 1 大于; 0: 等于; -1: 小于; 2 范围内; -2 有交集
-         */
-    MnDateSingleComponent.prototype.compared = /**
-         * 根据当前视图比较两个时间
-         * @param src
-         * @param target
-         *
-         * @return 1 大于; 0: 等于; -1: 小于; 2 范围内; -2 有交集
-         */
-    function (src, target) {
-        var _src = src[this._view];
-        var _target = target[this._view];
-        if (_src.start > _target.end) {
-            return -1;
-        }
-        else if (_src.end < _target.start) {
-            return 1;
-        }
-        else if (_src.start === _target.start && _src.end === _target.end) {
-            return 0;
-        }
-        else if (_src.start < _target.start && _target.end < _src.end) {
-            return 2;
-        }
-        else {
-            return -2;
-        }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MnDateSingleComponent.prototype, "classEnd_", {
+        get: function () {
+            var _this = this;
+            return mu.run(this._endDate, function (_endDate) {
+                _this._endDate = _this.mndate(_endDate);
+                return !_this._max && !_this._min && _this._current && _this._mds.compared(_this._view, _this._date, _this._endDate) === 0;
+            });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MnDateSingleComponent.prototype, "classStartEndRange_", {
+        get: function () {
+            if (this._current && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._endDate)) {
+                return !this._max
+                    && !this._min
+                    && this._current && this._mds.range(this._view, this._date, this._startDate, this._endDate) === 2;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MnDateSingleComponent.prototype, "classHover_", {
+        get: function () {
+            if (this._current && mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
+                return !this._max
+                    && !this._min
+                    && this._current && this._mds.range(this._view, this._date, this._startDate, this._hoverDate) === 2;
+            }
+            else {
+                return false;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MnDateSingleComponent.prototype, "classReHover_", {
+        get: function () {
+            if (this._current && mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
+                return !this._max
+                    && !this._min
+                    && this._current && this._mds.range(this._view, this._date, this._hoverDate, this._startDate) === 2;
+            }
+            else {
+                return false;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MnDateSingleComponent.prototype, "classPrev_", {
+        get: function () {
+            return this._prev;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MnDateSingleComponent.prototype, "classCurrent_", {
+        get: function () {
+            return this._current;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MnDateSingleComponent.prototype, "classNext_", {
+        get: function () {
+            return this._next;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MnDateSingleComponent.prototype.ngOnInit = function () {
     };
     MnDateSingleComponent.prototype.mndate = function (date) {
         return new mn_date_class_1.MnDate(date);
@@ -154,7 +184,7 @@ var MnDateSingleComponent = (function () {
     MnDateSingleComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'mn-datesingle',
-                    template: "\n        <div class=\"content\">\n            {{_date[_view].value}}\n        </div>\n    "
+                    template: "\n        <div class=\"content\">\n            {{_date[_view]?.value}}\n        </div>\n    "
                 },] },
     ];
     /** @nocollapse */
@@ -163,13 +193,23 @@ var MnDateSingleComponent = (function () {
     ]; };
     MnDateSingleComponent.propDecorators = {
         "date_": [{ type: core_1.Input, args: ['mnDate',] },],
+        "maxDate_": [{ type: core_1.Input, args: ['mnMaxDate',] },],
+        "minDate_": [{ type: core_1.Input, args: ['mnMinDate',] },],
+        "startDate_": [{ type: core_1.Input, args: ['mnStartDate',] },],
+        "endDate_": [{ type: core_1.Input, args: ['mnEndDate',] },],
+        "hoverDate_": [{ type: core_1.Input, args: ['mnHoverDate',] },],
         "_view": [{ type: core_1.Input, args: ['mnView',] },],
-        "classStart_": [{ type: core_1.HostBinding, args: ['class.start',] },],
-        "classEnd_": [{ type: core_1.HostBinding, args: ['class.end',] },],
-        "classRange_": [{ type: core_1.HostBinding, args: ['class.range',] },],
-        "classReverseRange_": [{ type: core_1.HostBinding, args: ['class.range-reverse',] },],
+        "status_": [{ type: core_1.Input, args: ['mnStatus',] },],
         "classMax_": [{ type: core_1.HostBinding, args: ['class.max',] },],
         "classMin_": [{ type: core_1.HostBinding, args: ['class.min',] },],
+        "classStart_": [{ type: core_1.HostBinding, args: ['class.start',] },],
+        "classEnd_": [{ type: core_1.HostBinding, args: ['class.end',] },],
+        "classStartEndRange_": [{ type: core_1.HostBinding, args: ['class.range',] },],
+        "classHover_": [{ type: core_1.HostBinding, args: ['class.hover',] },],
+        "classReHover_": [{ type: core_1.HostBinding, args: ['class.re-hover',] },],
+        "classPrev_": [{ type: core_1.HostBinding, args: ['class.prev',] },],
+        "classCurrent_": [{ type: core_1.HostBinding, args: ['class.current',] },],
+        "classNext_": [{ type: core_1.HostBinding, args: ['class.next',] },],
     };
     return MnDateSingleComponent;
 }());

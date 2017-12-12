@@ -40,7 +40,6 @@ var MnDatetimeServices = (function () {
             // todo mom -> mm
             return mndate[_map[type]](diff, begin);
         };
-        console.debug(rule);
         // if (mu.isNotExist(rule)) {
         //     return;
         // }
@@ -65,7 +64,7 @@ var MnDatetimeServices = (function () {
         });
         if (!_end) {
             if (_endType) {
-                //todo 计算获得结束时间
+                // todo 计算获得结束时间
             }
             else {
                 _end = mndate;
@@ -783,6 +782,110 @@ var MnDatetimeServices = (function () {
     MnDatetimeServices.prototype.getCalendarWithQuarters = function (_date) {
     };
     MnDatetimeServices.prototype.getCalendarWithYears = function (_date) {
+    };
+    /**
+     * v2
+     */
+    /**
+     * 根据当前视图比较两个时间
+     * @param view
+     * @param src
+     * @param target
+     *
+     * @return 1 大于; 0: 等于; -1: 小于; 2 范围内; -2 有交集
+     */
+    /**
+         * v2
+         */
+    /**
+         * 根据当前视图比较两个时间
+         * @param view
+         * @param src
+         * @param target
+         *
+         * @return 1 大于; 0: 等于; -1: 小于; 2 范围内; -2 有交集
+         */
+    MnDatetimeServices.prototype.compared = /**
+         * v2
+         */
+    /**
+         * 根据当前视图比较两个时间
+         * @param view
+         * @param src
+         * @param target
+         *
+         * @return 1 大于; 0: 等于; -1: 小于; 2 范围内; -2 有交集
+         */
+    function (view, src, target) {
+        if (mu.isEmpty(src) || mu.isEmpty(target)) {
+            return;
+        }
+        src = new mn_date_class_1.MnDate(src);
+        target = new mn_date_class_1.MnDate(target);
+        var _src = src[view];
+        var _target = target[view];
+        if (_src.start > _target.end) {
+            return 1;
+        }
+        else if (_src.end < _target.start) {
+            return -1;
+        }
+        else if (_src.start === _target.start && _src.end === _target.end) {
+            return 0;
+        }
+        else if (_src.start < _target.start && _target.end < _src.end) {
+            return 2;
+        }
+        else {
+            return -2;
+        }
+    };
+    /**
+     * 判断当前时间是否在时间范围之内
+     * @param view
+     * @param src
+     * @param min
+     * @param max
+     * @return {number} 2 范围内，0 小于最小值， 1 大于最大值
+     */
+    /**
+         * 判断当前时间是否在时间范围之内
+         * @param view
+         * @param src
+         * @param min
+         * @param max
+         * @return {number} 2 范围内，0 小于最小值， 1 大于最大值
+         */
+    MnDatetimeServices.prototype.range = /**
+         * 判断当前时间是否在时间范围之内
+         * @param view
+         * @param src
+         * @param min
+         * @param max
+         * @return {number} 2 范围内，0 小于最小值， 1 大于最大值
+         */
+    function (view, src, min, max) {
+        if (mu.isEmpty(src)) {
+            return;
+        }
+        if (mu.isEmpty(min)) {
+            min = new mn_date_class_1.MnDate('1/1/1');
+        }
+        if (mu.isEmpty(max)) {
+            min = new mn_date_class_1.MnDate('9999/1/1');
+        }
+        var _src = src[view];
+        var _min = min[view];
+        var _max = max[view];
+        if (_min.end < _src.start && _src.end < _max.start) {
+            return 2;
+        }
+        else if (_min.end > _src.star) {
+            return 0;
+        }
+        else if (_src.end > _max.start) {
+            return 1;
+        }
     };
     MnDatetimeServices.decorators = [
         { type: core_1.Injectable },
