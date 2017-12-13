@@ -114,3 +114,6 @@
 * fixed set req.header value no undefined
 * rewrite mnResource (URLSearchParams -> HttpParams)
 
+0.3.5
+
+* 修正 mnResource post | patch 等方法 params 的传递方式

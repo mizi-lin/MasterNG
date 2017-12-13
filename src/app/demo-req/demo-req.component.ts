@@ -60,27 +60,41 @@ export class DemoReqComponent implements OnInit {
     }
 
     constructor(public _rp: ResourcePool, private _http: HttpClient, private _mnFileServ: MnFileSaverServices) {
-        this._http.get('./assets/store/user.json', {params: {cef: 1, efj: 2}}).subscribe((a) => {
+        // this._http.post('./assets/store/user.json', {
+        //     params: {
+        //         cef: 1,
+        //         efj: 2
+        //     }
+        // }).subscribe((a) => {
+        //     console.log('ooOoOOoOOoo', a);
+        // });
+
+        this._rp.demo.post({
+            store: 'abcdef',
+            name: 'jiangshan',
+            ee: 'eeee',
+            ff: 'aaaa'
+        }, {a: 1}).subscribe((a) => {
             console.log('ooOoOOoOOoo', a);
         });
     }
 
     ngOnInit() {
-        let i = 0;
-        const l = setInterval(() => {
-            this._rp.demo.get({
-                store: 'store',
-                name: 'user',
-                key: 'req_resource'
-            }).subscribe(() => {
-                i++;
-                console.debug(i);
-                if (i > 5) {
-                    clearInterval(l);
-                }
-            });
-
-        }, 300);
+        // let i = 0;
+        // const l = setInterval(() => {
+        //     this._rp.demo.get({
+        //         store: 'store',
+        //         name: 'user',
+        //         key: 'req_resource'
+        //     }).subscribe(() => {
+        //         i++;
+        //         console.debug(i);
+        //         if (i > 5) {
+        //             clearInterval(l);
+        //         }
+        //     });
+        //
+        // }, 300);
     }
 
 }

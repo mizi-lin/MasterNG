@@ -87,7 +87,7 @@ var MnResource = (function () {
         var rest = this.restful(url, search, false);
         var restdata = this.restful(rest.url, data, true);
         options = mu.extend(true, {
-            search: rest.searchParams
+            params: rest.params
         }, options || {});
         return this.http.post(restdata.url, data, options);
     };
@@ -110,7 +110,7 @@ var MnResource = (function () {
         var rest = this.restful(url, search, false);
         var restdata = this.restful(rest.url, data, true);
         options = mu.extend(true, {
-            search: rest.searchParams
+            params: rest.params
         }, options || {});
         return this.http.patch(restdata.url, data, options);
     };
@@ -118,7 +118,7 @@ var MnResource = (function () {
         var rest = this.restful(url, search);
         url = rest.url;
         options = mu.extend(true, {
-            search: rest.searchParams
+            params: rest.params
         }, options || {});
         return this.http.delete(url, options);
     };
