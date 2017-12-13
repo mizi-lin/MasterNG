@@ -1,15 +1,5 @@
 <div class="demo-req">
 
-    <mn-panel-s class="bordered" title="Use Http"
-        [tools]="[reload]">
-        <mn-req
-                [req]="user_req"
-                [showNoData]="true"
-                (result)="user_data = $event.data">
-            {{user_data | json}}
-        </mn-req>
-    </mn-panel-s>
-
     <mn-panel-s class="bordered mt-8" title="Use Resource">
         <mn-req [req]="{
             api: 'demo',
@@ -21,28 +11,49 @@
 
     </mn-panel-s>
 
-    <mn-panel-s class="bordered mt-8" title="Req Error">
-        <mn-req [req]="{
-            url: 'aaa.json'
-        }" (result)="aaa = $event.data">
-            {{aaa | json}}
-        </mn-req>
+    <!--<mn-panel-s class="bordered" title="Use Http"-->
+        <!--[tools]="[reload]">-->
+        <!--<mn-req-->
+                <!--[req]="user_req"-->
+                <!--[showNoData]="true"-->
+                <!--(result)="user_data = $event.data">-->
+            <!--{{user_data | json}}-->
+        <!--</mn-req>-->
+    <!--</mn-panel-s>-->
 
-    </mn-panel-s>
+    <!--<mn-panel-s class="bordered mt-8" title="Use Resource">-->
+        <!--<mn-req [req]="{-->
+            <!--api: 'demo',-->
+            <!--method: 'get',-->
+            <!--params: {name: 'user', store: 'store', a: 1, b: 2}-->
+        <!--}" (result)="user_data = $event.data">-->
+            <!--{{user_data | json}}-->
+        <!--</mn-req>-->
+
+    <!--</mn-panel-s>-->
+
+    <!--<mn-panel-s class="bordered mt-8" title="Req Error">-->
+        <!--<mn-req [req]="{-->
+            <!--url: 'aaa.json'-->
+        <!--}" (result)="aaa = $event.data">-->
+            <!--{{aaa | json}}-->
+        <!--</mn-req>-->
+
+    <!--</mn-panel-s>-->
 
 
-    <mn-panel-s class="bordered mt-8" title="ReqDownload">
-        <mn-row>
-            <mn-col [span]="8">
-                <button mn-btn (click)="download($event)">（文本）CSV 文件下载</button>
-            </mn-col>
-            <mn-col [span]="8">
-                <button mn-btn (click)="csvDownload($event)">（文本）多维数组转CSV下载 </button>
-            </mn-col>
-            <mn-col [span]="8">
-                <button mn-btn (click)="zipDownload($event)">（二进制流）压缩包下载</button>
-            </mn-col>
-        </mn-row>
-    </mn-panel-s>
+    <!--<mn-panel-s class="bordered mt-8" title="ReqDownload">-->
+        <!--<mn-row>-->
+            <!--<mn-col [span]="8">-->
+                <!--<button mn-btn (click)="download($event)">（文本）CSV 文件下载</button>-->
+            <!--</mn-col>-->
+            <!--<mn-col [span]="8">-->
+                <!--<button mn-btn (click)="csvDownload($event)">（文本）多维数组转CSV下载 </button>-->
+            <!--</mn-col>-->
+            <!--<mn-col [span]="8">-->
+                <!--<button mn-btn (click)="zipDownload($event)">（二进制流）压缩包下载</button>-->
+            <!--</mn-col>-->
+        <!--</mn-row>-->
+    <!--</mn-panel-s>-->
 
 </div>

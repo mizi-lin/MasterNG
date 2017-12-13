@@ -41,7 +41,9 @@ var MnReqInterceptorFactory = (function () {
         this._mrs.getHeaders(function (headers_map) {
             mu.each(headers_map, function (hm) {
                 var value = typeof hm.value === 'function' ? hm.value() : hm.value;
-                _req = _req.clone({ headers: _req.headers[hm.method](hm.key, value) });
+                if (mu.isExist(value)) {
+                    _req = _req.clone({ headers: _req.headers[hm.method](hm.key, value) });
+                }
             });
         });
         /**

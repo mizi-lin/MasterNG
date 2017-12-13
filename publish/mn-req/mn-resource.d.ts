@@ -14,7 +14,7 @@ export declare class MnResource {
      * @param url
      * @param params
      * @param isReplace | true : 是否将不存在的占位符转为''(空)
-     * @returns {{url: string, searchParams: URLSearchParams, search: any, params: any}}
+     * @returns {{url: string, searchParams: HttpParams, search: any, params: any}}
      */
     private restful(url, params, isReplace?);
     get(url: string, search?: any, options?: any): Observable<any>;

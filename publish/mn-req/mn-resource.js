@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var http_1 = require("@angular/http");
 var core_1 = require("@angular/core");
-var http_2 = require("@angular/common/http");
+var http_1 = require("@angular/common/http");
 /**
  * the some angular1 resource
  * 类似 angular 1 的 resource 服务
@@ -18,21 +17,21 @@ var MnResource = (function () {
      * @param url
      * @param params
      * @param isReplace | true : 是否将不存在的占位符转为''(空)
-     * @returns {{url: string, searchParams: URLSearchParams, search: any, params: any}}
+     * @returns {{url: string, searchParams: HttpParams, search: any, params: any}}
      */
     /**
          * URL to REST_URL
          * @param url
          * @param params
          * @param isReplace | true : 是否将不存在的占位符转为''(空)
-         * @returns {{url: string, searchParams: URLSearchParams, search: any, params: any}}
+         * @returns {{url: string, searchParams: HttpParams, search: any, params: any}}
          */
     MnResource.prototype.restful = /**
          * URL to REST_URL
          * @param url
          * @param params
          * @param isReplace | true : 是否将不存在的占位符转为''(空)
-         * @returns {{url: string, searchParams: URLSearchParams, search: any, params: any}}
+         * @returns {{url: string, searchParams: HttpParams, search: any, params: any}}
          */
     function (url, params, isReplace) {
         if (isReplace === void 0) { isReplace = true; }
@@ -47,15 +46,17 @@ var MnResource = (function () {
             }) || (isReplace ? '' : m);
         });
         url = url.replace(/\/$/, '');
-        var searchParams = new http_1.URLSearchParams();
+        var searchParams = new http_1.HttpParams();
         mu.run(sp, function (p) {
-            mu.each(p, function (v, k) { return searchParams.set(k, v); });
+            mu.each(p, function (v, k) {
+                searchParams = searchParams.set(k, v);
+            });
         });
         return {
             url: url,
             searchParams: searchParams,
             search: sp,
-            params: params,
+            params: searchParams,
             restParams: restParams
         };
     };
@@ -63,7 +64,7 @@ var MnResource = (function () {
         var rest = this.restful(url, search);
         url = rest.url;
         options = mu.extend(true, {
-            search: rest.searchParams
+            params: rest.params
         }, options || {});
         return this.http.get(url, options);
     };
@@ -156,7 +157,7 @@ var MnResource = (function () {
     ];
     /** @nocollapse */
     MnResource.ctorParameters = function () { return [
-        { type: http_2.HttpClient, },
+        { type: http_1.HttpClient, },
     ]; };
     return MnResource;
 }());

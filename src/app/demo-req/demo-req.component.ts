@@ -60,7 +60,7 @@ export class DemoReqComponent implements OnInit {
     }
 
     constructor(public _rp: ResourcePool, private _http: HttpClient, private _mnFileServ: MnFileSaverServices) {
-        this._http.get('./assets/store/user.json').subscribe((a) => {
+        this._http.get('./assets/store/user.json', {params: {cef: 1, efj: 2}}).subscribe((a) => {
             console.log('ooOoOOoOOoo', a);
         });
     }
@@ -81,7 +81,6 @@ export class DemoReqComponent implements OnInit {
             });
 
         }, 300);
-
     }
 
 }

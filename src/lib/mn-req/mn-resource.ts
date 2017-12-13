@@ -1,7 +1,6 @@
-import {Http, URLSearchParams} from '@angular/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 declare let mu: any, console: any;
 
@@ -23,7 +22,7 @@ export class MnResource {
      * @param url
      * @param params
      * @param isReplace | true : 是否将不存在的占位符转为''(空)
-     * @returns {{url: string, searchParams: URLSearchParams, search: any, params: any}}
+     * @returns {{url: string, searchParams: HttpParams, search: any, params: any}}
      */
     private restful(url: string, params: any, isReplace: boolean = true): any {
         url = url || '';
@@ -40,17 +39,19 @@ export class MnResource {
 
         url = url.replace(/\/$/, '');
 
-        const searchParams: URLSearchParams = new URLSearchParams();
+        let searchParams: HttpParams = new HttpParams();
 
         mu.run(sp, (p) => {
-            mu.each(p, (v: any, k: string) => searchParams.set(k, v));
+            mu.each(p, (v: any, k: string) => {
+                searchParams = searchParams.set(k, v);
+            });
         });
 
         return {
             url: url,
             searchParams: searchParams,
             search: sp,
-            params: params,
+            params: searchParams,
             restParams: restParams
         };
     }
@@ -59,7 +60,7 @@ export class MnResource {
         const rest = this.restful(url, search);
         url = rest.url;
         options = mu.extend(true, {
-            search: rest.searchParams
+            params: rest.params
         }, options || {});
 
         return this.http.get(url, options);

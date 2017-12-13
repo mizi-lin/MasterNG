@@ -45,11 +45,11 @@ export class MnReqInterceptorFactory implements HttpInterceptor {
         this._mrs.getHeaders((headers_map) => {
             mu.each(headers_map, hm => {
                 let value = typeof hm.value === 'function' ? hm.value() : hm.value;
-                _req = _req.clone({headers: _req.headers[hm.method](hm.key, value)});
+                if (mu.isExist(value)) {
+                    _req = _req.clone({headers: _req.headers[hm.method](hm.key, value)});
+                }
             });
         });
-
-
 
         /**
          * pre Request

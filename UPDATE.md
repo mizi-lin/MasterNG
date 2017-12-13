@@ -100,7 +100,6 @@
 * 修正 mn-col 会被content部分撑破宽度，并重写其关联css样式
 
 0.3.2
-
 * update angular 5
 
 0.3.3
@@ -108,6 +107,10 @@
 * instead http to httpClient
 * rewrite ReqInterceptor
 * mn-req change req add unsubscribe
+* 修正在EchartServices被除数为0的情况
 
+0.3.4
 
+* fixed set req.header value no undefined
+* rewrite mnResource (URLSearchParams -> HttpParams)
 
