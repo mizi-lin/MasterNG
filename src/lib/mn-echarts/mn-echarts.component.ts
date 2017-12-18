@@ -1,10 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import * as mu from 'mzmu';
 import {MnEchartsServices} from './mn-echarts.service';
-
 declare const mu: any;
-
-import './china.js';
+import '../assets/china.js';
 
 /**
  * 处理数据，将data转为echart_options
