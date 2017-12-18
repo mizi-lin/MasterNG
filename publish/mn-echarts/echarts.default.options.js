@@ -142,6 +142,66 @@ exports.DEFAULT_ECHART_OPTIONS = {
         },
         series: []
     },
+    map: {
+        tooltip: {
+            show: true,
+            trigger: 'item'
+        },
+        legend: {
+            data: []
+        },
+        visualMap: {
+            min: 0,
+            max: 200,
+            left: 'left',
+            top: 'bottom',
+            text: ['高', '低'],
+            calculable: true,
+            inRange: {
+                color: ['#ffffff', '#E0DAFF', '#ADBFFF', '#9CB4FF', '#6A9DFF', '#3889FF']
+            }
+        },
+        geo: {
+            map: 'china',
+            zoom: 1.2,
+            roam: true,
+            label: {
+                normal: {
+                    show: true,
+                    color: '#c1c4c8'
+                },
+                emphasis: {
+                    show: false,
+                    color: '#292929'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    areaColor: '#fbfbfb',
+                    borderColor: '#b9b4b7'
+                },
+                emphasis: {
+                    areaColor: '#05ff09'
+                }
+            }
+        },
+        series: [
+            {
+                type: 'map',
+                mapType: 'china',
+                geoIndex: 0,
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data: []
+            }
+        ]
+    },
     radar: {
         legend: {
             show: true

@@ -73,7 +73,7 @@ export class MnEchartsServices {
         return !target ? 0 : (src / target);
     }
 
-    getEchartResult(type: string, data: any, setting: any = {}, $charts?: any, $mycharts?: any): any {
+    getEchartResult(type: string, data: any = [], setting: any = {}, $charts?: any, $mycharts?: any): any {
         const NAME = 'name';
         const X_VALUE = 'x';
         const Y_VALUE = 'value';
@@ -81,6 +81,13 @@ export class MnEchartsServices {
         const source = mu.clone(data);
         let options: any = mu.clone(default_options);
         let _series_data: any, _x_axis: any, _legend: any;
+
+        // 空数据处理
+        if (mu.isEmpty(data)) {
+            if (!setting.nodata) {
+                return;
+            }
+        }
 
         /**
          * 校验各options项
@@ -199,7 +206,15 @@ export class MnEchartsServices {
 
                 'tooltip',
                 'grid_position'
+            ],
 
+            map: [
+                '$module',
+                'convert',
+                '$series',
+                'map_label',
+                'tooltip',
+                'grid_position'
             ]
 
         };
@@ -347,6 +362,14 @@ export class MnEchartsServices {
              * SERIES 数据
              */
             switch (type) {
+                case 'map':
+                    options.series[0].data = mu.map(_series_data, (o, name) => {
+                        return {
+                            name: name,
+                            value: (mu.map(o, oo => oo.value, []) || [])[0],
+                        };
+                    }, []);
+                    break;
                 case 'radar':
                     options.series[0].data = mu.map(_series_data, (o, name) => {
                         return {
@@ -360,9 +383,7 @@ export class MnEchartsServices {
                             symbol: 'none'
                         };
                     }, []);
-
                     break;
-
                 default:
 
                     options.series = mu.map(_series_data, (o, name) => {
@@ -518,6 +539,12 @@ export class MnEchartsServices {
                 mu.run(top, () => {
                     options.legend.top = top;
                 });
+            });
+        };
+
+        fn.map_label = () => {
+            mu.exist(mu.prop(options, 'geo.label.normal.show'), () => {
+                options.geo.label.normal.show = !!setting.map_label;
             });
         };
 
@@ -911,6 +938,8 @@ export class MnEchartsServices {
 
         options = this.adjustOptionsWithColors(options);
 
+        // console.debug('::::::::', options);
+
         /**
          * DataView 计算
          */
@@ -924,7 +953,8 @@ export class MnEchartsServices {
                 _col_headers = mu.map(_series_data, (v, k) => {
                     return mu.map(v, (d) => mu.ifnvl(d.name, d));
                 }, []);
-                _col_headers = _col_headers[0];
+
+                _col_headers = (_col_headers || [])[0];
             });
 
             const _dataView = mu.map(_series_data, (v, k) => {
@@ -1017,7 +1047,7 @@ export class MnEchartsServices {
      * @param {any[]} arr
      * @return {any[]}
      */
-    transpose(arr: any[]): any[] {
+    transpose(arr: any[] = []): any[] {
         return mu.map(arr[0], (v, i) => {
             return mu.map(arr, (items) => {
                 return items[i];
@@ -1069,6 +1099,13 @@ export class MnEchartsServices {
 
             return color;
         };
+
+        /**
+         * Echart Map Only
+         */
+        // mu.run(mu.prop(options, 'visualMap.inRange.color'), () => {
+        //     options.visualMap.inRange.color = ['#fff', ...colors.slice(0, 5)];
+        // });
 
         /**
          * 固定Legend样式
@@ -1143,7 +1180,7 @@ export class MnEchartsServices {
             const size = (legend.length * 9) + legend.join(',').length;
             // 默认一个字符宽度大概为7px
             // 计算legend有多少行
-            const h = Math.ceil(this.division((size * 7) , _width));
+            const h = Math.ceil(this.division((size * 7), _width));
             // 默认legend的间距大概为2.5行
             // 默认每行行高16px(font size 12px)
             const height = 16 * (h + 2.5);

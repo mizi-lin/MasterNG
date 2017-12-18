@@ -4,6 +4,8 @@ import {MnEchartsServices} from './mn-echarts.service';
 
 declare const mu: any;
 
+import './china.js';
+
 /**
  * 处理数据，将data转为echart_options
  */

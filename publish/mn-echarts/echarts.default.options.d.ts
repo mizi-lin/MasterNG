@@ -129,6 +129,64 @@ export declare const DEFAULT_ECHART_OPTIONS: {
         };
         series: any[];
     };
+    map: {
+        tooltip: {
+            show: boolean;
+            trigger: string;
+        };
+        legend: {
+            data: any[];
+        };
+        visualMap: {
+            min: number;
+            max: number;
+            left: string;
+            top: string;
+            text: string[];
+            calculable: boolean;
+            inRange: {
+                color: string[];
+            };
+        };
+        geo: {
+            map: string;
+            zoom: number;
+            roam: boolean;
+            label: {
+                normal: {
+                    show: boolean;
+                    color: string;
+                };
+                emphasis: {
+                    show: boolean;
+                    color: string;
+                };
+            };
+            itemStyle: {
+                normal: {
+                    areaColor: string;
+                    borderColor: string;
+                };
+                emphasis: {
+                    areaColor: string;
+                };
+            };
+        };
+        series: {
+            type: string;
+            mapType: string;
+            geoIndex: number;
+            label: {
+                normal: {
+                    show: boolean;
+                };
+                emphasis: {
+                    show: boolean;
+                };
+            };
+            data: any[];
+        }[];
+    };
     radar: {
         legend: {
             show: boolean;

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var mn_echarts_service_1 = require("./mn-echarts.service");
+require("./china.js");
 /**
  * 处理数据，将data转为echart_options
  */

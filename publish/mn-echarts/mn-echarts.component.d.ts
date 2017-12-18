@@ -1,5 +1,6 @@
 import { EventEmitter, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MnEchartsServices } from './mn-echarts.service';
+import './china.js';
 /**
  * 处理数据，将data转为echart_options
  */

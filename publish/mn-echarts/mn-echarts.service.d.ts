@@ -22,7 +22,7 @@ export declare class MnEchartsServices {
      */
     total(arr: any[], key: string): any;
     division(src: any, target: any): number;
-    getEchartResult(type: string, data: any, setting?: any, $charts?: any, $mycharts?: any): any;
+    getEchartResult(type: string, data?: any, setting?: any, $charts?: any, $mycharts?: any): any;
     /**
      * 数据根据规则转换
      * @param data
@@ -36,7 +36,7 @@ export declare class MnEchartsServices {
      * @param {any[]} arr
      * @return {any[]}
      */
-    transpose(arr: any[]): any[];
+    transpose(arr?: any[]): any[];
     morphArray(o: any, def: any, def2?: any): any[];
     /**
      * 调整 echart 颜色 以及 legend 的样式

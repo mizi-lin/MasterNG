@@ -117,3 +117,7 @@
 0.3.5
 
 * 修正 mnResource post | patch 等方法 params 的传递方式
+
+0.3.6
+
+* 添加 echart type for map

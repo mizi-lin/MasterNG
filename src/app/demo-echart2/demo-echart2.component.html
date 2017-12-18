@@ -31,24 +31,30 @@
     <!--</mn-req>-->
     <!--</mn-panel-s>-->
 
-    <mn-echarts-panel class="bordered" title="EchartsPanel::bar mn-panel && tools"
-                      [req]="{url: './assets/store/echarts-bar.json'}"
-                      [type]="'bar'"
-                      [show_tools]="'show'"
-                      [tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"
-                      [setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}"
+    <!--<mn-echarts-panel class="bordered" title="EchartsPanel::bar mn-panel && tools"-->
+                      <!--[req]="{url: './assets/store/echarts-bar.json'}"-->
+                      <!--[type]="'bar'"-->
+                      <!--[show_tools]="'show'"-->
+                      <!--[tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"-->
+                      <!--[setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}"-->
+                      <!--[hph]="'auto'"-->
+                      <!--height="300px">-->
+    <!--</mn-echarts-panel>-->
+
+    <!--<mn-echarts [type]="'map'" [options]="{-->
+        <!--series: [{-->
+            <!--type: 'map',-->
+            <!--map: 'china'-->
+        <!--}]-->
+    <!--}" [style.height.px]="400">-->
+    <!--</mn-echarts>-->
+
+    <mn-echarts-panel class="bordered" title="EchartsPanel::map mn-panel && tools"
+                      [req]="{url: './assets/store/echart-map.json'}"
+                      [type]="'map'"
                       [hph]="'auto'"
                       height="300px">
     </mn-echarts-panel>
-
-    <mn-req
-            [req]="{url: './assets/store/echart-map.json'}"
-            (result)="option = $event.data"
-    >
-
-        <mn-echarts [options]="option"></mn-echarts>
-
-    </mn-req>
 
     <!--<div class="mt-16 mb-16" mnElement #abc="element" [ngStyle]="{'height': '200px', 'background': '#f00'}">-->
 

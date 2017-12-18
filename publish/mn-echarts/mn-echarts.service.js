@@ -91,6 +91,7 @@ var MnEchartsServices = (function () {
     };
     MnEchartsServices.prototype.getEchartResult = function (type, data, setting, $charts, $mycharts) {
         var _this = this;
+        if (data === void 0) { data = []; }
         if (setting === void 0) { setting = {}; }
         var NAME = 'name';
         var X_VALUE = 'x';
@@ -99,6 +100,12 @@ var MnEchartsServices = (function () {
         var source = mu.clone(data);
         var options = mu.clone(default_options);
         var _series_data, _x_axis, _legend;
+        // 空数据处理
+        if (mu.isEmpty(data)) {
+            if (!setting.nodata) {
+                return;
+            }
+        }
         /**
                  * 校验各options项
                  */
@@ -190,6 +197,14 @@ var MnEchartsServices = (function () {
                 'yAxis_zero',
                 'dataZoom',
                 'xy_exchange',
+                'tooltip',
+                'grid_position'
+            ],
+            map: [
+                '$module',
+                'convert',
+                '$series',
+                'map_label',
                 'tooltip',
                 'grid_position'
             ]
@@ -324,6 +339,14 @@ var MnEchartsServices = (function () {
                          * SERIES 数据
                          */
             switch (type) {
+                case 'map':
+                    options.series[0].data = mu.map(_series_data, function (o, name) {
+                        return {
+                            name: name,
+                            value: (mu.map(o, function (oo) { return oo.value; }, []) || [])[0],
+                        };
+                    }, []);
+                    break;
                 case 'radar':
                     options.series[0].data = mu.map(_series_data, function (o, name) {
                         return {
@@ -476,6 +499,11 @@ var MnEchartsServices = (function () {
                 mu.run(top, function () {
                     options.legend.top = top;
                 });
+            });
+        };
+        fn.map_label = function () {
+            mu.exist(mu.prop(options, 'geo.label.normal.show'), function () {
+                options.geo.label.normal.show = !!setting.map_label;
             });
         };
         /**
@@ -812,6 +840,7 @@ var MnEchartsServices = (function () {
         });
         // type === 'radar' && console.debug(JSON.stringify(options));
         options = this.adjustOptionsWithColors(options);
+        // console.debug('::::::::', options);
         /**
                  * DataView 计算
                  */
@@ -823,7 +852,7 @@ var MnEchartsServices = (function () {
                 _col_headers = mu.map(_series_data, function (v, k) {
                     return mu.map(v, function (d) { return mu.ifnvl(d.name, d); });
                 }, []);
-                _col_headers = _col_headers[0];
+                _col_headers = (_col_headers || [])[0];
             });
             var _dataView = mu.map(_series_data, function (v, k) {
                 var v_ = mu.map(v, function (d) { return mu.ifnvl(d.value, d); });
@@ -925,6 +954,7 @@ var MnEchartsServices = (function () {
          * @return {any[]}
          */
     function (arr) {
+        if (arr === void 0) { arr = []; }
         return mu.map(arr[0], function (v, i) {
             return mu.map(arr, function (items) {
                 return items[i];
@@ -976,6 +1006,12 @@ var MnEchartsServices = (function () {
             }
             return color;
         };
+        /**
+                 * Echart Map Only
+                 */
+        // mu.run(mu.prop(options, 'visualMap.inRange.color'), () => {
+        //     options.visualMap.inRange.color = ['#fff', ...colors.slice(0, 5)];
+        // });
         /**
                  * 固定Legend样式
                  */
