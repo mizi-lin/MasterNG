@@ -102,8 +102,8 @@ var MnEchartsServices = (function () {
         var _series_data, _x_axis, _legend;
         // 空数据处理
         if (mu.isEmpty(data)) {
-            if (!setting.nodata) {
-                return;
+            if (!!setting.nodata) {
+                return {};
             }
         }
         /**

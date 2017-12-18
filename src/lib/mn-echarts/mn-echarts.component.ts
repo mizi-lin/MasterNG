@@ -93,7 +93,7 @@ export class MnEchartsComponent implements OnInit, OnChanges {
 
         mu.run(changes['type'], (typeListener) => {
             if (!typeListener.firstChange) {
-                const result_ = this._es.getEchartResult(this.type, this.data, this.setting);
+                const result_ = this._es.getEchartResult(this.type, this.data, this.setting) || {};
                 this.echarts_options = result_['options'];
                 this._result.source = mu.clone(this.data);
                 this._result = mu.extend(this._result, result_);

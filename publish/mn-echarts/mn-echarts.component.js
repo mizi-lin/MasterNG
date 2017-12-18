@@ -48,7 +48,7 @@ var MnEchartsComponent = (function () {
         });
         mu.run(changes['type'], function (typeListener) {
             if (!typeListener.firstChange) {
-                var result_ = _this._es.getEchartResult(_this.type, _this.data, _this.setting);
+                var result_ = _this._es.getEchartResult(_this.type, _this.data, _this.setting) || {};
                 _this.echarts_options = result_['options'];
                 _this._result.source = mu.clone(_this.data);
                 _this._result = mu.extend(_this._result, result_);
