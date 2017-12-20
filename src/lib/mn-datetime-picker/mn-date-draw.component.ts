@@ -66,7 +66,12 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
         this._startDate = this.reStartDate(dt);
     }
 
-    @Input('mnEndDate') _endDate: any;
+    _endDate: any;
+
+    @Input('mnEndDate')
+    set endDate_(dt) {
+        this._endDate = this.reEndDate(dt);
+    }
 
     @Input('mnYear')
     set year_(y) {
@@ -111,6 +116,11 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this._frames = this.buildFrame();
+
+        this._startEnd.emit({
+            startDate: this._startDate,
+            endDate: this._endDate
+        });
     }
 
     ngOnDestroy() {
@@ -351,14 +361,30 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
         this._hover.emit(this._hoverDate);
     }
 
+    /**
+     * 重新计算startDate
+     * @param dt
+     * @return {any}
+     */
     reStartDate(dt) {
+        dt = new MnDate(dt);
         if (this._minDate) {
-            return dt;
+            return this._minDate._date > dt._date ? this._minDate : dt;
         }
         return dt;
     }
 
+    /**
+     * 重新计算结束时间
+     * @param dt
+     * @return {any}
+     */
     reEndDate(dt) {
+        dt = new MnDate(dt);
+        if (this._maxDate) {
+            return this._maxDate._date < dt._date ? this._maxDate : dt;
+        }
+
         return dt;
     }
 }

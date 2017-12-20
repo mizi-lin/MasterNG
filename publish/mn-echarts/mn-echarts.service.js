@@ -340,12 +340,19 @@ var MnEchartsServices = (function () {
                          */
             switch (type) {
                 case 'map':
-                    options.series[0].data = mu.map(_series_data, function (o, name) {
+                    var _data = mu.map(_series_data, function (o, name) {
                         return {
                             name: name,
                             value: (mu.map(o, function (oo) { return oo.value; }, []) || [])[0],
                         };
                     }, []);
+                    options.series[0].data = _data;
+                    /**
+                                         * 地图区域值设置最大最小值
+                                         */
+                    options.visualMap = options.visualMap || {};
+                    var _ds = mu.map(_data, function (o) { return o.value || 0; });
+                    options.visualMap.max = Math.max.apply(Math, _ds);
                     break;
                 case 'radar':
                     options.series[0].data = mu.map(_series_data, function (o, name) {

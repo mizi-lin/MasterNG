@@ -363,12 +363,21 @@ export class MnEchartsServices {
              */
             switch (type) {
                 case 'map':
-                    options.series[0].data = mu.map(_series_data, (o, name) => {
+                    let _data = mu.map(_series_data, (o, name) => {
                         return {
                             name: name,
                             value: (mu.map(o, oo => oo.value, []) || [])[0],
                         };
                     }, []);
+
+                    options.series[0].data = _data;
+
+                    /**
+                     * 地图区域值设置最大最小值
+                     */
+                    options.visualMap = options.visualMap || {};
+                    let _ds = mu.map(_data, o => o.value || 0);
+                    options.visualMap.max = Math.max(..._ds);
                     break;
                 case 'radar':
                     options.series[0].data = mu.map(_series_data, (o, name) => {

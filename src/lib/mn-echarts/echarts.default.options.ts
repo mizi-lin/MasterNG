@@ -159,16 +159,16 @@ export const DEFAULT_ECHART_OPTIONS = {
             left: 'left',
             top: 'bottom',
             text: ['高', '低'],
-            calculable: true,
+            calculable: false,
             inRange: {
-                color: ['#ffffff', '#E0DAFF', '#ADBFFF', '#9CB4FF', '#6A9DFF', '#3889FF']
+                color: ['#ffffff',  '#3fce9e']
             }
         },
 
         geo: {
             map: 'china',
             zoom: 1.2,
-            roam: true,
+            roam: false,
             label: {
                 normal: {
                     show: true,
@@ -186,7 +186,7 @@ export const DEFAULT_ECHART_OPTIONS = {
 
                 },
                 emphasis: {
-                    areaColor: '#05ff09'
+                    areaColor: '#30d0e4'
                 }
             }
         },

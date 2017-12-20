@@ -61,6 +61,13 @@ var MnDateDrawComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(MnDateDrawComponent.prototype, "endDate_", {
+        set: function (dt) {
+            this._endDate = this.reEndDate(dt);
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(MnDateDrawComponent.prototype, "year_", {
         set: function (y) {
             this.$date.y = y;
@@ -93,6 +100,10 @@ var MnDateDrawComponent = (function () {
     });
     MnDateDrawComponent.prototype.ngOnInit = function () {
         this._frames = this.buildFrame();
+        this._startEnd.emit({
+            startDate: this._startDate,
+            endDate: this._endDate
+        });
     };
     MnDateDrawComponent.prototype.ngOnDestroy = function () {
         this.date$.unsubscribe();
@@ -320,13 +331,48 @@ var MnDateDrawComponent = (function () {
         }
         this._hover.emit(this._hoverDate);
     };
-    MnDateDrawComponent.prototype.reStartDate = function (dt) {
+    /**
+     * 重新计算startDate
+     * @param dt
+     * @return {any}
+     */
+    /**
+         * 重新计算startDate
+         * @param dt
+         * @return {any}
+         */
+    MnDateDrawComponent.prototype.reStartDate = /**
+         * 重新计算startDate
+         * @param dt
+         * @return {any}
+         */
+    function (dt) {
+        dt = new mn_date_class_1.MnDate(dt);
         if (this._minDate) {
-            return dt;
+            return this._minDate._date > dt._date ? this._minDate : dt;
         }
         return dt;
     };
-    MnDateDrawComponent.prototype.reEndDate = function (dt) {
+    /**
+     * 重新计算结束时间
+     * @param dt
+     * @return {any}
+     */
+    /**
+         * 重新计算结束时间
+         * @param dt
+         * @return {any}
+         */
+    MnDateDrawComponent.prototype.reEndDate = /**
+         * 重新计算结束时间
+         * @param dt
+         * @return {any}
+         */
+    function (dt) {
+        dt = new mn_date_class_1.MnDate(dt);
+        if (this._maxDate) {
+            return this._maxDate._date < dt._date ? this._maxDate : dt;
+        }
         return dt;
     };
     MnDateDrawComponent.decorators = [
@@ -347,7 +393,7 @@ var MnDateDrawComponent = (function () {
         "minDate_": [{ type: core_1.Input, args: ['mnMinDate',] },],
         "hoverDate_": [{ type: core_1.Input, args: ['mnHoverDate',] },],
         "startDate_": [{ type: core_1.Input, args: ['mnStartDate',] },],
-        "_endDate": [{ type: core_1.Input, args: ['mnEndDate',] },],
+        "endDate_": [{ type: core_1.Input, args: ['mnEndDate',] },],
         "year_": [{ type: core_1.Input, args: ['mnYear',] },],
         "month_": [{ type: core_1.Input, args: ['mnMonth',] },],
         "day_": [{ type: core_1.Input, args: ['mnDay',] },],

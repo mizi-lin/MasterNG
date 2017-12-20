@@ -19,14 +19,16 @@ declare const mu: any;
                         [mnStartDate]="_startDate"
                         [mnEndDate]="_endDate"
                         [mnHoverDate]="_hoverDate"
-                        [mnYear]="2017"
-                        [mnMonth]="12"
-                        [mnDay]="17"
                         [mnView]="'days'"
+
+                        [mnYear]="_next.days.year"
+                        [mnMonth]="_next.days.month"
+                        
+                        (mnResult)="getPreCalendar($event)"
                         (mnStartEnd)="getStartEnd($event)"
                         (mnHover)="_hoverDate = $event"></mn-datecalendar>
             </mn-col>
-            
+
             <mn-col [span]="1">
                 <mn-datecalendar
                         [mnMinDate]="_minDate"
@@ -34,20 +36,19 @@ declare const mu: any;
                         [mnStartDate]="_startDate"
                         [mnEndDate]="_endDate"
                         [mnHoverDate]="_hoverDate"
-                        [mnYear]="2018"
-                        [mnMonth]="1"
-                        [mnDay]="17"
                         [mnView]="'days'"
+
+                        [mnYear]="_next.days.year"
+                        [mnMonth]="_next.days.month"
+
                         (mnStartEnd)="getStartEnd($event)"
                         (mnHover)="_hoverDate = $event"></mn-datecalendar>
             </mn-col>
-            
+
         </mn-fill>
     `
 })
 export class MnDateMultipleComponent implements OnInit {
-
-    _hoverDate: any;
 
     _maxDate: any;
 
@@ -67,17 +68,24 @@ export class MnDateMultipleComponent implements OnInit {
 
     @Input('mnStartDate')
     set startDate_(dt) {
-        this._startDate = new MnDate(dt);
+        this._startDate = this.reStartDate(dt);
+        this._prev = this._startDate;
     }
 
     _endDate: any;
 
     @Input('mnEndDate')
     set endDate_(dt) {
-        this._endDate = new MnDate(dt);
+        this._endDate = this.reEndDate(dt);
+        this._next = this.next_(this._prev, this._endDate);
     }
 
     @Input('mnView') _view: string = 'days';
+
+    _hoverDate: any;
+
+    _prev: any = {};
+    _next: any = {};
 
     constructor() {
 
@@ -91,7 +99,49 @@ export class MnDateMultipleComponent implements OnInit {
         this._endDate = ds.endDate;
     }
 
+    getPreCalendar(ds) {
+        // let _next = ds.mom(1);
+        // if (!this.getPreCalendar['first']) {
+        //     this._next.year = _next.year;
+        //     this._next.month = _next.month;
+        //     this.getPreCalendar['first'] = true;
+        // }
+    }
 
+    /**
+     * 重新计算startDate
+     * @param dt
+     * @return {any}
+     */
+    reStartDate(dt) {
+        dt = new MnDate(dt);
+        if (this._minDate) {
+            return this._minDate._date > dt._date ? this._minDate : dt;
+        }
+        return dt;
+    }
+
+    /**
+     * 重新计算结束时间
+     * @param dt
+     * @return {any}
+     */
+    reEndDate(dt) {
+        dt = new MnDate(dt);
+        if (this._maxDate) {
+            return this._maxDate._date < dt._date ? this._maxDate : dt;
+        }
+
+        return dt;
+    }
+
+    /**
+     * 获得下个月的期间区域
+     * @private
+     */
+    next_(prev: any, next: any) {
+        return prev._d === next._d ? new MnDate(prev.mom(1).start) : next;
+    }
 
 }
 

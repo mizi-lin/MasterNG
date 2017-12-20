@@ -19,6 +19,7 @@ export declare class MnDateDrawComponent implements OnInit, OnDestroy {
     _startDate: any;
     startDate_: any;
     _endDate: any;
+    endDate_: any;
     year_: any;
     month_: any;
     day_: any;
@@ -53,6 +54,16 @@ export declare class MnDateDrawComponent implements OnInit, OnDestroy {
      */
     getStartEndDate(dt: any): void;
     getHover(dt: any): void;
+    /**
+     * 重新计算startDate
+     * @param dt
+     * @return {any}
+     */
     reStartDate(dt: any): any;
+    /**
+     * 重新计算结束时间
+     * @param dt
+     * @return {any}
+     */
     reEndDate(dt: any): any;
 }

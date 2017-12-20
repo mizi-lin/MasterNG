@@ -12,7 +12,6 @@ var MnDateCalendarComponent = (function () {
         this._result = new core_1.EventEmitter();
         this._startEnd = new core_1.EventEmitter();
         this._hover = new core_1.EventEmitter();
-        this._month = 0;
         this._day = 1;
         this._view = 'days';
         this._tools = true;
@@ -37,6 +36,9 @@ var MnDateCalendarComponent = (function () {
         configurable: true
     });
     MnDateCalendarComponent.prototype.ngOnInit = function () {
+        var current = new mn_date_class_1.MnDate(new Date());
+        this._year = mu.ifnvl(this._year, current.days.year);
+        this._month = mu.ifnvl(this._month, current.days.month);
     };
     MnDateCalendarComponent.prototype.getResult = function ($event) {
         var _this = this;
@@ -66,6 +68,7 @@ var MnDateCalendarComponent = (function () {
                 });
                 break;
         }
+        this._result.emit($event);
     };
     MnDateCalendarComponent.prototype.prevBig = function () {
         switch (this._view) {

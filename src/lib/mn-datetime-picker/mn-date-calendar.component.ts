@@ -73,7 +73,7 @@ export class MnDateCalendarComponent implements OnInit {
     @Input('mnHoverDate') _hoverDate: any;
 
     @Input('mnYear') _year: number;
-    @Input('mnMonth') _month: number = 0;
+    @Input('mnMonth') _month: number;
     @Input('mnDay') _day: number = 1;
     @Input('mnView') _view: string = 'days';
     @Input('mnTools') _tools: boolean = true;
@@ -85,6 +85,9 @@ export class MnDateCalendarComponent implements OnInit {
     }
 
     ngOnInit() {
+        let current = new MnDate(new Date());
+        this._year = mu.ifnvl(this._year, current.days.year);
+        this._month = mu.ifnvl(this._month, current.days.month);
     }
 
     getResult($event) {
@@ -115,6 +118,8 @@ export class MnDateCalendarComponent implements OnInit {
 
                 break;
         }
+
+        this._result.emit($event);
     }
 
     _show_prev_big: boolean = true;

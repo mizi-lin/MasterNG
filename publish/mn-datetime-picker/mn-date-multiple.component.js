@@ -8,6 +8,8 @@ var mn_date_class_1 = require("./mn-date.class");
 var MnDateMultipleComponent = (function () {
     function MnDateMultipleComponent() {
         this._view = 'days';
+        this._prev = {};
+        this._next = {};
     }
     Object.defineProperty(MnDateMultipleComponent.prototype, "maxDate_", {
         set: function (dt) {
@@ -25,14 +27,16 @@ var MnDateMultipleComponent = (function () {
     });
     Object.defineProperty(MnDateMultipleComponent.prototype, "startDate_", {
         set: function (dt) {
-            this._startDate = new mn_date_class_1.MnDate(dt);
+            this._startDate = this.reStartDate(dt);
+            this._prev = this._startDate;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(MnDateMultipleComponent.prototype, "endDate_", {
         set: function (dt) {
-            this._endDate = new mn_date_class_1.MnDate(dt);
+            this._endDate = this.reEndDate(dt);
+            this._next = this.next_(this._prev, this._endDate);
         },
         enumerable: true,
         configurable: true
@@ -43,10 +47,77 @@ var MnDateMultipleComponent = (function () {
         this._startDate = ds.startDate;
         this._endDate = ds.endDate;
     };
+    MnDateMultipleComponent.prototype.getPreCalendar = function (ds) {
+        // let _next = ds.mom(1);
+        // if (!this.getPreCalendar['first']) {
+        //     this._next.year = _next.year;
+        //     this._next.month = _next.month;
+        //     this.getPreCalendar['first'] = true;
+        // }
+    };
+    /**
+     * 重新计算startDate
+     * @param dt
+     * @return {any}
+     */
+    /**
+         * 重新计算startDate
+         * @param dt
+         * @return {any}
+         */
+    MnDateMultipleComponent.prototype.reStartDate = /**
+         * 重新计算startDate
+         * @param dt
+         * @return {any}
+         */
+    function (dt) {
+        dt = new mn_date_class_1.MnDate(dt);
+        if (this._minDate) {
+            return this._minDate._date > dt._date ? this._minDate : dt;
+        }
+        return dt;
+    };
+    /**
+     * 重新计算结束时间
+     * @param dt
+     * @return {any}
+     */
+    /**
+         * 重新计算结束时间
+         * @param dt
+         * @return {any}
+         */
+    MnDateMultipleComponent.prototype.reEndDate = /**
+         * 重新计算结束时间
+         * @param dt
+         * @return {any}
+         */
+    function (dt) {
+        dt = new mn_date_class_1.MnDate(dt);
+        if (this._maxDate) {
+            return this._maxDate._date < dt._date ? this._maxDate : dt;
+        }
+        return dt;
+    };
+    /**
+     * 获得下个月的期间区域
+     * @private
+     */
+    /**
+         * 获得下个月的期间区域
+         * @private
+         */
+    MnDateMultipleComponent.prototype.next_ = /**
+         * 获得下个月的期间区域
+         * @private
+         */
+    function (prev, next) {
+        return prev._d === next._d ? new mn_date_class_1.MnDate(prev.mom(1).start) : next;
+    };
     MnDateMultipleComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'mn-datemultiple',
-                    template: "\n        <mn-fill>\n            <mn-col [span]=\"1\">\n                <mn-datecalendar\n                        [mnMinDate]=\"_minDate\"\n                        [mnMaxDate]=\"_maxDate\"\n                        [mnStartDate]=\"_startDate\"\n                        [mnEndDate]=\"_endDate\"\n                        [mnHoverDate]=\"_hoverDate\"\n                        [mnYear]=\"2017\"\n                        [mnMonth]=\"12\"\n                        [mnDay]=\"17\"\n                        [mnView]=\"'days'\"\n                        (mnStartEnd)=\"getStartEnd($event)\"\n                        (mnHover)=\"_hoverDate = $event\"></mn-datecalendar>\n            </mn-col>\n            \n            <mn-col [span]=\"1\">\n                <mn-datecalendar\n                        [mnMinDate]=\"_minDate\"\n                        [mnMaxDate]=\"_maxDate\"\n                        [mnStartDate]=\"_startDate\"\n                        [mnEndDate]=\"_endDate\"\n                        [mnHoverDate]=\"_hoverDate\"\n                        [mnYear]=\"2018\"\n                        [mnMonth]=\"1\"\n                        [mnDay]=\"17\"\n                        [mnView]=\"'days'\"\n                        (mnStartEnd)=\"getStartEnd($event)\"\n                        (mnHover)=\"_hoverDate = $event\"></mn-datecalendar>\n            </mn-col>\n            \n        </mn-fill>\n    "
+                    template: "\n        <mn-fill>\n            <mn-col [span]=\"1\">\n                <mn-datecalendar\n                        [mnMinDate]=\"_minDate\"\n                        [mnMaxDate]=\"_maxDate\"\n                        [mnStartDate]=\"_startDate\"\n                        [mnEndDate]=\"_endDate\"\n                        [mnHoverDate]=\"_hoverDate\"\n                        [mnView]=\"'days'\"\n\n                        [mnYear]=\"_next.days.year\"\n                        [mnMonth]=\"_next.days.month\"\n                        \n                        (mnResult)=\"getPreCalendar($event)\"\n                        (mnStartEnd)=\"getStartEnd($event)\"\n                        (mnHover)=\"_hoverDate = $event\"></mn-datecalendar>\n            </mn-col>\n\n            <mn-col [span]=\"1\">\n                <mn-datecalendar\n                        [mnMinDate]=\"_minDate\"\n                        [mnMaxDate]=\"_maxDate\"\n                        [mnStartDate]=\"_startDate\"\n                        [mnEndDate]=\"_endDate\"\n                        [mnHoverDate]=\"_hoverDate\"\n                        [mnView]=\"'days'\"\n\n                        [mnYear]=\"_next.days.year\"\n                        [mnMonth]=\"_next.days.month\"\n\n                        (mnStartEnd)=\"getStartEnd($event)\"\n                        (mnHover)=\"_hoverDate = $event\"></mn-datecalendar>\n            </mn-col>\n\n        </mn-fill>\n    "
                 },] },
     ];
     /** @nocollapse */
