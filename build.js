@@ -29,7 +29,7 @@ console.log('oOoooOOoooO 删除可能存在的temp');
 rimraf.sync('__pre_publish', fs);
 
 console.log('ooOoooOOooO 删除可能存在的publish');
-rimraf.sync('publish', fs);
+rimraf.sync('.publish', fs);
 
 console.log('oooOooOOooO 复制lib为__pre_publish, 作为编译文件的主体');
 
