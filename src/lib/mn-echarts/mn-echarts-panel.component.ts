@@ -127,7 +127,7 @@ declare const mu: any, jQuery: any;
                         [loader]="loader"
                         [loaderStyle]="loaderStyle"
                         [req]="req"
-                        (result)="_data = $event.data">
+                        (result)="_data = _reqResult($event.data, $event) || $event.data">
 
                     <div class="mn-dataView" *ngIf="_show_dataView">
                         <table class="table bordered td-top-bd td-left-bd">
@@ -176,6 +176,10 @@ export class MnEchartsPanelComponent implements OnChanges {
 
     @Input() loader: ElementRef;
     @Input() loaderStyle: any;
+
+    @Input('mnReqResult') _reqResult($event) {
+        return $event.data;
+    }
 
     /**
      * show_tools

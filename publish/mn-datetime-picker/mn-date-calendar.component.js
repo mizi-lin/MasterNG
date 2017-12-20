@@ -46,24 +46,27 @@ var MnDateCalendarComponent = (function () {
         switch (this._view) {
             case 'days':
                 this._title = mu.format(this._mdate._date, 'yyyy-MM');
-                mu.run(this._minDate, function () {
-                    _this._show_prev_small = _this._mds.compared(_this._view, _this._mdate.months.start, _this._minDate) === 1;
+                var _prevMinDate = mu.run(this._prevDate, function () {
+                    return new mn_date_class_1.MnDate(_this._prevDate.mom(1).start);
+                });
+                mu.run(_prevMinDate || this._minDate, function (_minDate) {
+                    _this._show_prev_small = _this._mds.compared(_this._view, _this._mdate.months.start, _minDate) === 1;
                     if (!_this._show_prev_small) {
                         _this._show_prev_big = false;
                     }
                     else {
                         var _prev = _this._mdate.yoy(-1, true);
-                        _this._show_prev_big = _this._mds.compared(_this._view, _prev.start, _this._minDate) === 1;
+                        _this._show_prev_big = _this._mds.compared(_this._view, _prev.start, _minDate) === 1;
                     }
                 });
-                mu.run(this._maxDate, function () {
-                    _this._show_next_small = _this._mds.compared(_this._view, _this._mdate.months.end, _this._maxDate) === -1;
+                mu.run(this._nextDate || this._maxDate, function (_maxDate) {
+                    _this._show_next_small = _this._mds.compared(_this._view, _this._mdate.months.end, _maxDate) === -1;
                     if (!_this._show_next_small) {
                         _this._show_next_big = false;
                     }
                     else {
                         var _next_year = _this._mdate.mom(12);
-                        _this._show_next_big = _this._mds.compared(_this._view, _next_year.start, _this._maxDate) === -1;
+                        _this._show_next_big = _this._mds.compared(_this._view, _next_year.start, _maxDate) === -1;
                     }
                 });
                 break;
@@ -120,6 +123,8 @@ var MnDateCalendarComponent = (function () {
         "_hover": [{ type: core_1.Output, args: ['mnHover',] },],
         "maxDate_": [{ type: core_1.Input, args: ['mnMaxDate',] },],
         "minDate_": [{ type: core_1.Input, args: ['mnMinDate',] },],
+        "_prevDate": [{ type: core_1.Input, args: ['mnPrevDate',] },],
+        "_nextDate": [{ type: core_1.Input, args: ['mnNextDate',] },],
         "_startDate": [{ type: core_1.Input, args: ['mnStartDate',] },],
         "_endDate": [{ type: core_1.Input, args: ['mnEndDate',] },],
         "_hoverDate": [{ type: core_1.Input, args: ['mnHoverDate',] },],

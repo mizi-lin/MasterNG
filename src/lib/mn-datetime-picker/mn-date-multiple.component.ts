@@ -21,8 +21,10 @@ declare const mu: any;
                         [mnHoverDate]="_hoverDate"
                         [mnView]="'days'"
 
-                        [mnYear]="_next.days.year"
-                        [mnMonth]="_next.days.month"
+                        [mnYear]="_prev.days.year"
+                        [mnMonth]="_prev.days.month"
+                        
+                        [mnNextDate]="_next"
                         
                         (mnResult)="getPreCalendar($event)"
                         (mnStartEnd)="getStartEnd($event)"
@@ -40,6 +42,8 @@ declare const mu: any;
 
                         [mnYear]="_next.days.year"
                         [mnMonth]="_next.days.month"
+
+                        [mnPrevDate]="_prev"
 
                         (mnStartEnd)="getStartEnd($event)"
                         (mnHover)="_hoverDate = $event"></mn-datecalendar>
@@ -86,6 +90,8 @@ export class MnDateMultipleComponent implements OnInit {
 
     _prev: any = {};
     _next: any = {};
+
+    _nextMinDate: any = {};
 
     constructor() {
 

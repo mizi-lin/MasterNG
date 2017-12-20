@@ -68,6 +68,10 @@ export class MnDateCalendarComponent implements OnInit {
         this._minDate = new MnDate(dt);
     }
 
+
+    @Input('mnPrevDate') _prevDate: any;
+    @Input('mnNextDate') _nextDate: any;
+
     @Input('mnStartDate') _startDate: any;
     @Input('mnEndDate') _endDate: any;
     @Input('mnHoverDate') _hoverDate: any;
@@ -96,23 +100,27 @@ export class MnDateCalendarComponent implements OnInit {
             case 'days':
                 this._title = mu.format(this._mdate._date, 'yyyy-MM');
 
-                mu.run(this._minDate, () => {
-                    this._show_prev_small = this._mds.compared(this._view, this._mdate.months.start, this._minDate) === 1;
+                let _prevMinDate = mu.run(this._prevDate, () => {
+                    return new MnDate(this._prevDate.mom(1).start);
+                });
+
+                mu.run(_prevMinDate || this._minDate, (_minDate) => {
+                    this._show_prev_small = this._mds.compared(this._view, this._mdate.months.start, _minDate) === 1;
                     if (!this._show_prev_small) {
                         this._show_prev_big = false;
                     } else {
                         let _prev = this._mdate.yoy(-1, true);
-                        this._show_prev_big = this._mds.compared(this._view, _prev.start, this._minDate) === 1;
+                        this._show_prev_big = this._mds.compared(this._view, _prev.start, _minDate) === 1;
                     }
                 });
 
-                mu.run(this._maxDate, () => {
-                    this._show_next_small = this._mds.compared(this._view, this._mdate.months.end, this._maxDate) === -1;
+                mu.run(this._nextDate || this._maxDate, (_maxDate) => {
+                    this._show_next_small = this._mds.compared(this._view, this._mdate.months.end, _maxDate) === -1;
                     if (!this._show_next_small) {
                         this._show_next_big = false;
                     } else {
                         let _next_year = this._mdate.mom(12);
-                        this._show_next_big = this._mds.compared(this._view, _next_year.start, this._maxDate) === -1;
+                        this._show_next_big = this._mds.compared(this._view, _next_year.start, _maxDate) === -1;
                     }
                 });
 
@@ -133,6 +141,7 @@ export class MnDateCalendarComponent implements OnInit {
     }
 
     _show_prev_small: boolean = true;
+
     prevSmall() {
         switch (this._view) {
             case 'days':
@@ -144,6 +153,7 @@ export class MnDateCalendarComponent implements OnInit {
     }
 
     _show_next_big: boolean = true;
+
     nextBig() {
         switch (this._view) {
             case 'days':
@@ -153,6 +163,7 @@ export class MnDateCalendarComponent implements OnInit {
     }
 
     _show_next_small: boolean = true;
+
     nextSmall() {
         switch (this._view) {
             case 'days':

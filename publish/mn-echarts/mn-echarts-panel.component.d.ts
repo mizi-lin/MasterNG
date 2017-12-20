@@ -17,6 +17,7 @@ export declare class MnEchartsPanelComponent implements OnChanges {
     filename: string;
     loader: ElementRef;
     loaderStyle: any;
+    _reqResult($event: any): any;
     /**
      * show_tools
      * show, toggle

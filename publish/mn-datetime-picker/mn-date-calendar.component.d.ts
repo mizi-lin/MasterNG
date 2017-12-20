@@ -12,6 +12,8 @@ export declare class MnDateCalendarComponent implements OnInit {
     maxDate_: any;
     _minDate: any;
     minDate_: any;
+    _prevDate: any;
+    _nextDate: any;
     _startDate: any;
     _endDate: any;
     _hoverDate: any;

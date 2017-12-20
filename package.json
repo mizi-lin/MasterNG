@@ -1,6 +1,6 @@
 {
   "name": "masterng",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -9,9 +9,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "release:lib": "bash ./build.sh",
+    "release": "bash ./build.sh",
     "pub:lib": "bash ./publish.sh",
-    "pub": "npm run release:lib && npm run pub:lib",
+    "pub": "npm run release && npm run pub:lib",
     "git": "bash ./git-deploy.sh"
   },
   "private": false,
