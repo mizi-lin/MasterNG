@@ -25,6 +25,10 @@ export class MnDate {
 
     constructor(dateValue?: any, formatter?: string) {
 
+        if (mu.isEmpty(dateValue)) {
+            return void 0;
+        }
+
         if (!mu.or(mu.type(dateValue), 'date', 'string', 'number')) {
             return dateValue;
         }

@@ -11,7 +11,7 @@ declare const mu: any;
 @Component({
     selector: 'mn-datemultiple',
     template: `
-        <mn-fill>
+        <mn-fill [gutter]="16">
             <mn-col [span]="1">
                 <mn-datecalendar
                         [mnMinDate]="_minDate"
@@ -23,9 +23,9 @@ declare const mu: any;
 
                         [mnYear]="_prev.days.year"
                         [mnMonth]="_prev.days.month"
-                        
+
                         [mnNextDate]="_next"
-                        
+
                         (mnResult)="getPreCalendar($event)"
                         (mnStartEnd)="getStartEnd($event)"
                         (mnHover)="_hoverDate = $event"></mn-datecalendar>
@@ -45,6 +45,7 @@ declare const mu: any;
 
                         [mnPrevDate]="_prev"
 
+                        (mnResult)="getNextCalendar($event)"
                         (mnStartEnd)="getStartEnd($event)"
                         (mnHover)="_hoverDate = $event"></mn-datecalendar>
             </mn-col>
@@ -91,8 +92,6 @@ export class MnDateMultipleComponent implements OnInit {
     _prev: any = {};
     _next: any = {};
 
-    _nextMinDate: any = {};
-
     constructor() {
 
     }
@@ -106,12 +105,11 @@ export class MnDateMultipleComponent implements OnInit {
     }
 
     getPreCalendar(ds) {
-        // let _next = ds.mom(1);
-        // if (!this.getPreCalendar['first']) {
-        //     this._next.year = _next.year;
-        //     this._next.month = _next.month;
-        //     this.getPreCalendar['first'] = true;
-        // }
+        this._prev = ds;
+    }
+
+    getNextCalendar(ds) {
+        this._next = ds;
     }
 
     /**

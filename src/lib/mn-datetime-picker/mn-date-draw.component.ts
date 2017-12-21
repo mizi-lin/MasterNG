@@ -12,6 +12,15 @@ declare const mu: any;
 @Component({
     selector: 'mn-datedraw',
     template: `
+        <mn-fill [gutter]="2" *ngIf="_view === 'days'" class="mnc-weekdays">
+            <mn-col [span]="1">Mo</mn-col>
+            <mn-col [span]="1">Tu</mn-col>
+            <mn-col [span]="1">We</mn-col>
+            <mn-col [span]="1">Th</mn-col>
+            <mn-col [span]="1">Fr</mn-col>
+            <mn-col [span]="1">Sa</mn-col>
+            <mn-col [span]="1">Su</mn-col>
+        </mn-fill>
         <mn-fill [gutter]="2" *ngFor="let rows of _frames">
             <mn-col [span]="1" *ngFor="let dt of rows">
                 <mn-datesingle
@@ -319,18 +328,15 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
      * @param dt
      */
     getStartEndDate(dt) {
-        if (this._max || this._min) {
-            return;
-        }
 
         if (this._mds.range(this._view, dt, this._minDate, this._maxDate) !== 2) {
             return;
         }
 
-        if (this._endDate) {
+        if (mu.isNotEmpty(this._endDate)) {
             this._startDate = dt;
             this._endDate = void 0;
-        } else if (this._startDate) {
+        } else if (mu.isNotEmpty(this._startDate)) {
             // startDate must lg endDate
             if (this._startDate._d > dt._d) {
                 this._endDate = this._startDate;
@@ -338,6 +344,7 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
             } else {
                 this._endDate = dt;
             }
+
         } else {
             this._startDate = dt;
         }

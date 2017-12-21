@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {MnDate} from './mn-date.class';
 import {MnDatetimeServices} from './mn-datetime.services';
 
@@ -8,23 +7,22 @@ declare const mu: any;
 /**
  * 构建日期视图
  */
-
 @Component({
     selector: 'mn-datecalendar',
     encapsulation: ViewEncapsulation.None,
     styleUrls: ['./mn-date2.scss'],
     template: `
         <mn-fill [hph]="false" class="mnc-header">
-            <mn-col [style.width.px]="60" class="mnc-header-prev">
+            <mn-col [style.width.px]="60" class="pl-8 prev">
                 <i class="fa fa-angle-double-left" *ngIf="_tools && _show_prev_big"
                    (click)="prevBig()"></i>
                 <i class="fa fa-angle-left" *ngIf="_tools && _show_prev_small"
                    (click)="prevSmall()"></i>
             </mn-col>
-            <mn-col [span]="1" class="mnc-header-current">
+            <mn-col [span]="1" class="mnc-tc">
                 {{_title}}
             </mn-col>
-            <mn-col [style.width.px]="60" class="mnc-header-next">
+            <mn-col [style.width.px]="60" class="pr-8 mnc-tr next">
                 <i class="fa fa-angle-right" *ngIf="_tools && _show_next_small"
                    (click)="nextSmall()"></i>
                 <i class="fa fa-angle-double-right" *ngIf="_tools && _show_next_big"
@@ -33,6 +31,7 @@ declare const mu: any;
         </mn-fill>
 
         <mn-datedraw
+                class="mt-4"
                 [mnYear]="_year"
                 [mnMonth]="_month"
                 [mnDay]="_day"
@@ -68,9 +67,49 @@ export class MnDateCalendarComponent implements OnInit {
         this._minDate = new MnDate(dt);
     }
 
+    _nextDate: any;
+    @Input('mnNextDate')
+    set nextDate(value: any) {
+        this._nextDate = value;
 
-    @Input('mnPrevDate') _prevDate: any;
-    @Input('mnNextDate') _nextDate: any;
+        mu.run(this._mdate, () => {
+
+            let _nextMaxDate = mu.run(this._nextDate, () => {
+                return new MnDate(this._nextDate.mom(-1).end);
+            });
+
+            mu.run(_nextMaxDate || this._maxDate, (_maxDate) => {
+                this._show_next_small = this._mds.compared(this._view, this._mdate.months.end, _maxDate) === -1;
+                if (!this._show_next_small) {
+                    this._show_next_big = false;
+                } else {
+                    let _next_year = this._mdate.mom(12);
+                    this._show_next_big = this._mds.compared(this._view, _next_year.start, _maxDate) === -1;
+                }
+            });
+        });
+    }
+
+    _prevDate: any;
+    @Input('mnPrevDate')
+    set prevDate(value: any) {
+        this._prevDate = value;
+        mu.run(this._mdate, () => {
+            let _prevMinDate = mu.run(this._prevDate, () => {
+                return new MnDate(this._prevDate.mom(1).start);
+            });
+
+            mu.run(_prevMinDate || this._minDate, (_minDate) => {
+                this._show_prev_small = this._mds.compared(this._view, this._mdate.months.start, _minDate) === 1;
+                if (!this._show_prev_small) {
+                    this._show_prev_big = false;
+                } else {
+                    let _prev = this._mdate.yoy(-1, true);
+                    this._show_prev_big = this._mds.compared(this._view, _prev.start, _minDate) === 1;
+                }
+            });
+        });
+    }
 
     @Input('mnStartDate') _startDate: any;
     @Input('mnEndDate') _endDate: any;
@@ -95,6 +134,7 @@ export class MnDateCalendarComponent implements OnInit {
     }
 
     getResult($event) {
+
         this._mdate = $event;
         switch (this._view) {
             case 'days':
@@ -114,7 +154,11 @@ export class MnDateCalendarComponent implements OnInit {
                     }
                 });
 
-                mu.run(this._nextDate || this._maxDate, (_maxDate) => {
+                let _nextMaxDate = mu.run(this._nextDate, () => {
+                    return new MnDate(this._nextDate.mom(-1).end);
+                });
+
+                mu.run(_nextMaxDate || this._maxDate, (_maxDate) => {
                     this._show_next_small = this._mds.compared(this._view, this._mdate.months.end, _maxDate) === -1;
                     if (!this._show_next_small) {
                         this._show_next_big = false;

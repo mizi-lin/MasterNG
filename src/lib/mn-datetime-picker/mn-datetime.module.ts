@@ -18,6 +18,7 @@ import {MnDateSingleComponent} from './mn-date-single.component';
 import {MnDateDrawComponent} from './mn-date-draw.component';
 import {MnDateMultipleComponent} from './mn-date-multiple.component';
 import {MnDateCalendarComponent} from './mn-date-calendar.component';
+import {MnDatePickerComponent} from './mn-date-picker.component';
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import {MnDateCalendarComponent} from './mn-date-calendar.component';
         MnDateSingleComponent,
         MnDateDrawComponent,
         MnDateCalendarComponent,
-        MnDateMultipleComponent
+        MnDateMultipleComponent,
+        MnDatePickerComponent
     ],
 
     exports: [
@@ -57,7 +59,8 @@ import {MnDateCalendarComponent} from './mn-date-calendar.component';
         MnDateSingleComponent,
         MnDateDrawComponent,
         MnDateCalendarComponent,
-        MnDateMultipleComponent
+        MnDateMultipleComponent,
+        MnDatePickerComponent
     ],
 
     providers: [

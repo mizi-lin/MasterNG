@@ -1,48 +1,80 @@
-.start {
-    background: #0e77ca;
-}
 
-.end {
-    background: #ed6b75;
-}
-
-.range {
-    background: #fff000;
-}
-
-.hover {
-    background: rgba(255, 240, 0, .5);
-}
-
-.re-hover {
-    background: rgba(14, 119, 202, .3);
-}
-
-.max {
-    color: #aaa;
-    text-decoration: line-through;
-}
-
-.min {
-    color: #f00;
-    text-decoration: line-through;
-}
-
-.current {
-    cursor: pointer;
-    &:not(.max):not(.min):hover {
-        background: rgba(237, 107, 117, .8);
-    }
-}
-
-.next, .prev {
-    color: #ccc;
-}
 
 mn-datesingle,
 mn-datecalendar,
 mn-datedraw,
-mn-datemultiple {
+mn-datemultiple,
+mn-datepicker {
     display: block;
 }
 
+mn-datepicker {
+    .mnc-picker {
+        padding-right: 8px;
+        height: 28px !important;
+        border: 1px solid #dedede;
+        border-radius: 3px;
+
+        mn-input {
+            height: 100%;
+            border: 1px solid transparent;
+            min-width: 105px;
+        }
+    }
+}
+
+mn-datecalendar {
+}
+
+.mnc-weekdays > mn-col,
+mn-datesingle {
+    margin-bottom: 2px;
+    padding: 4px;
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    border-radius: 2px;
+}
+
+mn-datedraw {
+    .start {
+        background: rgba(61, 168, 245, .3);
+    }
+
+    .end {
+        background: rgba(61, 168, 245, .5);
+    }
+
+    .range {
+        background: rgba(226, 242, 254, 1);
+    }
+
+    .hover {
+        background: rgba(255, 240, 0, .5);
+    }
+
+    .re-hover {
+        background: rgb(254, 242, 226);
+    }
+
+    .max {
+        color: #aaa;
+        text-decoration: line-through;
+    }
+
+    .min {
+        color: #aaa;
+        text-decoration: line-through;
+    }
+
+    .current {
+        cursor: pointer;
+        &:not(.max):not(.min):hover {
+            background: rgba(237, 107, 117, .8);
+        }
+    }
+
+    .next, .prev {
+        color: #999;
+    }
+}
