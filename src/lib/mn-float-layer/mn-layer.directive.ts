@@ -11,9 +11,6 @@ declare const mu: any;
  * 将浮层（floatLayer) 移到根目录下（body）
  * 以此更能准确的定位（position: absolute)
  */
-
-let nextUniqueId: number = 0;
-
 export class MnLayerContext {
     public $implicit: any = null;
     public mnLayer: any = null;
@@ -66,7 +63,7 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
 
     _clear: any;
     _showed: boolean = false;
-    _layer: HTMLElement;
+    _layer: any;
 
     private _context: MnLayerContext = new MnLayerContext();
     private _viewRef: EmbeddedViewRef<MnLayerContext>;
@@ -88,11 +85,7 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
     }
 
     _createLayerElement() {
-        let layer = document.createElement('div');
-        layer.id = `mnc-layer-${nextUniqueId++}`;
-        layer.classList.add('mnc-layer');
-        layer.classList.add(this._module);
-        this._ms.getContainer().appendChild(layer);
+        let layer = this._ms.createLayerElement(this._module);
         this._layer = layer;
 
         // 绑定事件
@@ -102,12 +95,12 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
         });
 
         // 移出下拉框，隐藏下拉框
-        // this._render.listen(layer, 'mouseleave', () => {
-        //     this._clear = setTimeout(() => {
-        //         this._hide();
-        //         this._showed = false;
-        //     }, 500);
-        // });
+        this._render.listen(layer, 'mouseleave', () => {
+            this._clear = setTimeout(() => {
+                this._hide();
+                this._showed = false;
+            }, 500);
+        });
 
         // 绑定隐藏事件
         mu.run(this._hide_evt, () => {

@@ -13,13 +13,13 @@ declare const mu: any;
     selector: 'mn-datedraw',
     template: `
         <mn-fill [gutter]="2" *ngIf="_view === 'days'" class="mnc-weekdays">
+            <mn-col [span]="1">Su</mn-col>
             <mn-col [span]="1">Mo</mn-col>
             <mn-col [span]="1">Tu</mn-col>
             <mn-col [span]="1">We</mn-col>
             <mn-col [span]="1">Th</mn-col>
             <mn-col [span]="1">Fr</mn-col>
             <mn-col [span]="1">Sa</mn-col>
-            <mn-col [span]="1">Su</mn-col>
         </mn-fill>
         <mn-fill [gutter]="2" *ngFor="let rows of _frames">
             <mn-col [span]="1" *ngFor="let dt of rows">
@@ -275,7 +275,9 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
                 let next = mndate.mom(1);
 
                 // pre month
-                mu.each(pre.endWeekday, (i, ii) => {
+                // su -> sa pre.endWeekday + 1
+                // mo -> su pre.endWeekday
+                mu.each(pre.endWeekday + 1, (i, ii) => {
                     _pools.unshift({
                         st: 'prev',
                         d: pre.days - ii,

@@ -6,8 +6,11 @@ var mn_layer_container_service_1 = require("./mn-layer-container.service");
  * 将浮层（floatLayer) 移到根目录下（body）
  * 以此更能准确的定位（position: absolute)
  */
-var nextUniqueId = 0;
-var MnLayerContext = (function () {
+var /**
+ * 将浮层（floatLayer) 移到根目录下（body）
+ * 以此更能准确的定位（position: absolute)
+ */
+MnLayerContext = (function () {
     function MnLayerContext() {
         this.$implicit = null;
         this.mnLayer = null;
@@ -74,11 +77,7 @@ var MnLayerDirective = (function () {
     };
     MnLayerDirective.prototype._createLayerElement = function () {
         var _this = this;
-        var layer = document.createElement('div');
-        layer.id = "mnc-layer-" + nextUniqueId++;
-        layer.classList.add('mnc-layer');
-        layer.classList.add(this._module);
-        this._ms.getContainer().appendChild(layer);
+        var layer = this._ms.createLayerElement(this._module);
         this._layer = layer;
         // 绑定事件
         this._render.listen(layer, 'mouseover', function () {

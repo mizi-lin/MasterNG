@@ -5,6 +5,9 @@ var core_1 = require("@angular/core");
 var DAY_TS = 86400000;
 var MnDate = (function () {
     function MnDate(dateValue, formatter) {
+        if (mu.isEmpty(dateValue)) {
+            return void 0;
+        }
         if (!mu.or(mu.type(dateValue), 'date', 'string', 'number')) {
             return dateValue;
         }

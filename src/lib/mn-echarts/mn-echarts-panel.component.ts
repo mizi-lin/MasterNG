@@ -89,9 +89,6 @@ declare const mu: any, jQuery: any;
                     <ng-template [ngIf]="toolMap['sort']">
                         <mn-col [order]="toolMap['sort'].order"
                                 [class.active]="statusMap.sortClick">
-
-                            <!-- <todo 暂时先使用 nz-zorro> -->
-
                             <mn-dropdown (mnResult)="_dropDownResult = $event">
                                 <i class="icon iconfont icon-sort-copy" mnTooltip="icon-sort-copy"></i>
                                 <mn-dropdown-content>

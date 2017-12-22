@@ -22,5 +22,7 @@ export declare class MnReqServices {
      */
     _noDataComponent: any;
     setNoDataComponent(component: any): void;
+    _restful: boolean;
+    setRestful(b: boolean): void;
     constructor();
 }

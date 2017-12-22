@@ -17,6 +17,7 @@ export declare class MnReqHttpComponent implements OnChanges, OnDestroy {
     delay: number;
     result: any;
     _observable: Subscriber<any>;
+    _restful: boolean;
     isNoData: boolean;
     noDataComponent: any;
     process: number;

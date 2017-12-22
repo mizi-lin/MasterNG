@@ -46,6 +46,7 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
     @Output() result: any = new EventEmitter<any>();
 
     _observable: Subscriber<any>;
+    _restful: boolean = true;
 
     isNoData: boolean = false;
 
@@ -55,6 +56,9 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
 
     constructor(private _http: HttpClient,
                 private _rs: MnReqServices) {
+
+        this._restful = mu.ifnvl(this._rs._restful, true);
+
     }
 
     reqHttp(req: any): void {
@@ -85,7 +89,7 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
         this._observable = source.subscribe((res) => {
             this.process = 100;
             res = res || {};
-            mu.run(res.data, () => {
+            mu.run(this._restful ? res.data : res, () => {
                 this.isNoData = false;
             }, () => {
                 this.isNoData = true;

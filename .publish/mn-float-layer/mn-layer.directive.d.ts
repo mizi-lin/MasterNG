@@ -1,5 +1,9 @@
 import { AfterViewInit, OnInit, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 import { MnLayerContainerService } from './mn-layer-container.service';
+/**
+ * 将浮层（floatLayer) 移到根目录下（body）
+ * 以此更能准确的定位（position: absolute)
+ */
 export declare class MnLayerContext {
     $implicit: any;
     mnLayer: any;
@@ -18,7 +22,7 @@ export declare class MnLayerDirective implements OnInit, AfterViewInit {
     result: any;
     _clear: any;
     _showed: boolean;
-    _layer: HTMLElement;
+    _layer: any;
     private _context;
     private _viewRef;
     constructor(_render: Renderer2, _ms: MnLayerContainerService, _vcRef: ViewContainerRef, _tempRef: TemplateRef<MnLayerContext>);

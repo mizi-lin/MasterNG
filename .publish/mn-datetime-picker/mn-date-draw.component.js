@@ -226,7 +226,9 @@ var MnDateDrawComponent = (function () {
                 var pre_1 = mndate.mom(-1);
                 var next_1 = mndate.mom(1);
                 // pre month
-                mu.each(pre_1.endWeekday, function (i, ii) {
+                // su -> sa pre.endWeekday + 1
+                // mo -> su pre.endWeekday
+                mu.each(pre_1.endWeekday + 1, function (i, ii) {
                     _pools.unshift({
                         st: 'prev',
                         d: pre_1.days - ii,
@@ -291,17 +293,14 @@ var MnDateDrawComponent = (function () {
          * @param dt
          */
     function (dt) {
-        if (this._max || this._min) {
-            return;
-        }
         if (this._mds.range(this._view, dt, this._minDate, this._maxDate) !== 2) {
             return;
         }
-        if (this._endDate) {
+        if (mu.isNotEmpty(this._endDate)) {
             this._startDate = dt;
             this._endDate = void 0;
         }
-        else if (this._startDate) {
+        else if (mu.isNotEmpty(this._startDate)) {
             // startDate must lg endDate
             if (this._startDate._d > dt._d) {
                 this._endDate = this._startDate;
@@ -378,7 +377,7 @@ var MnDateDrawComponent = (function () {
     MnDateDrawComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'mn-datedraw',
-                    template: "\n        <mn-fill [gutter]=\"2\" *ngFor=\"let rows of _frames\">\n            <mn-col [span]=\"1\" *ngFor=\"let dt of rows\">\n                <mn-datesingle\n                        [mnMaxDate]=\"_maxDate\"\n                        [mnMinDate]=\"_minDate\"\n                        [mnStartDate]=\"_startDate\"\n                        [mnEndDate]=\"_endDate\"\n                        [mnHoverDate]=\"_hoverDate\"\n                        [mnDate]=\"dt?.mndate\"\n                        [mnStatus]=\"dt?.status\"\n                        [mnView]=\"_view\"\n                        (click)=\"getStartEndDate(dt?.mndate)\"\n                        (mouseover)=\"getHover(dt)\"></mn-datesingle>\n            </mn-col>\n        </mn-fill>\n    "
+                    template: "\n        <mn-fill [gutter]=\"2\" *ngIf=\"_view === 'days'\" class=\"mnc-weekdays\">\n            <mn-col [span]=\"1\">Su</mn-col>\n            <mn-col [span]=\"1\">Mo</mn-col>\n            <mn-col [span]=\"1\">Tu</mn-col>\n            <mn-col [span]=\"1\">We</mn-col>\n            <mn-col [span]=\"1\">Th</mn-col>\n            <mn-col [span]=\"1\">Fr</mn-col>\n            <mn-col [span]=\"1\">Sa</mn-col>\n        </mn-fill>\n        <mn-fill [gutter]=\"2\" *ngFor=\"let rows of _frames\">\n            <mn-col [span]=\"1\" *ngFor=\"let dt of rows\">\n                <mn-datesingle\n                        [mnMaxDate]=\"_maxDate\"\n                        [mnMinDate]=\"_minDate\"\n                        [mnStartDate]=\"_startDate\"\n                        [mnEndDate]=\"_endDate\"\n                        [mnHoverDate]=\"_hoverDate\"\n                        [mnDate]=\"dt?.mndate\"\n                        [mnStatus]=\"dt?.status\"\n                        [mnView]=\"_view\"\n                        (click)=\"getStartEndDate(dt?.mndate)\"\n                        (mouseover)=\"getHover(dt)\"></mn-datesingle>\n            </mn-col>\n        </mn-fill>\n    "
                 },] },
     ];
     /** @nocollapse */

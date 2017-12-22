@@ -17,6 +17,7 @@ import {DemoDatetimeComponent} from './demo-datetime/demo-datetime.component';
 import {CommonModule} from '@angular/common';
 import {DemoNodataComponent} from './demo-nodata/demo-nodata.component';
 import {MnCommonServices} from '../lib/mn-common/services/mn-common.services';
+import { DemoLayerComponent } from './demo-layer/demo-layer.component';
 
 @NgModule({
     imports: [
@@ -55,6 +56,11 @@ import {MnCommonServices} from '../lib/mn-common/services/mn-common.services';
             {
                 path: 'datetime',
                 component: DemoDatetimeComponent
+            },
+
+            {
+                path: 'layer',
+                component: DemoLayerComponent
             }
 
         ], {useHash: true}),
@@ -72,7 +78,8 @@ import {MnCommonServices} from '../lib/mn-common/services/mn-common.services';
         HeatWidgetComponent,
         DemoEchart2Component,
         DemoDatetimeComponent,
-        DemoNodataComponent
+        DemoNodataComponent,
+        DemoLayerComponent
     ],
 
     entryComponents: [

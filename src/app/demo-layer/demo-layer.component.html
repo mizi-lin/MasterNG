@@ -1,0 +1,17 @@
+<mn-panel-s [title]="'Create Modal'">
+
+    <button mn-btn class="info"
+        (click)="createModal({
+            title: 'this is a modal',
+            content: 'Read for one'
+        })">Create Modal</button>
+
+    <button mn-btn class="info"
+            (click)="createModal({
+                id: 'c2',
+                title: 'this is a modal',
+                content: 'abcdef',
+                mask: false
+            })">Create 2 Modal</button>
+
+</mn-panel-s>

@@ -10,7 +10,6 @@ var MnDateMultipleComponent = (function () {
         this._view = 'days';
         this._prev = {};
         this._next = {};
-        this._nextMinDate = {};
     }
     Object.defineProperty(MnDateMultipleComponent.prototype, "maxDate_", {
         set: function (dt) {
@@ -49,12 +48,10 @@ var MnDateMultipleComponent = (function () {
         this._endDate = ds.endDate;
     };
     MnDateMultipleComponent.prototype.getPreCalendar = function (ds) {
-        // let _next = ds.mom(1);
-        // if (!this.getPreCalendar['first']) {
-        //     this._next.year = _next.year;
-        //     this._next.month = _next.month;
-        //     this.getPreCalendar['first'] = true;
-        // }
+        this._prev = ds;
+    };
+    MnDateMultipleComponent.prototype.getNextCalendar = function (ds) {
+        this._next = ds;
     };
     /**
      * 重新计算startDate
@@ -118,7 +115,7 @@ var MnDateMultipleComponent = (function () {
     MnDateMultipleComponent.decorators = [
         { type: core_1.Component, args: [{
                     selector: 'mn-datemultiple',
-                    template: "\n        <mn-fill>\n            <mn-col [span]=\"1\">\n                <mn-datecalendar\n                        [mnMinDate]=\"_minDate\"\n                        [mnMaxDate]=\"_maxDate\"\n                        [mnStartDate]=\"_startDate\"\n                        [mnEndDate]=\"_endDate\"\n                        [mnHoverDate]=\"_hoverDate\"\n                        [mnView]=\"'days'\"\n\n                        [mnYear]=\"_prev.days.year\"\n                        [mnMonth]=\"_prev.days.month\"\n                        \n                        [mnNextDate]=\"_next\"\n                        \n                        (mnResult)=\"getPreCalendar($event)\"\n                        (mnStartEnd)=\"getStartEnd($event)\"\n                        (mnHover)=\"_hoverDate = $event\"></mn-datecalendar>\n            </mn-col>\n\n            <mn-col [span]=\"1\">\n                <mn-datecalendar\n                        [mnMinDate]=\"_minDate\"\n                        [mnMaxDate]=\"_maxDate\"\n                        [mnStartDate]=\"_startDate\"\n                        [mnEndDate]=\"_endDate\"\n                        [mnHoverDate]=\"_hoverDate\"\n                        [mnView]=\"'days'\"\n\n                        [mnYear]=\"_next.days.year\"\n                        [mnMonth]=\"_next.days.month\"\n\n                        [mnPrevDate]=\"_prev\"\n\n                        (mnStartEnd)=\"getStartEnd($event)\"\n                        (mnHover)=\"_hoverDate = $event\"></mn-datecalendar>\n            </mn-col>\n\n        </mn-fill>\n    "
+                    template: "\n        <mn-fill [gutter]=\"16\">\n            <mn-col [span]=\"1\">\n                <mn-datecalendar\n                        [mnMinDate]=\"_minDate\"\n                        [mnMaxDate]=\"_maxDate\"\n                        [mnStartDate]=\"_startDate\"\n                        [mnEndDate]=\"_endDate\"\n                        [mnHoverDate]=\"_hoverDate\"\n                        [mnView]=\"'days'\"\n\n                        [mnYear]=\"_prev.days.year\"\n                        [mnMonth]=\"_prev.days.month\"\n\n                        [mnNextDate]=\"_next\"\n\n                        (mnResult)=\"getPreCalendar($event)\"\n                        (mnStartEnd)=\"getStartEnd($event)\"\n                        (mnHover)=\"_hoverDate = $event\"></mn-datecalendar>\n            </mn-col>\n\n            <mn-col [span]=\"1\">\n                <mn-datecalendar\n                        [mnMinDate]=\"_minDate\"\n                        [mnMaxDate]=\"_maxDate\"\n                        [mnStartDate]=\"_startDate\"\n                        [mnEndDate]=\"_endDate\"\n                        [mnHoverDate]=\"_hoverDate\"\n                        [mnView]=\"'days'\"\n\n                        [mnYear]=\"_next.days.year\"\n                        [mnMonth]=\"_next.days.month\"\n\n                        [mnPrevDate]=\"_prev\"\n\n                        (mnResult)=\"getNextCalendar($event)\"\n                        (mnStartEnd)=\"getStartEnd($event)\"\n                        (mnHover)=\"_hoverDate = $event\"></mn-datecalendar>\n            </mn-col>\n\n        </mn-fill>\n    "
                 },] },
     ];
     /** @nocollapse */

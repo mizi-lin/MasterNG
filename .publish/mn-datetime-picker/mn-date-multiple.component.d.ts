@@ -15,11 +15,11 @@ export declare class MnDateMultipleComponent implements OnInit {
     _hoverDate: any;
     _prev: any;
     _next: any;
-    _nextMinDate: any;
     constructor();
     ngOnInit(): void;
     getStartEnd(ds: any): void;
     getPreCalendar(ds: any): void;
+    getNextCalendar(ds: any): void;
     /**
      * 重新计算startDate
      * @param dt

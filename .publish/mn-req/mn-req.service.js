@@ -38,6 +38,9 @@ var MnReqServices = (function () {
     MnReqServices.prototype.setNoDataComponent = function (component) {
         this._noDataComponent = component;
     };
+    MnReqServices.prototype.setRestful = function (b) {
+        this._restful = b;
+    };
     MnReqServices.decorators = [
         { type: core_1.Injectable },
     ];

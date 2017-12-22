@@ -60,6 +60,12 @@ export class MnReqServices {
         this._noDataComponent = component;
     }
 
+    _restful: boolean;
+
+    setRestful(b: boolean) {
+        this._restful = b;
+    }
+
     constructor() {
     }
 }

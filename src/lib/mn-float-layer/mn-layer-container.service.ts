@@ -1,4 +1,5 @@
 import {Injectable, OnDestroy} from '@angular/core';
+import {MnDate} from '../mn-datetime-picker/mn-date.class';
 
 declare const mu: any;
 
@@ -6,6 +7,7 @@ declare const mu: any;
 export class MnLayerContainerService implements OnDestroy {
 
     protected _containerElement: HTMLElement;
+    protected _nextUniqueId: number = 1;
 
     constructor() {
     }
@@ -24,6 +26,16 @@ export class MnLayerContainerService implements OnDestroy {
         container.classList.add('mnc-layer-container');
         document.body.appendChild(container);
         this._containerElement = container;
+    }
+
+    createLayerElement(moduleName: string, id?: string) {
+        id = `mnc-layer-${id || (this._nextUniqueId++)}`;
+        let layer = document.querySelector(`#${id}`) || document.createElement('div');
+        layer.id = id;
+        layer.classList.add('mnc-layer');
+        layer.classList.add(moduleName);
+        this.getContainer().appendChild(layer);
+        return layer;
     }
 }
 

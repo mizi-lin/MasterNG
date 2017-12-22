@@ -13,6 +13,7 @@ var MnReqHttpComponent = (function () {
         this.showNoData = true;
         this.delay = 500;
         this.result = new core_1.EventEmitter();
+        this._restful = true;
         this.isNoData = false;
         this.noDataComponent = this._rs._noDataComponent || mn_req_nodata_component_1.MnReqNoDataComponent;
         this.process = 0;
@@ -22,6 +23,7 @@ var MnReqHttpComponent = (function () {
                 _this.reqHttp(req);
             });
         }, this.delay);
+        this._restful = mu.ifnvl(this._rs._restful, true);
     }
     MnReqHttpComponent.prototype.reqHttp = function (req) {
         var _this = this;
@@ -50,7 +52,7 @@ var MnReqHttpComponent = (function () {
         this._observable = source.subscribe(function (res) {
             _this.process = 100;
             res = res || {};
-            mu.run(res.data, function () {
+            mu.run(_this._restful ? res.data : res, function () {
                 _this.isNoData = false;
             }, function () {
                 _this.isNoData = true;
