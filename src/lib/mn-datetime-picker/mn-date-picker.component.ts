@@ -46,6 +46,7 @@ declare const mu: any;
 export class MnDatePickerComponent implements OnInit {
 
     _dropDownResult: any;
+    _selected: any = {};
 
     constructor() {
     }

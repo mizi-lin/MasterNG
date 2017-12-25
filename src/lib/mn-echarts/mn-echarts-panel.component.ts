@@ -175,7 +175,7 @@ export class MnEchartsPanelComponent implements OnChanges {
     @Input() loader: ElementRef;
     @Input() loaderStyle: any;
 
-    @Input('mnReqResult') _reqResult($event: any = {}) {
+    @Input('mnReqResult') _reqResult($event: any = {}, data: any = {}) {
         return $event.data;
     }
 
