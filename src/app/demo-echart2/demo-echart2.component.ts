@@ -14,14 +14,22 @@ export class DemoEchart2Component implements OnInit {
 
     height: number = 350;
 
+    req: any = {url: './assets/store/echart-map.json'};
+
     ngOnInit() {
 
-        // setInterval(() => {
-        //     this.height += 20;
-        // }, 1000);
+        setTimeout(() => {
+            this.req = {url: './assets/store/echart-map2.json'};
+
+            setTimeout(() => {
+                this.req = {url: './assets/store/echart-map.json'};
+            }, 3000);
+
+        }, 3000);
     }
 
     _abc(data) {
+        data = data.data;
         return mu.map(data, (o, i) => {
             if (i) {
                 return o;

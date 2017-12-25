@@ -12,12 +12,12 @@ declare const mu: any;
         <ng-template [ngIf]="loading">
             <mn-loader-bar [loader]="loader"
                            [loaderStyle]="loaderStyle"
-                           [progress]="process"></mn-loader-bar>
+                           [progress]="_process"></mn-loader-bar>
         </ng-template>
         <ng-container *ngIf="showNoData">
-            <mn-dynamic-component *ngIf="isNoData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
+            <mn-dynamic-component *ngIf="_isNoData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
         </ng-container>
-        <ng-container *ngIf="showNoData ? !isNoData : true">
+        <ng-container *ngIf="showNoData ? !_isNoData : true">
             <ng-content></ng-content>
         </ng-container>
 
@@ -32,21 +32,13 @@ declare const mu: any;
 })
 export class MnReqHttpComponent implements OnChanges, OnDestroy {
 
+    @Output() result: any = new EventEmitter<any>();
+
     @Input() req: any;
     @Input() params: any;
     @Input() payload: any;
 
-    @Input('mnData')
-    set data_(res) {
-        res = res || {};
-        mu.run(this._restful ? res.data : res, () => {
-            this.isNoData = false;
-        }, () => {
-            this.isNoData = true;
-        });
-
-        this.result.emit(res);
-    }
+    @Input('mnData') data: any;
 
     @Input() context: any;
     @Input() loader: ElementRef;
@@ -54,17 +46,12 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
     @Input() loaderStyle: any;
     @Input() showNoData: boolean = true;
     @Input() delay: number = 500;
-
-    @Output() result: any = new EventEmitter<any>();
+    @Input() noDataComponent: any = this._rs._noDataComponent || MnReqNoDataComponent;
 
     _observable: Subscriber<any>;
     _restful: boolean = true;
-
-    isNoData: boolean = false;
-
-    @Input() noDataComponent: any = this._rs._noDataComponent || MnReqNoDataComponent;
-
-    process: number = 0;
+    _isNoData: boolean = false;
+    _process: number = 0;
 
     constructor(private _http: HttpClient,
                 private _rs: MnReqServices) {
@@ -99,19 +86,24 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
         });
 
         this._observable = source.subscribe((res) => {
-            this.process = 100;
+            this._process = 100;
             res = res || {};
             mu.run(this._restful ? res.data : res, () => {
-                this.isNoData = false;
+                this._isNoData = false;
             }, () => {
-                this.isNoData = true;
+                this._isNoData = true;
             });
-
             this.result.emit(res);
-        }, () => {
-            this.process = 100;
-        }, () => {
-            this.process = 100;
+        },
+        // error
+        () => {
+            this._process = 100;
+            this._isNoData = true;
+            this.result.emit({});
+        },
+        // completed
+        () => {
+            this._process = 100;
         });
 
     }
@@ -119,7 +111,7 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
     ngOnChanges(changes: SimpleChanges) {
 
         mu.run(this.req, () => {
-            this.process = mu.randomInt(0, 49);
+            this._process = mu.randomInt(0, 49);
             this.processStep();
         });
 
@@ -141,6 +133,16 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
             this.debounceReqHttp(this.req);
         });
 
+        /**
+         * req 与 data 二者只可同时生效其一
+         * req 占主导位置
+         */
+        mu.run(!this.req && changes['data'], () => {
+            let res = mu.prop(this.data, 'data') || this.data || {};
+            this._isNoData = mu.isEmpty(res);
+            this.result.emit(res);
+        });
+
     }
 
     ngOnDestroy(): void {
@@ -156,8 +158,8 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
 
     processStep(): any {
         const tid = setTimeout(() => {
-            if (this.process < mu.randomInt(75, 85)) {
-                this.process = this.process * 1.05;
+            if (this._process < mu.randomInt(75, 85)) {
+                this._process = this._process * 1.05;
                 this.processStep();
             } else {
                 clearTimeout(tid);

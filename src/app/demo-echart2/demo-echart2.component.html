@@ -32,30 +32,36 @@
     <!--</mn-panel-s>-->
 
     <!--<mn-echarts-panel class="bordered" title="EchartsPanel::bar mn-panel && tools"-->
-                      <!--[req]="{url: './assets/store/echarts-bar.json'}"-->
-                      <!--[type]="'bar'"-->
-                      <!--[show_tools]="'show'"-->
-                      <!--[tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"-->
-                      <!--[setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}"-->
-                      <!--[hph]="'auto'"-->
-                      <!--height="300px">-->
+    <!--[req]="{url: './assets/store/echarts-bar.json'}"-->
+    <!--[type]="'bar'"-->
+    <!--[show_tools]="'show'"-->
+    <!--[tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"-->
+    <!--[setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}"-->
+    <!--[hph]="'auto'"-->
+    <!--height="300px">-->
     <!--</mn-echarts-panel>-->
 
     <!--<mn-echarts [type]="'map'" [options]="{-->
-        <!--series: [{-->
-            <!--type: 'map',-->
-            <!--map: 'china'-->
-        <!--}]-->
+    <!--series: [{-->
+    <!--type: 'map',-->
+    <!--map: 'china'-->
+    <!--}]-->
     <!--}" [style.height.px]="400">-->
     <!--</mn-echarts>-->
 
-    <mn-echarts-panel class="bordered" title="EchartsPanel::map mn-panel && tools"
-                      [req]="{url: './assets/store/echart-map.json'}"
-                      [mnReqResult]="_abc"
-                      [type]="'map'"
-                      [hph]="'auto'"
-                      height="300px">
-    </mn-echarts-panel>
+    <mn-req
+            [showNoData]="false"
+            [req]="req"
+            (result)="data = $event.data">
+
+        <mn-echarts-panel class="bordered" title="EchartsPanel::map mn-panel && tools"
+                          [data]="data"
+                          [type]="'map'"
+                          [hph]="'auto'"
+                          height="300px">
+        </mn-echarts-panel>
+
+    </mn-req>
 
     <!--<div class="mt-16 mb-16" mnElement #abc="element" [ngStyle]="{'height': '200px', 'background': '#f00'}">-->
 
