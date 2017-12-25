@@ -22,7 +22,7 @@ if [ $? -eq 0 ]; then
     echo '::::::::::: 删除临时目录 .publish'
         rm -rf ./.publish
 
-    echo ':::::::::::: 将编译结果提交到Git'
+    echo ':::::::::::: Git Mark 此次修改信息'
     git add .
     git commit -am "$_ov -> $_uv"
     git pull
