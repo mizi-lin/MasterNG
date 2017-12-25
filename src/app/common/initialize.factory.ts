@@ -82,6 +82,13 @@ export function InitializeFactory(_initServ: InitializeService,
          */
         _mcs._reqService.setNoDataComponent(DemoNodataComponent);
 
+        /**
+         * _reqService.setRestful
+         * 设置response数据是否使用 restful 数据格式
+         * restful 数据格式  { data: {} || [] }
+         */
+        _mcs._reqService.setRestful(true);
+
         // ************************************
         // _ruleService
         // 规则（Auth）配置
