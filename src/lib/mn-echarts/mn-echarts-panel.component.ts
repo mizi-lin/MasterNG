@@ -124,6 +124,7 @@ declare const mu: any, jQuery: any;
                         [loader]="loader"
                         [loaderStyle]="loaderStyle"
                         [req]="req"
+                        [mnData]="data"
                         (result)="_data = _reqResult($event.data, $event) || $event.data">
 
                     <div class="mn-dataView" *ngIf="_show_dataView">

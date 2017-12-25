@@ -121,3 +121,9 @@
 0.3.6, 0.3.7, 0.3.8
 
 * 添加 echart type for map
+
+0.3.9 - 0.3.13
+
+* 修正 mnReq 支持空传data属性的数据变化
+* 修正 mnReq 支持 no restful 返回数据类型变化
+* .publish 不再主动提交到 git

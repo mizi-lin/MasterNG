@@ -36,7 +36,7 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
     @Input() params: any;
     @Input() payload: any;
 
-    @Input()
+    @Input('mnData')
     set data_(res) {
         res = res || {};
         mu.run(this._restful ? res.data : res, () => {
@@ -44,6 +44,8 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
         }, () => {
             this.isNoData = true;
         });
+
+        this.result.emit(res);
     }
 
     @Input() context: any;
