@@ -18,18 +18,15 @@ export class MnModalServices {
     }
 
     open(config: any = {}) {
+        if (config.id) {
+            this._layer = this._lcs.createLayerElement('mn-modal', config.id);
+        } else if (!this._layer) {
+            this._layer = this._lcs.createLayerElement('mn-modal');
+        }
 
-        // if (config.id) {
-        //     this._layer = this._lcs.createLayerElement('mn-modal', config.id);
-        // } else if (!this._layer) {
-        //     this._layer = this._lcs.createLayerElement('mn-modal');
-        // }
-        //
-        // this._layer.innerHTML = `<mn-modal [title]="config.title"></mn-modal>`;
-        //
-        // this._appRef.bootstrap(MnModalComponent, this._layer);
+        this._layer.innerHTML = `<mn-modal [title]="config.title"></mn-modal>`;
 
-        // _nt.remove();
+        this._appRef.bootstrap(MnModalComponent, this._layer);
     }
 
 }

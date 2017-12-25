@@ -35,7 +35,17 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
     @Input() req: any;
     @Input() params: any;
     @Input() payload: any;
-    @Input() data: any;
+
+    @Input()
+    set data_(res) {
+        res = res || {};
+        mu.run(this._restful ? res.data : res, () => {
+            this.isNoData = false;
+        }, () => {
+            this.isNoData = true;
+        });
+    }
+
     @Input() context: any;
     @Input() loader: ElementRef;
     @Input() loading: boolean = true;
