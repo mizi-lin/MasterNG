@@ -19,6 +19,9 @@ if [ $? -eq 0 ]; then
     echo '::::::::: 将package.json写回主项目'
         cp -R ./.publish/package.json ./package.json
 
+    echo '::::::::::: 删除临时目录 .publish'
+        rm -rf ./.publish
+
     echo ':::::::::::: 将编译结果提交到Git'
     git add .
     git commit -am "$_ov -> $_uv"
