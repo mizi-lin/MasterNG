@@ -3,10 +3,8 @@ import {MnReqNoDataComponent} from './mn-req-nodata.component';
 import {Subscriber} from 'rxjs/Subscriber';
 import {MnReqServices} from './mn-req.service';
 import {HttpClient} from '@angular/common/http';
-import {setTimeout} from 'timers';
 
 declare const mu: any;
-
 @Component({
     selector: 'mn-req, mn-http',
     template: `
