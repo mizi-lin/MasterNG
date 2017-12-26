@@ -102,7 +102,7 @@ export class MnDatetimeServices {
     }
 
     reStartDate(startDate, maxDate, minDate) {
-        if (!mu.isEmpty(startDate)) {
+        if (mu.isEmpty(startDate)) {
             return startDate;
         }
 
@@ -119,7 +119,7 @@ export class MnDatetimeServices {
     }
 
     reEndDate(endDate, maxDate, minDate) {
-        if (!mu.isEmpty(endDate)) {
+        if (mu.isEmpty(endDate)) {
             return endDate;
         }
 

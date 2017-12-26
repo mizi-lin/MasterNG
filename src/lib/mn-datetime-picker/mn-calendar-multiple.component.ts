@@ -48,7 +48,7 @@ export class MnCalendarMultipleComponent implements OnInit, OnChanges {
 
     @Input('mnMinDate')
     set minDate(date) {
-        if (!mu.isEmpty(date)) {
+        if (mu.isEmpty(date)) {
             return;
         }
         this.minDate_ = new MnDate(date);
@@ -56,7 +56,7 @@ export class MnCalendarMultipleComponent implements OnInit, OnChanges {
 
     @Input('mnMaxDate')
     set maxDate(date) {
-        if (!mu.isEmpty(date)) {
+        if (mu.isEmpty(date)) {
             return;
         }
         this.maxDate_ = new MnDate(date);
