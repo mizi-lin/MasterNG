@@ -5,6 +5,7 @@ import {MnReqServices} from './mn-req.service';
 import {HttpClient} from '@angular/common/http';
 
 declare const mu: any;
+
 @Component({
     selector: 'mn-req, mn-http',
     template: `
@@ -150,7 +151,7 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
              * 3. mnReq data firstChange 时 等待 data 初始值为 nodata, 等待data变化时，避免nodata呈现在view中
              */
             this.debounceData(changes['data']);
-            this.result.emit(res);
+
         });
 
     }
@@ -176,11 +177,14 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
                 } else {
                     this._isNoData = mu.isEmpty(res);
                 }
-            }, 1000);
+
+                this.result.emit(res);
+            }, 3500);
         } else {
             let res = mu.prop(this.data, 'data') || this.data || {};
             this._debounce_data_tid && clearTimeout(this._debounce_data_tid);
             this._isNoData = mu.isEmpty(res);
+            this.result.emit(res);
         }
     });
 

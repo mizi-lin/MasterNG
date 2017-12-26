@@ -85,7 +85,7 @@ export class MnEchartsServices {
         // 空数据处理
         if (mu.isEmpty(data)) {
             if (!!setting.nodata) {
-                return {};
+                return options;
             }
         }
 

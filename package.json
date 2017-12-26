@@ -1,6 +1,6 @@
 {
   "name": "masterng",
-  "version": "0.3.15-b4",
+  "version": "0.3.15-b5",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
