@@ -16,34 +16,45 @@ export class DemoEchart2Component implements OnInit {
 
     req: any = {url: './assets/store/echart-map.json'};
 
+    _data: any;
+
     setting: any = {
-        tooltip: (e) => {
-            console.debug(e);
-            return `${e.name} \n ${e.value}`;
-        }
+        // tooltip: (e) => {
+        //     console.debug(e);
+        //     return `${e.name} \n ${e.value}`;
+        // }
     };
 
     ngOnInit() {
 
-        // setTimeout(() => {
-        //     this.req = {url: './assets/store/echart-map2.json'};
-        //
-        //     setTimeout(() => {
-        //         this.req = {url: './assets/store/echart-map.json'};
-        //     }, 3000);
-        //
-        // }, 3000);
+        setTimeout(() => {
+            // this.req = {url: './assets/store/echart-map2.json'};
+            //
+            // setTimeout(() => {
+            //     this.req = {url: './assets/store/echart-map.json'};
+            // }, 3000);
+
+            this.setting.tooltip = (e) => {
+                return `${e.name} \n ${e.value}`;
+            };
+
+        }, 3000);
     }
 
     _abc(data) {
-        data = data.data;
-        return mu.map(data, (o, i) => {
-            if (i) {
-                return o;
-            } else {
-                return 'BREAK';
-            }
-        });
+
+        setTimeout(() => {
+            data = data.data;
+            this._data = mu.map(data, (o, i) => {
+                if (i) {
+                    return o;
+                } else {
+                    return 'BREAK';
+                }
+            });
+        }, 3000);
+
+
 
         // return $event.data;
     }

@@ -227,24 +227,26 @@ export class MnDatetimePickerComponent implements OnInit {
 
         // this._startDate = $event.startDate;
         // this._endDate = $event.endDate;
-        if (!this._hasChange) {
+        // if (!this._hasChange) {
             // Hack fixed angular error
             // ERROR Error:
             //      ExpressionChangedAfterItHasBeenCheckedError:
             //      Expression has changed after it was checked
             // public ngDoCheck(): void { this.cdr.detectChanges(); }
+
             setTimeout(() => {
                 mu.run(this._startDate, () => {
                     this._selected = this._rst({
-                        startDate: this._startDate,
-                        endDate: this._endDate
+                        startDate: this._viewed.startDate || this._startDate,
+                        endDate: this._viewed.endDate || this._endDate
                     });
-
                     this.result.emit(this._selected);
                 });
             }, 0);
-            this._hasChange = true;
-        }
+
+        // }
+
+
     }
 
     // 确认事件
@@ -271,8 +273,8 @@ export class MnDatetimePickerComponent implements OnInit {
     }
 
     _rst(rst: any): any {
-        rst.start = this._format(this._startDate);
-        rst.end = this._format(this._endDate);
+        rst.start = this._format(rst.startDate);
+        rst.end = this._format(rst.endDate);
         return rst;
     }
 }

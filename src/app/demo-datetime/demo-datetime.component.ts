@@ -12,6 +12,7 @@ declare const mu: any;
 export class DemoDatetimeComponent implements OnInit {
 
     minDate: string = '2017-12-10';
+    startDate: string = '2017-12-01';
 
     constructor(private _http: HttpClient) {
     }

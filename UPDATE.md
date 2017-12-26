@@ -127,3 +127,12 @@
 * 修正 mnReq 支持空传data属性的数据变化
 * 修正 mnReq 支持 no restful 返回数据类型变化
 * .publish 不再主动提交到 git
+
+0.3.14
+
+* 修正 mnReq nodata error
+
+0.3.15
+
+* 修正 datetimepicker minDate change no render
+* 修正 mnEchartPanel nodata series.type error

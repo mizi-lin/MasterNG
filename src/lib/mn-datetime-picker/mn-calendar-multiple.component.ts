@@ -44,7 +44,7 @@ declare const mu: any;
         </mn-fill>
     `
 })
-export class MnCalendarMultipleComponent implements OnInit {
+export class MnCalendarMultipleComponent implements OnInit, OnChanges {
 
     @Input('mnMinDate')
     set minDate(date) {
@@ -185,6 +185,22 @@ export class MnCalendarMultipleComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        mu.run(changes['minDate'], (change) => {
+            if (!change.firstChange) {
+                this.startDate = mu.clone(this.startDate_);
+                this.endDate = mu.clone(this.endDate_);
+            }
+        });
+
+        mu.run(changes['maxDate'], (change) => {
+            if (!change.firstChange) {
+                this.startDate = mu.clone(this.startDate_);
+                this.endDate = mu.clone(this.endDate_);
+            }
+        });
     }
 
     getPrevYear() {

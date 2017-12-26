@@ -52,10 +52,10 @@
     <mn-req
             [showNoData]="false"
             [req]="req"
-            (result)="data = $event.data">
+            (result)="_abc($event)">
 
         <mn-echarts-panel class="bordered" title="EchartsPanel::map mn-panel && tools"
-                          [data]="data"
+                          [data]="_data"
                           [type]="'map'"
                           [hph]="'auto'"
                           [setting]="setting"
