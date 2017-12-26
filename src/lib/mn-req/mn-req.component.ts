@@ -3,6 +3,7 @@ import {MnReqNoDataComponent} from './mn-req-nodata.component';
 import {Subscriber} from 'rxjs/Subscriber';
 import {MnReqServices} from './mn-req.service';
 import {HttpClient} from '@angular/common/http';
+import {setTimeout} from 'timers';
 
 declare const mu: any;
 
@@ -15,12 +16,15 @@ declare const mu: any;
                            [progress]="_process"></mn-loader-bar>
         </ng-template>
         <ng-container *ngIf="showNoData">
-            <mn-dynamic-component *ngIf="_isNoData" [component]="noDataComponent" [inputs]="context"></mn-dynamic-component>
+            <mn-dynamic-component
+                    *ngIf="_isNoData"
+                    [component]="noDataComponent"
+                    [inputs]="context">
+            </mn-dynamic-component>
         </ng-container>
         <ng-container *ngIf="showNoData ? !_isNoData : true">
             <ng-content></ng-content>
         </ng-container>
-
     `,
     styles: [
             `:host {
@@ -86,30 +90,29 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
         });
 
         this._observable = source.subscribe((res) => {
-            this._process = 100;
-            res = res || {};
-            mu.run(this._restful ? res.data : res, () => {
-                this._isNoData = false;
-            }, () => {
+                this._process = 100;
+                res = res || {};
+                mu.run(this._restful ? res.data : res, () => {
+                    this._isNoData = false;
+                }, () => {
+                    this._isNoData = true;
+                });
+                this.result.emit(res);
+            },
+            // error
+            () => {
+                this._process = 100;
                 this._isNoData = true;
+                this.result.emit({});
+            },
+            // completed
+            () => {
+                this._process = 100;
             });
-            this.result.emit(res);
-        },
-        // error
-        () => {
-            this._process = 100;
-            this._isNoData = true;
-            this.result.emit({});
-        },
-        // completed
-        () => {
-            this._process = 100;
-        });
 
     }
 
     ngOnChanges(changes: SimpleChanges) {
-
         mu.run(this.req, () => {
             this._process = mu.randomInt(0, 49);
             this.processStep();
@@ -139,7 +142,27 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
          */
         mu.run(!this.req && changes['data'], () => {
             let res = mu.prop(this.data, 'data') || this.data || {};
-            this._isNoData = mu.isEmpty(res);
+            let _isNoData = mu.isEmpty(res);
+
+            /**
+             * 重复处理 data 存在机制
+             *
+             * 1. mnReq 不提倡使用 data 直接传值
+             * 2. mnReq data firstChange 时，做了一个简单的延迟处理，在着1000ms中判断是否重新传入req值
+             * 3. mnReq data firstChange 时 等待 data 初始值为 nodata, 等待data变化时，避免nodata呈现在view中
+             */
+            if (!_isNoData && mu.prop(changes, 'data.firstChange')) {
+                let tid = setTimeout(() => {
+                    if (this.req) {
+                        clearTimeout(tid);
+                    } else {
+                        this._isNoData = _isNoData;
+                    }
+                }, 1000);
+            } else {
+                this._isNoData = _isNoData;
+            }
+
             this.result.emit(res);
         });
 
