@@ -16,16 +16,23 @@ export class DemoEchart2Component implements OnInit {
 
     req: any = {url: './assets/store/echart-map.json'};
 
+    setting: any = {
+        tooltip: (e) => {
+            console.debug(e);
+            return `${e.name} \n ${e.value}`;
+        }
+    };
+
     ngOnInit() {
 
-        setTimeout(() => {
-            this.req = {url: './assets/store/echart-map2.json'};
-
-            setTimeout(() => {
-                this.req = {url: './assets/store/echart-map.json'};
-            }, 3000);
-
-        }, 3000);
+        // setTimeout(() => {
+        //     this.req = {url: './assets/store/echart-map2.json'};
+        //
+        //     setTimeout(() => {
+        //         this.req = {url: './assets/store/echart-map.json'};
+        //     }, 3000);
+        //
+        // }, 3000);
     }
 
     _abc(data) {

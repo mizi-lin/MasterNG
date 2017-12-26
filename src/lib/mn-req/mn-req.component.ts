@@ -57,6 +57,8 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
     _isNoData: boolean = false;
     _process: number = 0;
 
+    _debounce_data_tid: any;
+
     constructor(private _http: HttpClient,
                 private _rs: MnReqServices) {
 
@@ -142,8 +144,6 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
          */
         mu.run(!this.req && changes['data'], () => {
             let res = mu.prop(this.data, 'data') || this.data || {};
-            let _isNoData = mu.isEmpty(res);
-
             /**
              * 重复处理 data 存在机制
              *
@@ -151,18 +151,7 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
              * 2. mnReq data firstChange 时，做了一个简单的延迟处理，在着1000ms中判断是否重新传入req值
              * 3. mnReq data firstChange 时 等待 data 初始值为 nodata, 等待data变化时，避免nodata呈现在view中
              */
-            if (!_isNoData && mu.prop(changes, 'data.firstChange')) {
-                let tid = setTimeout(() => {
-                    if (this.req) {
-                        clearTimeout(tid);
-                    } else {
-                        this._isNoData = _isNoData;
-                    }
-                }, 1000);
-            } else {
-                this._isNoData = _isNoData;
-            }
-
+            this.debounceData(changes['data']);
             this.result.emit(res);
         });
 
@@ -178,6 +167,24 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
             this.reqHttp(req);
         });
     }, this.delay);
+
+    // 处理直接传递数据
+    debounceData: any = mu.debounce((change) => {
+        if (change.firstChange) {
+            this._debounce_data_tid = setTimeout(() => {
+                let res = mu.prop(this.data, 'data') || this.data || {};
+                if (this.req) {
+                    clearTimeout(this._debounce_data_tid);
+                } else {
+                    this._isNoData = mu.isEmpty(res);
+                }
+            }, 1000);
+        } else {
+            let res = mu.prop(this.data, 'data') || this.data || {};
+            this._debounce_data_tid && clearTimeout(this._debounce_data_tid);
+            this._isNoData = mu.isEmpty(res);
+        }
+    });
 
     processStep(): any {
         const tid = setTimeout(() => {
