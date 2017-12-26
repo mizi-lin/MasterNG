@@ -67,8 +67,6 @@ export class MnDatetimeServices {
             let [_diff, _type, _begin] = _rst;
             _endType = !!_begin;
             _start = _getRangeDate(_diff, _type, _endType);
-
-            console.debug(_start);
         });
 
         _end = mu.run(mu.trim(_r2 || ''), (_r2) => {
@@ -104,7 +102,7 @@ export class MnDatetimeServices {
     }
 
     reStartDate(startDate, maxDate, minDate) {
-        if (!startDate) {
+        if (!mu.isEmpty(startDate)) {
             return startDate;
         }
 
@@ -121,7 +119,7 @@ export class MnDatetimeServices {
     }
 
     reEndDate(endDate, maxDate, minDate) {
-        if (!endDate) {
+        if (!mu.isEmpty(endDate)) {
             return endDate;
         }
 
