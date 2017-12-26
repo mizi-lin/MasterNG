@@ -10,11 +10,19 @@ declare const mu: any;
     styleUrls: ['./demo-datetime.component.scss']
 })
 export class DemoDatetimeComponent implements OnInit {
+
+    minDate: string = '2017-12-10';
+
     constructor(private _http: HttpClient) {
     }
 
     ngOnInit() {
 
+        setTimeout(() => {
+            console.debug(this.minDate);
+            this.minDate = '2017-12-18';
+            console.debug(this.minDate);
+        }, 3000);
 
     }
 

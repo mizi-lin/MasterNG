@@ -101,60 +101,79 @@ export class MnCalendarViewComponent implements OnInit, OnChanges {
 
         // year or month change
         mu.run(mu.prop(changes, 'year.currentValue') || mu.prop(changes, 'month.currentValue'), () => {
+            this._draw();
+        });
 
-            // 年月必须同时存在
-            if (!(this.year && this.month)) {
-                let d = new Date();
-                this.year = d.getFullYear();
-                this.month = d.getMonth() + 1;
+        mu.run(changes.minDate, (change) => {
+            if (!change.firstChange) {
+                this._debounceDraw();
             }
+        });
 
-            // 获取当前时间信息
-            let current = this.current = new MnDate(this._getDate(this.year, this.month, this.day));
+        mu.run(changes.maxDate, (change) => {
+            if (!change.firstChange) {
+                this._debounceDraw();
+            }
+        });
+    }
 
-            let prev = this.prev_month = current.mom(-1);
-            let next = this.next_month = current.mom(1);
+    _debounceDraw: any = mu.debounce(() => {
+        this._draw();
+    }, 500);
 
-            this.result.emit(current);
+    _draw() {
+        // 年月必须同时存在
+        if (!(this.year && this.month)) {
+            let d = new Date();
+            this.year = d.getFullYear();
+            this.month = d.getMonth() + 1;
+        }
 
-            // 获取日历时间列表
-            const dates = mu.run(() => {
-                let prev_dates = [], current_dates = [], next_dates = [];
+        // 获取当前时间信息
+        let current = this.current = new MnDate(this._getDate(this.year, this.month, this.day));
 
-                let i = 0;
-                while (i < current.months.startWeekday) {
-                    let _d = this.getDate(prev.year, prev.month, prev.days - i);
-                    prev_dates.push(_d);
-                    i++;
-                }
-                prev_dates = prev_dates.reverse();
+        let prev = this.prev_month = current.mom(-1);
+        let next = this.next_month = current.mom(1);
 
-                current_dates = mu.map(current.months.days, (day) => {
-                    return this.getDate(current.days.year, current.days.month, day);
-                }, []);
+        this.result.emit(current);
 
-                const len = 42 - prev_dates.length - current_dates.length;
-                for (let j = 1; j <= len; j++) {
+        // 获取日历时间列表
+        const dates = mu.run(() => {
+            let prev_dates = [], current_dates = [], next_dates = [];
 
-                    let _d = this.getDate(next.year, next.month, j);
-                    next_dates.push(_d);
-                }
+            let i = 0;
+            while (i < current.months.startWeekday) {
+                let _d = this.getDate(prev.year, prev.month, prev.days - i);
+                prev_dates.push(_d);
+                i++;
+            }
+            prev_dates = prev_dates.reverse();
 
-                return [...prev_dates, ...current_dates, ...next_dates];
-            });
-
-            let _dates = mu.map(6, (i) => {
-                return new Array(7);
+            current_dates = mu.map(current.months.days, (day) => {
+                return this.getDate(current.days.year, current.days.month, day);
             }, []);
 
-            mu.each(42, (i, ii) => {
-                let row = Math.floor(ii / 7);
-                let col = ii % 7;
-                _dates[row][col] = dates[ii];
-            });
+            const len = 42 - prev_dates.length - current_dates.length;
+            for (let j = 1; j <= len; j++) {
 
-            this.calendar = _dates;
+                let _d = this.getDate(next.year, next.month, j);
+                next_dates.push(_d);
+            }
+
+            return [...prev_dates, ...current_dates, ...next_dates];
         });
+
+        let _dates = mu.map(6, (i) => {
+            return new Array(7);
+        }, []);
+
+        mu.each(42, (i, ii) => {
+            let row = Math.floor(ii / 7);
+            let col = ii % 7;
+            _dates[row][col] = dates[ii];
+        });
+
+        this.calendar = _dates;
     }
 
     // 获得日期字符串

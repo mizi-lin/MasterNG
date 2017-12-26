@@ -65,6 +65,8 @@ export class MnCalendarComponent implements OnInit, OnChanges {
     @Input('mnMinDate')
     set minDate(date) {
         this.minDate_ = new MnDate(date);
+
+
     }
 
     @Input('mnMaxDate')
