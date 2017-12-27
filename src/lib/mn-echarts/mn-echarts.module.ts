@@ -9,7 +9,7 @@ import {MnEchartsPanelComponent} from './mn-echarts-panel.component';
 import {MnEchartsServices} from './mn-echarts.service';
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MnFloatLayerModule} from '../mn-float-layer/mn-float-layer.module';
+import {MnFloatLayerModule} from '../mn-flayer/mn-flayer.module';
 
 @NgModule({
     imports: [

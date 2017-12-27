@@ -6,7 +6,7 @@ import {MnCalendarViewComponent} from './mn-calendar-view.component';
 import {MnCalendarMultipleComponent} from './mn-calendar-multiple.component';
 import {MnDatetimeServices} from './mn-datetime.services';
 import {MuDatetimeRangesComponent} from './mn-datetime-ranges.component';
-import {MnFloatLayerModule} from '../mn-float-layer/mn-float-layer.module';
+import {MnFloatLayerModule} from '../mn-flayer/mn-flayer.module';
 import {MnDatetimePickerComponent} from './mn-datetime-picker.component';
 import {MnButtonModule} from '../mn-button/mn-button.module';
 import {MnCommonModule} from '../mn-common/mn-common.module';

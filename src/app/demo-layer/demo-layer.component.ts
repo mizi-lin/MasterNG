@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MnModalServices} from '../../lib/mn-float-layer/mn-modal.services';
+import {MnModalServices} from '../../lib/mn-flayer/mn-modal.services';
+import {DemoNodataComponent} from '../demo-nodata/demo-nodata.component';
 
 @Component({
     selector: 'mn-demo-layer',
@@ -7,6 +8,14 @@ import {MnModalServices} from '../../lib/mn-float-layer/mn-modal.services';
     styleUrls: ['./demo-layer.component.scss']
 })
 export class DemoLayerComponent implements OnInit {
+
+    test: any = {
+        result: ($event) => {
+            // console.debug($event);
+        }
+    };
+
+    a: any = DemoNodataComponent;
 
     constructor(private _mms: MnModalServices) {
     }

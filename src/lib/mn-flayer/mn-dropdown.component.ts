@@ -12,7 +12,7 @@ declare const mu: any;
         </div>
 
         <ng-template
-                [mnLayerModule]="'dropdown'"
+                [mnLayerModule]="'mnDropDown'"
                 [mnLayerStatus]="status"
                 [mnLayerHideEvt]="hidetype"
                 [mnLayerPosition]="'bottom left'"

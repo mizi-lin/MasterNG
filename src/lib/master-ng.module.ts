@@ -10,7 +10,7 @@ import {MnCommonModule} from './mn-common/mn-common.module';
 import {MnI18nModule} from './mn-i18n/mn-i18n.module';
 import {MnRuleModule} from './mn-rule/mn-rule.module';
 import {MnDatetimeModule} from './mn-datetime-picker/mn-datetime.module';
-import {MnFloatLayerModule} from './mn-float-layer/mn-float-layer.module';
+import {MnFloatLayerModule} from './mn-flayer/mn-flayer.module';
 import {MnFormModule} from './mn-form/mn-form.module';
 import {ExtraModules} from './mn-dynamic/mn-dynamic-template.directive';
 import {MnCommonServices} from './mn-common/services/mn-common.services';

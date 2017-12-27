@@ -9,7 +9,7 @@ declare const mu: any;
     template: `
         <ng-content></ng-content>
         <ng-template
-                [mnLayerModule]="'mnc-tooltip'"
+                [mnLayerModule]="'mnTooltip'"
                 [mnLayerPosition]="_position"
                 [mnLayerStatus]="_status"
                 [mnLayerHideEvt]="_hideType"

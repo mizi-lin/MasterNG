@@ -11,13 +11,17 @@ import {MnModalComponent} from './mn-modal.component';
 import {MnModalServices} from './mn-modal.services';
 import {MnLayerComponent} from './mn-layer.component';
 import {MnPanelModule} from '../mn-panel/mn-panel.module';
+import {MnLayoutModule} from '../mn-layout/mn-layout.module';
+import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
 
 @NgModule({
     imports: [
         CommonModule,
         MnCommonModule,
         MnFormModule,
-        MnPanelModule
+        MnPanelModule,
+        MnLayoutModule,
+        MnDynamicModule
     ],
     declarations: [
         MnDropdownComponent,
