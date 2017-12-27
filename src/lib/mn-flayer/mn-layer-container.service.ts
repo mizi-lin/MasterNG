@@ -28,10 +28,25 @@ export class MnLayerContainerService implements OnDestroy {
         this._containerElement = container;
     }
 
-    createLayerElement (moduleName: string, id?: string): HTMLElement {
-        id = `mnc-layer-${id || (this._nextUniqueId++)}`;
-        let layer = <HTMLElement>(document.querySelector(`#${id}`) || document.createElement('div'));
-        layer.id = id;
+    createLayerElement(moduleName: string, id?: string): HTMLElement {
+
+        if (id) {
+            if (document.querySelector(`#${id}`)) {
+                return <HTMLElement>document.querySelector(`#${id}`);
+            } else {
+                let ID = `mnc-layer-${id}`;
+                if (document.querySelector(`#${ID}`)) {
+                    return <HTMLElement>document.querySelector(`#${ID}`);
+                } else {
+                    id = ID;
+                }
+            }
+        }
+
+        let _id = id || `mnc-layer-${this._nextUniqueId++}`;
+        let layer = <HTMLElement>document.createElement('div');
+
+        layer.id = _id;
         layer.classList.add('mnc-layer');
         layer.classList.add(moduleName);
         this.getContainer().appendChild(layer);

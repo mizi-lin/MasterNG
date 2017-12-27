@@ -21,6 +21,7 @@ export class MnModalContext {
         <!--</section>-->
 
         <ng-template
+                [mnLayerId]="_layerId"
                 [mnLayerModule]="'mnModal'"
                 [mnLayerStatus]="_status"
                 [mnLayerSourceRef]="_ref"

@@ -20,7 +20,8 @@ export class MnModalServices {
         } else if (!this._layer) {
             this._layer = this._lcs.createLayerElement('mnModal');
         }
-        this._layer.innerHTML = `<div><mn-modal></mn-modal></div>`;
+
+        this._layer.innerHTML = `<mn-modal></mn-modal>`;
         this._mcf = this._cfr.resolveComponentFactory(MnModalComponent);
         let compRef: ComponentRef<any> = this._appRef.bootstrap(this._mcf, this._layer.firstElementChild);
         let instance: MnModalComponent = <MnModalComponent> compRef.instance;
@@ -30,10 +31,7 @@ export class MnModalServices {
         instance['_source'] = 'service';
         instance['_component'] = config.component;
         instance['_content'] = config.content;
-
-        // setTimeout(() => {
-        //     compRef.destroy();
-        // }, 3000);
+        instance['_layerId'] = config.id || this._layer.id;
     }
 
 }

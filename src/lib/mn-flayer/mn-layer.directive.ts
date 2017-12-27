@@ -20,6 +20,7 @@ export class MnLayerContext {
 export class MnLayerDirective implements OnInit, AfterViewInit {
 
     @Input('mnLayerModule') _module;
+    @Input('mnLayerId') _layerId;
 
     _position: any;
 
@@ -85,7 +86,7 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
     }
 
     _createLayerElement() {
-        let layer = this._ms.createLayerElement(this._module);
+        let layer = this._ms.createLayerElement(this._module, this._layerId);
         this._layer = layer;
 
         // 绑定事件
