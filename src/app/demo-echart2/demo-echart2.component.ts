@@ -15,6 +15,7 @@ export class DemoEchart2Component implements OnInit {
     height: number = 350;
 
     req: any = {url: './assets/store/echart-map.json'};
+    req2: any = {url: './assets/store/nodata.json'};
 
     _data: any;
 

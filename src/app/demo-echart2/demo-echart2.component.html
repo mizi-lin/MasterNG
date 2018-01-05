@@ -1,4 +1,4 @@
-<div class="p-16" [style.height.px]="height">
+<div class="p-16">
 
     <!--<mn-echarts-panel class="bordered" title="EchartsPanel::bar mn-panel && tools"-->
     <!--[hph]="true"-->
@@ -61,8 +61,16 @@
                           [setting]="setting"
                           height="300px">
         </mn-echarts-panel>
-
     </mn-req>
+
+    <mn-echarts-panel class="bordered mt-48" title="EchartsPanel::map mn-panel && tools"
+                      [req]="req2"
+                      [type]="'map'"
+                      [tools]="['reload']"
+                      [hph]="'auto'"
+                      [setting]="setting"
+                      height="300px">
+    </mn-echarts-panel>
 
     <!--<div class="mt-16 mb-16" mnElement #abc="element" [ngStyle]="{'height': '200px', 'background': '#f00'}">-->
 

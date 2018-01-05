@@ -12,7 +12,7 @@ declare const mu: any;
 @Component({
     selector: 'mn-req, mn-http',
     template: `
-        <ng-template [ngIf]="loading" xmlns="">
+        <ng-template [ngIf]="loading">
             <mn-loader-bar [loader]="loader"
                            [loaderStyle]="loaderStyle"
                            [progress]="_process"></mn-loader-bar>
@@ -24,7 +24,7 @@ declare const mu: any;
 
         <ng-container *ngIf="showNoData">
             <mn-dynamic-component
-                    *ngIf="_isNoData"
+                    *ngIf="_isNoData && _process === 100"
                     [component]="noDataComponent"
                     [inputs]="context">
             </mn-dynamic-component>
