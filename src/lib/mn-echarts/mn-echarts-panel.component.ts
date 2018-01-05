@@ -122,6 +122,7 @@ declare const mu: any, jQuery: any;
             <mn-panel-body>
                 <mn-req #panel
                         [mnShowGutter]="_show_gutter"
+                        [mnShowLoading]="_show_loading"
                         [loader]="loader"
                         [loaderStyle]="loaderStyle"
                         [req]="req"
@@ -198,6 +199,7 @@ export class MnEchartsPanelComponent implements OnChanges {
     }
 
     @Input('mnShowGutter') _show_gutter: boolean = true;
+    @Input('mnShowLoading') _show_loading: boolean = true;
 
     @Input()
     set title(v) {

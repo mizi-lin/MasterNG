@@ -52,7 +52,7 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
 
     @Input() context: any;
     @Input() loader: ElementRef;
-    @Input() loading: boolean = true;
+    @Input('mnShowLoading') loading: boolean = true;
     @Input() loaderStyle: any;
     @Input() showNoData: boolean = true;
     @Input() delay: number = 500;
