@@ -1,12 +1,15 @@
 import {ApplicationRef, ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, Renderer2} from '@angular/core';
 import {MnModalComponent} from './mn-modal.component';
 import {MnLayerContainerService} from './mn-layer-container.service';
+import {MnNotifyComponent} from './mn-notify.component';
+
 declare const mu: any;
 
 @Injectable()
 export class MnModalServices {
 
     _mcf: ComponentFactory<MnModalComponent>;
+    _mnf: ComponentFactory<MnNotifyComponent>;
     _layer: HTMLElement;
 
     constructor(private _appRef: ApplicationRef,
@@ -30,6 +33,20 @@ export class MnModalServices {
         instance['_open'] = true;
         instance['_source'] = 'service';
         instance['_component'] = config.component;
+        instance['_content'] = config.content;
+        instance['_layerId'] = config.id || this._layer.id;
+    }
+
+    notify(config: any = {}) {
+        this._layer = this._lcs.createLayerElement('mnNotify', 'notify');
+
+        this._layer.innerHTML += `<mn-notify></mn-notify>`;
+        this._mnf = this._cfr.resolveComponentFactory(MnNotifyComponent);
+        let compRef: ComponentRef<any> = this._appRef.bootstrap(this._mnf, this._layer.firstElementChild);
+        let instance: MnNotifyComponent = <MnNotifyComponent> compRef.instance;
+        instance['_open'] = true;
+        instance['_type'] = config.type || 'error';
+        instance['_source'] = 'service';
         instance['_content'] = config.content;
         instance['_layerId'] = config.id || this._layer.id;
     }

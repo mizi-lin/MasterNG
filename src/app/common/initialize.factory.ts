@@ -114,6 +114,8 @@ export function InitializeFactory(_initServ: InitializeService,
          */
         _mcs._echartsService.setConfig({
             toolbars: true,
+            // toggle 默认隐藏，滑过显示
+            // show 一直显示
             show_tools: 'toggle'
         });
 

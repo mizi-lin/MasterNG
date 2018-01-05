@@ -136,3 +136,13 @@
 
 * 修正 datetimepicker minDate change no render
 * 修正 mnEchartPanel nodata series.type error
+
+0.3.16
+
+* 修正 mnEchartPanel toolbar reload 在 not req 时显示
+
+0.3.17
+
+* 添加module -> mnGutter
+* 将mnGutter融入mnReq
+* mnEchartPanel设置是否显示mnGutter -> mnShowGutter

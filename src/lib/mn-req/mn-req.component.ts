@@ -1,4 +1,7 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy, ElementRef} from '@angular/core';
+import {
+    Component, OnInit, Input, OnChanges, SimpleChanges, Output, EventEmitter, OnDestroy, ElementRef,
+    ViewEncapsulation
+} from '@angular/core';
 import {MnReqNoDataComponent} from './mn-req-nodata.component';
 import {Subscriber} from 'rxjs/Subscriber';
 import {MnReqServices} from './mn-req.service';
@@ -9,11 +12,16 @@ declare const mu: any;
 @Component({
     selector: 'mn-req, mn-http',
     template: `
-        <ng-template [ngIf]="loading">
+        <ng-template [ngIf]="loading" xmlns="">
             <mn-loader-bar [loader]="loader"
                            [loaderStyle]="loaderStyle"
                            [progress]="_process"></mn-loader-bar>
         </ng-template>
+
+        <ng-template [ngIf]="_show_gutter">
+            <mn-gutter [mnRows]="1" *ngIf="_process != 100"></mn-gutter>
+        </ng-template>
+
         <ng-container *ngIf="showNoData">
             <mn-dynamic-component
                     *ngIf="_isNoData"
@@ -21,17 +29,15 @@ declare const mu: any;
                     [inputs]="context">
             </mn-dynamic-component>
         </ng-container>
+
         <ng-container *ngIf="showNoData ? !_isNoData : true">
             <ng-content></ng-content>
         </ng-container>
     `,
-    styles: [
-            `:host {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }`
-    ]
+
+    styleUrls: ['./mn-req.scss'],
+    encapsulation: ViewEncapsulation.None
+
 })
 export class MnReqHttpComponent implements OnChanges, OnDestroy {
 
@@ -42,6 +48,7 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
     @Input() payload: any;
 
     @Input('mnData') data: any;
+    @Input('mnShowGutter') _show_gutter: boolean = true;
 
     @Input() context: any;
     @Input() loader: ElementRef;
@@ -142,6 +149,7 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
          * req 占主导位置
          */
         mu.run(!this.req && changes['data'], () => {
+            this._process = mu.randomInt(10, 30);
             let res = mu.prop(this.data, 'data') || this.data || {};
             /**
              * 重复处理 data 存在机制
@@ -151,7 +159,6 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
              * 3. mnReq data firstChange 时 等待 data 初始值为 nodata, 等待data变化时，避免nodata呈现在view中
              */
             this.debounceData(changes['data']);
-
         });
 
     }
@@ -186,6 +193,8 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
             this._isNoData = mu.isEmpty(res);
             this.result.emit(res);
         }
+
+        this._process = 100;
     });
 
     processStep(): any {

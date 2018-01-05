@@ -11,6 +11,7 @@ import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
 import {MnFileDownloadDirective} from './mn-file-download.directive';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {MnReqInterceptorFactory} from './mn-req-interceptor.factory';
+import {MnLayoutModule} from '../mn-layout/mn-layout.module';
 
 /**
  * ReqModule
@@ -29,8 +30,8 @@ import {MnReqInterceptorFactory} from './mn-req-interceptor.factory';
         CommonModule,
         HttpClientModule,
         MnDynamicModule.forRoot(),
-        MnLoaderBarModule.forRoot()
-
+        MnLoaderBarModule.forRoot(),
+        MnLayoutModule.forRoot()
     ],
     declarations: [
         MnReqHttpComponent,

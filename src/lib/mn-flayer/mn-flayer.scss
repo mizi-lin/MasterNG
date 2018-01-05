@@ -20,3 +20,14 @@
         text-align: center;
     }
 }
+
+#mnc-layer-notify {
+    position: absolute;
+    right: 16px;
+    top: 8px;
+    width: 280px;
+
+    mn-alert {
+        margin-top: 8px;
+    }
+}

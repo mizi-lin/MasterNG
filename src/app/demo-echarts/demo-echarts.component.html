@@ -40,6 +40,18 @@
                             [type]="'pie'" [setting]="{subtype: 'annular', legend_show: false, selected: 1}" [style.height.px]="300">
                     </mn-echarts>
                 </mn-col>
+
+                <mn-col [span]="24">
+                    <mn-echarts-panel
+                            [hph]="'300px'"
+                            [title]="'echart-panel data'"
+                            [tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"
+                            [show_tools]="'show'"
+                            [data]="pie_data"
+                            [type]="'pie'"
+                            [setting]="{subtype: 'annular', legend_show: false, selected: 1}" [style.height.px]="300">
+                    </mn-echarts-panel>
+                </mn-col>
             </mn-row>
         </mn-req>
     </mn-panel-s>

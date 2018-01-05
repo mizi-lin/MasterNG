@@ -2,6 +2,7 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MnRowComponent} from './mn-row.component';
 import {MnColComponent} from './mn-col.component';
+import {MnGutterComponent} from './mn-gutter.component';
 
 @NgModule({
     imports: [
@@ -9,11 +10,13 @@ import {MnColComponent} from './mn-col.component';
     ],
     declarations: [
         MnRowComponent,
-        MnColComponent
+        MnColComponent,
+        MnGutterComponent
     ],
     exports: [
         MnRowComponent,
-        MnColComponent
+        MnColComponent,
+        MnGutterComponent
     ],
     providers: [
         MnRowComponent

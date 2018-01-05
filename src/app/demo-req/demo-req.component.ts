@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ResourcePool} from './resource-pool';
 import {Http, ResponseContentType} from '@angular/http';
 import {MnFileSaverServices} from '../../lib/mn-common/services/mn-file-saver.services';
@@ -10,7 +10,8 @@ declare const mu: any;
 @Component({
     selector: 'app-demo-req',
     templateUrl: './demo-req.component.html',
-    styleUrls: ['./demo-req.component.scss']
+    styleUrls: ['./demo-req.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class DemoReqComponent implements OnInit {
 

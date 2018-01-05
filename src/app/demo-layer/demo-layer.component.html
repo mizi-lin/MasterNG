@@ -29,10 +29,27 @@
         <div>abcdefg hijk lmn opq rst uvw xyz</div>
     </mn-modal>
 
-
     <button mn-btn class="primary" (click)="test.open2 = true">Page Modal 2</button>
 
     <mn-modal [mnTitle]="'Page Modal 2 Title'" [mnComponent]="a" [(mnOpen)]="test.open2">
     </mn-modal>
+
+</mn-panel-s>
+
+<mn-panel-s [title]="'Create Modal'">
+
+    <button mn-btn class="info"
+            (click)="createNotify({
+            type: 'error',
+            content: 'this is a error'
+        })">Create Modal
+    </button>
+
+    <button mn-btn class="primary"
+            (click)="createNotify({
+                type: 'warning',
+                content: 'warning'
+            })">Create 2 Modal
+    </button>
 
 </mn-panel-s>

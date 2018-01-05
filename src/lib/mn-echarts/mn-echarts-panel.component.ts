@@ -121,6 +121,7 @@ declare const mu: any, jQuery: any;
             </mn-panel-header>
             <mn-panel-body>
                 <mn-req #panel
+                        [mnShowGutter]="_show_gutter"
                         [loader]="loader"
                         [loaderStyle]="loaderStyle"
                         [req]="req"
@@ -175,7 +176,8 @@ export class MnEchartsPanelComponent implements OnChanges {
     @Input() loader: ElementRef;
     @Input() loaderStyle: any;
 
-    @Input('mnReqResult') _reqResult($event: any = {}, data: any = {}) {
+    @Input('mnReqResult')
+    _reqResult($event: any = {}, data: any = {}) {
         return $event.data;
     }
 
@@ -184,7 +186,6 @@ export class MnEchartsPanelComponent implements OnChanges {
      * show, toggle
      */
     @Input() show_tools = 'show';
-
     @Input() data: any;
 
     // 让控件支持高度100%
@@ -195,6 +196,8 @@ export class MnEchartsPanelComponent implements OnChanges {
     get getHph() {
         return this.hph === true ? '100%' : this.hph === false ? 'auto' : this.hph;
     }
+
+    @Input('mnShowGutter') _show_gutter: boolean = true;
 
     @Input()
     set title(v) {
@@ -387,7 +390,14 @@ export class MnEchartsPanelComponent implements OnChanges {
     }
 
     reload_click($event): void {
-        this.req = mu.clone(this.req);
+        mu.run(this.req, req => {
+            this.req = mu.clone(req);
+        });
+
+        mu.run(this.data, data => {
+            this.data = mu.clone(data);
+        });
+
         this.setStatus('reload_click');
     }
 

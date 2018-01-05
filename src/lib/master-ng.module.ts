@@ -18,6 +18,7 @@ import {MnDynamicServices} from './mn-dynamic/mn-dynamic-component.service';
 import {MnRuleServices} from './mn-rule/mn-rule.services';
 import {MnReqServices} from './mn-req/mn-req.service';
 import {MnEchartsServices} from './mn-echarts/mn-echarts.service';
+import {MnAlertModule} from './mn-alert/mn-alert.module';
 
 @NgModule({
     imports: [
@@ -37,7 +38,8 @@ import {MnEchartsServices} from './mn-echarts/mn-echarts.service';
         MnRuleModule,
         MnDatetimeModule,
         MnFloatLayerModule,
-        MnFormModule
+        MnFormModule,
+        MnAlertModule
     ],
     exports: [
         MnLayoutModule,

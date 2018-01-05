@@ -11,15 +11,6 @@ export class MnModalContext {
 @Component({
     selector: 'mn-modal',
     template: `
-        <!--<section #modal>-->
-        <!--<div class="mnc-mask" *ngIf="_mask"></div>-->
-        <!--<div class="mnc-modal">-->
-        <!--<mn-panel-s [title]="_title">-->
-        <!--<div (click)="close()">Close</div>-->
-        <!--</mn-panel-s>-->
-        <!--</div>-->
-        <!--</section>-->
-
         <ng-template
                 [mnLayerId]="_layerId"
                 [mnLayerModule]="'mnModal'"

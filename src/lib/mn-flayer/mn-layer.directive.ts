@@ -105,8 +105,6 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
             });
         }
 
-
-
         // 绑定隐藏事件
         mu.run(this._hide_evt, () => {
             this._render.listen(layer, this._hide_evt, () => {

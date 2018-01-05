@@ -1,0 +1,50 @@
+mn-req {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    mn-gutter {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        overflow: hidden;
+        z-index: 2;
+        padding: 16px;
+        background: #fff;
+
+        mn-row {
+            mn-col {
+                height: 24px;
+                padding-bottom: 5px;
+                padding-top: 5px;
+                .mnc-content {
+                    background: rgba(125, 125, 125, .1);
+                    border-radius: 2px;
+                }
+
+
+            }
+        }
+
+        animation-name: mnGutterfadeIn; /*动画名称*/
+        animation-duration: 2s; /*动画持续时间*/
+        animation-iteration-count: 1; /*动画次数*/
+        animation-delay: 0s; /*延迟时间*/
+    }
+
+}
+
+@-webkit-keyframes mnGutterfadeIn {
+    0% {
+        opacity: 1; /*初始状态 透明度为0*/
+    }
+    50% {
+        opacity: .5; /*中间状态 透明度为0*/
+    }
+    100% {
+        opacity: 0; /*结尾状态 透明度为1*/
+    }
+}

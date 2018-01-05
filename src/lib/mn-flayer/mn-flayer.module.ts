@@ -13,6 +13,8 @@ import {MnLayerComponent} from './mn-layer.component';
 import {MnPanelModule} from '../mn-panel/mn-panel.module';
 import {MnLayoutModule} from '../mn-layout/mn-layout.module';
 import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
+import {MnNotifyComponent} from './mn-notify.component';
+import {MnAlertModule} from '../mn-alert/mn-alert.module';
 
 @NgModule({
     imports: [
@@ -21,7 +23,8 @@ import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
         MnFormModule,
         MnPanelModule,
         MnLayoutModule,
-        MnDynamicModule
+        MnDynamicModule,
+        MnAlertModule
     ],
     declarations: [
         MnDropdownComponent,
@@ -29,7 +32,8 @@ import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
         MnTooltipComponent,
         MnLayerDirective,
         MnModalComponent,
-        MnLayerComponent
+        MnLayerComponent,
+        MnNotifyComponent
     ],
     exports: [
         MnDropdownComponent,
@@ -37,12 +41,14 @@ import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
         MnTooltipComponent,
         MnLayerDirective,
         MnModalComponent,
-        MnLayerComponent
+        MnLayerComponent,
+        MnNotifyComponent
     ],
 
     entryComponents: [
         MnModalComponent,
-        MnLayerComponent
+        MnLayerComponent,
+        MnNotifyComponent
     ],
 
     providers: [
