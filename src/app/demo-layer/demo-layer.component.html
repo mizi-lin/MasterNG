@@ -23,9 +23,9 @@
             })">Create 3 template
     </button>
 
-    <button mn-btn class="primary" (click)="test.open = true">Page Modal</button>
+    <button mn-btn class="primary" (click)="test.modal = true">Page Modal</button>
 
-    <mn-modal [mnTitle]="'abcdef'" [(mnOpen)]="test.open">
+    <mn-modal [mnTitle]="'abcdef'" [(mnOpen)]="test.modal">
         <div>abcdefg hijk lmn opq rst uvw xyz</div>
     </mn-modal>
 
@@ -36,7 +36,7 @@
 
 </mn-panel-s>
 
-<mn-panel-s [title]="'Create Modal'">
+<mn-panel-s [title]="'Create Notify'">
 
     <button mn-btn class="info"
             (click)="createNotify({

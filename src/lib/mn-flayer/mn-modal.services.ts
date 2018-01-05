@@ -17,12 +17,14 @@ export class MnModalServices {
                 private _lcs: MnLayerContainerService) {
     }
 
-    open(config: any = {}) {
+    modal(config: any = {}) {
         if (config.id) {
             this._layer = this._lcs.createLayerElement('mnModal', config.id);
-        } else if (!this._layer) {
+        } else if (!this._layer || (mu.prop(this._layer, 'className') || '').indexOf('mnModal') === -1 ) {
             this._layer = this._lcs.createLayerElement('mnModal');
         }
+
+        console.dir(this._layer);
 
         this._layer.innerHTML = `<mn-modal></mn-modal>`;
         this._mcf = this._cfr.resolveComponentFactory(MnModalComponent);
@@ -49,6 +51,7 @@ export class MnModalServices {
         instance['_source'] = 'service';
         instance['_content'] = config.content;
         instance['_layerId'] = config.id || this._layer.id;
+        instance['_delay'] = config._delay;
     }
 
 }

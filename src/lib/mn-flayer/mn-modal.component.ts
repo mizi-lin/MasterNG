@@ -15,7 +15,7 @@ export class MnModalContext {
                 [mnLayerId]="_layerId"
                 [mnLayerModule]="'mnModal'"
                 [mnLayerStatus]="_status"
-                [mnLayerSourceRef]="_ref"
+                [mnLayerSourceRef]="_sourceRef"
                 (mnResult)="_result($event)"
                 mnLayer>
             <section>
@@ -42,6 +42,8 @@ export class MnModalContext {
                             <ng-container *ngIf="_component">
                                 <mn-dynamic-component [component]="_component"></mn-dynamic-component>
                             </ng-container>
+
+                            <div (click)="close()">Close</div>
                         </mn-panel-body>
                     </mn-panel>
                 </div>
@@ -61,6 +63,9 @@ export class MnModalComponent implements OnInit {
 
     @Input('mnComponent') _component: any;
     @Input('mnContent') _content: any;
+
+    @Input('mnLayerId') _layerId: any;
+    @Input('mnSourceRef') _sourceRef: any;
 
     @Input('mnOpen')
     set _open(b: boolean) {

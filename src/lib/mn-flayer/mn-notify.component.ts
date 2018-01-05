@@ -7,7 +7,7 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, V
                 [mnLayerId]="'notify'"
                 [mnLayerModule]="'mnNotify'"
                 [mnLayerStatus]="_status"
-                [mnLayerSourceRef]="_ref"
+                [mnLayerSourceRef]="_sourceRef"
                 (mnResult)="_result($event)"
                 mnLayer>
             <mn-alert 
@@ -40,6 +40,7 @@ export class MnNotifyComponent implements OnInit {
 
     _status: string = 'hide';
     _notify: any;
+    _sourceRef: any;
 
     constructor(private _render: Renderer2,
                 private _vcRef: ViewContainerRef,

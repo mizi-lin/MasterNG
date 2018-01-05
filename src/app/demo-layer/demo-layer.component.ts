@@ -24,7 +24,7 @@ export class DemoLayerComponent implements OnInit {
     }
 
     createModal(config) {
-        this._mms.open(config);
+        this._mms.modal(config);
     }
 
     createNotify(config) {
