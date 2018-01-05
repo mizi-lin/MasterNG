@@ -64,8 +64,10 @@ export class MnLoaderBarComponent implements OnChanges {
         setTimeout(() => {
 
             mu.run(this.loader, (ref) => {
-                const el = mu.prop(ref, 'elementRef.nativeElement') || mu.prop(ref, 'nativeElement');
-                el.appendChild(_ref.nativeElement);
+                if (ref !== '__self__') {
+                    const el = mu.prop(ref, 'elementRef.nativeElement') || mu.prop(ref, 'nativeElement');
+                    el.appendChild(_ref.nativeElement);
+                }
             });
 
             /**

@@ -146,3 +146,8 @@
 * 添加module -> mnGutter
 * 将mnGutter融入mnReq
 * mnEchartPanel设置是否显示mnGutter -> mnShowGutter
+
+0.3.18
+
+* 添加module -> mnAppend, mnPrepend
+* mnEchartPanel 支持 mnAppend, mnPrepend

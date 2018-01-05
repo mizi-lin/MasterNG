@@ -46,7 +46,7 @@
                             [hph]="'300px'"
                             [title]="'echart-panel data'"
                             [tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"
-                            [show_tools]="'show'"
+                            [mnShowTools]="'show'"
                             [data]="pie_data"
                             [type]="'pie'"
                             [setting]="{subtype: 'annular', legend_show: false, selected: 1}" [style.height.px]="300">
@@ -65,9 +65,12 @@
                               [req]="{url: './assets/store/echarts-bar.json'}"
                               [type]="'bar'"
                               [tools]="['fullscreen', 'download', 'data_view', 'sort', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend',  'reload']"
-                              [show_tools]="'show'"
+                              [mnShowTools]="'show'"
                               [setting]="{legend_show: false, legend_position: 'center bottom', rotate: 20}"
                               height="300px">
+
+                <mn-prepend style="height: 20px; background: #f00;"> prepend content </mn-prepend>
+
             </mn-echarts-panel>
         </mn-col>
         <mn-col [span]="12" class="bordered-content mnc-overflow-auto">
@@ -77,7 +80,7 @@
                             [tools]="[ 'download', 'data_view', 'legend', 'reload', 'fullscreen']"
                             [setting]="{legend_position: 'center top'}"
                             (result)="a = $event.options"
-                            [show_tools]="'show'">
+                            [mnShowTools]="'show'">
             </mn-echarts-box>
         </mn-col>
     </mn-fill>

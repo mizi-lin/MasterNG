@@ -8,6 +8,19 @@ import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services'
 
 declare const mu: any, jQuery: any;
 
+/**
+ *  mnEchartPanel
+ *  可由 ajax, data, options 快速会出charts
+ *
+ *  其构造由 mnPanel > mnReq + mnPrepend + mnAppend 组成
+ *
+ *  mnPanel > mnPanelHeader ( > mnPanelTitle > mnPanelToolbar ) + mnPanelBody
+ *  mnReq > mnLoader + mnGutter + mnDynamic + mnEchart > mnEchartRender
+ *
+ *  mnEchartPanle 主体由 mnReq 构成
+ *  所以默认 mnReq 的 loader UI 显示位置前置至 mnPanelBody prepend 位置
+ */
+
 @Component({
     selector: 'mn-echarts-panel, mn-echarts-box',
     styleUrls: ['./mn-echarts.scss', '../assets/fonts/iconfont.scss'],
@@ -16,7 +29,7 @@ declare const mu: any, jQuery: any;
         <mn-panel [hph]="true">
             <mn-panel-header>
                 <mn-panel-title [innerHTML]="_title"></mn-panel-title>
-                <mn-panel-toolbar [tools]="_tools" [class.toggle]="show_tools === 'toggle'">
+                <mn-panel-toolbar [tools]="_tools" [class.toggle]="showTools === 'toggle'">
 
                     <ng-template [ngIf]="toolMap['download']">
                         <mn-col (click)="download_click($event)"
@@ -119,18 +132,20 @@ declare const mu: any, jQuery: any;
                     </ng-template>
                 </mn-panel-toolbar>
             </mn-panel-header>
-            <mn-panel-body class="mnc-tb">
+            <mn-panel-body class="mnc-tb" mnElement #panelBody="element">
+                
                 <ng-content select="mn-prepend"></ng-content>
+                
                 <div class="mnc-tb-row">
                     <mn-req #panel
                             [mnShowGutter]="_show_gutter"
                             [mnShowLoading]="_show_loading"
-                            [loader]="loader"
+                            [loader]="loader || panelBody"
                             [loaderStyle]="loaderStyle"
                             [req]="req"
                             [mnData]="data"
                             (result)="_data = _reqResult($event.data, $event) || $event.data">
-    
+
                         <div class="mn-dataView" *ngIf="_show_dataView">
                             <table class="table bordered td-top-bd td-left-bd">
                                 <tbody>
@@ -142,7 +157,7 @@ declare const mu: any, jQuery: any;
                                 </tbody>
                             </table>
                         </div>
-    
+
                         <mn-echarts [style.height]="height"
                                     [setting]="setting"
                                     [options]="options"
@@ -187,10 +202,10 @@ export class MnEchartsPanelComponent implements OnChanges {
     }
 
     /**
-     * show_tools
+     * showTools
      * show, toggle
      */
-    @Input() show_tools = 'show';
+    @Input('mnShowTools') showTools = 'show';
     @Input() data: any;
 
     // 让控件支持高度100%
@@ -265,11 +280,11 @@ export class MnEchartsPanelComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
 
         /**
-         * show_tools 设置值
+         * showTools 设置值
          */
-        mu.empty(mu.prop(changes, 'show_tools.currentValue'), () => {
-            if (this._config.show_tools) {
-                this.show_tools = this._config.show_tools;
+        mu.empty(mu.prop(changes, 'showTools.currentValue'), () => {
+            if (this._config.showTools) {
+                this.showTools = this._config.showTools;
             }
         });
 

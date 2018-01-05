@@ -10,8 +10,8 @@ mn-echarts-box {
             display: table;
 
             .mnc-tb-row,
-            mn-prepend,
-            mn-append {
+            > mn-prepend,
+            > mn-append {
                 display: table-row;
             }
         }
