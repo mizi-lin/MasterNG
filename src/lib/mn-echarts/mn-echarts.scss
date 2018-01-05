@@ -5,10 +5,20 @@ mn-echarts-box {
 
     mn-panel-body {
         padding: 0;
+
+        &.mnc-tb {
+            display: table;
+
+            .mnc-tb-row,
+            mn-prepend,
+            mn-append {
+                display: table-row;
+            }
+        }
     }
 
     mn-req {
-        padding: 16px;
+        padding: 8px;
     }
 
     .mn-dataView {
@@ -34,6 +44,10 @@ mn-echarts-box {
     &:hover mn-panel-toolbar.toggle {
         display: block;
     }
+
+
+
+
 }
 
 mn-echarts-box {

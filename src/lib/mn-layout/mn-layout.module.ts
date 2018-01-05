@@ -3,6 +3,8 @@ import {CommonModule} from '@angular/common';
 import {MnRowComponent} from './mn-row.component';
 import {MnColComponent} from './mn-col.component';
 import {MnGutterComponent} from './mn-gutter.component';
+import {MnPrependComponent} from './mn-prepend.component';
+import {MnAppendComponent} from './mn-append.component';
 
 @NgModule({
     imports: [
@@ -11,12 +13,16 @@ import {MnGutterComponent} from './mn-gutter.component';
     declarations: [
         MnRowComponent,
         MnColComponent,
-        MnGutterComponent
+        MnGutterComponent,
+        MnPrependComponent,
+        MnAppendComponent
     ],
     exports: [
         MnRowComponent,
         MnColComponent,
-        MnGutterComponent
+        MnGutterComponent,
+        MnPrependComponent,
+        MnAppendComponent
     ],
     providers: [
         MnRowComponent

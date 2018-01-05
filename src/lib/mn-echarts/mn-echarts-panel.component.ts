@@ -119,43 +119,47 @@ declare const mu: any, jQuery: any;
                     </ng-template>
                 </mn-panel-toolbar>
             </mn-panel-header>
-            <mn-panel-body>
-                <mn-req #panel
-                        [mnShowGutter]="_show_gutter"
-                        [mnShowLoading]="_show_loading"
-                        [loader]="loader"
-                        [loaderStyle]="loaderStyle"
-                        [req]="req"
-                        [mnData]="data"
-                        (result)="_data = _reqResult($event.data, $event) || $event.data">
+            <mn-panel-body class="mnc-tb">
+                <ng-content select="mn-prepend"></ng-content>
+                <div class="mnc-tb-row">
+                    <mn-req #panel
+                            [mnShowGutter]="_show_gutter"
+                            [mnShowLoading]="_show_loading"
+                            [loader]="loader"
+                            [loaderStyle]="loaderStyle"
+                            [req]="req"
+                            [mnData]="data"
+                            (result)="_data = _reqResult($event.data, $event) || $event.data">
+    
+                        <div class="mn-dataView" *ngIf="_show_dataView">
+                            <table class="table bordered td-top-bd td-left-bd">
+                                <tbody>
+                                    <tr *ngFor="let dd of _dataView">
+                                        <td *ngFor="let d of dd">
+                                            {{d || '-' | mu:'format'}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <mn-echarts [style.height]="height"
+                                    [setting]="setting"
+                                    [options]="options"
+                                    [type]="type"
+                                    [data]="_data || data"
+                                    (chartClick)="chartClick.emit($event)"
+                                    (chartDblClick)="chartDblClick.emit($event)"
+                                    (chartMouseDown)="chartMouseDown.emit($event)"
+                                    (chartMouseUp)="chartMouseUp.emit($event)"
+                                    (chartMouseOver)="chartMouseOver.emit($event)"
+                                    (chartMouseOut)="chartMouseOut.emit($event)"
+                                    (chartGlobalOut)="chartGlobalOut.emit($event)"
+                                    (result)="_result($event)"></mn-echarts>
+                    </mn-req>
+                </div>
 
-                    <div class="mn-dataView" *ngIf="_show_dataView">
-                        <table class="table bordered td-top-bd td-left-bd">
-                            <tbody>
-                                <tr *ngFor="let dd of _dataView">
-                                    <td *ngFor="let d of dd">
-                                        {{d || '-' | mu:'format'}}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <mn-echarts [style.height]="height"
-                                [setting]="setting"
-                                [options]="options"
-                                [type]="type"
-                                [data]="_data || data"
-                                (chartClick)="chartClick.emit($event)"
-                                (chartDblClick)="chartDblClick.emit($event)"
-                                (chartMouseDown)="chartMouseDown.emit($event)"
-                                (chartMouseUp)="chartMouseUp.emit($event)"
-                                (chartMouseOver)="chartMouseOver.emit($event)"
-                                (chartMouseOut)="chartMouseOut.emit($event)"
-                                (chartGlobalOut)="chartGlobalOut.emit($event)"
-                                (result)="_result($event)"></mn-echarts>
-
-                </mn-req>
+                <ng-content select="mn-append"></ng-content>
             </mn-panel-body>
         </mn-panel>
     `
