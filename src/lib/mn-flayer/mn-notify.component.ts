@@ -10,7 +10,7 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, V
                 [mnLayerSourceRef]="_sourceRef"
                 (mnResult)="_result($event)"
                 mnLayer>
-            
+
             <section class="mnc-notify">
                 <mn-alert
                         [mnType]="_type"
@@ -19,11 +19,11 @@ import {Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2, V
 
                 <i class="fa fa-close {{_type}}" (click)="_close()" *ngIf="_close_btn"></i>
             </section>
-            
+
         </ng-template>
     `,
-
-   encapsulation: ViewEncapsulation.None
+    styleUrls: ['./mn-flayer.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class MnNotifyComponent implements OnInit {
     // modal 来源 service 服务, page 页面
