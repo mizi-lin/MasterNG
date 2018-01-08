@@ -5,11 +5,11 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
     template: `
         <section class="mnc-alert mnc-alert-{{_type}}">
             <mn-fill [gutter]="8">
-                <mn-col [style.width.px]="48">
-                    <i class="{{_icon}}"></i>
-                </mn-col>
+                <!--<mn-col [style.width.px]="48">-->
+                    <!--<i class="{{_icon}}"></i>-->
+                <!--</mn-col>-->
                 <mn-col [span]="1" [innerHTML]="_content">
-                    
+                    <ng-content></ng-content>
                 </mn-col>
             </mn-fill>
         </section>

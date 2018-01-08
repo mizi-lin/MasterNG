@@ -24,14 +24,12 @@ mn-req {
                     background: rgba(125, 125, 125, .1);
                     border-radius: 2px;
                 }
-
-
             }
         }
 
         animation-name: mnGutterfadeOut; /*动画名称*/
         animation-duration: 2s; /*动画持续时间*/
-        animation-iteration-count: 1; /*动画次数*/
+        animation-iteration-count: 3; /*动画次数*/
         animation-delay: 0s; /*延迟时间*/
     }
 

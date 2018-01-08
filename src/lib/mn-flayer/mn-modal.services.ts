@@ -41,17 +41,23 @@ export class MnModalServices {
 
     notify(config: any = {}) {
         this._layer = this._lcs.createLayerElement('mnNotify', 'notify');
-
-        this._layer.innerHTML += `<mn-notify></mn-notify>`;
+        let _section = <HTMLElement>document.createElement('mn-notify');
+        // _section.innerHTML += `<mn-notify></mn-notify>`;
         this._mnf = this._cfr.resolveComponentFactory(MnNotifyComponent);
-        let compRef: ComponentRef<any> = this._appRef.bootstrap(this._mnf, this._layer.firstElementChild);
+
+        // console.dir(this._layer);
+        let compRef: ComponentRef<any> = this._appRef.bootstrap(this._mnf, _section);
+
         let instance: MnNotifyComponent = <MnNotifyComponent> compRef.instance;
         instance['_open'] = true;
         instance['_type'] = config.type || 'error';
         instance['_source'] = 'service';
         instance['_content'] = config.content;
         instance['_layerId'] = config.id || this._layer.id;
-        instance['_delay'] = config._delay;
+        instance['_delay'] = mu.ifnvl(config.delay, 3000);
+        instance['_close_btn'] = mu.ifnvl(config.closeBtn, true);
+        this._layer.appendChild(_section);
+
     }
 
 }

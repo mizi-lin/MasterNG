@@ -151,3 +151,8 @@
 
 * 添加module -> mnAppend, mnPrepend
 * mnEchartPanel 支持 mnAppend, mnPrepend
+
+0.3.19
+
+* 添加module -> mnAlert, mnNotity, mnModal
+* 添加services mnModalService

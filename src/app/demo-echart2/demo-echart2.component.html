@@ -57,9 +57,9 @@
         <mn-echarts-panel class="bordered" title="EchartsPanel::map mn-panel && tools"
                           [data]="_data"
                           [type]="'map'"
-                          [hph]="'auto'"
-                          [setting]="setting"
-                          height="300px">
+                          [hph]="'300px'"
+                          [tools]="['reload']"
+                          [setting]="setting">
         </mn-echarts-panel>
     </mn-req>
 
@@ -67,9 +67,8 @@
                       [req]="req2"
                       [type]="'map'"
                       [tools]="['reload']"
-                      [hph]="'auto'"
-                      [setting]="setting"
-                      height="300px">
+                      [hph]="'300px'"
+                      [setting]="setting">
     </mn-echarts-panel>
 
     <!--<div class="mt-16 mb-16" mnElement #abc="element" [ngStyle]="{'height': '200px', 'background': '#f00'}">-->
