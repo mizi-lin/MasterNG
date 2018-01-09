@@ -18,6 +18,7 @@ import {CommonModule} from '@angular/common';
 import {DemoNodataComponent} from './demo-nodata/demo-nodata.component';
 import {MnCommonServices} from '../lib/mn-common/services/mn-common.services';
 import { DemoLayerComponent } from './demo-layer/demo-layer.component';
+import { DemoTabComponent } from './demo-tab/demo-tab.component';
 
 @NgModule({
     imports: [
@@ -61,6 +62,11 @@ import { DemoLayerComponent } from './demo-layer/demo-layer.component';
             {
                 path: 'layer',
                 component: DemoLayerComponent
+            },
+
+            {
+                path: 'tab',
+                component: DemoTabComponent
             }
 
         ], {useHash: true}),
@@ -79,7 +85,8 @@ import { DemoLayerComponent } from './demo-layer/demo-layer.component';
         DemoEchart2Component,
         DemoDatetimeComponent,
         DemoNodataComponent,
-        DemoLayerComponent
+        DemoLayerComponent,
+        DemoTabComponent
     ],
 
     entryComponents: [

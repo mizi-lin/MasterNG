@@ -19,6 +19,7 @@ import {MnRuleServices} from './mn-rule/mn-rule.services';
 import {MnReqServices} from './mn-req/mn-req.service';
 import {MnEchartsServices} from './mn-echarts/mn-echarts.service';
 import {MnAlertModule} from './mn-alert/mn-alert.module';
+import {MnTabModule} from './mn-tab/mn-tab.module';
 
 @NgModule({
     imports: [
@@ -39,7 +40,8 @@ import {MnAlertModule} from './mn-alert/mn-alert.module';
         MnDatetimeModule,
         MnFloatLayerModule,
         MnFormModule,
-        MnAlertModule
+        MnAlertModule,
+        MnTabModule
     ],
     exports: [
         MnLayoutModule,
@@ -54,7 +56,8 @@ import {MnAlertModule} from './mn-alert/mn-alert.module';
         MnRuleModule,
         MnDatetimeModule,
         MnFloatLayerModule,
-        MnFormModule
+        MnFormModule,
+        MnTabModule
     ]
 })
 export class MasterNgModule {

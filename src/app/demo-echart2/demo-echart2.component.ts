@@ -53,7 +53,13 @@ export class DemoEchart2Component implements OnInit {
                     return 'BREAK';
                 }
             });
-        }, 3000);
+
+            // setTimeout(() => {
+            //     data = data.data;
+            //     this._data = [];
+            // }, 3000);
+
+        }, 5000);
 
 
 

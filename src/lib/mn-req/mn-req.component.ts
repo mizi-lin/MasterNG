@@ -12,7 +12,7 @@ declare const mu: any;
 @Component({
     selector: 'mn-req, mn-http',
     template: `
-        <ng-template [ngIf]="loading">
+        <ng-template [ngIf]="_loading">
             <mn-loader-bar [loader]="loader"
                            [loaderStyle]="loaderStyle"
                            [progress]="_process"></mn-loader-bar>
@@ -22,15 +22,15 @@ declare const mu: any;
             <mn-gutter [mnRows]="1" *ngIf="_process != 100"></mn-gutter>
         </ng-template>
 
-        <ng-container *ngIf="showNoData">
+        <ng-container *ngIf="_showNoData">
             <mn-dynamic-component
                     *ngIf="_isNoData && _process === 100"
-                    [component]="noDataComponent"
-                    [inputs]="context">
+                    [component]="_noDataComponent"
+                    [inputs]="_noDataContext">
             </mn-dynamic-component>
         </ng-container>
 
-        <ng-container *ngIf="showNoData ? !_isNoData : true">
+        <ng-container *ngIf="_showNoData ? !_isNoData : true">
             <ng-content></ng-content>
         </ng-container>
     `,
@@ -44,32 +44,29 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
     @Output() result: any = new EventEmitter<any>();
 
     @Input() req: any;
-    @Input() params: any;
-    @Input() payload: any;
 
-    @Input('mnData') data: any;
+    @Input('mnData') _data: any;
     @Input('mnShowGutter') _show_gutter: boolean = true;
-
-    @Input() context: any;
+    @Input('mnShowLoading') _loading: boolean = true;
+    @Input('mnNoDataComponent') _noDataComponent: any = this._rs._noDataComponent || MnReqNoDataComponent;
+    @Input('mnNoDataContext') _noDataContext: any;
+    @Input('mnShowNoData') _showNoData: boolean = true;
     @Input() loader: ElementRef;
-    @Input('mnShowLoading') loading: boolean = true;
     @Input() loaderStyle: any;
-    @Input() showNoData: boolean = true;
-    @Input() delay: number = 500;
-    @Input() noDataComponent: any = this._rs._noDataComponent || MnReqNoDataComponent;
 
     _observable: Subscriber<any>;
     _restful: boolean = true;
     _isNoData: boolean = false;
     _process: number = 0;
+    _delay: number = 500;
 
-    _debounce_data_tid: any;
+    _dbTimeId: any;
 
     constructor(private _http: HttpClient,
                 private _rs: MnReqServices) {
 
+        // 获取 resource pool
         this._restful = mu.ifnvl(this._rs._restful, true);
-
     }
 
     reqHttp(req: any): void {
@@ -126,20 +123,6 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
             this.processStep();
         });
 
-        mu.run(changes['params'] && this.req, () => {
-            this.req.params = {
-                params: this.params
-            };
-            this.params = null;
-            this.debounceReqHttp(this.req);
-        });
-
-        mu.run(changes['payload'] && this.req, () => {
-            this.req.payload = this.payload;
-            this.payload = null;
-            this.debounceReqHttp(this.req);
-        });
-
         mu.run(changes['req'], () => {
             this.debounceReqHttp(this.req);
         });
@@ -148,17 +131,9 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
          * req 与 data 二者只可同时生效其一
          * req 占主导位置
          */
-        mu.run(!this.req && changes['data'], () => {
-            this._process = mu.randomInt(10, 30);
-            let res = mu.prop(this.data, 'data') || this.data || {};
-            /**
-             * 重复处理 data 存在机制
-             *
-             * 1. mnReq 不提倡使用 data 直接传值
-             * 2. mnReq data firstChange 时，做了一个简单的延迟处理，在着1000ms中判断是否重新传入req值
-             * 3. mnReq data firstChange 时 等待 data 初始值为 nodata, 等待data变化时，避免nodata呈现在view中
-             */
-            this.debounceData(changes['data']);
+        mu.run(!this.req && changes['_data'], () => {
+            this._process = mu.randomInt(this._process || 30, 60);
+            this.debounceData(changes['_data']);
         });
 
     }
@@ -172,30 +147,21 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
             this.ngOnDestroy();
             this.reqHttp(req);
         });
-    }, this.delay);
+    }, this._delay);
 
     // 处理直接传递数据
     debounceData: any = mu.debounce((change) => {
-        if (change.firstChange) {
-            this._debounce_data_tid = setTimeout(() => {
-                let res = mu.prop(this.data, 'data') || this.data || {};
-                if (this.req) {
-                    clearTimeout(this._debounce_data_tid);
-                } else {
-                    this._isNoData = mu.isEmpty(res);
-                }
-
-                this.result.emit(res);
-            }, 3500);
-        } else {
-            let res = mu.prop(this.data, 'data') || this.data || {};
-            this._debounce_data_tid && clearTimeout(this._debounce_data_tid);
-            this._isNoData = mu.isEmpty(res);
-            this.result.emit(res);
+        // data 只认存在数据（isExist)
+        let _data = mu.prop(change, 'currentValue.data') || mu.prop(change, 'currentValue');
+        if (mu.isExist(_data)) {
+            this._dbTimeId && clearTimeout(this._dbTimeId);
+            this._process = 100;
+            this._dbTimeId = setTimeout(() => {
+                this._isNoData = mu.isEmpty(_data);
+                this.result.emit(_data);
+            }, 2500);
         }
-
-        this._process = 100;
-    });
+    }, this._delay);
 
     processStep(): any {
         const tid = setTimeout(() => {
