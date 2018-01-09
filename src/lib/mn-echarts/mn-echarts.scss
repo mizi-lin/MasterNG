@@ -9,6 +9,10 @@ mn-echarts-box {
         &.mnc-tb {
             display: table;
 
+            .mnc-tb-row:only-of-type {
+                height: 100%;
+            }
+
             .mnc-tb-row,
             > mn-prepend,
             > mn-append {

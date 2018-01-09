@@ -17,7 +17,7 @@ export class DemoEchart2Component implements OnInit {
     req: any = {url: './assets/store/echart-map.json'};
     req2: any = {url: './assets/store/nodata.json'};
 
-    _data: any;
+    _data: any = [];
 
     setting: any = {
         // tooltip: (e) => {
@@ -50,7 +50,7 @@ export class DemoEchart2Component implements OnInit {
                 if (i) {
                     return o;
                 } else {
-                    return 'BREAK';
+                    return '__remove_map__';
                 }
             });
 

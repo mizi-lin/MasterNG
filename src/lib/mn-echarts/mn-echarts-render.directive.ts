@@ -50,6 +50,9 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
     private _chart: any = null;
     private currentWindowWidth: any = null;
 
+    _width: number = 0;
+    _height: number = 0;
+
     constructor(private _ref: ElementRef,
                 private _es: MnEchartsServices) {
 
@@ -58,13 +61,10 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
 
         const $el = jQuery(this._ref.nativeElement.parentElement);
 
-        $el.mnResize(() => {
-            mu.run(this._chart, () => {
-                this._chart.resize({
-                    width: $el.width(),
-                    height: $el.height()
-                });
-            });
+        $el.mnResize((e) => {
+            this._width = Math.floor($el.width());
+            this._height = Math.floor($el.height());
+            this._deResize();
         });
 
     }
@@ -73,19 +73,6 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         mu.run(this._chart, () => {
             this._chart.resize();
         });
-    }
-
-    private getWidth(elm: Element): number {
-        if (elm) {
-            const $el = jQuery(elm);
-            return $el.width() || this.getWidth(elm.parentElement);
-        } else {
-            return 0;
-        }
-    }
-
-    private getHeight(elm: Element): number {
-        return elm && (elm.clientHeight || this.getHeight(elm.parentElement));
     }
 
     private createChart(): any {
@@ -105,16 +92,18 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
          * 或多或少会四舍五入又或进一，造成最终计算宽度的时候
          * 超过 100%
          */
-        mu.run(this.getWidth(this._ref.nativeElement), (w) => {
+        mu.run(this._width, (w) => {
             _width = Math.floor(w);
             this._ref.nativeElement.style.width = _width + 'px';
         });
-        mu.run(this.getHeight(this._ref.nativeElement), (h) => {
+        mu.run(this._height, (h) => {
             _height = Math.floor(h);
             this._ref.nativeElement.style.height = _height + 'px';
         });
+
         this._result['width'] = _width;
         this._result['height'] = _height;
+
         this.result.emit(this._result);
         this.options = this._es.adjustOptionsWithLegend(this.options, _width, _height);
         this._de(this._chart, this.options);
@@ -129,6 +118,15 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         }
         _chart.setOption(options, true);
         _chart.resize();
+    }, 300);
+
+    _deResize: any = mu.debounce(() => {
+        mu.run(this._chart, () => {
+            this._chart.resize({
+                width: this._width,
+                height: this._height
+            });
+        });
     }, 300);
 
     @HostListener('window:resize', ['$event'])
@@ -149,11 +147,9 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         if (changes['options']) {
             this.onOptionsChange(this.options);
 
-            setTimeout(() => {
-                this.onOptionsChange(this.options);
-                this.onOptionsChange(this.options);
-                this.onOptionsChange(this.options);
-            }, 200);
+            // setTimeout(() => {
+            //     this.onOptionsChange(this.options);
+            // }, 200);
         }
 
         // -> 空的options, 不渲染echarts

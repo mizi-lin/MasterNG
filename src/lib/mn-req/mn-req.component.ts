@@ -12,13 +12,13 @@ declare const mu: any;
 @Component({
     selector: 'mn-req, mn-http',
     template: `
-        <ng-template [ngIf]="_loading">
+        <ng-template [ngIf]="_showLoading">
             <mn-loader-bar [loader]="loader"
                            [loaderStyle]="loaderStyle"
                            [progress]="_process"></mn-loader-bar>
         </ng-template>
 
-        <ng-template [ngIf]="_show_gutter">
+        <ng-template [ngIf]="_showGutter">
             <mn-gutter [mnRows]="1" *ngIf="_process != 100"></mn-gutter>
         </ng-template>
 
@@ -46,8 +46,8 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
     @Input() req: any;
 
     @Input('mnData') _data: any;
-    @Input('mnShowGutter') _show_gutter: boolean = true;
-    @Input('mnShowLoading') _loading: boolean = true;
+    @Input('mnShowGutter') _showGutter: boolean = true;
+    @Input('mnShowLoading') _showLoading: boolean = true;
     @Input('mnNoDataComponent') _noDataComponent: any = this._rs._noDataComponent || MnReqNoDataComponent;
     @Input('mnNoDataContext') _noDataContext: any;
     @Input('mnShowNoData') _showNoData: boolean = true;
@@ -93,6 +93,8 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
             const _resources = this._rs.getResources();
             return _resources[req.api][method](req.params || {}, req.payload || {});
         });
+
+        // this._observable && this._observable.unsubscribe();
 
         this._observable = source.subscribe((res) => {
                 this._process = 100;
@@ -155,10 +157,11 @@ export class MnReqHttpComponent implements OnChanges, OnDestroy {
         let _data = mu.prop(change, 'currentValue.data') || mu.prop(change, 'currentValue');
         if (mu.isExist(_data)) {
             this._dbTimeId && clearTimeout(this._dbTimeId);
-            this._process = 100;
+            this._process = 99;
             this._dbTimeId = setTimeout(() => {
                 this._isNoData = mu.isEmpty(_data);
                 this.result.emit(_data);
+                this._process = 100;
             }, 2500);
         }
     }, this._delay);
