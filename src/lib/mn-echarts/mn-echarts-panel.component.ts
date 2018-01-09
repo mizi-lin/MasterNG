@@ -189,7 +189,6 @@ export class MnEchartsPanelComponent implements OnChanges {
     @Input() height: string;
     @Input() options: any;
     @Input() setting: any;
-    @Input() where: any;
     @Input() tools: string;
     @Input() filename: string = 'MasterNg';
 
@@ -289,11 +288,10 @@ export class MnEchartsPanelComponent implements OnChanges {
         });
 
         mu.exist(changes['setting'], (changes_setting) => {
-            if (changes_setting.first) {
+            this.setting = this.setting || {};
+            if (changes_setting.firstChange) {
                 this._src_setting = mu.clone(this.setting);
-
             }
-            this.setting.__where__ = this.where;
         });
 
         mu.exist(changes['type'], (type_changes) => {
