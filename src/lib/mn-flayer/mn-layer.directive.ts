@@ -147,9 +147,6 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
     // 隐藏下拉框
     // 移除下拉内容
     _hide(): void {
-
-        console.debug(this._vcRef);
-
         this._vcRef.clear();
         this._viewRef = null;
         this._showed = false;

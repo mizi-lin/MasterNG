@@ -19,14 +19,16 @@ export class MnModalContext {
                 (mnResult)="_result($event)"
                 mnLayer>
             <section>
-                <div class="mnc-mask" *ngIf="_mask"></div>
+                <div class="mnc-mask" *ngIf="_mask" (click)="close()"></div>
                 <div class="mnc-modal">
                     <mn-panel [hph]="true">
                         <mn-panel-header>
                             <mn-panel-title [innerHTML]="_title">
                             </mn-panel-title>
                             <mn-panel-toolbar>
-                                <mn-col (click)="close()">Close</mn-col>
+                                <mn-col>
+                                    <i class="fa fa-close" (click)="close()"></i>
+                                </mn-col>
                             </mn-panel-toolbar>
                         </mn-panel-header>
                         <mn-panel-body>
@@ -42,8 +44,6 @@ export class MnModalContext {
                             <ng-container *ngIf="_component">
                                 <mn-dynamic-component [component]="_component"></mn-dynamic-component>
                             </ng-container>
-
-                            <div (click)="close()">Close</div>
                         </mn-panel-body>
                     </mn-panel>
                 </div>
