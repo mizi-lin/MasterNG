@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {MnDate} from './mn-date.class';
 
 declare const mu: any;
@@ -216,41 +216,43 @@ export class MnDatetimePickerComponent implements OnInit {
 
     _mcmResult($event: any) {
 
-        // console.debug('::::::--::::::', $event);
-
-        mu.run($event.startDate, () => {
-            this._viewed.startDate = $event.startDate.clone();
-        });
-
-        mu.run($event.endDate, () => {
-            this._viewed.endDate = $event.endDate.clone();
-        }, () => {
-            this._viewed.endDate = {};
-        });
-
         // this._startDate = $event.startDate;
         // this._endDate = $event.endDate;
         // if (!this._hasChange) {
-            // Hack fixed angular error
-            // ERROR Error:
-            //      ExpressionChangedAfterItHasBeenCheckedError:
-            //      Expression has changed after it was checked
-            // public ngDoCheck(): void { this.cdr.detectChanges(); }
+        // Hack fixed angular error
+        // ERROR Error:
+        //      ExpressionChangedAfterItHasBeenCheckedError:
+        //      Expression has changed after it was checked
+        // public ngDoCheck(): void { this.cdr.detectChanges(); }
 
-            setTimeout(() => {
-                mu.run(this._viewed.startDate, () => {
-                    this._selected = this._rst({
-                        startDate: this._viewed.startDate || this._startDate,
-                        endDate: this._viewed.endDate || this._endDate
-                    });
-                    this.result.emit(this._selected);
-                }, () => {
-                    this.result.emit({});
+        setTimeout(() => {
+
+            mu.run($event.startDate, () => {
+                this._viewed.startDate = $event.startDate.clone();
+            }, () => {
+                this._viewed.startDate = void 0;
+            });
+
+            mu.run($event.endDate, () => {
+                this._viewed.endDate = $event.endDate.clone();
+            }, () => {
+                this._viewed.endDate = void 0;
+            });
+
+            mu.run(this._viewed.startDate, () => {
+                this._selected = this._rst({
+                    startDate: this._viewed.startDate,
+                    endDate: this._viewed.endDate
                 });
-            }, 0);
+
+                this.result.emit(this._selected);
+            }, () => {
+                this._selected = {};
+                this.result.emit({});
+            });
+        }, 0);
 
         // }
-
 
     }
 
@@ -278,6 +280,9 @@ export class MnDatetimePickerComponent implements OnInit {
     }
 
     _rst(rst: any): any {
+        if (!rst) {
+            return '';
+        }
         rst.start = this._format(rst.startDate);
         rst.end = this._format(rst.endDate);
         return rst;

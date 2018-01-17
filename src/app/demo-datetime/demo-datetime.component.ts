@@ -20,9 +20,7 @@ export class DemoDatetimeComponent implements OnInit {
     ngOnInit() {
 
         setTimeout(() => {
-            console.debug(this.minDate);
-            this.minDate = '2017-12-18';
-            console.debug(this.minDate);
+            this.minDate = '2018-01-17';
         }, 3000);
 
     }

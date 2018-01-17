@@ -65,10 +65,13 @@ export class MnCalendarMultipleComponent implements OnInit, OnChanges {
             return;
         }
 
+
         this.startDate_ = new MnDate(date);
         this.startDate_ = this._mds.reStartDate(this.startDate_, this.maxDate_, this.minDate_);
 
+
         if (this.startDate_) {
+
 
             if (!this._hasChanges) {
                 this.prev_year = this.startDate_.days.year;
@@ -87,7 +90,11 @@ export class MnCalendarMultipleComponent implements OnInit, OnChanges {
             this.prev_date = this.startDate_.days.date;
 
             setTimeout(() => {
+
+
                 if (!this.endDate_) {
+
+
                     this.result.emit({startDate: this.startDate_});
                 }
             }, 100);
@@ -117,15 +124,19 @@ export class MnCalendarMultipleComponent implements OnInit, OnChanges {
                 this.next_date = this.startDate_.days.date;
             }
 
+
             this.result.emit({
                 startDate: this.startDate_,
                 endDate: this.endDate_
             });
         } else {
+
+
             this.result.emit({
                 startDate: this.startDate_,
                 endDate: this.endDate_
             });
+
             return;
         }
 
@@ -203,6 +214,9 @@ export class MnCalendarMultipleComponent implements OnInit, OnChanges {
         mu.run(changes['minDate'], (change) => {
             if (!change.firstChange) {
                 this.startDate = mu.clone(this.startDate_);
+
+                console.debug(mu.clone( this.startDate) );
+
                 this.endDate = mu.clone(this.endDate_);
             }
         });
