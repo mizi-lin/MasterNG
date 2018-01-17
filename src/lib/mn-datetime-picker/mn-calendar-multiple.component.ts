@@ -122,6 +122,10 @@ export class MnCalendarMultipleComponent implements OnInit, OnChanges {
                 endDate: this.endDate_
             });
         } else {
+            this.result.emit({
+                startDate: this.startDate_,
+                endDate: this.endDate_
+            });
             return;
         }
 
