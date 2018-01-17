@@ -216,7 +216,7 @@ export class MnDatetimePickerComponent implements OnInit {
 
     _mcmResult($event: any) {
 
-        console.debug('::::::--::::::', $event);
+        // console.debug('::::::--::::::', $event);
 
         mu.run($event.startDate, () => {
             this._viewed.startDate = $event.startDate.clone();
