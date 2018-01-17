@@ -112,7 +112,7 @@ export class MnDatetimeServices {
             }
 
             if (maxDate && (startDate.days.start > maxDate.days.start)) {
-                startDate = maxDate;
+                startDate = void 0;
             }
         }
         return startDate;
@@ -129,7 +129,7 @@ export class MnDatetimeServices {
             }
 
             if (minDate && minDate.days.start > endDate.days.start) {
-                endDate = minDate;
+                endDate = void 0;
             }
         }
 

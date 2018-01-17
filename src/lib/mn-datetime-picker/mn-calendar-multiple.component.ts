@@ -1,7 +1,4 @@
-import {
-    AfterViewInit, Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges,
-    ViewChildren
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChildren} from '@angular/core';
 import {MnCalendarComponent} from './mn-calendar.component';
 import {MnCalendarViewComponent} from './mn-calendar-view.component';
 import {MnDatetimeServices} from './mn-datetime.services';
@@ -71,27 +68,32 @@ export class MnCalendarMultipleComponent implements OnInit, OnChanges {
         this.startDate_ = new MnDate(date);
         this.startDate_ = this._mds.reStartDate(this.startDate_, this.maxDate_, this.minDate_);
 
-        if (!this._hasChanges) {
-            this.prev_year = this.startDate_.days.year;
-            this.prev_month = this.startDate_.days.month;
-            this._hasChanges = true;
-        }
+        if (this.startDate_) {
 
-        // 若两个月份指向同一个月份
-        if (this.next_year === this.prev_year && this.next_month === this.prev_month) {
-            let _adjust_next = this.startDate_.mom(1);
-            this.next_year = _adjust_next.year;
-            this.next_month = _adjust_next.month;
-            this.next_date = this.startDate_.days.date;
-        }
-
-        this.prev_date = this.startDate_.days.date;
-
-        setTimeout(() => {
-            if (!this.endDate_) {
-                this.result.emit({startDate: this.startDate_});
+            if (!this._hasChanges) {
+                this.prev_year = this.startDate_.days.year;
+                this.prev_month = this.startDate_.days.month;
+                this._hasChanges = true;
             }
-        }, 100);
+
+            // 若两个月份指向同一个月份
+            if (this.next_year === this.prev_year && this.next_month === this.prev_month) {
+                let _adjust_next = this.startDate_.mom(1);
+                this.next_year = _adjust_next.year;
+                this.next_month = _adjust_next.month;
+                this.next_date = this.startDate_.days.date;
+            }
+
+            this.prev_date = this.startDate_.days.date;
+
+            setTimeout(() => {
+                if (!this.endDate_) {
+                    this.result.emit({startDate: this.startDate_});
+                }
+            }, 100);
+        } else {
+            return;
+        }
     }
 
     @Input('mnEndDate')
@@ -101,22 +103,28 @@ export class MnCalendarMultipleComponent implements OnInit, OnChanges {
         }
         this.endDate_ = new MnDate(date);
         this.endDate_ = this._mds.reEndDate(this.endDate_, this.maxDate_, this.minDate_);
-        this.next_year = this.endDate_.days.year;
-        this.next_month = this.endDate_.days.month;
-        this.next_date = this.endDate_.days.date;
 
-        // 若两个月份指向同一个月份
-        if (this.next_year === this.prev_year && this.next_month === this.prev_month) {
-            let _adjust_next = this.startDate_.mom(1);
-            this.next_year = _adjust_next.year;
-            this.next_month = _adjust_next.month;
-            this.next_date = this.startDate_.days.date;
+        if (this.endDate_) {
+            this.next_year = this.endDate_.days.year;
+            this.next_month = this.endDate_.days.month;
+            this.next_date = this.endDate_.days.date;
+
+            // 若两个月份指向同一个月份
+            if (this.next_year === this.prev_year && this.next_month === this.prev_month) {
+                let _adjust_next = this.startDate_.mom(1);
+                this.next_year = _adjust_next.year;
+                this.next_month = _adjust_next.month;
+                this.next_date = this.startDate_.days.date;
+            }
+
+            this.result.emit({
+                startDate: this.startDate_,
+                endDate: this.endDate_
+            });
+        } else {
+            return;
         }
 
-        this.result.emit({
-            startDate: this.startDate_,
-            endDate: this.endDate_
-        });
     }
 
     @Output('mnResult') result: any = new EventEmitter<any>();
