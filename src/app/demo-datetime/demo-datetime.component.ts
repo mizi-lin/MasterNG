@@ -11,17 +11,25 @@ declare const mu: any;
 })
 export class DemoDatetimeComponent implements OnInit {
 
-    minDate: string = '2017-12-10';
-    startDate: string = '2017-12-01';
+    minDate: string = '2016-12-11';
+    maxDate: string = '2017-12-10';
+    startDate: string = '';
+    endDate: string = '';
 
     constructor(private _http: HttpClient) {
     }
 
     ngOnInit() {
 
-        setTimeout(() => {
-            this.minDate = '2018-01-17';
-        }, 3000);
+        // setTimeout(() => {
+        //     this.minDate = '2018-01-17';
+        //
+        //     setTimeout(() => {
+        //         this.minDate = '2017-12-10';
+        //         this.startDate = '2018-01-09';
+        //         this.endDate = '2018-01-16';
+        //     }, 5000);
+        // }, 5000);
 
     }
 

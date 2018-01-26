@@ -97,12 +97,12 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
 
         if (mu.or(this._module, 'mnTooltip', 'mnDropDown')) {
             // 移出下拉框，隐藏下拉框
-            this._render.listen(layer, 'mouseleave', () => {
-                this._clear = setTimeout(() => {
-                    this._hide();
-                    this._showed = false;
-                }, 500);
-            });
+            // this._render.listen(layer, 'mouseleave', () => {
+            //     this._clear = setTimeout(() => {
+            //         this._hide();
+            //         this._showed = false;
+            //     }, 500);
+            // });
         }
 
         // 绑定隐藏事件

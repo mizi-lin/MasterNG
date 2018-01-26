@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostBinding, Input, OnInit, Output} from '@angular/core';
+import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {MnDate} from './mn-date.class';
 import {MnDatetimeServices} from './mn-datetime.services';
 
@@ -66,10 +66,7 @@ export class MnDateSingleComponent implements OnInit {
 
     @Input('mnView') _view: string = 'days';
 
-    _current: boolean;
-    _prev: boolean;
-    _next: boolean;
-    _status: string;
+    @Input('mnDisabled') _disabled: boolean = false;
 
     @Input('mnStatus')
     set status_(st) {
@@ -80,6 +77,11 @@ export class MnDateSingleComponent implements OnInit {
     }
 
     _max: boolean = false;
+
+    _current: boolean;
+    _prev: boolean;
+    _next: boolean;
+    _status: string;
 
     @HostBinding('class.max')
     get classMax_() {
@@ -105,7 +107,11 @@ export class MnDateSingleComponent implements OnInit {
     get classStart_() {
         return mu.run(this._startDate, (_startDate) => {
             this._startDate = this.mndate(_startDate);
-            return !this._max && !this._min && this._current && this._mds.compared(this._view, this._date, this._startDate) === 0;
+
+            return !this._max
+                && !this._min
+                && this._current
+                && this._mds.compared(this._view, this._date, this._startDate) === 0;
         });
     }
 
@@ -113,7 +119,10 @@ export class MnDateSingleComponent implements OnInit {
     get classEnd_() {
         return mu.run(this._endDate, (_endDate) => {
             this._endDate = this.mndate(_endDate);
-            return !this._max && !this._min && this._current && this._mds.compared(this._view, this._date, this._endDate) === 0;
+            return !this._max
+                && !this._min
+                && this._current
+                && this._mds.compared(this._view, this._date, this._endDate) === 0;
         });
     }
 
@@ -161,6 +170,11 @@ export class MnDateSingleComponent implements OnInit {
     @HostBinding('class.next')
     get classNext_() {
         return this._next;
+    }
+
+    @HostBinding('class.disabled')
+    get classDisabled_() {
+        return this._disabled;
     }
 
     constructor(private _mds: MnDatetimeServices) {

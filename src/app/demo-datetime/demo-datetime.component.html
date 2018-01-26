@@ -20,14 +20,14 @@
     <!--</mn-panel-s>-->
 
     <mn-panel-s class="bordered mt-16" title="Datetime Picker">
-        <mn-datetimepicker style="margin-left: 500px;"
-                [mnMinDate]="minDate"
-                [mnMaxDate]="1516032000000"
-                [mnStartDate]="'2018-01-09'"
-                [mnEndDate]="'2018-01-16'"
-                (mnResult)="result($event)"
-                (mnSelected)="_result($event)"
-        ></mn-datetimepicker>
+        <!--<mn-datetimepicker style="margin-left: 500px;"-->
+                <!--[mnMinDate]="minDate"-->
+                <!--[mnMaxDate]="1516032000000"-->
+                <!--[mnStartDate]="startDate"-->
+                <!--[mnEndDate]="endDate"-->
+                <!--(mnResult)="result($event)"-->
+                <!--(mnSelected)="_result($event)"-->
+        <!--&gt;</mn-datetimepicker>-->
 
         <!--[mnEndDate]="'2016-08-21'"-->
         <!--[mnMinDate]="'1995-06-11'"-->
@@ -80,7 +80,14 @@
                 <!--[mnEndDate]="'2018-03-11'"-->
                 <!--[mnView]="'days'"></mn-datemultiple>-->
 
-        <mn-datepicker></mn-datepicker>
+        <mn-datepicker
+                [mnMinDate]="minDate"
+                [mnMaxDate]="maxDate"
+                [mnStartDate]="startDate"
+                [mnEndDate]="endDate"
+                (mnResult)="result($event)"
+                (mnSelected)="_result($event)"
+            ></mn-datepicker>
     </mn-panel-s>
 
     <!--<div *mnLayer>江山如此多娇</div>-->

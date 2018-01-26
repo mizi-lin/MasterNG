@@ -41,6 +41,9 @@ declare const mu: any;
                 [mnStartDate]="_startDate"
                 [mnEndDate]="_endDate"
                 [mnHoverDate]="_hoverDate"
+                
+                [mnDisabled]="_disabled"
+                
                 (mnStartEnd)="_startEnd.emit($event)"
                 (mnHover)="_hover.emit($event)"
                 (mnResult)="getResult($event)"></mn-datedraw>
@@ -120,6 +123,7 @@ export class MnDateCalendarComponent implements OnInit {
     @Input('mnDay') _day: number = 1;
     @Input('mnView') _view: string = 'days';
     @Input('mnTools') _tools: boolean = true;
+    @Input('mnDisabled') _disabled: boolean = false;
 
     _title: string = '';
     _mdate: any;

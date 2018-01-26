@@ -19,7 +19,24 @@ mn-datepicker {
             height: 100%;
             border: 1px solid transparent;
             min-width: 105px;
+            .mn-input{
+                text-align: center;
+            }
         }
+    }
+}
+
+mn-datemultiple.disabled {
+    position: relative;
+    &:before {
+        position: absolute;
+        left: -8px;
+        top: -8px;
+        bottom: -8px;
+        right: -8px;
+        content: ' ';
+        background: rgba(0, 0, 0, .05);
+        cursor: not-allowed;
     }
 }
 
@@ -38,24 +55,30 @@ mn-datesingle {
 }
 
 mn-datedraw {
-    .start {
+    mn-datesingle.start {
         background: rgba(61, 168, 245, .3);
     }
 
-    .end {
+    mn-datesingle.end {
         background: rgba(61, 168, 245, .5);
     }
 
     .range {
-        background: rgba(226, 242, 254, 1);
+        background: rgba(226, 242, 254, 2);
     }
 
     .hover {
-        background: rgba(255, 240, 0, .5);
+        background: rgba(226, 242, 254, 1);
     }
 
     .re-hover {
         background: rgb(254, 242, 226);
+    }
+
+    .disabled {
+        color: #aaa !important;
+        background: rgba(0,0,0, .05)!important;
+        cursor: not-allowed !important;
     }
 
     .max {
@@ -71,7 +94,7 @@ mn-datedraw {
     .current {
         cursor: pointer;
         &:not(.max):not(.min):hover {
-            background: rgba(237, 107, 117, .8);
+            background: rgba(237, 107, 117, .5);
         }
     }
 

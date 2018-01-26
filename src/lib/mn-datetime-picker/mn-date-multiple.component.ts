@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {MnDate} from './mn-date.class';
 
@@ -19,12 +19,14 @@ declare const mu: any;
                         [mnStartDate]="_startDate"
                         [mnEndDate]="_endDate"
                         [mnHoverDate]="_hoverDate"
-                        [mnView]="'days'"
+                        [mnView]="_view"
 
-                        [mnYear]="_prev.days.year"
-                        [mnMonth]="_prev.days.month"
+                        [mnYear]="_prev?.days?.year"
+                        [mnMonth]="_prev?.days?.month"
 
                         [mnNextDate]="_next"
+
+                        [mnDisabled]="_disabled$ || _disabled"
 
                         (mnResult)="getPreCalendar($event)"
                         (mnStartEnd)="getStartEnd($event)"
@@ -38,12 +40,14 @@ declare const mu: any;
                         [mnStartDate]="_startDate"
                         [mnEndDate]="_endDate"
                         [mnHoverDate]="_hoverDate"
-                        [mnView]="'days'"
+                        [mnView]="_view"
 
-                        [mnYear]="_next.days.year"
-                        [mnMonth]="_next.days.month"
+                        [mnYear]="_next?.days?.year"
+                        [mnMonth]="_next?.days?.month"
 
                         [mnPrevDate]="_prev"
+
+                        [mnDisabled]="_disabled$ || _disabled"
 
                         (mnResult)="getNextCalendar($event)"
                         (mnStartEnd)="getStartEnd($event)"
@@ -55,37 +59,73 @@ declare const mu: any;
 })
 export class MnDateMultipleComponent implements OnInit {
 
+    date$ = new BehaviorSubject<any>({});
+
+    date$_: any = {};
+
     _maxDate: any;
 
     @Input('mnMaxDate')
     set maxDate_(dt) {
-        this._maxDate = new MnDate(dt);
+        let _maxDate = new MnDate(dt);
+        mu.run(_maxDate, () => {
+            this.date$_ = {
+                ...this.date$_,
+                _maxDate
+            };
+            this._maxDate = _maxDate;
+            this.date$.next(this.date$_);
+        });
     }
 
     _minDate: any;
 
     @Input('mnMinDate')
     set minDate_(dt) {
-        this._minDate = new MnDate(dt);
+        let _minDate = new MnDate(dt);
+        mu.run(_minDate, () => {
+            this.date$_ = {
+                ...this.date$_,
+                _minDate
+            };
+            this._minDate = _minDate;
+            this.date$.next(this.date$_);
+        });
     }
 
     _startDate: any;
 
     @Input('mnStartDate')
     set startDate_(dt) {
-        this._startDate = this.reStartDate(dt);
-        this._prev = this._startDate;
+        let _startDate = new MnDate(dt);
+        this.date$_ = {
+            ...this.date$_,
+            _startDate
+        };
+        this.date$.next(this.date$_);
     }
 
     _endDate: any;
 
     @Input('mnEndDate')
     set endDate_(dt) {
-        this._endDate = this.reEndDate(dt);
-        this._next = this.next_(this._prev, this._endDate);
+        let _endDate = new MnDate(dt);
+        this.date$_ = {
+            ...this.date$_,
+            _endDate
+        };
+        this.date$.next(this.date$_);
     }
 
     @Input('mnView') _view: string = 'days';
+
+    _disabled: boolean = false;
+
+    // 手动配置 disabled 时，权重最大
+    @Input('mnDisabled') _disabled$: boolean = false;
+
+    @Output('mnResult') _result = new EventEmitter<any>();
+    @Output('mnSelected') _selected = new EventEmitter<any>();
 
     _hoverDate: any;
 
@@ -97,55 +137,182 @@ export class MnDateMultipleComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.date$.subscribe(dates => this.calculation(dates));
     }
 
-    getStartEnd(ds) {
+    calculation = mu.debounce((dates) => {
+        let {_minDate = <any>{}, _maxDate = <any>{}, _startDate = <any>{}, _endDate = <any>{}} = dates;
+
+        console.debug(
+            '~~ minDate :::', _minDate['_d']);
+        console.debug(
+            '~~ maxDate :::', _maxDate['_d']);
+        console.debug(
+            '~~ startDate :::', _startDate['_d']);
+        console.debug(
+            '~~ endDate :::', _endDate['_d']);
+
+        _minDate = mu.ifempty(_minDate, new MnDate('100-01-01'));
+        _maxDate = mu.ifempty(_maxDate, new MnDate('9999-12-12'));
+
+        /**
+         * 时间异常
+         *
+         *  _minDate === _maxDate
+         *  _startDate > _endDate
+         *  _minDate > _maxDate
+         *  _minDate > _endDate
+         *  _startDate > _maxDate
+         */
+        if (_minDate._ts === _maxDate._ts) {
+            this._disabled = true;
+            console.error('exception :::: ', 'minDate equal maxDate');
+            this._result.emit({
+                disable: true
+            });
+            return;
+        }
+
+        if (_minDate._ts > _maxDate._ts) {
+            this._disabled = true;
+            console.error('exception :::: ', 'minDate greater than maxDate');
+            this._result.emit({
+                disable: true
+            });
+            return;
+        }
+
+        // 若开始结束时间不存在
+        if (mu.isEmpty(_startDate) && mu.isEmpty(_endDate)) {
+            this._disabled = false;
+            this._result.emit({
+                disable: false
+            });
+            return;
+        }
+
+        if (mu.isNotEmpty(_endDate) && _minDate._ts > _endDate._ts) {
+            this._disabled = true;
+            this._result.emit({
+                disable: true
+            });
+            console.error('exception :::: ', 'minDate greater than endDate');
+            return;
+        }
+
+        if (mu.isNotEmpty(_startDate) && _startDate._ts > _maxDate._ts) {
+            this._disabled = true;
+            this._result.emit({
+                disable: true
+            });
+            console.error('exception :::: ', 'startDate greater than maxDate');
+            return;
+        }
+
+        if (mu.isNotEmpty(_startDate) && mu.isNotEmpty(_endDate) && _startDate._ts > _endDate._ts) {
+            this._disabled = true;
+            this._result.emit({
+                disable: true
+            });
+            console.error('exception :::: ', 'startDate greater than endDate');
+            return;
+        }
+
+        /**
+         * 时间区间重新计算
+         *
+         * 1. _startDate < _minDate < _endDate
+         * // => _startDate = _minDate
+         *
+         * 2. _startDate < _maxDate < _endDate
+         * // => _endDate = _maxDate
+         */
+        if (mu.isNotEmpty(_startDate) && _startDate._ts < _minDate._ts) {
+            this._disabled = false;
+            _startDate = _minDate.clone();
+            console.warn('warning :::: ', 'startDate less than endDate');
+        }
+
+        if (mu.isNotEmpty(_endDate) && _maxDate._ts < _endDate._ts) {
+            this._disabled = false;
+            _endDate = _maxDate.clone();
+            console.warn('warning :::: ', 'maxDate less than endDate');
+        }
+
+        this._startDate = _startDate;
+        this._endDate = _endDate;
+
+        this._result.emit({
+            disable: false,
+            startDate: this._startDate,
+            endDate: this._endDate,
+            maxDate: this._maxDate,
+            minDate: this._minDate,
+        });
+
+        /**
+         * 获取两个视图信息
+         */
+
+        this.getViewInfo();
+
+    }, 300);
+
+    /**
+     * 获取两个视图信息
+     */
+    getViewInfo() {
+        let {_startDate, _endDate} = this;
+
+        /**
+         * 没有设置初始时间，则默认视图显示当前时间
+         */
+        if (mu.isEmpty(_startDate) && mu.isEmpty(_endDate)) {
+            this._prev = new MnDate(new Date());
+            this._next = new MnDate(this._prev.mom(1).start);
+            return;
+        }
+
+        if (mu.isEmpty(_startDate) && mu.isNotEmpty(_endDate)) {
+            this._prev = _endDate.clone();
+            this._next = new MnDate(this._prev.mom(1).start);
+            return;
+        }
+
+        if (mu.isNotEmpty(_startDate)) {
+            this._prev = _startDate.clone();
+            this._next = new MnDate(this._prev.mom(1).start);
+            if (
+                mu.prop(_startDate, 'months.start') === mu.prop(_endDate, 'months.start')
+                || mu.isEmpty(_endDate)) {
+                this._next = new MnDate(this._prev.mom(1).start);
+            } else {
+                this._next = _endDate.clone();
+            }
+        }
+
+    }
+
+    getPreCalendar(prev) {
+        this._prev = prev;
+    }
+
+    getNextCalendar(next) {
+        this._next = next;
+    }
+
+    getStartEnd($event) {
+        this.getStartEnd_($event);
+    }
+
+    getStartEnd_ = mu.debounce((ds) => {
         this._startDate = ds.startDate;
         this._endDate = ds.endDate;
-    }
 
-    getPreCalendar(ds) {
-        this._prev = ds;
-    }
-
-    getNextCalendar(ds) {
-        this._next = ds;
-    }
-
-    /**
-     * 重新计算startDate
-     * @param dt
-     * @return {any}
-     */
-    reStartDate(dt) {
-        dt = new MnDate(dt);
-        if (this._minDate) {
-            return this._minDate._date > dt._date ? this._minDate : dt;
+        if (this._endDate) {
+            this._selected.emit(ds);
         }
-        return dt;
-    }
-
-    /**
-     * 重新计算结束时间
-     * @param dt
-     * @return {any}
-     */
-    reEndDate(dt) {
-        dt = new MnDate(dt);
-        if (this._maxDate) {
-            return this._maxDate._date < dt._date ? this._maxDate : dt;
-        }
-
-        return dt;
-    }
-
-    /**
-     * 获得下个月的期间区域
-     * @private
-     */
-    next_(prev: any, next: any) {
-        return prev._d === next._d ? new MnDate(prev.mom(1).start) : next;
-    }
+    }, 100);
 
 }
 
