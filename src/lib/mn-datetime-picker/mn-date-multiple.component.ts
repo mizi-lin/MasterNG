@@ -186,15 +186,18 @@ export class MnDateMultipleComponent implements OnInit {
         if (mu.isEmpty(_startDate) && mu.isEmpty(_endDate)) {
             this._disabled = false;
             this._result.emit({
+                maxDate: this._maxDate,
+                minDate: this._minDate,
                 disable: false
             });
+            this.getViewInfo();
             return;
         }
 
         if (mu.isNotEmpty(_endDate) && _minDate._ts > _endDate._ts) {
             this._disabled = true;
             this._result.emit({
-                disable: true
+                disabled: true
             });
             console.error('exception :::: ', 'minDate greater than endDate');
             return;
@@ -203,7 +206,7 @@ export class MnDateMultipleComponent implements OnInit {
         if (mu.isNotEmpty(_startDate) && _startDate._ts > _maxDate._ts) {
             this._disabled = true;
             this._result.emit({
-                disable: true
+                disabled: true
             });
             console.error('exception :::: ', 'startDate greater than maxDate');
             return;
@@ -212,7 +215,7 @@ export class MnDateMultipleComponent implements OnInit {
         if (mu.isNotEmpty(_startDate) && mu.isNotEmpty(_endDate) && _startDate._ts > _endDate._ts) {
             this._disabled = true;
             this._result.emit({
-                disable: true
+                disabled: true
             });
             console.error('exception :::: ', 'startDate greater than endDate');
             return;
@@ -228,22 +231,21 @@ export class MnDateMultipleComponent implements OnInit {
          * // => _endDate = _maxDate
          */
         if (mu.isNotEmpty(_startDate) && _startDate._ts < _minDate._ts) {
-            this._disabled = false;
             _startDate = _minDate.clone();
             console.warn('warning :::: ', 'startDate less than endDate');
         }
 
         if (mu.isNotEmpty(_endDate) && _maxDate._ts < _endDate._ts) {
-            this._disabled = false;
             _endDate = _maxDate.clone();
             console.warn('warning :::: ', 'maxDate less than endDate');
         }
 
+        this._disabled = false;
         this._startDate = _startDate;
         this._endDate = _endDate;
 
         this._result.emit({
-            disable: false,
+            disabled: false,
             startDate: this._startDate,
             endDate: this._endDate,
             maxDate: this._maxDate,
@@ -262,15 +264,28 @@ export class MnDateMultipleComponent implements OnInit {
      * 获取两个视图信息
      */
     getViewInfo() {
-        let {_startDate, _endDate} = this;
+        let {_startDate, _endDate, _maxDate, _minDate} = this;
 
         /**
          * 没有设置初始时间，则默认视图显示当前时间
          */
+
         if (mu.isEmpty(_startDate) && mu.isEmpty(_endDate)) {
-            this._prev = new MnDate(new Date());
-            this._next = new MnDate(this._prev.mom(1).start);
-            return;
+
+            if (mu.isNotEmpty(_maxDate)) {
+                this._next = _maxDate.clone();
+                this._prev = new MnDate(this._next.mom(-1).start);
+                return;
+            } else if (mu.isNotEmpty(_minDate)) {
+                this._prev = _minDate.clone();
+                this._next = new MnDate(this._prev.mom(1).start);
+                return;
+            } else {
+                this._prev = new MnDate(new Date());
+                this._next = new MnDate(this._prev.mom(1).start);
+                return;
+            }
+
         }
 
         if (mu.isEmpty(_startDate) && mu.isNotEmpty(_endDate)) {
@@ -309,7 +324,7 @@ export class MnDateMultipleComponent implements OnInit {
         this._startDate = ds.startDate;
         this._endDate = ds.endDate;
 
-        if (this._endDate) {
+        if (mu.isNotEmpty(this._endDate)) {
             this._selected.emit(ds);
         }
     }, 100);

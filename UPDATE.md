@@ -156,3 +156,7 @@
 
 * 添加module -> mnAlert, mnNotity, mnModal
 * 添加services mnModalService
+
+0.3.21
+
+* MnDatePicker v2.0.0 发布，暂时只支持 days

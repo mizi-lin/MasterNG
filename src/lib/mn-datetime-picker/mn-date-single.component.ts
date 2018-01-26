@@ -70,7 +70,8 @@ export class MnDateSingleComponent implements OnInit {
 
     @Input('mnStatus')
     set status_(st) {
-        this._current = st === 'current';
+        // this._current = mu.or(st, 'current', 'prev', 'next');
+        this._current = mu.or(st, 'current');
         this._next = st === 'next';
         this._prev = st === 'prev';
         this._status = st;
@@ -131,16 +132,19 @@ export class MnDateSingleComponent implements OnInit {
         if (this._current && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._endDate)) {
             return !this._max
                 && !this._min
-                && this._current && this._mds.range(this._view, this._date, this._startDate, this._endDate) === 2;
+                && this._current
+                && this._mds.range(this._view, this._date, this._startDate, this._endDate) === 2;
         }
     }
 
     @HostBinding('class.hover')
     get classHover_() {
-        if (this._current && mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
+        // if (this._current && mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
+        if (mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
             return !this._max
                 && !this._min
-                && this._current && this._mds.range(this._view, this._date, this._startDate, this._hoverDate) === 2;
+                // && this._current
+                && this._mds.range(this._view, this._date, this._startDate, this._hoverDate) === 2;
         } else {
             return false;
         }
@@ -148,10 +152,11 @@ export class MnDateSingleComponent implements OnInit {
 
     @HostBinding('class.re-hover')
     get classReHover_() {
-        if (this._current && mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
+        // if (this._current && mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
+        if (mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
             return !this._max
                 && !this._min
-                && this._current && this._mds.range(this._view, this._date, this._hoverDate, this._startDate) === 2;
+                && this._mds.range(this._view, this._date, this._hoverDate, this._startDate) === 2;
         } else {
             return false;
         }

@@ -124,10 +124,12 @@ export class MnDatePickerComponent implements OnInit {
 
         mu.run(start, () => {
             this._$selected.start = mu.format(start._date, this._formatter);
+            this._startDate = start;
         });
 
         mu.run(end, () => {
             this._$selected.end = mu.format(end._date, this._formatter);
+            this._endDate = end;
         });
 
         this._selected.emit({
