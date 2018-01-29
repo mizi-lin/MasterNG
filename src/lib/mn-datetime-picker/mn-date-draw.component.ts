@@ -33,7 +33,8 @@ declare const mu: any;
                         [mnStatus]="dt?.status"
                         [mnView]="_view"
                         [mnDisabled]="_disabled"
-                        
+                        [mnMultiple]="_multiple"
+
                         (click)="getStartEndDate(dt?.mndate)"
                         (mouseover)="getHover(dt)"></mn-datesingle>
             </mn-col>
@@ -109,6 +110,7 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
 
     @Input('mnView') _view: string;
     @Input('mnDisabled') _disabled: boolean = false;
+    @Input('mnMultiple') _multiple: boolean = true;
 
     _frames: any;
     _max: boolean;
@@ -338,19 +340,23 @@ export class MnDateDrawComponent implements OnInit, OnDestroy {
             return;
         }
 
-        if (mu.isNotEmpty(this._endDate)) {
-            this._startDate = dt;
-            this._endDate = void 0;
-        } else if (mu.isNotEmpty(this._startDate)) {
-
-            // startDate must gt endDate
-            if (this._startDate._d > dt._d) {
-                this._endDate = this._startDate;
+        if (this._multiple) {
+            if (mu.isNotEmpty(this._endDate)) {
                 this._startDate = dt;
-            } else {
-                this._endDate = dt;
-            }
+                this._endDate = void 0;
+            } else if (mu.isNotEmpty(this._startDate)) {
 
+                // startDate must gt endDate
+                if (this._startDate._d > dt._d) {
+                    this._endDate = this._startDate;
+                    this._startDate = dt;
+                } else {
+                    this._endDate = dt;
+                }
+
+            } else {
+                this._startDate = dt;
+            }
         } else {
             this._startDate = dt;
         }

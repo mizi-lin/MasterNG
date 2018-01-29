@@ -43,6 +43,7 @@ declare const mu: any;
                 [mnHoverDate]="_hoverDate"
                 
                 [mnDisabled]="_disabled"
+                [mnMultiple]="_multiple"
                 
                 (mnStartEnd)="_startEnd.emit($event)"
                 (mnHover)="_hover.emit($event)"
@@ -124,6 +125,7 @@ export class MnDateCalendarComponent implements OnInit {
     @Input('mnView') _view: string = 'days';
     @Input('mnTools') _tools: boolean = true;
     @Input('mnDisabled') _disabled: boolean = false;
+    @Input('mnMultiple') _multiple: boolean = true;
 
     _title: string = '';
     _mdate: any;

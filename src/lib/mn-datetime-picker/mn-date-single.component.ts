@@ -67,6 +67,7 @@ export class MnDateSingleComponent implements OnInit {
     @Input('mnView') _view: string = 'days';
 
     @Input('mnDisabled') _disabled: boolean = false;
+    @Input('mnMultiple') _multiple: boolean = true;
 
     @Input('mnStatus')
     set status_(st) {
@@ -129,6 +130,11 @@ export class MnDateSingleComponent implements OnInit {
 
     @HostBinding('class.range')
     get classStartEndRange_() {
+
+        if (!this._multiple) {
+            return;
+        }
+
         if (this._current && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._endDate)) {
             return !this._max
                 && !this._min
@@ -139,6 +145,11 @@ export class MnDateSingleComponent implements OnInit {
 
     @HostBinding('class.hover')
     get classHover_() {
+
+        if (!this._multiple) {
+            return;
+        }
+
         // if (this._current && mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
         if (mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
             return !this._max
@@ -152,6 +163,11 @@ export class MnDateSingleComponent implements OnInit {
 
     @HostBinding('class.re-hover')
     get classReHover_() {
+
+        if (!this._multiple) {
+            return;
+        }
+
         // if (this._current && mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
         if (mu.isEmpty(this._endDate) && mu.isNotEmpty(this._startDate) && mu.isNotEmpty(this._hoverDate)) {
             return !this._max

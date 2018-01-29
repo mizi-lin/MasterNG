@@ -27,13 +27,14 @@ declare const mu: any;
                         [mnNextDate]="_next"
 
                         [mnDisabled]="_disabled$ || _disabled"
+                        [mnMultiple]="_multiple"
 
                         (mnResult)="getPreCalendar($event)"
                         (mnStartEnd)="getStartEnd($event)"
                         (mnHover)="_hoverDate = $event"></mn-datecalendar>
             </mn-col>
 
-            <mn-col [span]="1">
+            <mn-col [span]="1" *ngIf="_multiple">
                 <mn-datecalendar
                         [mnMinDate]="_minDate"
                         [mnMaxDate]="_maxDate"
@@ -48,6 +49,7 @@ declare const mu: any;
                         [mnPrevDate]="_prev"
 
                         [mnDisabled]="_disabled$ || _disabled"
+                        [mnMultiple]="_multiple"
 
                         (mnResult)="getNextCalendar($event)"
                         (mnStartEnd)="getStartEnd($event)"
@@ -118,6 +120,7 @@ export class MnDateMultipleComponent implements OnInit {
     }
 
     @Input('mnView') _view: string = 'days';
+    @Input('mnMultiple') _multiple: boolean = true;
 
     _disabled: boolean = false;
 
@@ -266,6 +269,14 @@ export class MnDateMultipleComponent implements OnInit {
     getViewInfo() {
         let {_startDate, _endDate, _maxDate, _minDate} = this;
 
+        // 单日历视图
+        if (!this._multiple) {
+            if (mu.isNotEmpty(_startDate)) {
+                this._prev = _startDate.clone();
+            }
+            return;
+        }
+
         /**
          * 没有设置初始时间，则默认视图显示当前时间
          */
@@ -324,9 +335,16 @@ export class MnDateMultipleComponent implements OnInit {
         this._startDate = ds.startDate;
         this._endDate = ds.endDate;
 
-        if (mu.isNotEmpty(this._endDate)) {
-            this._selected.emit(ds);
+        if (this._multiple) {
+            if (mu.isNotEmpty(this._endDate)) {
+                this._selected.emit(ds);
+            }
+        } else {
+            if (mu.isNotEmpty(this._startDate)) {
+                this._selected.emit(ds);
+            }
         }
+
     }, 100);
 
 }

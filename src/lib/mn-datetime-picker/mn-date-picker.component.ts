@@ -14,20 +14,20 @@ declare const mu: any;
         <mn-dropdown (mnResult)="_dropDownResult = $event">
             <mn-fill class="mnc-picker" [ngClass]="{disabled: _disabled$ || _disabled}">
                 <mn-col [span]="1">
-                    <mn-input [mnPlaceHolder]="_startPlaceHolder"
+                    <mn-input [mnPlaceHolder]="_multiple ? _startPlaceHolder : 'Selected Date'"
                               [mnReadonly]="true"
                               [mnDisabled]="_disabled$ || _disabled"
                               [mnValue]="_$selected?.start">
                     </mn-input>
                 </mn-col>
-                <mn-col>
+                <mn-col *ngIf="_multiple">
                     <span>~</span>
                 </mn-col>
-                <mn-col [span]="1">
+                <mn-col [span]="1" *ngIf="_multiple">
                     <mn-input [mnPlaceHolder]="_endPlaceHolder"
-                            [mnReadonly]="true"
-                            [mnDisabled]="_disabled$ || _disabled"
-                            [mnValue]="_$selected?.end">
+                              [mnReadonly]="true"
+                              [mnDisabled]="_disabled$ || _disabled"
+                              [mnValue]="_$selected?.end">
                     </mn-input>
                 </mn-col>
                 <mn-col>
@@ -44,6 +44,7 @@ declare const mu: any;
                         [mnEndDate]="_endDate"
                         [mnView]="_view"
                         [mnDisabled]="_disabled$ || _disabled"
+                        [mnMultiple]="_multiple"
                         (mnSelected)="getSelected($event)"
                         (mnResult)="getResult($event)"></mn-datemultiple>
             </mn-dropdown-content>
@@ -61,6 +62,8 @@ export class MnDatePickerComponent implements OnInit {
     @Input('mnStartPlaceHolder') _startPlaceHolder: string = 'Start Date';
     @Input('mnEndPlaceHolder') _endPlaceHolder: string = 'End Date';
     @Input('mnFormatter') _formatter: string = 'yyyy-MM-dd';
+    @Input('mnView') _view: string = 'days';
+    @Input('mnMultiple') _multiple: boolean = true;
 
     @Input('mnMaxDate')
     set maxDate_(dt) {
@@ -85,10 +88,10 @@ export class MnDatePickerComponent implements OnInit {
 
     @Input('mnEndDate')
     set endDate_(dt) {
-        this._endDate = new MnDate(dt);
+        if (this._multiple) {
+            this._endDate = new MnDate(dt);
+        }
     }
-
-    @Input('mnView') _view: string = 'days';
 
     _disabled: boolean = false;
     _disabled$: boolean = false;
