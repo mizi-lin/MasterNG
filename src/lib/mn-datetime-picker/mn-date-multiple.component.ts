@@ -143,14 +143,14 @@ export class MnDateMultipleComponent implements OnInit {
     calculation = mu.debounce((dates) => {
         let {_minDate = <any>{}, _maxDate = <any>{}, _startDate = <any>{}, _endDate = <any>{}} = dates;
 
-        console.debug(
-            '~~ minDate :::', _minDate['_d']);
-        console.debug(
-            '~~ maxDate :::', _maxDate['_d']);
-        console.debug(
-            '~~ startDate :::', _startDate['_d']);
-        console.debug(
-            '~~ endDate :::', _endDate['_d']);
+        // console.debug(
+        //     '~~ minDate :::', _minDate['_d']);
+        // console.debug(
+        //     '~~ maxDate :::', _maxDate['_d']);
+        // console.debug(
+        //     '~~ startDate :::', _startDate['_d']);
+        // console.debug(
+        //     '~~ endDate :::', _endDate['_d']);
 
         _minDate = mu.ifempty(_minDate, new MnDate('100-01-01'));
         _maxDate = mu.ifempty(_maxDate, new MnDate('9999-12-12'));
