@@ -47,7 +47,7 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
     }
 
     @Input('mnLayerSourceRef') _sRef;
-    @Input('mnLayerHideEvt') _hide_evt;
+    @Input('mnLayerHideEvt') _hideEvt;
 
     @Input()
     set mnLayerStatus(status) {
@@ -106,8 +106,8 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
         }
 
         // 绑定隐藏事件
-        mu.run(this._hide_evt, () => {
-            this._render.listen(layer, this._hide_evt, () => {
+        mu.run(this._hideEvt, () => {
+            this._render.listen(layer, this._hideEvt, () => {
                 this._hide();
                 this._showed = false;
             });

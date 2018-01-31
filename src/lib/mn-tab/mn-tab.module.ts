@@ -6,6 +6,8 @@ import {MnPanelModule} from '../mn-panel/mn-panel.module';
 import {MnLayoutModule} from '../mn-layout/mn-layout.module';
 import {MnDynamicModule} from '../mn-dynamic/mn-dynamic.module';
 import {MnTabComponent} from './mn-tab.component';
+import {MnTabsComponent} from './mn-tabs.component';
+import {MnTabContentComponent} from './mn-tabContent.component';
 
 @NgModule({
     imports: [
@@ -17,10 +19,14 @@ import {MnTabComponent} from './mn-tab.component';
         MnDynamicModule
     ],
     declarations: [
-        MnTabComponent
+        MnTabsComponent,
+        MnTabComponent,
+        MnTabContentComponent
     ],
     exports: [
-        MnTabComponent
+        MnTabsComponent,
+        MnTabComponent,
+        MnTabContentComponent
     ],
 
     entryComponents: [

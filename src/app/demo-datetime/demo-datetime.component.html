@@ -89,6 +89,18 @@
                 (mnResult)="result($event)"
                 (mnSelected)="_result($event)"
             ></mn-datepicker>
+
+        <div>
+            <mn-datepicker
+                    [mnMinDate]="minDate"
+                    [mnMaxDate]="maxDate"
+                    [mnStartDate]="startDate"
+                    [mnEndDate]="endDate"
+                    [mnMultiple]="true"
+                    (mnResult)="result($event)"
+                    (mnSelected)="_result($event)"
+            ></mn-datepicker>
+        </div>
     </mn-panel-s>
 
     <!--<div *mnLayer>江山如此多娇</div>-->

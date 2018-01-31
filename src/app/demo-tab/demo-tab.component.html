@@ -1,37 +1,36 @@
-<mn-tab></mn-tab>
+<mn-panel-s [title]="'tab options'" class="mt-16">
+    <mn-tabs [mnOptions]="_options"></mn-tabs>
+</mn-panel-s>
 
+<mn-panel-s [title]="'tab set'" class="mt-16">
+    <mn-tabs class="card" [mnActive]="'tabs options 3'">
+        <mn-tab [mnOptions]="_option1">
+            <ng-template #test>
+                床前明月光，地上谢良庄
+                <mn-demo-datetime [abc]="abc"></mn-demo-datetime>
+            </ng-template>
+        </mn-tab>
+        <mn-tab [mnOptions]="_option2"></mn-tab>
+        <mn-tab [mnOptions]="_option3" [mnTemplate]="test"></mn-tab>
+    </mn-tabs>
+</mn-panel-s>
 
-<pre>
-    <code type="html">
-
-    &lt;mn-tabs>
-
-        &lt;mn-tab>
-
-            &lt;mn-tab-name>
-
-            &lt;/mn-tab-name>
-
-            &lt;mn-tab-content>
-
-
-            &lt;/mn-tab-content>
-
-        &lt;/mn-tab>
-
-    &lt;/mn-tabs>
-
-</code>
-</pre>
-
-
-<!--<mn-tabs>-->
-    <!--<mn-tab [mnTitle]="'Tab1'" [mnComponent]="component" [mnOrder]="0" [mnActive]="true">-->
-        <!--<mn-tab-title [mnOrder]="0" [mnActive]="true">-->
-
-        <!--</mn-tab-title>-->
-        <!--<mn-tab-content>-->
-
-        <!--</mn-tab-content>-->
-    <!--</mn-tab>-->
-<!--</mn-tabs>-->
+<mn-panel-s [title]="'tab content'" class="mt-16">
+    <mn-tabs>
+        <mn-tab [mnTitle]="'self -1'">
+            <mn-tabContent>
+                <div>This is self - 1 content</div>
+            </mn-tabContent>
+        </mn-tab>
+        <mn-tab [mnTitle]="'self -2'">
+            <mn-tabContent>
+                <div>This is self - 2 content</div>
+            </mn-tabContent>
+        </mn-tab>
+        <mn-tab [mnTitle]="'self -3'">
+            <mn-tabContent>
+                <div>This is self - 3 content ..... {{abc}} -- abcdef hijk lmn </div>
+            </mn-tabContent>
+        </mn-tab>
+    </mn-tabs>
+</mn-panel-s>

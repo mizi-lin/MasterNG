@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {MnDate} from '../../lib/mn-datetime-picker/mn-date.class';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 declare const mu: any;
@@ -16,10 +15,14 @@ export class DemoDatetimeComponent implements OnInit {
     startDate: string = '2018-01-06';
     endDate: string = '2018-01-16';
 
+    @Input() abc: string = '11111';
+
     constructor(private _http: HttpClient) {
     }
 
     ngOnInit() {
+
+        console.debug(+new Date(), this.abc);
 
         // setTimeout(() => {
         //     this.minDate = '2018-01-17';
