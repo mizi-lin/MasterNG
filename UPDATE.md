@@ -164,3 +164,7 @@
 0.3.21
 
 * MnTab v1.0.0 发布
+
+o.3.22
+
+* 添加 MnCommonModule 添加 MnLoggerService
