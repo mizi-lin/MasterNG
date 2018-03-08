@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {MnDate} from './mn-date.class';
+import {MnLoggerService} from '../mn-common/services/mn-logger.service';
 
 declare const mu: any;
 
@@ -135,7 +136,7 @@ export class MnDateMultipleComponent implements OnInit {
     _prev: any = {};
     _next: any = {};
 
-    constructor() {
+    constructor(private _logger: MnLoggerService) {
 
     }
 
@@ -146,13 +147,13 @@ export class MnDateMultipleComponent implements OnInit {
     calculation = mu.debounce((dates) => {
         let {_minDate = <any>{}, _maxDate = <any>{}, _startDate = <any>{}, _endDate = <any>{}} = dates;
 
-        // console.debug(
+        // this._logger.debug(
         //     '~~ minDate :::', _minDate['_d']);
-        // console.debug(
+        // this._logger.debug(
         //     '~~ maxDate :::', _maxDate['_d']);
-        // console.debug(
+        // this._logger.debug(
         //     '~~ startDate :::', _startDate['_d']);
-        // console.debug(
+        // this._logger.debug(
         //     '~~ endDate :::', _endDate['_d']);
 
         _minDate = mu.ifempty(_minDate, new MnDate('100-01-01'));
@@ -169,7 +170,7 @@ export class MnDateMultipleComponent implements OnInit {
          */
         if (_minDate._ts === _maxDate._ts) {
             this._disabled = true;
-            console.error('exception :::: ', 'minDate equal maxDate');
+            this._logger.Error('exception :::: ', 'minDate equal maxDate');
             this._result.emit({
                 disable: true
             });
@@ -178,7 +179,7 @@ export class MnDateMultipleComponent implements OnInit {
 
         if (_minDate._ts > _maxDate._ts) {
             this._disabled = true;
-            console.error('exception :::: ', 'minDate greater than maxDate');
+            this._logger.Error('exception :::: ', 'minDate greater than maxDate');
             this._result.emit({
                 disable: true
             });
@@ -202,7 +203,7 @@ export class MnDateMultipleComponent implements OnInit {
             this._result.emit({
                 disabled: true
             });
-            console.error('exception :::: ', 'minDate greater than endDate');
+            this._logger.Error('exception :::: ', 'minDate greater than endDate');
             return;
         }
 
@@ -211,7 +212,7 @@ export class MnDateMultipleComponent implements OnInit {
             this._result.emit({
                 disabled: true
             });
-            console.error('exception :::: ', 'startDate greater than maxDate');
+            this._logger.Error('exception :::: ', 'startDate greater than maxDate');
             return;
         }
 
@@ -220,7 +221,7 @@ export class MnDateMultipleComponent implements OnInit {
             this._result.emit({
                 disabled: true
             });
-            console.error('exception :::: ', 'startDate greater than endDate');
+            this._logger.Error('exception :::: ', 'startDate greater than endDate');
             return;
         }
 
@@ -235,12 +236,12 @@ export class MnDateMultipleComponent implements OnInit {
          */
         if (mu.isNotEmpty(_startDate) && _startDate._ts < _minDate._ts) {
             _startDate = _minDate.clone();
-            console.warn('warning :::: ', 'startDate less than endDate');
+            this._logger.Warn('warning :::: ', 'startDate less than endDate');
         }
 
         if (mu.isNotEmpty(_endDate) && _maxDate._ts < _endDate._ts) {
             _endDate = _maxDate.clone();
-            console.warn('warning :::: ', 'maxDate less than endDate');
+            this._logger.Warn('warning :::: ', 'maxDate less than endDate');
         }
 
         this._disabled = false;

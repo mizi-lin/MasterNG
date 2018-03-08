@@ -5,6 +5,7 @@ import {MuPipe} from './pipe/mn-mu.pipe';
 import {MnFileSaverServices} from './services/mn-file-saver.services';
 import {MnElementRefDirective} from './directive/mn-element-ref.directive';
 import {MnCommonServices} from './services/mn-common.services';
+import {MnLoggerService} from './services/mn-logger.service';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {MnCommonServices} from './services/mn-common.services';
     ],
     providers: [
         MnCommonServices,
-        MnFileSaverServices
+        MnFileSaverServices,
+        MnLoggerService
     ]
 })
 export class MnCommonModule {
