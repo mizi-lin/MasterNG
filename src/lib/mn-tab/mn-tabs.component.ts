@@ -114,7 +114,7 @@ export class MnTabsComponent implements OnInit {
 
     _clickTabTitle(tab, inx) {
         this._options.active = tab.key || inx;
-        this._selected({
+        this._selected.emit({
             tab,
             index: inx,
             key: tab.key

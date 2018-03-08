@@ -1154,6 +1154,8 @@ export class MnEchartsServices {
 
         });
 
+
+
         return options;
     }
 

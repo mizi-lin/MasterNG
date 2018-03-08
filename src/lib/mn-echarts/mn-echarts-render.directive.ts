@@ -116,6 +116,9 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         if (mu.prop(options, 'series.0.type') === 'wordCloud') {
             _chart.clear();
         }
+
+        console.debug(options, JSON.stringify(options));
+
         _chart.setOption(options, true);
         _chart.resize();
     }, 300);
