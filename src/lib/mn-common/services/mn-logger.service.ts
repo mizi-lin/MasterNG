@@ -68,4 +68,15 @@ export class MnLoggerService {
     debug(...args: any[]): void {
         this._state && this.Debug(...args);
     }
+
+    string(...args: any[]): void {
+        let _args = mu.map(args, (o) => {
+            try {
+                return JSON.stringify(o);
+            } catch (e) {
+                return o;
+            }
+        });
+        this._state && this.Debug(...args);
+    }
 }
