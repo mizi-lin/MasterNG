@@ -23,7 +23,6 @@ export class ToolCompressComponent implements OnInit {
     onClick($event: any) {
         mu.run(this._panel, (o) => {
             o._renderer.removeClass(o._ref.nativeElement, 'full-screen');
-            console.debug(':::--:::', $event);
             this.fsClick.emit($event);
         });
     }

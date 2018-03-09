@@ -117,8 +117,6 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
             _chart.clear();
         }
 
-        console.debug(options, JSON.stringify(options));
-
         _chart.setOption(options, true);
         _chart.resize();
     }, 300);

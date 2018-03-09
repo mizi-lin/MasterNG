@@ -4,6 +4,7 @@ import {MnI18nServices} from '../../mn-i18n/mn-i18n.services';
 import {MnRuleServices} from '../../mn-rule/mn-rule.services';
 import {MnReqServices} from '../../mn-req/mn-req.service';
 import {MnEchartsServices} from '../../mn-echarts/mn-echarts.service';
+import {MnLoggerService} from './mn-logger.service';
 
 @Injectable()
 export class MnCommonServices {
@@ -12,6 +13,7 @@ export class MnCommonServices {
         public _i18nService: MnI18nServices,
         public _ruleService: MnRuleServices,
         public _reqService: MnReqServices,
+        public _logger: MnLoggerService,
         public _echartsService: MnEchartsServices
     ) {
     }

@@ -18,9 +18,6 @@ import {ApplicationRef, Component, ElementRef, OnInit} from '@angular/core';
 export class MnLayerComponent implements OnInit {
 
     constructor(private _ref: ElementRef) {
-
-        console.dir(_ref.nativeElement.querySelector('div'));
-
     }
 
     ngOnInit() {

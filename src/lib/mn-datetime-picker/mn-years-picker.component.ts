@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MnDate} from './mn-date.class';
 import {MnDatetimeServices} from './mn-datetime.services';
+import {MnLoggerService} from '../mn-common/services/mn-logger.service';
 
 declare const mu: any;
 
@@ -58,7 +59,7 @@ export class MnYearsPickerComponent implements OnInit {
         }
 
         if (!this.startDate) {
-            console.warn('startDate and endDate must exist at the same time');
+            this._logger.warn('startDate and endDate must exist at the same time');
         }
         let endDate = new MnDate(value);
         this.endDate = this._mds.reEndDate(endDate, this.maxDate, this.minDate);
@@ -69,7 +70,7 @@ export class MnYearsPickerComponent implements OnInit {
     @Input('mnDate')
     set _date(value) {
         if (this.startDate || this.endDate) {
-            console.warn('startDate or endDate can not exist with the date');
+            this._logger.warn('startDate or endDate can not exist with the date');
         }
 
         let date = new MnDate(value);
@@ -81,7 +82,8 @@ export class MnYearsPickerComponent implements OnInit {
 
     current: any = new MnDate(new Date());
 
-    constructor(private _mds: MnDatetimeServices) {
+    constructor(private _logger: MnLoggerService,
+                private _mds: MnDatetimeServices) {
     }
 
     ngOnInit() {

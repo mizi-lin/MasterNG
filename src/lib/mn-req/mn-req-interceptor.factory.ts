@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import {MnReqServices} from './mn-req.service';
+import {MnLoggerService} from '../mn-common/services/mn-logger.service';
 
 declare const mu: any;
 
@@ -21,7 +22,9 @@ declare const mu: any;
 
 @Injectable()
 export class MnReqInterceptorFactory implements HttpInterceptor {
-    constructor(private _mrs: MnReqServices) {
+    constructor(
+        private _logger: MnLoggerService,
+        private _mrs: MnReqServices) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -68,7 +71,7 @@ export class MnReqInterceptorFactory implements HttpInterceptor {
              * Observable.throw(error) => error
              * Observable.empty() => 错误不往下走
              */
-            console.error('catch::::', error.url);
+            this._logger.error('catch::::', error.url);
             if (this._mrs.reqCatch) {
                 return this._mrs.reqCatch(error, caught, error.url) || Observable.throw(error);
             } else {
@@ -76,7 +79,7 @@ export class MnReqInterceptorFactory implements HttpInterceptor {
             }
         }).do((event: HttpEvent<any>) => {
         }, (error: HttpErrorResponse) => {
-            console.error('error::::', error.url);
+            this._logger.error('error::::', error.url);
         }).finally(() => {
             /**
              * Request
@@ -110,7 +113,7 @@ export class MnReqInterceptorFactory implements HttpInterceptor {
 
         this.progressStep();
 
-        console.log(
+        this._logger.log(
             'before request:::: -> ',
             url,
             mu.prop(config, 'method'),

@@ -24,8 +24,6 @@ export class MnModalServices {
             this._layer = this._lcs.createLayerElement('mnModal');
         }
 
-        console.dir(this._layer);
-
         this._layer.innerHTML = `<mn-modal></mn-modal>`;
         this._mcf = this._cfr.resolveComponentFactory(MnModalComponent);
         let compRef: ComponentRef<any> = this._appRef.bootstrap(this._mcf, this._layer.firstElementChild);

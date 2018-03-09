@@ -107,8 +107,6 @@ export function createComponentFactory(compiler: Compiler, template: string, ext
     // };
     // const decoratedCmp = Component(compMetadata)(cmpClass);
 
-    console.debug('::::::::::::', extraModules);
-
     @Component({
         selector: 'decorated-cmp',
         template: template
@@ -150,8 +148,6 @@ export class MnDynamicTemplateDirective implements OnDestroy, OnChanges {
     constructor(private _vcRef: ViewContainerRef,
                 private _compiler: Compiler,
                 private _extraModules: ExtraModules) {
-
-        console.debug('oooooOooOoooOOooOoooo', _extraModules);
 
     }
 

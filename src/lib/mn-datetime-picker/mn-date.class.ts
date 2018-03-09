@@ -361,7 +361,6 @@ export class MnDate {
     getBeginDate(date: any, ...types: number[]): any {
 
         if (!date) {
-            console.error('getBeginDate');
             return;
         }
 
@@ -376,9 +375,6 @@ export class MnDate {
     }
 
     cloneDate(date: any) {
-        if (!date) {
-            console.debug(this, this.getBeginDate(date || this, 0, 1, 2, 3, 4, 5, 6));
-        }
         return this.getBeginDate(date || this, 0, 1, 2, 3, 4, 5, 6);
     }
 

@@ -101,7 +101,6 @@ export class MnModalComponent implements OnInit {
     }
 
     close(): any {
-        console.debug(this._modal.hide);
         this._modal.hide();
         this._open = false;
         this._openChange.emit(false);

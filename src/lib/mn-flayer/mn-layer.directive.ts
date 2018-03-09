@@ -4,6 +4,7 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import {MnLayerContainerService} from './mn-layer-container.service';
+import {MnLoggerService} from '../mn-common/services/mn-logger.service';
 
 declare const mu: any;
 
@@ -36,7 +37,7 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
 
         mu.run(p.split(' '), (ps) => {
             if (ps.length < 2) {
-                console.error('position error');
+                this._logger.error('position error');
                 return;
             }
             this._position = mu.map(ps, (pos, index) => {
@@ -69,7 +70,9 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
     private _context: MnLayerContext = new MnLayerContext();
     private _viewRef: EmbeddedViewRef<MnLayerContext>;
 
-    constructor(private _render: Renderer2,
+    constructor(
+                private _logger: MnLoggerService,
+                private _render: Renderer2,
                 private _ms: MnLayerContainerService,
                 private _vcRef: ViewContainerRef,
                 private _tempRef: TemplateRef<MnLayerContext>) {
@@ -168,8 +171,8 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
                 const _sRect = this._sRef.nativeElement.getBoundingClientRect();
                 const _tRect = _layerBody.getBoundingClientRect();
 
-                // console.log('::::::sRect', _sRect);
-                // console.log('::::::_tRect', _tRect);
+                // this._logger.log('::::::sRect', _sRect);
+                // this._logger.log('::::::_tRect', _tRect);
 
                 let position: any = {};
                 position.left0 = {left: this.adjustLeft(_sRect.left - _tRect.width, _tRect)};
