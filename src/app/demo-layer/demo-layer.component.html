@@ -25,13 +25,16 @@
 
     <button mn-btn class="primary" (click)="test.modal = true">Page Modal</button>
 
-    <mn-modal [mnTitle]="'abcdef'" [(mnOpen)]="test.modal">
-        <div>abcdefg hijk lmn opq rst uvw xyz</div>
+    <mn-modal [mnTitle]="'静夜思'" [(mnOpen)]="test.modal">
+        <div>床前明月光</div>
+        <div>疑是地上霜</div>
+        <div>举头望明月</div>
+        <div>低头思故乡</div>
     </mn-modal>
 
     <button mn-btn class="primary" (click)="test.open2 = true">Page Modal 2</button>
 
-    <mn-modal [mnTitle]="'Page Modal 2 Title'" [mnComponent]="a" [(mnOpen)]="test.open2">
+    <mn-modal [mnTitle]="'春晓'" [mnComponent]="a" [(mnOpen)]="test.open2">
     </mn-modal>
 
 </mn-panel-s>
@@ -41,7 +44,7 @@
             (click)="createNotify({
             type: 'error',
             content: 'this is a error'
-        })">Create Modal
+        })">Create Error Notify
     </button>
 
     <button mn-btn class="primary"
@@ -50,6 +53,6 @@
                 content: 'warning',
                 delay: 0,
                 closeBtn: true
-            })">Create 2 Modal
+            })">Create Warn Notify
     </button>
 </mn-panel-s>

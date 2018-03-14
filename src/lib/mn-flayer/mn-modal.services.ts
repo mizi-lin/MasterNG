@@ -53,7 +53,7 @@ export class MnModalServices {
         instance['_content'] = config.content;
         instance['_layerId'] = config.id || this._layer.id;
         instance['_delay'] = mu.ifnvl(config.delay, 3000);
-        instance['_close_btn'] = mu.ifnvl(config.closeBtn, true);
+        instance['_closeBtn'] = mu.ifnvl(config.closeBtn, true);
         this._layer.appendChild(_section);
 
     }

@@ -1,6 +1,13 @@
 import {
     AfterViewInit,
-    Directive, ElementRef, EmbeddedViewRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, Renderer2, TemplateRef,
+    Directive,
+    EmbeddedViewRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    Renderer2,
+    TemplateRef,
     ViewContainerRef
 } from '@angular/core';
 import {MnLayerContainerService} from './mn-layer-container.service';
@@ -50,8 +57,13 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
     @Input('mnLayerSourceRef') _sRef;
     @Input('mnLayerHideEvt') _hideEvt;
 
-    @Input()
-    set mnLayerStatus(status) {
+    @Input('mnLayerStatus')
+    set status_(status) {
+
+        mu.run(mu.type(status, 'boolean'), () => {
+            status = status ? 'show' : 'hide';
+        });
+
         if (status === 'show') {
             this._show();
         } else if (status === 'hide' && !this._showed) {
@@ -62,16 +74,17 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
     }
 
     @Output('mnResult') result: any = new EventEmitter<any>();
+    @Output('mnShowResult') showResult: any = new EventEmitter<any>();
 
     _clear: any;
     _showed: boolean = false;
     _layer: any;
+    _content: any;
 
     private _context: MnLayerContext = new MnLayerContext();
     private _viewRef: EmbeddedViewRef<MnLayerContext>;
 
-    constructor(
-                private _logger: MnLoggerService,
+    constructor(private _logger: MnLoggerService,
                 private _render: Renderer2,
                 private _ms: MnLayerContainerService,
                 private _vcRef: ViewContainerRef,
@@ -82,10 +95,7 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.result.emit({
-            hide: () => this._hide(),
-            show: () => this._show()
-        });
+
     }
 
     _createLayerElement() {
@@ -99,7 +109,7 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
         });
 
         if (mu.or(this._module, 'mnTooltip', 'mnDropDown')) {
-            // 移出下拉框，隐藏下拉框
+            // 移出下拉框，隐藏flayer
             this._render.listen(layer, 'mouseleave', () => {
                 this._clear = setTimeout(() => {
                     this._hide();
@@ -114,6 +124,12 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
                 this._hide();
                 this._showed = false;
             });
+        });
+
+        this.result.emit({
+            layer: this._layer,
+            hide: () => this._hide(),
+            show: () => this._show()
         });
     }
 
@@ -134,17 +150,26 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
         // this._render.addClass(this._layer, 'mnc-hide');
 
         mu.each(this._viewRef.rootNodes, (_node) => {
+
+            if (_node.nodeType === 1) {
+                this.showResult.emit({content: _node});
+            }
+
             this._layer.appendChild(_node);
         });
 
-        // 设置浮动层位置
-        this._adjustPosition(this._layer, () => {
+        mu.run(this._position, () => {
+            // 设置浮动层位置
+            this._adjustPosition(this._layer, () => {
+                this._render.addClass(this._layer, 'mnc-show');
+                this._render.removeClass(this._layer, 'mnc-hide');
+            });
+        }, () => {
             this._render.addClass(this._layer, 'mnc-show');
             this._render.removeClass(this._layer, 'mnc-hide');
         });
 
         // const _el = this._viewRef.nativeElement;
-
     }
 
     // 隐藏下拉框

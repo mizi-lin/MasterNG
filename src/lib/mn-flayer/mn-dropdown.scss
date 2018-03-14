@@ -3,35 +3,7 @@ mn-dropdown {
     height: 32px;
 }
 
-.mnc-layer-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1000;
-    pointer-events: none;
-}
 
-.mnc-layer {
-    position: absolute;
-    z-index: 2;
-    border: 1px solid #eee;
-    background: #fff;
-    min-width: 10px;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
-    pointer-events: auto;
-
-    &.mnc-hide {
-        visibility: hidden;
-        pointer-events: none;
-    }
-
-    &.mnc-show {
-        visibility: visible;
-        pointer-events: auto;
-    }
-}
 
 .mnc-layer.mnTooltip {
     > div {
