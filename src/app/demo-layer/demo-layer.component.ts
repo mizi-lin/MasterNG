@@ -28,7 +28,6 @@ export class DemoLayerComponent implements OnInit {
     }
 
     createNotify(config) {
-        config.content = config.content + ':::' + +new Date();
         this._mms.notify(config);
     }
 }
