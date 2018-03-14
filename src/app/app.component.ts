@@ -16,8 +16,12 @@ export class AppComponent implements AfterViewInit {
         // console.log(mu);
         // console.log(jQuery);
 
+        // error;
     }
 
     ngAfterViewInit(): void {
     }
 }
+
+
+

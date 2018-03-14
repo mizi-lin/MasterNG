@@ -131,7 +131,7 @@ export class MnLayerDirective implements OnInit, AfterViewInit {
             this._viewRef = this._vcRef.createEmbeddedView(this._tempRef, this._context);
         }
 
-        this._render.addClass(this._layer, 'mnc-hide');
+        // this._render.addClass(this._layer, 'mnc-hide');
 
         mu.each(this._viewRef.rootNodes, (_node) => {
             this._layer.appendChild(_node);

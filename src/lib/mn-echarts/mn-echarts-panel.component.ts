@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {MnEchartsServices} from './mn-echarts.service';
 import '../assets/jquery.resize.js';
-import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services';
+import {MnFileSaverServices} from '../mn-common/services/mn-fileSaver.services';
 
 declare const mu: any, jQuery: any;
 

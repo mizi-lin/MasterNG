@@ -4,7 +4,7 @@ declare const mu: any, jQuery: any;
 import '../assets/jquery.file-download.js';
 import {Http} from '@angular/http';
 import {MnReqServices} from './mn-req.service';
-import {MnFileSaverServices} from '../mn-common/services/mn-file-saver.services';
+import {MnFileSaverServices} from '../mn-common/services/mn-fileSaver.services';
 
 @Directive({selector: '[file-download]'})
 export class MnFileDownloadDirective {

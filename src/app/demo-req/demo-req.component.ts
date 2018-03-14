@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ResourcePool} from './resource-pool';
 import {Http, ResponseContentType} from '@angular/http';
-import {MnFileSaverServices} from '../../lib/mn-common/services/mn-file-saver.services';
+import {MnFileSaverServices} from '../../lib/mn-common/services/mn-fileSaver.services';
 import {DemoNodataComponent} from '../demo-nodata/demo-nodata.component';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 

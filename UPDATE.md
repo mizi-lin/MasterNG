@@ -167,4 +167,8 @@
 
 o.3.22
 
-* 添加 MnCommonModule 添加 MnLoggerService
+* MnCommonModule 添加 MnLoggerService
+
+o.3.23
+
+* MnCommonModule 添加 MnErrorHandler
