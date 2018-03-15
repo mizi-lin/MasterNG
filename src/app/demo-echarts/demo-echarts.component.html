@@ -97,6 +97,7 @@
         </mn-col>
         <mn-col [span]="12">
             <mn-echarts-panel class="bordered" title="EchartsPanel::world cloud"
+                              [mnShowTools]="'hide'"
                               [req]="{url: './assets/store/echarts-world-cloud.json'}"
                               [type]="'wordCloud'"
                               [tools]="['fullscreen', 'download', 'data_view', 'line', 'bar', 'exchange', 'rate', 'label_all', 'legend', 'reload']"

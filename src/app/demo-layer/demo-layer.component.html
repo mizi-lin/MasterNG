@@ -56,3 +56,26 @@
             })">Create Warn Notify
     </button>
 </mn-panel-s>
+
+<mn-panel-s [title]="'DropDown'">
+
+    <mn-dropdown>
+        <button mn-btn class="info">DropDown</button>
+        <mn-dropdown-content class="p-8 mnc-block">
+            <ul>
+                <li>离离原上草</li>
+                <li>一岁一枯荣</li>
+                <li>野火烧不尽</li>
+                <li>春风吹又生</li>
+            </ul>
+        </mn-dropdown-content>
+    </mn-dropdown>
+</mn-panel-s>
+
+<mn-panel-s [title]="'Tooltip'">
+
+    <div>
+        天地不仁以万物为<span mnTooltip="chu gou">刍狗</span>, 圣人不仁，以百姓为刍狗。天地之间，其犹<mn-tooltip [mnTip]="'tuo ye'">橐龠</mn-tooltip>乎？虚而不屈，动而愈出。多言数穷，不如守中。
+    </div>
+
+</mn-panel-s>

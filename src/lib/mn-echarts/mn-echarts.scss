@@ -40,7 +40,7 @@ mn-echarts-box {
     mn-panel-toolbar {
         color: #999;
 
-        &.toggle {
+        &.toggle, &.hide  {
             display: none;
         }
     }

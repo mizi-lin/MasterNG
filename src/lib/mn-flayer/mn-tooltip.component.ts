@@ -1,11 +1,9 @@
-import {
-    Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewEncapsulation
-} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 
 declare const mu: any;
 
 @Component({
-    selector: '[mnTooltip]',
+    selector: '[mnTooltip], mn-tooltip',
     template: `
         <ng-content></ng-content>
         <ng-template
@@ -37,6 +35,11 @@ export class MnTooltipComponent implements OnInit {
     }
 
     @Input('mnTooltip') _tooltip: string;
+
+    @Input('mnTip') set tip_(value) {
+        this._tooltip = value;
+    }
+
     @Input('mnShowTypes') _showTypes: string = 'mouseover';
     @Input('mnHideEventType') _hideType: string;
     @Input('mnPosition') _position: string = 'top center';

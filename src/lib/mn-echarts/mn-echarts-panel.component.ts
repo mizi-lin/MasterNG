@@ -29,7 +29,7 @@ declare const mu: any, jQuery: any;
         <mn-panel [hph]="true">
             <mn-panel-header>
                 <mn-panel-title [innerHTML]="_title"></mn-panel-title>
-                <mn-panel-toolbar [tools]="_tools" [class.toggle]="showTools === 'toggle'">
+                <mn-panel-toolbar [tools]="_tools" [class.toggle]="showTools === 'toggle'" [class.hide]="showTools === 'hide'">
 
                     <ng-template [ngIf]="toolMap['download']">
                         <mn-col (click)="download_click($event)"
