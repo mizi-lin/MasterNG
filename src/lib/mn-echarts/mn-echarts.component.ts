@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import * as mu from 'mzmu';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {MnEchartsServices} from './mn-echarts.service';
 declare const mu: any;
 import '../assets/china.js';
@@ -11,9 +10,9 @@ import '../assets/china.js';
 @Component({
     selector: 'mn-echarts',
     template: `
-        <div 
-                mn-echarts-render 
-                [options]="echarts_options" 
+        <div
+                mn-echarts-render
+                [options]="echartsOptions"
                 (chartClick)="chartClick.emit($event)"
                 (chartDblClick)="chartDblClick.emit($event)"
                 (chartMouseDown)="chartMouseDown.emit($event)"
@@ -23,20 +22,10 @@ import '../assets/china.js';
                 (chartGlobalOut)="chartGlobalOut.emit($event)"
                 (result)="getRenderResult($event)"></div>
     `,
-    styles: [
-            `
-            :host,
-            :host ::ng-deep [mn-echarts-render] {
-                display: block;
-                width: 100%;
-                height: 100%;
-            }
-            `
-    ]
-
+    styleUrls: ['./mn-echarts.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class MnEchartsComponent implements OnInit, OnChanges {
-
     @Input() data: any;
     @Input() options: any;
 
@@ -54,28 +43,24 @@ export class MnEchartsComponent implements OnInit, OnChanges {
     @Output() chartMouseOut: EventEmitter<any> = new EventEmitter<any>();
     @Output() chartGlobalOut: EventEmitter<any> = new EventEmitter<any>();
 
-    echarts_options: any;
+    echartsOptions: any;
 
     _result: any = {};
 
+    constructor(private _es: MnEchartsServices) {}
 
-    constructor(private _es: MnEchartsServices) {
-    }
-
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     ngOnChanges(changes: SimpleChanges): void {
-
         mu.run(mu.prop(changes, 'options.currentValue'), (options) => {
-            this.echarts_options = options;
+            this.echartsOptions = options;
             this._result['options'] = options;
             this.result.emit(this._result);
         });
 
         mu.run(mu.prop(changes, 'data.currentValue'), (data) => {
             const result_ = this._es.getEchartResult(this.type, data, this.setting);
-            this.echarts_options = result_['options'];
+            this.echartsOptions = result_['options'];
             this._result.source = mu.clone(this.data);
             this._result = mu.extend(this._result, result_);
             this.result.emit(this._result);
@@ -84,7 +69,7 @@ export class MnEchartsComponent implements OnInit, OnChanges {
         mu.run(changes['setting'], (settingListener) => {
             if (!settingListener.firstChange) {
                 const result_ = this._es.getEchartResult(this.type, this.data, this.setting);
-                this.echarts_options = result_['options'];
+                this.echartsOptions = result_['options'];
                 this._result.source = mu.clone(this.data);
                 this._result = mu.extend(this._result, result_);
                 this.result.emit(this._result);
@@ -94,18 +79,16 @@ export class MnEchartsComponent implements OnInit, OnChanges {
         mu.run(changes['type'], (typeListener) => {
             if (!typeListener.firstChange) {
                 const result_ = this._es.getEchartResult(this.type, this.data, this.setting) || {};
-                this.echarts_options = result_['options'];
+                this.echartsOptions = result_['options'];
                 this._result.source = mu.clone(this.data);
                 this._result = mu.extend(this._result, result_);
                 this.result.emit(this._result);
             }
         });
-
     }
 
     getRenderResult(rst: any) {
         this._result = mu.extend(this._result, rst);
         this.result.emit(this._result);
     }
-
 }

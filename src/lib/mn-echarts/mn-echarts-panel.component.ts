@@ -1,6 +1,14 @@
 import {
-    Component, ElementRef, EventEmitter, HostBinding, Input, OnChanges, Output, SimpleChanges, ViewChild,
-    ViewChildren, ViewEncapsulation
+    Component,
+    ElementRef,
+    EventEmitter,
+    HostBinding,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import {MnEchartsServices} from './mn-echarts.service';
 import '../assets/jquery.resize.js';
@@ -23,7 +31,7 @@ declare const mu: any, jQuery: any;
 
 @Component({
     selector: 'mn-echarts-panel, mn-echarts-box',
-    styleUrls: ['./mn-echarts.scss', '../assets/fonts/iconfont.scss'],
+    styleUrls: ['./mn-echarts-box.scss', '../assets/fonts/iconfont.scss'],
     encapsulation: ViewEncapsulation.None,
     template: `
         <mn-panel [hph]="true">
@@ -133,9 +141,9 @@ declare const mu: any, jQuery: any;
                 </mn-panel-toolbar>
             </mn-panel-header>
             <mn-panel-body class="mnc-tb" mnElement #panelBody="element">
-                
+
                 <ng-content select="mn-prepend"></ng-content>
-                
+
                 <div class="mnc-tb-row">
                     <mn-req #panel
                             [mnShowGutter]="_show_gutter"
@@ -450,17 +458,8 @@ export class MnEchartsPanelComponent implements OnChanges {
     }
 
     fullScreenClick: any = (full: any, $event: any) => {
-        const $el = jQuery(this._panel.nativeElement);
-        $el.mnResize(() => {
-            this._chart.resize({
-                width: $el.width(),
-                height: $el.height()
-            });
-        });
-
         // 自定义方法
         mu.run(this.toolMap['fullscreen'].click, fn => fn(full, $event));
-
         this.setStatus('fullScreenClick');
     };
 }

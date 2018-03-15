@@ -1,0 +1,72 @@
+mn-echarts-panel,
+mn-echarts-box {
+    display: block;
+    width: 100%;
+
+    mn-panel-body {
+        padding: 0;
+
+        &.mnc-tb {
+            display: table;
+
+            .mnc-tb-row:only-of-type {
+                height: 100%;
+            }
+
+            .mnc-tb-row,
+            > mn-prepend,
+            > mn-append {
+                display: table-row;
+            }
+        }
+    }
+
+    mn-req {
+        padding: 8px;
+    }
+
+    .mn-dataView {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        z-index: 9;
+        padding: 16px;
+        overflow: auto;
+    }
+
+    mn-panel-toolbar {
+        color: #999;
+
+        &.toggle, &.hide  {
+            display: none;
+        }
+    }
+
+    &:hover mn-panel-toolbar.toggle {
+        display: block;
+    }
+}
+
+mn-echarts-box {
+    mn-panel-header {
+        position: absolute;
+        width: 100%;
+        visibility: visible;
+        z-index: 200;
+        border-bottom: 1px transparent solid;
+        pointer-events: none;
+
+        mn-panel-toolbar {
+            pointer-events: auto;
+        }
+    }
+
+    mn-panel-body {
+        height: 100%;
+    }
+}
+
+
