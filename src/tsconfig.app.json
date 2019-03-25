@@ -7,7 +7,9 @@
         "sourceMap": true,
         "types": [],
         "paths": {
-        }
+        },
+
+        "allowJs": true
     },
     "exclude": [
         "test.ts",

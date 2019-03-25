@@ -3,7 +3,7 @@
     "compilerOptions": {
         "outDir": "./.publish",
         "sourceMap": true,
-        "declaration": true,
+        "declaration": false,
         "importHelpers": true,
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
@@ -15,7 +15,8 @@
         "lib": [
             "es2016",
             "dom"
-        ]
+        ],
+        "allowJs": true
     },
     "exclude": [
         "node_modules"
