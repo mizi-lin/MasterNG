@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {MnDate} from './mn-date.class';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 /**
  * 构建日期视图

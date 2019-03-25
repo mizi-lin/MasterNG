@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Component({
     selector: 'mn-tabContent',

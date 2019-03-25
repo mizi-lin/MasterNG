@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 
-declare const mu: any;
 
 @Injectable()
 export class MnDynamicServices {

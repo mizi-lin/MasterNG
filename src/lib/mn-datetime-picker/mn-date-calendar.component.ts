@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from 
 import {MnDate} from './mn-date.class';
 import {MnDatetimeServices} from './mn-datetime.services';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 /**
  * 构建日期视图

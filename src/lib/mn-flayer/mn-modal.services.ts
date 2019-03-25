@@ -3,7 +3,7 @@ import {MnModalComponent} from './mn-modal.component';
 import {MnLayerContainerService} from './mn-layer-container.service';
 import {MnNotifyComponent} from './mn-notify.component';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Injectable()
 export class MnModalServices {

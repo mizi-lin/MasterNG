@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {MnI18nServices} from './mn-i18n.services';
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Pipe({
     name: 'i18n',

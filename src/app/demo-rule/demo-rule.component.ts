@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MnRuleServices} from '../../lib/mn-rule/mn-rule.services';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Component({
     selector: 'mn-demo-rule',

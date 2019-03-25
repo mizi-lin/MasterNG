@@ -4,7 +4,7 @@ import {count} from 'rxjs/operator/count';
 import {MnDate} from './mn-date.class';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Injectable()
 export class MnDatetimeServices {

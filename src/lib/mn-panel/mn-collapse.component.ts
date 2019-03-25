@@ -1,9 +1,7 @@
 import {Component, OnInit, Input, ContentChildren, AfterViewInit, OnChanges, SimpleChanges} from '@angular/core';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import {MnPanelComponent} from './mn-panel.component';
 import {MnPanelSimpleComponent} from './mn-panel-simple.component';
-
-declare const mu: any;
 
 @Component({
     selector: 'mn-collapse',

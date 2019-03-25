@@ -1,7 +1,7 @@
 import {Injectable, OnDestroy} from '@angular/core';
 import {MnDate} from '../mn-datetime-picker/mn-date.class';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Injectable()
 export class MnLayerContainerService implements OnDestroy {

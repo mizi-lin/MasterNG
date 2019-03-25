@@ -7,10 +7,9 @@ import {
     ComponentFactoryResolver, OnChanges, SimpleChanges, OnDestroy, EventEmitter
 } from '@angular/core';
 
-import * as mu from 'mzmu';
 import {MnDynamicServices} from './mn-dynamic-component.service';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 /**
  * mn-dynamic-component

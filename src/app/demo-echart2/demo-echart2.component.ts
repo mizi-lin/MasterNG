@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Component({
     selector: 'mn-demo-echart2',

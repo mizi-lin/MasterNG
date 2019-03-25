@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 // 24 * 60 * 60 * 1000;
 const DAY_TS = 86400000;

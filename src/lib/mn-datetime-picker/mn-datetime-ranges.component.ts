@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MnDatetimeServices} from './mn-datetime.services';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Component({
     selector: 'mn-datetimeranges',

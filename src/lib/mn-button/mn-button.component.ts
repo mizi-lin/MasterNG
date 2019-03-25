@@ -1,6 +1,5 @@
 import {Component, OnInit, Input, HostBinding, OnChanges, SimpleChanges} from '@angular/core';
-import * as mu from 'mzmu';
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Component({
     selector: 'mn-btn, [mn-btn]',

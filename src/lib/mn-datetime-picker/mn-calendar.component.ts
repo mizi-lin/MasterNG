@@ -3,7 +3,7 @@ import {MnDatetimeServices} from './mn-datetime.services';
 import {MnCalendarViewComponent} from './mn-calendar-view.component';
 import {MnDate} from './mn-date.class';
 
-declare const mu: any;
+import  mu from 'mzmu';
 export const YEAR_MILLISECONDS = 864000;
 
 @Component({

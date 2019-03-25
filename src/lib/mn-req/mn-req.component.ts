@@ -7,7 +7,7 @@ import {Subscriber} from 'rxjs/Subscriber';
 import {MnReqServices} from './mn-req.service';
 import {HttpClient} from '@angular/common/http';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Component({
     selector: 'mn-req, mn-http',

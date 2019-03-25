@@ -2,9 +2,8 @@ import {
     Component, OnInit, Input, ContentChildren, AfterViewInit, ElementRef,
     Renderer2, OnChanges, SimpleChanges, forwardRef, Inject, HostListener
 } from '@angular/core';
-import * as mu from 'mzmu';
+import  mu from 'mzmu';
 import {MnPanelComponent} from './mn-panel.component';
-declare const mu: any;
 
 @Component({
     selector: 'mn-panel-header',

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Injectable()
 export class MnLoaderBarServices {

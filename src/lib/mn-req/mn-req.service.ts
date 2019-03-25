@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Injectable()
 export class MnReqServices {

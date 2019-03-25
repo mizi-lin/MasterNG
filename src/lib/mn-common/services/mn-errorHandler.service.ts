@@ -1,7 +1,7 @@
 import {ErrorHandler, Injectable} from '@angular/core';
 import {MnLoggerService} from './mn-logger.service';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Injectable()
 export class MnErrorHandler extends ErrorHandler {

@@ -4,7 +4,7 @@ import {MnCalendarViewComponent} from './mn-calendar-view.component';
 import {MnDatetimeServices} from './mn-datetime.services';
 import {MnDate} from './mn-date.class';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Component({
     selector: 'mn-calendar-multiple',

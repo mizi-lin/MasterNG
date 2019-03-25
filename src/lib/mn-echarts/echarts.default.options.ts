@@ -1,4 +1,4 @@
-declare const mu: any;
+import  mu from 'mzmu';
 export const DEFAULT_ECHART_OPTIONS = {
     line: {
         title: {

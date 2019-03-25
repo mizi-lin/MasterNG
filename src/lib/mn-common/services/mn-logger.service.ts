@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 /**
  * 重写控制 console

@@ -2,10 +2,9 @@ import {
     Component, OnInit, Input, ContentChildren, AfterViewInit, ElementRef,
     Renderer2, OnChanges, SimpleChanges, HostListener, Host, forwardRef, Inject, Output, EventEmitter
 } from '@angular/core';
-import * as mu from 'mzmu';
 import {MnPanelComponent} from './mn-panel.component';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 @Component({
     selector: 'tool-expand',

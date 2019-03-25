@@ -2,7 +2,7 @@ import {Component, HostBinding, Input, OnInit} from '@angular/core';
 import {MnDate} from './mn-date.class';
 import {MnDatetimeServices} from './mn-datetime.services';
 
-declare const mu: any;
+import  mu from 'mzmu';
 
 /**
  * 日历控件最小模块：日期块

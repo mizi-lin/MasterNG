@@ -3,12 +3,19 @@
     "compilerOptions": {
         "outDir": "./dist",
         "sourceMap": true,
-        "declaration": true,
+        "declaration": false,
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "baseUrl": ".",
         "target": "es5",
+
+        "noImplicitAny": false,
+        "removeComments": false,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+
         "typeRoots": [
             "node_modules/@types"
         ],
