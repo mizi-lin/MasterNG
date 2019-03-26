@@ -15,9 +15,7 @@
         "lib": [
             "es2016",
             "dom"
-        ],
-
-        "allowJs": true
+        ]
     },
     "exclude": [
         "node_modules"
