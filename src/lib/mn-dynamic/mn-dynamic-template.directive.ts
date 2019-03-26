@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 /**
  * 每一个 Component 和 Directive 的实例都必须对应一个 Host（宿主），

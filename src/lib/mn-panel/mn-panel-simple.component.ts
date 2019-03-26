@@ -4,7 +4,7 @@ import {
     AfterContentChecked, HostBinding
 } from '@angular/core';
 import {MnPanelComponent} from './mn-panel.component';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-panel-s,mn-panel-simple',

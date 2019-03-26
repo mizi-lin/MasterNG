@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MnEchartsServices} from '../../lib/mn-echarts/mn-echarts.service';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-demo-echarts',

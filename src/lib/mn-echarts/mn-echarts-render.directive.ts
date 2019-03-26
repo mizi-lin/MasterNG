@@ -21,8 +21,8 @@ import {
 import * as echarts from 'echarts';
 import 'echarts-wordcloud/dist/echarts-wordcloud.min';
 import {MnEchartsServices} from './mn-echarts.service';
-
-declare const mu: any, jQuery: any;
+import * as mu from 'mzmu';
+declare var jQuery: any;
 
 @Directive({
     selector: '[mn-echarts-render]'
@@ -116,8 +116,6 @@ export class MnEchartsRenderDirective implements OnChanges, OnDestroy, AfterView
         if (mu.prop(options, 'series.0.type') === 'wordCloud') {
             _chart.clear();
         }
-
-        console.debug(options, JSON.stringify(options));
 
         _chart.setOption(options, true);
         _chart.resize();

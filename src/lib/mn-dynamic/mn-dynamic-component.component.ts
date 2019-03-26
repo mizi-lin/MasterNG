@@ -9,7 +9,7 @@ import {
 
 import {MnDynamicServices} from './mn-dynamic-component.service';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 /**
  * mn-dynamic-component

@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, HostBinding, OnChanges, SimpleChanges} from '@angular/core';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-btn-group',

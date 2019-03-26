@@ -3,7 +3,7 @@ import {
     Renderer2, OnChanges, SimpleChanges, HostListener, HostBinding, ViewEncapsulation
 } from '@angular/core';
 // import {ColComponent} from './col.component';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-row, mn-fill',

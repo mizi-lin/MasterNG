@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 /**
  * 文章栅格化效果

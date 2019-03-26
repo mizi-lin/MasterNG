@@ -3,7 +3,7 @@ import {
     Renderer2, OnChanges, SimpleChanges, HostListener, Host, forwardRef, Inject, Output, EventEmitter
 } from '@angular/core';
 import {MnPanelComponent} from './mn-panel.component';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'tool-collapse-down',

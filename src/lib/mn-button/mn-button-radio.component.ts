@@ -3,7 +3,7 @@ import {
     Renderer2, DoCheck, ViewChild, AfterViewInit
 } from '@angular/core';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-btn-radio',

@@ -3,7 +3,7 @@ import {MnDate} from './mn-date.class';
 import {MnDatetimeServices} from './mn-datetime.services';
 import {MnLoggerService} from '../mn-common/services/mn-logger.service';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-yearspicker',

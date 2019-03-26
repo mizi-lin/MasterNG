@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Injectable()
 export class MnReqServices {

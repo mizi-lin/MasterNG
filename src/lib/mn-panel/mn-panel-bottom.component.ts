@@ -2,7 +2,7 @@ import {
     Component, OnInit, Input, ContentChildren, AfterViewInit, ElementRef,
     Renderer2, OnChanges, SimpleChanges
 } from '@angular/core';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-panel-bottom',

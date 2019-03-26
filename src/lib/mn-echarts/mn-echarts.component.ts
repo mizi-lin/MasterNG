@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {MnEchartsServices} from './mn-echarts.service';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 import '../assets/china.js';
 
 /**

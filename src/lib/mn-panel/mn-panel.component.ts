@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {MnPanelBodyComponent} from './mn-panel-body.component';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-panel',

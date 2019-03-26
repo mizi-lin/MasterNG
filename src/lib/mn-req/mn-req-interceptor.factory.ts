@@ -9,7 +9,7 @@ import 'rxjs/add/operator/catch';
 import {MnReqServices} from './mn-req.service';
 import {MnLoggerService} from '../mn-common/services/mn-logger.service';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 /**
  * observable 流程处理

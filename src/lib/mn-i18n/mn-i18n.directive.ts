@@ -1,6 +1,6 @@
 import {Directive, ElementRef, Input, AfterViewInit, OnChanges, DoCheck} from '@angular/core';
 import {MnI18nServices} from './mn-i18n.services';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Directive({
     selector: '[i18n]'

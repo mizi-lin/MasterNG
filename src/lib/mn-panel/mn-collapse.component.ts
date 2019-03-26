@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, ContentChildren, AfterViewInit, OnChanges, SimpleChanges} from '@angular/core';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 import {MnPanelComponent} from './mn-panel.component';
 import {MnPanelSimpleComponent} from './mn-panel-simple.component';
 

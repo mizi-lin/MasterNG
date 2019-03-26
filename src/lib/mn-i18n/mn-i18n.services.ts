@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {MnI18nConfig} from './mn-i18n-config';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Injectable()
 export class MnI18nServices {

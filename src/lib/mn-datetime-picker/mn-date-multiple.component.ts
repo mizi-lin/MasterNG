@@ -3,7 +3,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {MnDate} from './mn-date.class';
 import {MnLoggerService} from '../mn-common/services/mn-logger.service';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 /**
  * 构建日期视图

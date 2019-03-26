@@ -1,7 +1,7 @@
 import {Component, ElementRef, EventEmitter, HostBinding, Input, OnChanges, OnInit, Output, Renderer2, SimpleChanges} from '@angular/core';
 import {MnLoaderBarServices} from './mn-loader-bar.services';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-loader-bar',

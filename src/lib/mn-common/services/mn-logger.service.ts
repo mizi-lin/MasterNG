@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 /**
  * 重写控制 console

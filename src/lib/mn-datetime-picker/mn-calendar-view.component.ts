@@ -2,7 +2,7 @@ import {Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output,
 import {MnDatetimeServices} from './mn-datetime.services';
 import {MnDate} from './mn-date.class';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-calendar-view',

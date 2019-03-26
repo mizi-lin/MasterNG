@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {saveAs} from 'file-saver/FileSaver.js';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 /**
  * 主要依赖file-saver.js 实现文件下载

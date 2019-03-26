@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {MnPanelComponent} from './mn-panel.component';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'tool-compress',

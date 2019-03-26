@@ -3,7 +3,7 @@ import {
     Renderer2, OnChanges, SimpleChanges, HostListener, DoCheck
 } from '@angular/core';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-panel-toolbar',

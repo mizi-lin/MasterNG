@@ -5,7 +5,7 @@ import {MnFileSaverServices} from '../../lib/mn-common/services/mn-fileSaver.ser
 import {DemoNodataComponent} from '../demo-nodata/demo-nodata.component';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'app-demo-req',

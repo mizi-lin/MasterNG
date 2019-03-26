@@ -2,7 +2,7 @@ import {
     Component, OnInit, Input, ContentChildren, AfterViewInit, ElementRef,
     Renderer2, OnChanges, SimpleChanges, forwardRef, Inject, HostListener
 } from '@angular/core';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 import {MnPanelComponent} from './mn-panel.component';
 
 @Component({

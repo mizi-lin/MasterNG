@@ -1,7 +1,7 @@
 import {Component, ContentChildren, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {MnTabComponent} from './mn-tab.component';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-tabs',

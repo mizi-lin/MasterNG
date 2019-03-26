@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MnI18nServices} from '../../lib/mn-i18n/mn-i18n.services';
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-demo-i18n',

@@ -13,7 +13,7 @@ import {
 import {MnLayerContainerService} from './mn-layer-container.service';
 import {MnLoggerService} from '../mn-common/services/mn-logger.service';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 /**
  * 将浮层（floatLayer) 移到根目录下（body）

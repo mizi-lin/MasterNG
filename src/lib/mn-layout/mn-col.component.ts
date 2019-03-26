@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import {MnRowComponent} from './mn-row.component';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Component({
     selector: 'mn-col',

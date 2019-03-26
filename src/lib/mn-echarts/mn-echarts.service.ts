@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {DEFAULT_ECHART_OPTIONS, DEFAULT_ECHART_SERIES_OPTIONS} from './echarts.default.options';
 import {COLORS_POOL} from './color-pool';
 
-import  mu from 'mzmu';
+import * as mu from 'mzmu';
 
 @Injectable()
 export class MnEchartsServices {
