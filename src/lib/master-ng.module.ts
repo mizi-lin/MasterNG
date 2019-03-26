@@ -61,7 +61,7 @@ import {MnTabModule} from './mn-tab/mn-tab.module';
     ]
 })
 export class MasterNgModule {
-    static forRoot(modules: any[] = []): ModuleWithProviders {
+    static forRoot(modules?: any[]): ModuleWithProviders {
         return {
             ngModule: MasterNgModule,
             providers: [
@@ -72,7 +72,7 @@ export class MasterNgModule {
                 MnEchartsServices,
                 {
                     provide: ExtraModules,
-                    useValue: {items: modules}
+                    useValue: {items: modules || []}
                 }
             ]
         };
